@@ -85,26 +85,33 @@ export default {
     </template>
   </Sidebar>
 
-  <!--Navbar-->
-  <div class="navbar h-8">
-    <div class="container">
-      <button class="w-9 h-9" @click="showSidebar()">
+  <!-- Navbar -->
+  <nav class="navbar shadow-xl h-16">
+    <div class="container mx-auto flex p-3 items-center">
+      <!-- Sidebar Toggle -->
+      <button
+        type="button"
+        class="button button-transparent button-icon button-icon-md"
+        @click="showSidebar()"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
+          viewBox="0 0 20 20"
+          fill="currentColor"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"
           />
         </svg>
       </button>
+
+      <router-link :to="{ name: 'Dashboard' }" class="ml-3">
+        <h3>JTS</h3>
+      </router-link>
     </div>
-  </div>
+  </nav>
 
   <router-view class="container mx-auto min-h-screen" />
 </template>
