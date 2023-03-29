@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body.prevent-scroll {
+    @apply overflow-hidden;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-lightSecondary rounded-full;
+  }
+
+  ::-webkit-scrollbar-corner {
+    @apply bg-opacity-0;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary;
+  }
+
+  input,
+  .input__search {
+    @apply p-1 mt-1 w-full border-2 rounded-md shadow-sm focus:outline-none text-sm;
+  }
+
+  button {
+    @apply p-1 mt-1 w-full border-2 rounded-md shadow-sm focus:outline-none text-sm h-8 bg-primary text-white;
+  }
+
+  .sidebar:not(.active) {
+    @apply pointer-events-none;
+  }
+
+  .sidebar {
+    @apply fixed left-0 top-0 w-screen h-screen flex z-20;
+  }
+
+  .sidebar-link {
+    @apply flex items-center w-full text-2xl bg-light hover:bg-darkPrimary hover:text-light transition-colors py-5 px-10;
+  }
+
+  .sidebar-link > svg {
+    @apply w-6 h-6 mr-2;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    @apply transition-opacity;
+  }
+
+  .slide-enter-from,
+  .slide-leave-to {
+    transform: translateX(-100%) !important;
+  }
+
+  .slide-enter-active,
+  .slide-leave-active {
+    @apply transition-transform !important;
+  }
+}
