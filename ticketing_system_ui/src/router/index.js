@@ -4,7 +4,7 @@ import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/Ticket.vue";
 
-const APP_TITLE = "JTS - Ticketing System";
+const APP_TITLE = "JTS";
 const routes = [
     {
         path: "/",
@@ -42,7 +42,7 @@ const router = createRouter({
 
 router.afterEach((to, from)=>{
     nextTick(()=>{
-       document.title = to.meta.title ? `${to.meta.title} - ${APP_TITLE}` : APP_TITLE
+       document.title = to.meta.title ? `${to.meta.title} | ${APP_TITLE}` : APP_TITLE
     })
 })
 
