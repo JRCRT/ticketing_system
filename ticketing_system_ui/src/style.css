@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   body.prevent-scroll {
     @apply overflow-hidden;
@@ -24,8 +25,101 @@
   }
 
   /* Selection */
-  ::selection {
+  /*   ::selection {
     @apply bg-primary;
+  } */
+
+  /*Icon Style*/
+  .icon-sm {
+    @apply h-5 w-5 !important;
+  }
+
+  .icon-md {
+    @apply h-5 w-5 !important;
+  }
+
+  .icon-lg {
+    @apply h-6 w-6 !important;
+  }
+
+  .button {
+    @apply inline-block text-center px-3 py-2 rounded-lg max-w-md transition-colors;
+  }
+
+  .button-rounded {
+    @apply rounded-full !important;
+  }
+
+  .button > svg {
+    @apply mr-1 icon-sm inline-block;
+  }
+
+  .button-block {
+    @apply block w-full mx-auto;
+  }
+
+  .button-primary {
+    @apply text-white bg-primary hover:bg-darkPrimary;
+  }
+
+  .button-secondary {
+    @apply text-primary hover:text-white bg-light2 hover:bg-primary ring-primary ring-2 ring-inset;
+  }
+
+  .button-transparent {
+    @apply text-dark3 bg-transparent hover:bg-lightSecondary;
+  }
+
+  .button-light {
+    @apply bg-light1 hover:bg-light2;
+  }
+
+  .button-danger {
+    @apply text-white bg-danger hover:bg-darkDanger;
+  }
+
+  .button-success {
+    @apply text-white bg-success hover:bg-darkSuccess;
+  }
+
+  .button-icon {
+    @apply flex p-0 rounded-lg transition-colors;
+  }
+
+  .button-icon div {
+    @apply w-full h-full flex;
+  }
+
+  .button-icon > svg,
+  .button-icon div > svg {
+    @apply block m-auto;
+  }
+
+  .button-icon-lg {
+    @apply h-14 w-14;
+    min-width: 3.5rem;
+  }
+
+  .button-icon-lg svg {
+    @apply icon-lg;
+  }
+
+  .button-icon-md {
+    @apply h-10 w-10;
+    min-width: 2.5rem;
+  }
+
+  .button-icon-md svg {
+    @apply icon-md;
+  }
+
+  .button-icon-sm {
+    @apply h-7 w-7;
+    min-width: 1.75rem;
+  }
+
+  .button-icon-sm svg {
+    @apply icon-sm;
   }
 
   input,
