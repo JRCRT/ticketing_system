@@ -144,7 +144,7 @@
   }
 
   .sidebar-link > svg {
-    @apply w-6 h-6 mr-2;
+    @apply icon-md mr-2;
   }
 
   .fade-enter-from,

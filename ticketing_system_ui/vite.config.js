@@ -10,7 +10,4 @@ export default defineConfig({
     },
   },
   plugins: [vue()],
-  optimizeDeps: {
-    exclude: ["oh-vue-icons/icons"]
-  },
 })
