@@ -174,4 +174,36 @@
   .slide-leave-active {
     @apply transition-transform !important;
   }
+
+  .card {
+    @apply p-5 w-52 h-24 bg-primary rounded-md cursor-pointer;
+  }
+
+  .card:not(.card:first-child) {
+    @apply ml-2;
+  }
+
+  .card-content {
+    @apply grid grid-rows-2;
+  }
+
+  .card-content > * {
+    @apply mx-auto text-white;
+  }
+
+  .card-content > h1 {
+    @apply font-bold text-4xl;
+  }
+
+  .card:nth-child(1) {
+    @apply bg-orange;
+  }
+
+  .card:nth-child(2) {
+    @apply bg-blue;
+  }
+
+  .card:nth-child(3) {
+    @apply bg-red;
+  }
 }

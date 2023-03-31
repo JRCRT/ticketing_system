@@ -37,6 +37,9 @@ module.exports = {
       dark2: colors.gray[800],
       dark3: colors.gray[900],
 
+      orange: colors.yellow[500],
+      blue: colors.sky[500],
+      red: colors.rose[500],
       // Default
       transparent: "transparent",
       current: "currentColor",

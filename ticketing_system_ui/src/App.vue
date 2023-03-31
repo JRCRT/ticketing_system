@@ -1,9 +1,11 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
+
 export default {
   data() {
     return {
       sidebarActive: false,
+      VITE_APP_TITLE: import.meta.env.VITE_APP_TITLE,
     };
   },
   components: {
@@ -24,7 +26,7 @@ export default {
   <Sidebar :active="sidebarActive" @close="hideSidebar()">
     <template v-slot:header>
       <router-link :to="{ name: 'Dashboard' }">
-        <h1 class="text-black">JTS</h1>
+        <h1 class="text-black">{{ VITE_APP_TITLE }}</h1>
       </router-link>
     </template>
     <template v-slot:content>
@@ -132,5 +134,5 @@ export default {
     </div>
   </nav>
 
-  <router-view class="container mx-auto min-h-screen pt-4" />
+  <router-view class="container mx-auto min-h-screen px-4" />
 </template>
