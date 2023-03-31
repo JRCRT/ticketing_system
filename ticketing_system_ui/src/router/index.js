@@ -6,7 +6,7 @@ import Ticket from "@/views/Ticket.vue";
 
 const routes = [
     {
-        path: "/",
+        path: "/login",
         name: "Login",
         component: Login,
         meta:{
@@ -14,7 +14,7 @@ const routes = [
         }
     },
     {
-        path: "/dashboard",
+        path: "/",
         name: "Dashboard",
         component: Dashboard,
         meta:{
