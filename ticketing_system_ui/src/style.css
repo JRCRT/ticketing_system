@@ -139,6 +139,14 @@
     @apply fixed left-0 top-0 w-screen h-screen flex z-20;
   }
 
+  .sidebar-backdrop {
+    @apply bg-black w-full h-full opacity-60 absolute cursor-pointer;
+  }
+
+  .sidebar-content {
+    @apply w-3/4 max-w-xs bg-white h-full z-10 overflow-x-scroll;
+  }
+
   .sidebar-link {
     @apply flex items-center w-full text-2xl bg-light hover:bg-darkPrimary hover:text-light transition-colors py-5 px-10;
   }

@@ -2,17 +2,14 @@
   <div class="sidebar" :class="{ active: active }">
     <transition name="fade">
       <div
-        class="bg-black w-full h-full opacity-60 absolute cursor-pointer"
+        class="sidebar-backdrop"
         v-show="active"
         @click="$emit('close')"
       ></div>
     </transition>
 
     <transition name="slide">
-      <div
-        class="w-3/4 max-w-xs bg-white h-full z-10 overflow-x-scroll"
-        v-show="active"
-      >
+      <div class="sidebar-content" v-show="active">
         <div class="p-10" @click="$emit('close')">
           <slot name="header"></slot>
         </div>
