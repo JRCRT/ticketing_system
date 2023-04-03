@@ -3,7 +3,7 @@ import { nextTick } from "vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/Ticket.vue";
-
+const user = "sds";
 const routes = [
     {
         path: "/login",
@@ -11,6 +11,13 @@ const routes = [
         component: Login,
         meta:{
             title: "Login"
+        },
+        beforeEnter: (to, from, next) => {
+            if(user){
+                router.replace({name: '/'});
+            }else{
+                next();
+            }
         }
     },
     {
@@ -18,7 +25,8 @@ const routes = [
         name: "Dashboard",
         component: Dashboard,
         meta:{
-            title: "Dashboard"
+            title: "Dashboard",
+            authRequired: true
         }
     },
     {
@@ -26,7 +34,8 @@ const routes = [
         name: "Ticket",
         component: Ticket,
         meta:{
-            title: "Ticket"
+            title: "Ticket",
+            authRequired: true
         }
     }
 ]
@@ -43,6 +52,15 @@ router.afterEach((to, from)=>{
     nextTick(()=>{
        document.title = to.meta.title ? `${to.meta.title} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE
     })
+})
+
+router.beforeEach((to, from, next)=>{
+    if(to.matched.some((route)=> route.meta.authRequired)){
+        if(!user) next({name: 'Login'});
+        else next();
+    }else{
+        next();
+    }
 })
 
 

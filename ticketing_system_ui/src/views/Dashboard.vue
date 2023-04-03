@@ -1,6 +1,14 @@
-<script></script>
+<script>
+import Table from "@/components/Table.vue";
+export default {
+  name: "Dashboard",
+  components: {
+    Table,
+  },
+};
+</script>
 <template>
-  <div>
+  <div class="flex flex-col gap-3">
     <!--Cards Container-->
     <div class="flex mt-2">
       <div class="card">
@@ -24,7 +32,7 @@
     </div>
     <!--Today's Transactions-->
     <div>
-      <p>Transactions</p>
+      <Table />
     </div>
   </div>
 </template>
