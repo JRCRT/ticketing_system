@@ -1,14 +1,14 @@
 <template>
   <div class="sidebar" :class="{ active: active }">
-    <transition name="fade">
+    <Transition name="fade">
       <div
         class="sidebar-backdrop"
         v-show="active"
         @click="$emit('close')"
       ></div>
-    </transition>
+    </Transition>
 
-    <transition name="slide">
+    <Transition name="slide">
       <div class="sidebar-content" v-show="active">
         <div class="p-10" @click="$emit('close')">
           <slot name="header"></slot>
@@ -17,7 +17,7 @@
           <slot name="content"></slot>
         </div>
       </div>
-    </transition>
+    </Transition>
   </div>
 </template>
 
