@@ -9,8 +9,9 @@ export default {
 </script>
 <template>
   <div class="flex flex-col gap-3">
+    <h5 class="text-primary">Dashboard</h5>
     <!--Cards Container-->
-    <div class="flex mt-2">
+    <div class="flex">
       <div class="card">
         <div class="card-content">
           <h1>3</h1>

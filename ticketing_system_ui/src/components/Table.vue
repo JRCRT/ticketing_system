@@ -40,7 +40,7 @@ export default {
         th.style.position = "relative";
 
         var grip = document.createElement("div");
-        grip.innerHTML = "&nbsp;";
+        //grip.innerHTML = "&nbsp;";
         grip.style.top = 0;
         grip.style.right = 0;
         grip.style.bottom = 0;
