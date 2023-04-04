@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 export default {
   components: { LoadingSpinner },
   inheritAttrs: false,
@@ -16,6 +16,9 @@ export default {
     document.body.classList.add("prevent-scroll");
   },
   unmounted() {
+    document.body.classList.remove("prevent-scroll");
+  },
+  created() {
     document.body.classList.remove("prevent-scroll");
   },
 };

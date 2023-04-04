@@ -1,5 +1,6 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
+import Loader from "@/components/Loader.vue";
 
 export default {
   data() {
@@ -23,6 +24,9 @@ export default {
 </script>
 
 <template>
+  <Transition name="fade">
+    <Loader />
+  </Transition>
   <Sidebar :active="sidebarActive" @close="hideSidebar()">
     <template v-slot:header>
       <router-link :to="{ name: 'Dashboard' }">
