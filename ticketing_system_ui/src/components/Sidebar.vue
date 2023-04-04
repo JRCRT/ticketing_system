@@ -1,15 +1,11 @@
 <template>
   <div class="sidebar" :class="{ active: active }">
     <Transition name="fade">
-      <div
-        class="sidebar-backdrop"
-        v-show="active"
-        @click="$emit('close')"
-      ></div>
+      <div class="sidebar-backdrop" v-if="active" @click="$emit('close')"></div>
     </Transition>
 
     <Transition name="slide">
-      <div class="sidebar-content" v-show="active">
+      <div class="sidebar-content" v-if="active">
         <div class="p-10" @click="$emit('close')">
           <slot name="header"></slot>
         </div>

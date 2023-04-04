@@ -49,17 +49,17 @@ export default {
     </table>
     <div class="flex p-1">
       <button
-        class="button button-transparent button-icon button-icon-md h-7 flex justify-center items-center my-auto"
+        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
       >
         Prev
       </button>
       <button
-        class="button button-transparent button-icon button-icon-md h-7 flex justify-center items-center my-auto"
+        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
       >
         1
       </button>
       <button
-        class="button button-transparent button-icon button-icon-md h-7 flex justify-center items-center my-auto"
+        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
       >
         Next
       </button>
