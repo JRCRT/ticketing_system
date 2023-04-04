@@ -18,8 +18,5 @@ export default {
   unmounted() {
     document.body.classList.remove("prevent-scroll");
   },
-  created() {
-    document.body.classList.remove("prevent-scroll");
-  },
 };
 </script>

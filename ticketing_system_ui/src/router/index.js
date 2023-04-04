@@ -3,7 +3,7 @@ import { nextTick } from "vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/Ticket.vue";
-const user = "sds";
+const user = "";
 const routes = [
     {
         path: "/login",
@@ -14,7 +14,7 @@ const routes = [
         },
         beforeEnter: (to, from, next) => {
             if(user){
-                router.replace({name: '/'});
+                router.replace({name: 'Dashboard'});
             }else{
                 next();
             }
