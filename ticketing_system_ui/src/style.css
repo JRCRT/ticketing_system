@@ -207,3 +207,10 @@ button {
 .card:nth-child(3) {
   @apply bg-red;
 }
+
+.table {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

@@ -30,11 +30,47 @@ export default {
       ],
     };
   },
+  mounted() {
+    var thElm;
+    var startOffset;
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll("table th"),
+      function (th) {
+        th.style.position = "relative";
+
+        var grip = document.createElement("div");
+        grip.innerHTML = "&nbsp;";
+        grip.style.top = 0;
+        grip.style.right = 0;
+        grip.style.bottom = 0;
+        grip.style.width = "5px";
+        grip.style.position = "absolute";
+        grip.style.cursor = "col-resize";
+        grip.addEventListener("mousedown", function (e) {
+          thElm = th;
+          startOffset = th.offsetWidth - e.pageX;
+        });
+
+        th.appendChild(grip);
+      }
+    );
+
+    document.addEventListener("mousemove", function (e) {
+      if (thElm) {
+        thElm.style.width = startOffset + e.pageX + "px";
+      }
+    });
+
+    document.addEventListener("mouseup", function () {
+      thElm = undefined;
+    });
+  },
 };
 </script>
 
 <template>
-  <div class="w-full rounded-md border">
+  <div class="table w-full rounded-md border">
     <table class="w-full">
       <thead>
         <th class="border" v-for="(header, index) in headers" :key="index">
@@ -51,7 +87,36 @@ export default {
       <button
         class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
       >
-        Prev
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+      <button
+        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
       </button>
       <button
         class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
@@ -61,7 +126,36 @@ export default {
       <button
         class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
       >
-        Next
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          />
+        </svg>
+      </button>
+      <button
+        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+          />
+        </svg>
       </button>
     </div>
   </div>
