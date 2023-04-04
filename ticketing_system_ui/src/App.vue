@@ -137,6 +137,5 @@ export default {
       </div>
     </div>
   </nav>
-
   <router-view class="container mx-auto min-h-screen px-4" />
 </template>

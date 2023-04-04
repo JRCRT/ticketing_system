@@ -3,7 +3,7 @@ import { nextTick } from "vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/Ticket.vue";
-const user = "";
+const user = "gfdgdfg";
 const routes = [
     {
         path: "/login",
@@ -58,6 +58,9 @@ router.beforeEach((to, from, next)=>{
     if(to.matched.some((route)=> route.meta.authRequired)){
         if(!user) next({name: 'Login'});
         else next();
+    }else if(to.matched.some((route) => route.meta.adminRequired))
+    {
+    
     }else{
         next();
     }
