@@ -135,11 +135,13 @@
     @apply pointer-events-none;
   }
 
-  .sidebar {
+  .sidebar,
+  .fullscreen-overlay {
     @apply fixed left-0 top-0 w-screen h-screen flex z-20;
   }
 
-  .sidebar-backdrop {
+  .sidebar-backdrop,
+  .backdrop {
     @apply bg-black w-full h-full opacity-60 absolute cursor-pointer;
   }
 

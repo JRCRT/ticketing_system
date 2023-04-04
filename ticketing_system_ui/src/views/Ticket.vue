@@ -1,13 +1,13 @@
 <template>
   <div class="h-full w-full">
-    <LoadingSpinner />
+    <Loader />
   </div>
 </template>
 <script>
-import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import Loader from "@/components/Loader.vue";
 export default {
   components: {
-    LoadingSpinner,
+    Loader,
   },
 };
 </script>
