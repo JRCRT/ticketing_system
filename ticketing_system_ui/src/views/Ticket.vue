@@ -28,6 +28,7 @@ export default {
     ApprovedTicket,
     DeclinedTicket,
   },
+
   data() {
     return {
       currentTab: "PendingTicket",

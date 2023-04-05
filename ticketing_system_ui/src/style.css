@@ -25,8 +25,8 @@ body.prevent-scroll {
 
 /* Selection */
 /*   ::selection {
-    @apply bg-primary;
-  } */
+      @apply bg-primary;
+    } */
 
 /*Icon Style*/
 .icon-sm {
@@ -208,7 +208,9 @@ button {
   @apply bg-red;
 }
 
-.table {
+.table,
+.tab,
+.active__tab {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
