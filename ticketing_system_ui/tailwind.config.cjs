@@ -40,6 +40,7 @@ module.exports = {
       orange: colors.yellow[500],
       blue: colors.sky[500],
       red: colors.rose[500],
+      brown: colors.stone[200],
       // Default
       transparent: "transparent",
       current: "currentColor",
