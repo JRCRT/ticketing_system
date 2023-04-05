@@ -3,13 +3,13 @@
     <div class="relative">
       <div class="flex">
         <div
-          @click="currentTab = tab"
-          :class="{ active: currentTab == tab }"
+          @click="currentTab = tab.name"
+          :class="{ active: currentTab == tab.name }"
           class="bg-transparent text-darkInfo w-fit rounded-t-md cursor-pointer p-2 mr-1 border-t border-l border-r border-t-transparent border-l-transparent border-r-transparent z-10 hover:bg-brown"
           v-for="tab in tabs"
           :key="tab"
         >
-          {{ tab }}
+          {{ tab.label }}
         </div>
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
@@ -43,7 +43,11 @@ export default {
   data() {
     return {
       currentTab: "PendingTicket",
-      tabs: ["PendingTicket", "ApprovedTicket", "DeclinedTicket"],
+      tabs: [
+        { name: "PendingTicket", label: "Pending" },
+        { name: "ApprovedTicket", label: "Approved" },
+        { name: "DeclinedTicket", label: "Declined" },
+      ],
     };
   },
 };
