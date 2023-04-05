@@ -214,3 +214,16 @@ button {
   -ms-user-select: none;
   user-select: none;
 }
+
+.tab,
+.active__tab {
+  @apply border-t border-l w-fit rounded-t-md border-r p-2 mr-1 z-10 cursor-pointer;
+}
+
+.active__tab {
+  @apply border-t-darkInfo border-l-darkInfo border-r-darkInfo bg-white text-black;
+}
+
+.tab {
+  @apply bg-transparent text-darkInfo  border-t-transparent border-l-transparent border-r-transparent  hover:bg-brown;
+}
