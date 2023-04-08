@@ -83,80 +83,93 @@ export default {
         </tr>
       </tbody>
     </table>
-    <div class="flex p-1">
-      <button
-        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
+
+    <!--Table Footer-->
+    <div class="flex justify-between p-1">
+      <!--Pagination-->
+      <div class="flex">
+        <button
+          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
-          />
-        </svg>
-      </button>
-      <button
-        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+        <button
+          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
-      </button>
-      <button
-        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-      >
-        1
-      </button>
-      <button
-        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+        <button
+          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"
-          />
-        </svg>
-      </button>
-      <button
-        class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
+          1
+        </button>
+        <button
+          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
+        <button
+          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!--No of rows per pages-->
+      <select>
+        <option>10</option>
+        <option>20</option>
+        <option>30</option>
+        <option>40</option>
+      </select>
     </div>
   </div>
 </template>
