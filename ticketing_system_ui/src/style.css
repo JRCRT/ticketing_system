@@ -28,6 +28,30 @@ body.prevent-scroll {
       @apply bg-primary;
     } */
 
+h1 {
+  @apply text-4xl font-medium;
+}
+
+h2 {
+  @apply text-3xl font-medium;
+}
+
+h3 {
+  @apply text-2xl font-semibold;
+}
+
+h4 {
+  @apply text-xl font-semibold;
+}
+
+h5 {
+  @apply text-lg font-bold;
+}
+
+h6 {
+  @apply text-base font-bold;
+}
+
 /*Icon Style*/
 .icon-sm {
   @apply h-5 w-5 !important;
@@ -215,6 +239,12 @@ button {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+table {
+  @apply table-fixed;
+}
+td {
+  @apply whitespace-nowrap overflow-hidden text-ellipsis;
 }
 
 .tab,

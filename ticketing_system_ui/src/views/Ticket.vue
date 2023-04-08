@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-3">
-    <h1 class="text-primary">Ticket</h1>
+    <h2 class="text-primary">Ticket</h2>
     <div class="relative">
       <div class="flex">
         <div
