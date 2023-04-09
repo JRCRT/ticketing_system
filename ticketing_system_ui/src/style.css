@@ -151,7 +151,7 @@ input,
 }
 
 select {
-  @apply p-1 border-2 rounded-md shadow-sm focus:outline-none text-sm;
+  @apply p-1 border-2 rounded-md shadow-sm focus:outline-none text-sm cursor-pointer;
 }
 
 button {
@@ -236,7 +236,11 @@ button {
   @apply bg-red;
 }
 
-.table,
+.table-container {
+  @apply w-full rounded-md border h-80 overflow-y-scroll;
+}
+
+.table-container,
 .tab,
 .active__tab {
   -webkit-user-select: none;
@@ -244,13 +248,13 @@ button {
   -ms-user-select: none;
   user-select: none;
 }
-table {
-  @apply table-fixed;
+
+th {
+  position: sticky;
 }
 td {
-  @apply whitespace-nowrap overflow-hidden text-ellipsis;
+  @apply whitespace-nowrap overflow-hidden text-ellipsis border-collapse;
 }
-
 .tab,
 .active__tab {
   @apply border-t border-l w-fit rounded-t-md border-r p-2 mr-1 z-10 cursor-pointer;

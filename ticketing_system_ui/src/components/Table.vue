@@ -13,6 +13,86 @@ export default {
           age: 23,
           gender: "Male",
         },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
+        {
+          name: "Mark",
+          age: 23,
+          gender: "Male",
+        },
       ],
       headers: [
         {
@@ -31,7 +111,7 @@ export default {
     };
   },
   mounted() {
-    var thElm;
+    /*   var thElm;
     var startOffset;
 
     Array.prototype.forEach.call(
@@ -64,13 +144,13 @@ export default {
 
     document.addEventListener("mouseup", function () {
       thElm = undefined;
-    });
+    });*/
   },
 };
 </script>
 
 <template>
-  <div class="table w-full rounded-md border">
+  <div class="table-container">
     <table class="w-full">
       <thead>
         <th class="border" v-for="(header, index) in headers" :key="index">
