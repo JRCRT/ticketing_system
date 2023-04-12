@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { nextTick } from "vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
-import Ticket from "@/views/Ticket.vue";
+import Ticket from "@/views/ticket/Ticket.vue";
 const user = "gfdgdfg";
 const routes = [
     {

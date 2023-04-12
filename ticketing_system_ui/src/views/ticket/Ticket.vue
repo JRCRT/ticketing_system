@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import PendingTicket from "@/components/ticket_status/PendingTicket.vue";
-import ApprovedTicket from "@/components/ticket_status/ApprovedTicket.vue";
-import DeclinedTicket from "@/components/ticket_status/DeclinedTicket.vue";
+import PendingTicket from "@/views/Ticket/PendingTicket.vue";
+import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
+import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 export default {
   components: {
     PendingTicket,
