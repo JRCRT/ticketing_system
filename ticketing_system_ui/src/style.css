@@ -236,10 +236,6 @@ button {
   @apply bg-red;
 }
 
-.table-container {
-  @apply w-full rounded-md border h-80 overflow-y-scroll;
-}
-
 .table-container,
 .tab,
 .active__tab {
@@ -248,13 +244,34 @@ button {
   -ms-user-select: none;
   user-select: none;
 }
-
-th {
-  position: sticky;
+.table-container {
+  @apply w-full rounded-md border;
 }
+/* table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+tbody {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  height: 100px;
+}
+tr {
+  display: block;
+}
+thead {
+  background: black;
+  color: #fff;
+}
+th,
 td {
-  @apply whitespace-nowrap overflow-hidden text-ellipsis border-collapse;
-}
+  padding: 5px;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
 .tab,
 .active__tab {
   @apply border-t border-l w-fit rounded-t-md border-r p-2 mr-1 z-10 cursor-pointer;

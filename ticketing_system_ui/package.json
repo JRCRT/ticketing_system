@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ag-grid-community": "^29.2.0",
+    "ag-grid-vue3": "^29.2.0",
     "vue": "^3.2.45",
     "vue-router": "4",
     "vuex": "^4.0.2"

@@ -1,255 +1,42 @@
+<template>
+  <div class="ag-theme-alpine">
+    <ag-grid-vue
+      class="h-80 w-full"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
+      :defaultColDef="defaultColDef"
+      :pagination="true"
+    >
+    </ag-grid-vue>
+  </div>
+</template>
+
 <script>
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { AgGridVue } from "ag-grid-vue3";
+
 export default {
-  data() {
-    return {
-      items: [
-        {
-          name: "Ryadsdsdsadsadasdsdsdsadasdsdsdsdsdsadsdsdsadsdn",
-          age: 24,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-        {
-          name: "Mark",
-          age: 23,
-          gender: "Male",
-        },
-      ],
-      headers: [
-        {
-          name: "Name",
-        },
-        {
-          name: "Age",
-        },
-        {
-          name: "Gender",
-        },
-        {
-          name: "Actions",
-        },
-      ],
-    };
+  name: "App",
+  components: {
+    AgGridVue,
   },
-  mounted() {
-    /*   var thElm;
-    var startOffset;
-
-    Array.prototype.forEach.call(
-      document.querySelectorAll("table th"),
-      function (th) {
-        th.style.position = "relative";
-
-        var grip = document.createElement("div");
-        grip.innerHTML = "&nbsp;";
-        grip.style.top = 0;
-        grip.style.right = 0;
-        grip.style.bottom = 0;
-        grip.style.width = "5px";
-        grip.style.position = "absolute";
-        grip.style.cursor = "col-resize";
-        grip.addEventListener("mousedown", function (e) {
-          thElm = th;
-          startOffset = th.offsetWidth - e.pageX;
-        });
-
-        th.appendChild(grip);
-      }
-    );
-
-    document.addEventListener("mousemove", function (e) {
-      if (thElm) {
-        thElm.style.width = startOffset + e.pageX + "px";
-      }
-    });
-
-    document.addEventListener("mouseup", function () {
-      thElm = undefined;
-    });*/
+  setup() {
+    return {
+      columnDefs: [
+        { headerName: "Make", field: "make", sortable: true },
+        { headerName: "Model", field: "model", sortable: true },
+        { headerName: "Price", field: "price", sortable: true },
+      ],
+      rowData: [
+        { make: "Toyota", model: "Celica", price: 35000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxster", price: 72000 },
+      ],
+      defaultColDef: {
+        resizable: true,
+      },
+    };
   },
 };
 </script>
-
-<template>
-  <div class="table-container">
-    <table class="w-full">
-      <thead>
-        <th class="border" v-for="(header, index) in headers" :key="index">
-          {{ header.name }}
-        </th>
-      </thead>
-      <tbody>
-        <tr class="border-b" v-for="(item, index) in items">
-          <td class="py-2 pl-4" v-for="i in item">{{ i }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!--Table Footer-->
-    <div class="flex justify-between p-1">
-      <!--Pagination-->
-      <div class="flex">
-        <button
-          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
-            />
-          </svg>
-        </button>
-        <button
-          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
-        </button>
-        <button
-          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-        >
-          1
-        </button>
-        <button
-          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </button>
-        <button
-          class="button button-transparent button-icon button-icon-sm flex justify-center items-center my-auto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <!--No of rows per pages-->
-      <select>
-        <option>10</option>
-        <option>20</option>
-        <option>30</option>
-        <option>40</option>
-      </select>
-    </div>
-  </div>
-</template>
