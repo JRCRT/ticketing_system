@@ -15,7 +15,6 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
-
 export default {
   name: "App",
   components: {
@@ -24,14 +23,30 @@ export default {
   setup() {
     return {
       columnDefs: [
-        { headerName: "Make", field: "make", sortable: true },
-        { headerName: "Model", field: "model", sortable: true },
-        { headerName: "Price", field: "price", sortable: true },
+        { headerName: "Ticket ID", field: "ticketId", sortable: true, flex: 1 },
+        { headerName: "Subject", field: "subject", sortable: true, flex: 2 },
+        {
+          headerName: "Prepared By",
+          field: "preparedBy",
+          sortable: true,
+          flex: 1,
+        },
+        {
+          headerName: "Date Prepared",
+          field: "datePrepared",
+          sortable: true,
+          flex: 1,
+        },
+        { headerName: "Status", field: "status", sortable: true, flex: 1 },
       ],
       rowData: [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
+        {
+          ticketId: 1,
+          subject: "Additional Unit",
+          preparedBy: "Juan Dela Cruz",
+          datePrepared: "04/12/2023",
+          status: "Pending",
+        },
       ],
       defaultColDef: {
         resizable: true,
