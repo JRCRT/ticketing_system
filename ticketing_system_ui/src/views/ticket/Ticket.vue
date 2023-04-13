@@ -2,15 +2,19 @@
   <div class="flex flex-col gap-3">
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
-      <div class="flex">
-        <div
-          @click="currentTab = tab.name"
-          :class="currentTab == tab.name ? 'active__tab' : 'tab'"
-          v-for="tab in tabs"
-          :key="tab"
-        >
-          {{ tab.label }}
+      <div class="flex justify-between">
+        <div class="flex">
+          <div
+            @click="currentTab = tab.name"
+            :class="currentTab == tab.name ? 'active__tab' : 'tab'"
+            v-for="tab in tabs"
+            :key="tab"
+          >
+            {{ tab.label }}
+          </div>
         </div>
+
+        <button class="w-14">New</button>
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>

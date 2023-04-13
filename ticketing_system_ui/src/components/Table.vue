@@ -19,37 +19,17 @@ export default {
   components: {
     AgGridVue,
   },
-  setup() {
+  props: ["columnDefs", "rowData"],
+  setup(props) {
+    const columnDefs = props.columnDefs;
+    const rowData = props.rowData;
+    const defaultColDef = {
+      resizable: true,
+    };
     return {
-      columnDefs: [
-        { headerName: "Ticket ID", field: "ticketId", sortable: true, flex: 1 },
-        { headerName: "Subject", field: "subject", sortable: true, flex: 2 },
-        {
-          headerName: "Prepared By",
-          field: "preparedBy",
-          sortable: true,
-          flex: 1,
-        },
-        {
-          headerName: "Date Prepared",
-          field: "datePrepared",
-          sortable: true,
-          flex: 1,
-        },
-        { headerName: "Status", field: "status", sortable: true, flex: 1 },
-      ],
-      rowData: [
-        {
-          ticketId: 1,
-          subject: "Additional Unit",
-          preparedBy: "Juan Dela Cruz",
-          datePrepared: "04/12/2023",
-          status: "Pending",
-        },
-      ],
-      defaultColDef: {
-        resizable: true,
-      },
+      columnDefs,
+      rowData,
+      defaultColDef,
     };
   },
 };
