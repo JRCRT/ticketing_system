@@ -163,11 +163,13 @@ button {
 }
 
 .sidebar,
+.modal,
 .fullscreen-overlay {
   @apply fixed left-0 top-0 w-screen h-screen flex z-20;
 }
 
 .sidebar-backdrop,
+.modal-backdrop,
 .backdrop {
   @apply bg-black w-full h-full opacity-60 absolute cursor-pointer;
 }
@@ -236,7 +238,6 @@ button {
   @apply bg-red;
 }
 
-.table-container,
 .tab,
 .active__tab {
   -webkit-user-select: none;
@@ -244,34 +245,7 @@ button {
   -ms-user-select: none;
   user-select: none;
 }
-.table-container {
-  @apply w-full rounded-md border;
-}
-/* table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-tbody {
-  display: block;
-  width: 100%;
-  overflow: auto;
-  height: 100px;
-}
-tr {
-  display: block;
-}
-thead {
-  background: black;
-  color: #fff;
-}
-th,
-td {
-  padding: 5px;
-  width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-} */
+
 .tab,
 .active__tab {
   @apply border-t border-l w-fit rounded-t-md border-r p-2 mr-1 z-10 cursor-pointer;
@@ -283,4 +257,12 @@ td {
 
 .tab {
   @apply bg-transparent text-darkInfo  border-t-transparent border-l-transparent border-r-transparent  hover:bg-brown;
+}
+
+.modal-container {
+  @apply rounded-md border-dark1 border-opacity-50 bg-white m-auto w-10/12 z-10 p-5;
+}
+
+.modal-header {
+  @apply flex items-start justify-between mb-3;
 }
