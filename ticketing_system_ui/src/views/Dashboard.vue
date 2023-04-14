@@ -6,7 +6,6 @@ export default {
   components: {
     Table,
   },
-
   setup() {
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticketId", flex: 1 },
@@ -24,6 +23,12 @@ export default {
         flex: 1,
       },
       { headerName: "Status", field: "status", flex: 1 },
+      {
+        headerName: "Action",
+        field: "action",
+        flex: 1,
+        cellRenderer: `<button>View</button>`,
+      },
     ];
     const rowData = [
       {
