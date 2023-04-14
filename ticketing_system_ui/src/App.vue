@@ -1,7 +1,6 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
 import Loader from "@/components/Loader.vue";
-import Modal from "@/components/Modal.vue";
 
 export default {
   data() {
@@ -12,7 +11,6 @@ export default {
   },
   components: {
     Sidebar,
-    Modal,
   },
   methods: {
     hideSidebar() {
@@ -26,15 +24,6 @@ export default {
 </script>
 
 <template>
-  <Modal>
-    <template v-slot:header>
-      <h5>Ticket 001</h5>
-    </template>
-    <template v-slot:content>
-      <h1>Modal</h1>
-    </template>
-  </Modal>
-
   <Sidebar :active="sidebarActive" @close="hideSidebar()">
     <template v-slot:header>
       <router-link :to="{ name: 'Dashboard' }">

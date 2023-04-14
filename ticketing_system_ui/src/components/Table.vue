@@ -25,6 +25,7 @@ export default {
     const rowData = props.rowData;
     const defaultColDef = {
       resizable: true,
+      sortable: true,
     };
     return {
       columnDefs,

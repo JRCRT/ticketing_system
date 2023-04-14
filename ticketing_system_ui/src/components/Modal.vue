@@ -6,7 +6,7 @@
         <slot name="header"></slot>
         <button
           @click="$emit('close')"
-          class="button-icon button-icon-md button-transparent"
+          class="button-icon button-icon-sm button-transparent"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,5 +31,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  emits: ["close"],
+  mounted() {
+    document.body.classList.add("prevent-scroll");
+  },
+  unmounted() {
+    document.body.classList.remove("prevent-scroll");
+  },
+};
 </script>

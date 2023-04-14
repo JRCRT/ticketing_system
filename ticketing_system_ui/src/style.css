@@ -151,7 +151,7 @@ input,
 }
 
 select {
-  @apply p-1 border-2 rounded-md shadow-sm focus:outline-none text-sm cursor-pointer;
+  @apply mt-2 w-full p-1 border-2 rounded-md shadow-sm focus:outline-none text-sm cursor-pointer;
 }
 
 button {
@@ -264,5 +264,5 @@ button {
 }
 
 .modal-header {
-  @apply flex items-start justify-between mb-3;
+  @apply flex items-center justify-between mb-3;
 }

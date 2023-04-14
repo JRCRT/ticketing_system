@@ -6,23 +6,24 @@ export default {
   components: {
     Table,
   },
+
   setup() {
     const columnDefs = [
-      { headerName: "Ticket ID", field: "ticketId", sortable: true, flex: 1 },
-      { headerName: "Subject", field: "subject", sortable: true, flex: 2 },
+      { headerName: "Ticket ID", field: "ticketId", flex: 1 },
+      { headerName: "Subject", field: "subject", flex: 2 },
       {
         headerName: "Prepared By",
         field: "preparedBy",
-        sortable: true,
+
         flex: 1,
       },
       {
         headerName: "Date Prepared",
         field: "datePrepared",
-        sortable: true,
+
         flex: 1,
       },
-      { headerName: "Status", field: "status", sortable: true, flex: 1 },
+      { headerName: "Status", field: "status", flex: 1 },
     ];
     const rowData = [
       {
