@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <Transition name="fade">
-      <CreateTicketModal v-if="modalActive" @close="closeModal()" />
+      <TicketForm v-if="modalActive" @close="closeModal()" />
     </Transition>
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
@@ -31,13 +31,13 @@
 import PendingTicket from "@/views/Ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
-import CreateTicketModal from "@/components/CreateTicketModal.vue";
+import TicketForm from "@/components/TicketForm.vue";
 export default {
   components: {
     PendingTicket,
     ApprovedTicket,
     DeclinedTicket,
-    CreateTicketModal,
+    TicketForm,
   },
 
   data() {
