@@ -13,13 +13,11 @@ export default {
       {
         headerName: "Prepared By",
         field: "preparedBy",
-
         flex: 1,
       },
       {
         headerName: "Date Prepared",
         field: "datePrepared",
-
         flex: 1,
       },
       { headerName: "Status", field: "status", flex: 1 },

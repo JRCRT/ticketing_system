@@ -1,19 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <Transition name="fade">
-      <Modal v-if="modalActive" @close="closeModal()">
-        <template v-slot:header>
-          <h5>Ticket 001</h5>
-        </template>
-        <template v-slot:content>
-          <select>
-            <option v-for="subject in subjects">{{ subject }}</option>
-          </select>
-          <input />
-          <input />
-          <input />
-        </template>
-      </Modal>
+      <CreateTicketModal v-if="modalActive" @close="closeModal()" />
     </Transition>
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
@@ -43,13 +31,13 @@
 import PendingTicket from "@/views/Ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
-import Modal from "@/components/Modal.vue";
+import CreateTicketModal from "@/components/CreateTicketModal.vue";
 export default {
   components: {
     PendingTicket,
     ApprovedTicket,
     DeclinedTicket,
-    Modal,
+    CreateTicketModal,
   },
 
   data() {
@@ -61,13 +49,6 @@ export default {
         { name: "DeclinedTicket", label: "Declined" },
       ],
       modalActive: false,
-      subjects: [
-        "Additional Unit",
-        "Additional Unit",
-        "Additional Unit",
-        "Additional Unit",
-        "Additional Unit",
-      ],
     };
   },
 
