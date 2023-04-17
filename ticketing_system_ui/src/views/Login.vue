@@ -1,4 +1,5 @@
 <script>
+import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
 export default {
   name: "Login Page",
 };
@@ -9,10 +10,7 @@ export default {
     class="flex h-[calc(100vh-64px)] min-w-[100vw] !mt-0 justify-center items-center mx-0 px-0"
   >
     <div class="w-1/2 h-full">
-      <img
-        class="object-cover w-full h-full"
-        src="../../src/assets/jaccs-logo-wo-bg.png"
-      />
+      <img class="object-cover w-full h-full" :src="JFP_Logo" />
     </div>
     <div class="bg-primary h-full w-1/2">
       <div
