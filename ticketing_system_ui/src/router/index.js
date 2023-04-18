@@ -3,7 +3,7 @@ import { nextTick } from "vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/ticket/Ticket.vue";
-const user = "sdsd";
+const user = "sdasd";
 const routes = [
   {
     path: "/login",

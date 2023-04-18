@@ -1,24 +1,38 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import Loader from "@/components/Loader.vue";
 
 export default {
-  data() {
-    return {
-      sidebarActive: false,
-      VITE_APP_TITLE: import.meta.env.VITE_APP_TITLE,
-    };
-  },
   components: {
     Sidebar,
   },
-  methods: {
-    hideSidebar() {
-      this.sidebarActive = false;
-    },
-    showSidebar() {
-      this.sidebarActive = true;
-    },
+  setup() {
+    const router = useRouter();
+    const sidebarActive = ref(false);
+    const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
+    const currentPath = ref("");
+
+    function hideSidebar() {
+      sidebarActive.value = false;
+    }
+
+    function showSidebar() {
+      sidebarActive.value = true;
+    }
+
+    onMounted(() => {
+      currentPath.value = router.currentRoute.value.path;
+      console.log(router.currentRoute.value.path);
+    });
+    return {
+      sidebarActive,
+      VITE_APP_TITLE,
+      currentPath,
+      hideSidebar,
+      showSidebar,
+    };
   },
 };
 </script>
@@ -87,7 +101,7 @@ export default {
   </Sidebar>
 
   <!-- Navbar -->
-  <nav class="navbar shadow-xl h-16">
+  <nav v-if="currentPath != '/login'" class="navbar shadow-xl h-16">
     <div class="container mx-auto flex p-3 items-center">
       <!-- Sidebar Toggle -->
       <button

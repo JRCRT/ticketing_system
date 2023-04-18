@@ -9,15 +9,15 @@
         <option v-for="subject in subjects">{{ subject }}</option>
       </select>
       <label>Background</label>
-      <input />
+      <textarea />
       <label>Contents</label>
-      <input />
+      <textarea />
       <label>Reasons</label>
-      <input />
+      <textarea />
       <label>Others</label>
-      <input />
+      <textarea />
       <label>Attached Documents</label>
-      <input />
+      <textarea />
     </template>
   </Modal>
 </template>
