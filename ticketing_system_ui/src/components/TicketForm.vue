@@ -19,6 +19,9 @@
       <label>Attached Documents</label>
       <textarea />
     </template>
+    <template v-slot:footer>
+      <button>Next</button>
+    </template>
   </Modal>
 </template>
 <script>

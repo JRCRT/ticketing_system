@@ -26,6 +26,9 @@
       <div class="modal-content">
         <slot name="content"></slot>
       </div>
+      <div class="modal-footer">
+        <slot name="footer"></slot>
+      </div>
     </div>
   </div>
 </template>
