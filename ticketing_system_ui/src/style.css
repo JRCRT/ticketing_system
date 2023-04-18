@@ -248,11 +248,15 @@ button {
 }
 
 .modal-container {
-  @apply rounded-md border-dark1 border-opacity-50 bg-white m-auto w-10/12 z-10 p-5 max-h-[calc(100vh-32px)] overflow-y-auto;
+  @apply rounded-md border-dark1 border-opacity-50 bg-white m-auto w-10/12 z-10 p-5 max-h-[calc(100vh-32px)];
 }
 
 .modal-header {
   @apply flex items-center justify-between mb-3;
+}
+
+.modal-content {
+  @apply overflow-y-auto max-h-[calc(100vh-160px)];
 }
 
 .modal-footer {
