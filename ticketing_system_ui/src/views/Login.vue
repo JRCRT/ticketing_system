@@ -20,7 +20,7 @@ export default {
   <div
     class="flex flex-col w-80 h-screen !mt-0 justify-center items-center mx-0 px-0"
   >
-    <img class="w-60 h-16 object-cover" :src="JFP_Logo" />
+    <img class="w-60 h-16 object-cover" :src="JFP_Logo" alt="JACCS Logo" />
     <div class="w-full mt-6">
       <label>Username</label>
       <input type="text" />

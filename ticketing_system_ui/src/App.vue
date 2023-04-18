@@ -22,7 +22,8 @@ export default {
       sidebarActive.value = true;
     }
 
-    onMounted(() => {
+    onMounted(async () => {
+      await router.isReady();
       currentPath.value = router.currentRoute.value.path;
       console.log(router.currentRoute.value.path);
     });
