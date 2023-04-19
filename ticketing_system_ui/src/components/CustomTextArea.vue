@@ -9,7 +9,7 @@ export default {
     const modelValue = ref("");
     const textarea = ref(null);
 
-    watch(modelValue, (_, _) => {
+    watch(modelValue, (_, __) => {
       textarea.value.style.height = "auto";
       nextTick(() => {
         textarea.value.style.height = `${textarea.value.scrollHeight}px`;
