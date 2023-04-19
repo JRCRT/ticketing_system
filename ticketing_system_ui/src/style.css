@@ -137,7 +137,9 @@ select,
 .input__search {
   @apply p-1 w-full border-2 rounded-md shadow-sm focus:outline-none text-sm;
 }
-
+textarea {
+  @apply overflow-hidden;
+}
 select {
   @apply p-1 w-full border-2 rounded-md shadow-sm focus:outline-none text-sm cursor-pointer;
 }

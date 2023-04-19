@@ -5,19 +5,17 @@
     </template>
     <template v-slot:content>
       <label>Subject</label>
-      <select>
-        <option v-for="subject in subjects">{{ subject }}</option>
-      </select>
+      <input />
       <label>Background</label>
-      <textarea />
+      <CustomTextArea />
       <label>Contents</label>
-      <textarea />
+      <CustomTextArea />
       <label>Reasons</label>
-      <textarea />
+      <CustomTextArea />
       <label>Others</label>
-      <textarea />
+      <CustomTextArea />
       <label>Attached Documents</label>
-      <textarea />
+      <CustomTextArea />
     </template>
     <template v-slot:footer>
       <button>Next</button>
@@ -26,10 +24,12 @@
 </template>
 <script>
 import Modal from "@/components/Modal.vue";
+import CustomTextArea from "@/components/CustomTextArea.vue";
 export default {
   emits: ["close"],
   components: {
     Modal,
+    CustomTextArea,
   },
   data() {
     return {
