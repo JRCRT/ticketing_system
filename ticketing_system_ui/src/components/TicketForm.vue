@@ -7,7 +7,14 @@
       <label>Subject</label>
       <input />
       <label>Background</label>
-      <CustomTextArea />
+      <Editor
+        :api-key="VITE_TINY_API_KEY"
+        :init="{
+          plugins: 'lists table',
+          statusbar: false,
+          menubar: 'format table',
+        }"
+      />
       <label>Contents</label>
       <CustomTextArea />
       <label>Reasons</label>
@@ -25,21 +32,22 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import CustomTextArea from "@/components/CustomTextArea.vue";
+import Editor from "@tinymce/tinymce-vue";
+
+import { ref } from "vue";
 export default {
   emits: ["close"],
   components: {
     Modal,
     CustomTextArea,
+    Editor,
   },
-  data() {
+
+  setup() {
+    const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
+
     return {
-      subjects: [
-        "Additional Unit",
-        "Additional Unit",
-        "Additional Unit",
-        "Additional Unit",
-        "Additional Unit",
-      ],
+      VITE_TINY_API_KEY,
     };
   },
 };

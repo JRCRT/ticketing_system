@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { nextTick } from "vue";
+import store from "@/store";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/ticket/Ticket.vue";
-const user = "sdasd";
+
 const routes = [
   {
     path: "/login",
@@ -13,7 +14,7 @@ const routes = [
       title: "Login",
     },
     beforeEnter: (to, from, next) => {
-      if (user) {
+      if (store.state.user) {
         router.replace({ name: "Dashboard" });
       } else {
         next();
@@ -58,7 +59,8 @@ router.afterEach((to, from) => {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((route) => route.meta.authRequired)) {
-    if (!user) next({ name: "Login" });
+    //route = dashboard
+    if (!store.state.user) next({ name: "Login" });
     else next();
   } else if (to.matched.some((route) => route.meta.adminRequired)) {
   } else {

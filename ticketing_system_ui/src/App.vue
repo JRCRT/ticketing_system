@@ -2,7 +2,9 @@
 import Sidebar from "@/components/Sidebar.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import Loader from "@/components/Loader.vue";
+import store from "./store";
 
 export default {
   components: {
@@ -10,6 +12,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
     const sidebarActive = ref(false);
     const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
     const currentPath = ref("");
@@ -22,10 +25,17 @@ export default {
       sidebarActive.value = true;
     }
 
+    function logout() {
+      store.commit("logout");
+      console.log("Logged Out");
+      router.push("/login");
+    }
+
     onMounted(async () => {
       await router.isReady();
-      currentPath.value = router.currentRoute.value.path;
-      console.log(router.currentRoute.value.path);
+
+      store.commit("changePath", router.currentRoute.value.path);
+      console.log(`currentPath: ${store.state.currentURL}`);
     });
     return {
       sidebarActive,
@@ -33,6 +43,8 @@ export default {
       currentPath,
       hideSidebar,
       showSidebar,
+      store,
+      logout,
     };
   },
 };
@@ -82,7 +94,7 @@ export default {
         Ticket
       </router-link>
 
-      <a class="sidebar-link cursor-pointer">
+      <a class="sidebar-link cursor-pointer" @click="logout()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -102,7 +114,7 @@ export default {
   </Sidebar>
 
   <!-- Navbar -->
-  <nav v-if="currentPath != '/login'" class="navbar shadow-xl h-16">
+  <nav v-if="store.state.currentURL != '/login'" class="navbar shadow-xl h-16">
     <div class="container mx-auto flex p-3 items-center">
       <!-- Sidebar Toggle -->
       <button

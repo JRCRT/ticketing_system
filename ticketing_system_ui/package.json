@@ -9,6 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^37.1.0",
+    "@ckeditor/ckeditor5-theme-lark": "^37.1.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "@ckeditor/vite-plugin-ckeditor5": "^0.1.1",
+    "@tinymce/tinymce-vue": "^5",
     "ag-grid-community": "^29.2.0",
     "ag-grid-vue3": "^29.2.0",
     "vue": "^3.2.45",

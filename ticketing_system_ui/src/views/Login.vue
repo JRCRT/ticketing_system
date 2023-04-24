@@ -1,16 +1,25 @@
 <script>
 import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   name: "Login Page",
   setup() {
+    const store = useStore();
     const router = useRouter();
     function getCurrentURL() {
       console.log(router.currentRoute.value.path);
     }
+    function login() {
+      store.commit("login");
+      console.log(store.state.user);
+      router.push("/");
+      store.commit("changePath", "");
+    }
     return {
       JFP_Logo,
       getCurrentURL,
+      login,
     };
   },
 };
@@ -29,6 +38,6 @@ export default {
       <label>Password</label>
       <input type="password" />
     </div>
-    <button @click="getCurrentURL()" class="mt-3">Login</button>
+    <button @click="login()" class="mt-3">Login</button>
   </div>
 </template>
