@@ -1,7 +1,17 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@ckeditor/ckeditor5-alignment': ^37.1.0
+  '@ckeditor/ckeditor5-basic-styles': ^37.1.0
+  '@ckeditor/ckeditor5-build-balloon': ^37.1.0
   '@ckeditor/ckeditor5-build-classic': ^37.1.0
+  '@ckeditor/ckeditor5-editor-balloon': ^37.1.0
+  '@ckeditor/ckeditor5-editor-classic': ^37.1.0
+  '@ckeditor/ckeditor5-essentials': ^37.1.0
+  '@ckeditor/ckeditor5-highlight': ^37.1.0
+  '@ckeditor/ckeditor5-paragraph': ^37.1.0
+  '@ckeditor/ckeditor5-paste-from-office': ^37.1.0
+  '@ckeditor/ckeditor5-table': ^37.1.0
   '@ckeditor/ckeditor5-theme-lark': ^37.1.0
   '@ckeditor/ckeditor5-vue': ^5.1.0
   '@ckeditor/vite-plugin-ckeditor5': ^0.1.1
@@ -18,7 +28,17 @@ specifiers:
   vuex: ^4.0.2
 
 dependencies:
+  '@ckeditor/ckeditor5-alignment': 37.1.0
+  '@ckeditor/ckeditor5-basic-styles': 37.1.0
+  '@ckeditor/ckeditor5-build-balloon': 37.1.0
   '@ckeditor/ckeditor5-build-classic': 37.1.0
+  '@ckeditor/ckeditor5-editor-balloon': 37.1.0
+  '@ckeditor/ckeditor5-editor-classic': 37.1.0
+  '@ckeditor/ckeditor5-essentials': 37.1.0
+  '@ckeditor/ckeditor5-highlight': 37.1.0
+  '@ckeditor/ckeditor5-paragraph': 37.1.0
+  '@ckeditor/ckeditor5-paste-from-office': 37.1.0
+  '@ckeditor/ckeditor5-table': 37.1.0
   '@ckeditor/ckeditor5-theme-lark': 37.1.0
   '@ckeditor/ckeditor5-vue': 5.1.0
   '@ckeditor/vite-plugin-ckeditor5': 0.1.1
@@ -68,6 +88,13 @@ packages:
       ckeditor5: 37.1.0
     dev: false
 
+  /@ckeditor/ckeditor5-alignment/37.1.0:
+    resolution: {integrity: sha512-VIlkssFj5Ajo6nClDnx7eWDgIkhFUMsNeR7o0xB7gfgqeLmBNKQvNr0oIRI8RQxG0/VWogWKJ68PBZ4Y22uIag==}
+    engines: {node: '>=16.0.0', npm: '>=5.7.1'}
+    dependencies:
+      ckeditor5: 37.1.0
+    dev: false
+
   /@ckeditor/ckeditor5-autoformat/37.1.0:
     resolution: {integrity: sha512-wZSuqsD6oz06fbE2zCn8PUDyax5YUDWFnB/26piLBu0HteRYFXJtIq6s2vA+zBbFfR3FL7362t+DP9VEHGigtw==}
     engines: {node: '>=16.0.0', npm: '>=5.7.1'}
@@ -87,6 +114,32 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=5.7.1'}
     dependencies:
       ckeditor5: 37.1.0
+    dev: false
+
+  /@ckeditor/ckeditor5-build-balloon/37.1.0:
+    resolution: {integrity: sha512-aHvz2xgrm0IXsYrjtD84tvoFpGSiHL8oMaVOMrVrb+mRZdoMDnByq7dg9ViiSsWINWExQYFfeWoNyj8VKKIR6A==}
+    engines: {node: '>=16.0.0', npm: '>=5.7.1'}
+    dependencies:
+      '@ckeditor/ckeditor5-adapter-ckfinder': 37.1.0
+      '@ckeditor/ckeditor5-autoformat': 37.1.0
+      '@ckeditor/ckeditor5-basic-styles': 37.1.0
+      '@ckeditor/ckeditor5-block-quote': 37.1.0
+      '@ckeditor/ckeditor5-ckbox': 37.1.0
+      '@ckeditor/ckeditor5-ckfinder': 37.1.0
+      '@ckeditor/ckeditor5-cloud-services': 37.1.0
+      '@ckeditor/ckeditor5-easy-image': 37.1.0
+      '@ckeditor/ckeditor5-editor-balloon': 37.1.0
+      '@ckeditor/ckeditor5-essentials': 37.1.0
+      '@ckeditor/ckeditor5-heading': 37.1.0
+      '@ckeditor/ckeditor5-image': 37.1.0
+      '@ckeditor/ckeditor5-indent': 37.1.0
+      '@ckeditor/ckeditor5-link': 37.1.0
+      '@ckeditor/ckeditor5-list': 37.1.0
+      '@ckeditor/ckeditor5-media-embed': 37.1.0
+      '@ckeditor/ckeditor5-paragraph': 37.1.0
+      '@ckeditor/ckeditor5-paste-from-office': 37.1.0
+      '@ckeditor/ckeditor5-table': 37.1.0
+      '@ckeditor/ckeditor5-typing': 37.1.0
     dev: false
 
   /@ckeditor/ckeditor5-build-classic/37.1.0:
@@ -163,6 +216,14 @@ packages:
       ckeditor5: 37.1.0
     dev: false
 
+  /@ckeditor/ckeditor5-editor-balloon/37.1.0:
+    resolution: {integrity: sha512-n2FktR7e2kS1nKJJS3NV2XcqDfY5LvGxrqu5Qkx+26TlSlIwr0Bs+apvlTqWWQw4maYHOb3JvKHNur4xBKl1eQ==}
+    engines: {node: '>=16.0.0', npm: '>=5.7.1'}
+    dependencies:
+      ckeditor5: 37.1.0
+      lodash-es: 4.17.21
+    dev: false
+
   /@ckeditor/ckeditor5-editor-classic/37.1.0:
     resolution: {integrity: sha512-3XipfINHckd8NITQT9ePdk0+3vytZ567x5qDGCeTgVAKqiFYNaEmuQKir1+D8uQddbrDNolv91XcILN8XHzDWQ==}
     engines: {node: '>=16.0.0', npm: '>=5.7.1'}
@@ -197,6 +258,13 @@ packages:
 
   /@ckeditor/ckeditor5-heading/37.1.0:
     resolution: {integrity: sha512-fr2gOkiitJJKtJvunbitKEVwQoh26oBO7mbp/1BNSydtsOoP+B9Tl5S15WiPRAnc5pjIAT8MOJO5PQY/GDXs5Q==}
+    engines: {node: '>=16.0.0', npm: '>=5.7.1'}
+    dependencies:
+      ckeditor5: 37.1.0
+    dev: false
+
+  /@ckeditor/ckeditor5-highlight/37.1.0:
+    resolution: {integrity: sha512-xUB/ja/ist7muW3aAy/hjwxsHWWuJyZm296sx3hW08drheDMd4FI9TG9CLyL/b0eZn9tcrCkvM8u6bQMn7N4tg==}
     engines: {node: '>=16.0.0', npm: '>=5.7.1'}
     dependencies:
       ckeditor5: 37.1.0

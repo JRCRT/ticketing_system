@@ -1,8 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
-    <Transition name="fade">
-      <TicketForm v-if="modalActive" @close="closeModal()" />
-    </Transition>
+    <TicketForm v-if="modalActive" @close="closeModal()" />
+
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
       <div class="flex justify-between">
