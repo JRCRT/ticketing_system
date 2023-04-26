@@ -27,6 +27,7 @@
     "ag-grid-community": "^29.2.0",
     "ag-grid-vue3": "^29.2.0",
     "vue": "^3.2.45",
+    "vue-multiselect": "3.0.0-beta.1",
     "vue-router": "4",
     "vuex": "^4.0.2"
   },

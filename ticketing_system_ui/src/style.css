@@ -258,7 +258,7 @@ button {
 }
 
 .modal-content {
-  @apply overflow-y-auto max-h-[calc(100vh-160px)];
+  @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-160px)];
 }
 
 .modal-footer {

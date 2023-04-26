@@ -7,7 +7,9 @@
       <label>Subject</label>
       <input />
       <label>Background</label>
-      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+      <div>
+        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+      </div>
       <label>Contents</label>
       <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Reasons</label>
@@ -15,7 +17,7 @@
       <label>Others</label>
       <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Attached Documents</label>
-      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+      <input type="file" />
     </template>
     <template v-slot:footer>
       <button>Next</button>
@@ -23,7 +25,10 @@
   </Modal>
 </template>
 <script>
+import "vue-multiselect/dist/vue-multiselect.css";
+
 import Modal from "@/components/Modal.vue";
+import VueMultiselect from "vue-multiselect";
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
@@ -44,11 +49,21 @@ export default {
   emits: ["close"],
   components: {
     Modal,
+    VueMultiselect,
   },
 
   setup() {
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
-    const editor = ClassicEditor;
+    const editor = BalloonEditor;
+    const options = [
+      "option 1",
+      "option 2",
+      "option 3",
+      "option 4",
+      "option 5",
+    ];
+
+    const selected = ref(null);
     const editorConfig = {
       plugins: [
         EssentialsPlugin,
@@ -71,6 +86,8 @@ export default {
       VITE_TINY_API_KEY,
       editor,
       editorConfig,
+      options,
+      selected,
     };
   },
 };
