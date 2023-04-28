@@ -20,8 +20,8 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="mr-2">Submit</button>
-          <button>Cancel</button>
+          <button class="button-primary mr-2">Submit</button>
+          <button class="button-transparent">Cancel</button>
         </div>
       </div>
     </template>
