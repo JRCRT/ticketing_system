@@ -7,9 +7,7 @@
       <label>Subject</label>
       <input />
       <label>Background</label>
-      <div>
-        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
-      </div>
+      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Contents</label>
       <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Reasons</label>
@@ -20,7 +18,12 @@
       <input type="file" />
     </template>
     <template v-slot:footer>
-      <button>Next</button>
+      <div class="w-full">
+        <div class="w-44 flex mx-auto">
+          <button class="mr-2">Submit</button>
+          <button>Cancel</button>
+        </div>
+      </div>
     </template>
   </Modal>
 </template>

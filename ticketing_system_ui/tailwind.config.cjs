@@ -1,10 +1,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     colors: {
@@ -41,7 +38,9 @@ module.exports = {
       blue: colors.sky[500],
       red: colors.rose[500],
       brown: colors.stone[200],
-      // Default
+
+      focusActive: "hsl(218.1, 100%, 58%)",
+      borderColor: "rgb(176, 176, 176)",
       transparent: "transparent",
       current: "currentColor",
       black: colors.black,
