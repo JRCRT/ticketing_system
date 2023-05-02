@@ -32,11 +32,11 @@ export default {
     <img class="w-60 h-16 object-cover" :src="JFP_Logo" alt="JACCS Logo" />
     <div class="w-full mt-6">
       <label>Username</label>
-      <input type="text" />
+      <input class="input__field" type="text" />
     </div>
     <div class="w-full mb-3">
       <label>Password</label>
-      <input type="password" />
+      <input class="input__field" type="password" />
     </div>
     <button @click="login()" class="mt-3 h-9 button-primary">Login</button>
   </div>

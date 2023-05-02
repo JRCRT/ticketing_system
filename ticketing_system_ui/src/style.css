@@ -131,7 +131,7 @@ label {
   @apply pt-2 text-sm text-secondary;
 }
 
-input,
+.input__field,
 textarea,
 select,
 .input__search {

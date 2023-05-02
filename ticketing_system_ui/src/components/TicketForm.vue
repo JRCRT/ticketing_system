@@ -5,7 +5,7 @@
     </template>
     <template v-slot:content>
       <label>Subject</label>
-      <input />
+      <input class="input__field" />
       <label>Background</label>
       <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Contents</label>
@@ -15,7 +15,7 @@
       <label>Others</label>
       <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Attached Documents</label>
-      <input type="file" />
+      <input class="input__field" type="file" />
       <label>Checked By</label>
       <VueMultiselect
         v-model="selectedChecker"
@@ -114,3 +114,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.multiselect__tags {
+  border: 1px solid rgb(176, 176, 176) !important;
+}
+</style>
