@@ -16,6 +16,20 @@
       <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
       <label>Attached Documents</label>
       <input type="file" />
+      <label>Checked By</label>
+      <VueMultiselect
+        v-model="selectedChecker"
+        :options="options"
+        :multiple="true"
+        :taggable="true"
+      />
+      <label>Approvers</label>
+      <VueMultiselect
+        v-model="selectedApprover"
+        :options="options"
+        :multiple="true"
+        :taggable="true"
+      />
     </template>
     <template v-slot:footer>
       <div class="w-full">
@@ -31,13 +45,13 @@
 </template>
 <script>
 import "vue-multiselect/dist/vue-multiselect.css";
+import "vue-select/dist/vue-select.css";
 
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
+import VueSelect from "vue-select";
 
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
-
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
@@ -55,6 +69,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
+    VueSelect,
   },
 
   setup() {
@@ -68,7 +83,8 @@ export default {
       "option 5",
     ];
 
-    const selected = ref(null);
+    const selectedChecker = ref(null);
+    const selectedApprover = ref(null);
     const editorConfig = {
       plugins: [
         EssentialsPlugin,
@@ -92,7 +108,8 @@ export default {
       editor,
       editorConfig,
       options,
-      selected,
+      selectedChecker,
+      selectedApprover,
     };
   },
 };

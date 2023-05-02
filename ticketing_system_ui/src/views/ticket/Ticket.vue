@@ -26,7 +26,9 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <component :is="currentTab" />
+    <KeepAlive>
+      <component :is="currentTab" />
+    </KeepAlive>
   </div>
 </template>
 
@@ -67,7 +69,6 @@ export default {
     function changeTab(tab) {
       currentTab.value = tab.name;
       router.replace({ name: "Ticket", params: { status: tab.status } });
-      console.log(router.currentRoute.value.params.status);
     }
 
     return {

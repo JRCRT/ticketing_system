@@ -26,6 +26,7 @@ specifiers:
   vue: ^3.2.45
   vue-multiselect: 3.0.0-beta.1
   vue-router: '4'
+  vue-select: 4.0.0-beta.6
   vuex: ^4.0.2
 
 dependencies:
@@ -49,6 +50,7 @@ dependencies:
   vue: 3.2.47
   vue-multiselect: 3.0.0-beta.1
   vue-router: 4.1.6_vue@3.2.47
+  vue-select: 4.0.0-beta.6_vue@3.2.47
   vuex: 4.0.2_vue@3.2.47
 
 devDependencies:
@@ -1376,6 +1378,14 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.5.0
+      vue: 3.2.47
+    dev: false
+
+  /vue-select/4.0.0-beta.6_vue@3.2.47:
+    resolution: {integrity: sha512-K+zrNBSpwMPhAxYLTCl56gaMrWZGgayoWCLqe5rWwkB8aUbAUh7u6sXjIR7v4ckp2WKC7zEEUY27g6h1MRsIHw==}
+    peerDependencies:
+      vue: 3.x
+    dependencies:
       vue: 3.2.47
     dev: false
 
