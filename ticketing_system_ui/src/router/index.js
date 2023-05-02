@@ -31,7 +31,7 @@ const routes = [
     },
   },
   {
-    path: "/ticket",
+    path: "/ticket/:status",
     name: "Ticket",
     component: Ticket,
     meta: {

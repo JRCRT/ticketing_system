@@ -77,7 +77,10 @@ export default {
       </router-link>
 
       <!--Ticket-->
-      <router-link class="sidebar-link" :to="{ name: 'Ticket' }">
+      <router-link
+        class="sidebar-link"
+        :to="{ name: 'Ticket', params: { status: 'pending' } }"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

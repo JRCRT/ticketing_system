@@ -7,8 +7,12 @@
       <div class="flex justify-between">
         <div class="flex">
           <div
-            @click="currentTab = tab.name"
-            :class="currentTab == tab.name ? 'active__tab' : 'tab'"
+            @click="changeTab(tab)"
+            :class="
+              router.currentRoute.value.params.status == tab.status
+                ? 'active__tab'
+                : 'tab'
+            "
             v-for="tab in tabs"
             :key="tab"
           >
@@ -31,6 +35,9 @@ import PendingTicket from "@/views/Ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 import TicketForm from "@/components/TicketForm.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     PendingTicket,
@@ -39,25 +46,39 @@ export default {
     TicketForm,
   },
 
-  data() {
-    return {
-      currentTab: "PendingTicket",
-      tabs: [
-        { name: "PendingTicket", label: "Pending" },
-        { name: "ApprovedTicket", label: "Approved" },
-        { name: "DeclinedTicket", label: "Declined" },
-      ],
-      modalActive: false,
-    };
-  },
+  setup() {
+    const router = useRouter();
+    const currentTab = ref("PendingTicket");
+    const tabs = [
+      { name: "PendingTicket", label: "Pending", status: "pending" },
+      { name: "ApprovedTicket", label: "Approved", status: "approved" },
+      { name: "DeclinedTicket", label: "Declined", status: "declined" },
+    ];
+    const modalActive = ref(false);
 
-  methods: {
-    closeModal() {
-      this.modalActive = false;
-    },
-    openModal() {
-      this.modalActive = true;
-    },
+    function closeModal() {
+      modalActive.value = false;
+    }
+
+    function openModal() {
+      modalActive.value = true;
+    }
+
+    function changeTab(tab) {
+      currentTab.value = tab.name;
+      router.replace({ name: "Ticket", params: { status: tab.status } });
+      console.log(router.currentRoute.value.params.status);
+    }
+
+    return {
+      currentTab,
+      tabs,
+      modalActive,
+      closeModal,
+      openModal,
+      changeTab,
+      router,
+    };
   },
 };
 </script>

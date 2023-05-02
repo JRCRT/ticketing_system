@@ -38,6 +38,6 @@ export default {
       <label>Password</label>
       <input type="password" />
     </div>
-    <button @click="login()" class="mt-3">Login</button>
+    <button @click="login()" class="mt-3 h-9 button-primary">Login</button>
   </div>
 </template>

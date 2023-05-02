@@ -1,5 +1,6 @@
 <script>
 import Table from "@/components/Table.vue";
+import { useRouter } from "vue-router";
 export default {
   name: "Dashboard",
 
@@ -7,6 +8,7 @@ export default {
     Table,
   },
   setup() {
+    const router = useRouter();
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticketId", flex: 1 },
       { headerName: "Subject", field: "subject", flex: 2 },
@@ -38,9 +40,14 @@ export default {
       },
     ];
 
+    function navigateToTicket(status) {
+      router.replace({ name: "Ticket", params: { status: status } });
+    }
+
     return {
       columnDefs,
       rowData,
+      navigateToTicket,
     };
   },
 };
@@ -50,19 +57,19 @@ export default {
     <h4 class="text-primary">Dashboard</h4>
     <!--Cards Container-->
     <div class="flex">
-      <div class="card">
+      <div @click="navigateToTicket('pending')" class="card">
         <div class="card-content">
           <h1>3</h1>
           <p>Pending</p>
         </div>
       </div>
-      <div class="card">
+      <div @click="navigateToTicket('approved')" class="card">
         <div class="card-content">
           <h1>2</h1>
           <p>Approved</p>
         </div>
       </div>
-      <div class="card">
+      <div @click="navigateToTicket('declined')" class="card">
         <div class="card-content">
           <h1>2</h1>
           <p>Declined</p>
