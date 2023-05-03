@@ -2,6 +2,7 @@
 import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { onMounted } from "vue";
 export default {
   name: "Login Page",
   setup() {
@@ -16,6 +17,13 @@ export default {
       router.push("/");
       store.commit("changePath", "");
     }
+
+    onMounted(async () => {
+      await router.isReady();
+
+      store.commit("changePath", router.currentRoute.value.path);
+      console.log(`currentPath: ${store.state.currentURL}`);
+    });
     return {
       JFP_Logo,
       getCurrentURL,

@@ -78,7 +78,7 @@ export default {
     </div>
     <!--Today's Transactions-->
     <div>
-      <Table :rowData="rowData" :columnDefs="columnDefs" />
+      <Table :rowData="rowData" :columnDefs="columnDefs"></Table>
     </div>
   </div>
 </template>

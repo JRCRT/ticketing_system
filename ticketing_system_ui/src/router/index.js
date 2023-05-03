@@ -4,6 +4,7 @@ import store from "@/store";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/ticket/Ticket.vue";
+import User from "@/views/User.vue";
 
 const routes = [
   {
@@ -39,6 +40,16 @@ const routes = [
       authRequired: true,
     },
   },
+
+  {
+    path: "/user",
+    name: "User",
+    component: User,
+    meta: {
+      title: "User",
+      adminRequired: true,
+    },
+  },
 ];
 
 const router = createRouter({
@@ -63,6 +74,8 @@ router.beforeEach((to, from, next) => {
     if (!store.state.user) next({ name: "Login" });
     else next();
   } else if (to.matched.some((route) => route.meta.adminRequired)) {
+    if (!store.state.user) next({ name: "Login" });
+    else next();
   } else {
     next();
   }
