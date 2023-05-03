@@ -44,12 +44,9 @@
   </Modal>
 </template>
 <script>
-import "vue-multiselect/dist/vue-multiselect.css";
-import "vue-select/dist/vue-select.css";
-
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
-import VueSelect from "vue-select";
+import "vue-multiselect/dist/vue-multiselect.css";
 
 import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
@@ -69,7 +66,6 @@ export default {
   components: {
     Modal,
     VueMultiselect,
-    VueSelect,
   },
 
   setup() {

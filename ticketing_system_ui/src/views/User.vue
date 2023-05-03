@@ -1,5 +1,6 @@
 <template>
   <div>
+    <UserForm v-if="modalActive" @close="closeModal()" />
     <h4 class="text-primary">User</h4>
     <div class="flex justify-between items-end mt-2 mb-2">
       <div>
@@ -7,17 +8,23 @@
         <input class="input__field !w-56 !p-[0.30rem]" />
       </div>
 
-      <button class="button-transparent !w-fit">New user</button>
+      <button @click="openModal()" class="button-transparent !w-fit">
+        New user
+      </button>
     </div>
     <Table :rowData="rowData" :columnDefs="columnDefs"></Table>
   </div>
 </template>
 <script>
+import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
+
+import { ref } from "vue";
 export default {
   name: "User",
   components: {
     Table,
+    UserForm,
   },
 
   setup() {
@@ -51,9 +58,22 @@ export default {
       },
     ];
 
+    const modalActive = ref(false);
+
+    function closeModal() {
+      modalActive.value = false;
+    }
+
+    function openModal() {
+      modalActive.value = true;
+    }
+
     return {
       columnDefs,
       rowData,
+      modalActive,
+      closeModal,
+      openModal,
     };
   },
 };
