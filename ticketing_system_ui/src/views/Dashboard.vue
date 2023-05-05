@@ -24,8 +24,8 @@ export default {
         flex: 1,
       },
       {
-        headerName: "Date Prepared",
-        field: "datePrepared",
+        headerName: "Date created",
+        field: "dateCreated",
         flex: 1,
       },
       {
@@ -34,25 +34,20 @@ export default {
         flex: 1,
         cellRenderer: TicketStatus,
       },
-      {
-        headerName: "Action",
-        field: "action",
-        flex: 1,
-      },
     ];
     const rowData = [
       {
         ticketId: 1,
         subject: "Additional Unit",
         preparedBy: "Juan Dela Cruz",
-        datePrepared: "04/12/2023",
+        dateCreated: "04/12/2023",
         status: "Pending",
       },
       {
         ticketId: 2,
         subject: "Additional Unit",
         preparedBy: "Pedro",
-        datePrepared: "04/12/2023",
+        dateCreated: "04/12/2023",
         status: "Approved",
       },
     ];
