@@ -2,7 +2,7 @@
   <div>
     <UserForm v-if="modalActive" @close="closeModal()" />
     <h4 class="text-primary">User</h4>
-    <div class="flex justify-between items-end mt-2 mb-2">
+    <div class="flex justify-between items-end mt-1 mb-2">
       <div>
         <label>Search</label>
         <input class="input__field !w-56 !p-[0.30rem]" />
@@ -45,13 +45,6 @@ export default {
         headerName: "Department",
         field: "department",
         flex: 1,
-      },
-
-      {
-        headerName: "Action",
-        field: "action",
-        flex: 1,
-        cellRenderer: `<button>View</button>`,
       },
     ];
     const rowData = [
