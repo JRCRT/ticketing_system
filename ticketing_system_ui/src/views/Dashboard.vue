@@ -1,14 +1,20 @@
 <script>
 import Table from "@/components/Table.vue";
+import TicketStatus from "@/components/TicketStatus.vue";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 export default {
   name: "Dashboard",
 
   components: {
     Table,
+    TicketStatus,
   },
   setup() {
     const router = useRouter();
+    const gridAPI = ref(null);
+    const rowSelection = "single";
+    const selectedRow = ref(null);
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticketId", flex: 1 },
       { headerName: "Subject", field: "subject", flex: 2 },
@@ -22,12 +28,16 @@ export default {
         field: "datePrepared",
         flex: 1,
       },
-      { headerName: "Status", field: "status", flex: 1 },
+      {
+        headerName: "Status",
+        field: "status",
+        flex: 1,
+        cellRenderer: TicketStatus,
+      },
       {
         headerName: "Action",
         field: "action",
         flex: 1,
-        cellRenderer: `<button>View</button>`,
       },
     ];
     const rowData = [
@@ -38,23 +48,40 @@ export default {
         datePrepared: "04/12/2023",
         status: "Pending",
       },
+      {
+        ticketId: 2,
+        subject: "Additional Unit",
+        preparedBy: "Pedro",
+        datePrepared: "04/12/2023",
+        status: "Approved",
+      },
     ];
 
     function navigateToTicket(status) {
       router.replace({ name: "Ticket", params: { status: status } });
     }
 
+    function onGridReady(params) {
+      gridAPI.value = params.api;
+    }
+
+    function getSelectedRow() {
+      console.log(gridAPI.value.getSelectedRows());
+    }
+
     return {
       columnDefs,
       rowData,
       navigateToTicket,
+      onGridReady,
+      getSelectedRow,
     };
   },
 };
 </script>
 <template>
   <div class="flex flex-col gap-3">
-    <h4 class="text-primary">Dashboard</h4>
+    <h4 @click="getSelectedRow()" class="text-primary">Dashboard</h4>
     <!--Cards Container-->
     <div class="flex">
       <div @click="navigateToTicket('pending')" class="card">
@@ -78,7 +105,11 @@ export default {
     </div>
     <!--Today's Transactions-->
     <div>
-      <Table :rowData="rowData" :columnDefs="columnDefs"></Table>
+      <Table
+        :rowData="rowData"
+        :columnDefs="columnDefs"
+        @grid-ready="onGridReady"
+      ></Table>
     </div>
   </div>
 </template>

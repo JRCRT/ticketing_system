@@ -6,6 +6,8 @@
       :rowData="rowData"
       :defaultColDef="defaultColDef"
       :pagination="true"
+      @grid-ready="onGridReady"
+      :rowSelection="rowSelection"
     >
     </ag-grid-vue>
   </div>
@@ -19,18 +21,24 @@ export default {
   components: {
     AgGridVue,
   },
-  props: ["columnDefs", "rowData"],
+  props: ["columnDefs", "rowData", "onGridReady", "onSelectionChange"],
   setup(props) {
     const columnDefs = props.columnDefs;
     const rowData = props.rowData;
+    const onGridReady = props.onGridReady;
+
     const defaultColDef = {
       resizable: true,
       sortable: true,
     };
+    const rowSelection = "single";
     return {
       columnDefs,
       rowData,
       defaultColDef,
+      onGridReady,
+
+      rowSelection,
     };
   },
 };

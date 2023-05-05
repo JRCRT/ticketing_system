@@ -7,10 +7,15 @@
         <label>Search</label>
         <input class="input__field !w-56 !p-[0.30rem]" />
       </div>
+      <div class="flex">
+        <button @click="openModal()" class="button-transparent !w-fit mr-2">
+          Open
+        </button>
 
-      <button @click="openModal()" class="button-transparent !w-fit">
-        New user
-      </button>
+        <button @click="openModal()" class="button-transparent !w-fit">
+          New user
+        </button>
+      </div>
     </div>
     <Table :rowData="rowData" :columnDefs="columnDefs"></Table>
   </div>
