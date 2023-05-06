@@ -110,9 +110,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.multiselect__tags {
-  border: 1px solid rgb(176, 176, 176) !important;
-}
-</style>

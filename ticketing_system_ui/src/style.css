@@ -267,5 +267,12 @@ button {
 
 .multiselect__tags {
   border: 1px solid rgb(176, 176, 176) !important;
-  padding: 8px 30px 0 8px !important;
+}
+
+.ck.ck-editor__editable_inline {
+  border: 1px solid rgb(176, 176, 176) !important;
+}
+
+.ck.ck-editor__editable.ck-rounded-corners:not(.ck-editor__nested-editable) {
+  border-radius: 0.375rem !important;
 }
