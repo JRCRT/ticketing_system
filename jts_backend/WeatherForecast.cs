@@ -1,4 +1,4 @@
-namespace backend;
+namespace jts_backend;
 
 public class WeatherForecast
 {

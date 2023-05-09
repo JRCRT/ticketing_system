@@ -3634,11 +3634,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\backend\\backend.csproj",
-      "projectName": "backend",
-      "projectPath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+      "projectName": "jts_backend",
+      "projectPath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
       "packagesPath": "C:\\Users\\ts226jor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\backend\\obj\\",
+      "outputPath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ts226jor\\AppData\\Roaming\\NuGet\\NuGet.Config"

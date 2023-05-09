@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rRvweula1DV4sfEmCq7yAeMz1VDvnJpeHdzj3dnE/+60lH3VuGWuZwpb4ZwBXEixufXBdm9Mf+0G/FSAhuDU1w==",
+  "dgSpecHash": "TXlO5wF1puNfoOVk5Bokc2MjZ1LpOfRT7SE6Cj9bzDSnMH7zAuDxffFaXamsWVjRe3lBsvMt0ukECeQXHbw+Zw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ts226jor\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ts226jor\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
