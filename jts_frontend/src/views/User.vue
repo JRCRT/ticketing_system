@@ -8,7 +8,7 @@
         <input class="input__field !w-56 !p-[0.30rem]" />
       </div>
       <div class="flex">
-        <button @click="openModal()" class="button-transparent !w-fit mr-2">
+        <button @click="getAPI()" class="button-transparent !w-fit mr-2">
           Open
         </button>
 
@@ -24,7 +24,7 @@
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
 
-import { ref } from "vue";
+import { ref, inject } from "vue";
 export default {
   name: "User",
   components: {
@@ -33,6 +33,7 @@ export default {
   },
 
   setup() {
+    const axios = inject("axios");
     const columnDefs = [
       { headerName: "No.", field: "no", flex: 1 },
       { headerName: "Name", field: "name", flex: 2 },
@@ -62,6 +63,11 @@ export default {
       modalActive.value = false;
     }
 
+    function getAPI() {
+      axios.get("http://localhost:5148/WeatherForecast").then((response) => {
+        console.log(response.data);
+      });
+    }
     function openModal() {
       modalActive.value = true;
     }
@@ -72,6 +78,7 @@ export default {
       modalActive,
       closeModal,
       openModal,
+      getAPI,
     };
   },
 };
