@@ -12,16 +12,16 @@ namespace jts_backend.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private UserSevice _userService;
-        public UserController(UserSevice userSevice)
+        private readonly IUserService _userService;
+        public UserController(IUserService userSevice)
         {
             _userService = userSevice;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<UserModel>> GetAllUsers(){
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers(){
             var users = await _userService.GetAllUser();
-            return users;
+            return Ok(users);
         }
     }
 }
