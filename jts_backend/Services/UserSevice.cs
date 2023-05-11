@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using AutoMapper;
 using jts_backend.Context;
+using jts_backend.Dtos;
 using jts_backend.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace jts_backend.Services
@@ -13,13 +16,16 @@ namespace jts_backend.Services
     {
 
         private readonly JtsContext _context;
-        public UserSevice(JtsContext context)
+        private readonly IMapper _mapper;
+        public UserSevice(JtsContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        public async Task<ICollection<UserModel>> GetAllUser()
+        public async Task<ICollection<UserDto>> GetAllUser()
         {
-            ICollection<UserModel> users = await _context.user.Select(user => user).ToListAsync();
+            
+            ICollection<UserDto> users = await _context.user.Select(user => _mapper.Map<UserDto>(user)).ToListAsync();
             return users;
         }
 
@@ -28,8 +34,10 @@ namespace jts_backend.Services
              throw new NotImplementedException();
         }
 
-        public void AddUser(UserModel user){
-            _context.user.Add(user);
+        public async Task AddUser(UserDto newUser){
+            UserModel user = _mapper.Map<UserModel>(newUser);
+            await _context.user.AddAsync(user);
+            await _context.SaveChangesAsync();
         }
 
     

@@ -8,6 +8,7 @@ builder.Services.AddDbContext<JtsContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<IUserService, UserSevice>();
 builder.Services.AddEndpointsApiExplorer();
