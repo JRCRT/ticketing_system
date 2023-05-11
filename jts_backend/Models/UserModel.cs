@@ -10,10 +10,24 @@ namespace jts_backend.Models
     {
         [Key]
         public int user_id { get; set; }
+
         [Required]
-        public string first_name { get; set; }
-        public string middle_name { get; set; }
-        [Required]
-        public string last_name { get; set; }
+        [MaxLength(500)]
+        public string first_name { get; set; } = string.Empty;
+
+        [MaxLength(100)]
+        public string? middle_name { get; set; }
+
+        [Required()]
+        [MaxLength(500)]
+        public string last_name { get; set; } = string.Empty;
+        
+        [Required()]
+        [MaxLength(100)]
+        public string username {get; set;} = string.Empty;
+
+        [Required()]
+        [MaxLength(100)]
+        public string password {get; set;} = string.Empty;
     }
 }
