@@ -64,7 +64,7 @@ export default {
     }
 
     function getAPI() {
-      axios.get("http://localhost:5148/WeatherForecast").then((response) => {
+      axios.get("http://localhost:5148/api/User").then((response) => {
         console.log(response.data);
       });
     }
