@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
-using jts_backend.Services;
+using jts_backend.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace jts_backend.Controllers

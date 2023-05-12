@@ -1,5 +1,5 @@
 using jts_backend.Context;
-using jts_backend.Services;
+using jts_backend.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
