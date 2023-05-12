@@ -20,13 +20,13 @@ namespace jts_backend.Controllers
         }
  
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetUserDto>>> GetAllUsers(){
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetUserDto>>>> GetAllUsers(){
             var users = await _userService.GetAllUser();
             return Ok(users);
         }
 
         [HttpPost("AddUser")]
-        public async Task<ActionResult<UserModel>> CreateUser(CreateUserDto newUser){
+        public async Task<ActionResult<ServiceResponse<UserModel>>> CreateUser(CreateUserDto newUser){
             var user = await _userService.AddUser(newUser);
             return Ok(user);
         }

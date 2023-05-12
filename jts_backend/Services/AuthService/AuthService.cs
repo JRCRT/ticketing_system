@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Azure;
 using jts_backend.Context;
 using jts_backend.Dtos.AuthDto;
 using jts_backend.Dtos.UserDto;
@@ -21,14 +22,24 @@ namespace jts_backend.Services.AuthService
             _context = context;
             _mapper = mapper;
         }
-        public async Task<GetUserDto> Login(LoginDto request)
+        public async Task<ServiceResponse<GetUserDto>> Login(LoginDto request)
         {
+            ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
+          
             UserModel? user = await _context.user.Where(u => u.username.ToLower() == request.username.ToLower()).FirstOrDefaultAsync();
             if(user is null){
-                
+                response.message = "Incorrect username.";
+                response.success = false;
             }
-            GetUserDto getUserDto = _mapper.Map<GetUserDto>(user);
-            return getUserDto;
+            else if(!Helper.Helper.VerifyPasswordHash(request.password, user.password_hash, user.password_salt)){
+                response.message = "Incorrect password";
+                response.success = false;        
+            }else{
+                GetUserDto userDto = _mapper.Map<GetUserDto>(user);
+                response.data = userDto;
+            }
+            
+            return response;
         }
     }
 }

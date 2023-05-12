@@ -9,8 +9,8 @@ namespace jts_backend.Services.UserService
 {
     public interface IUserService
     {
-        Task<ICollection<GetUserDto>> GetAllUser();
-        Task<UserModel> GetUser(int user_id);
-        Task<UserModel> AddUser(CreateUserDto user);
+        Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser();
+        Task<ServiceResponse<UserModel>> GetUser(int user_id);
+        Task<ServiceResponse<UserModel>> AddUser(CreateUserDto user);
     }
 }

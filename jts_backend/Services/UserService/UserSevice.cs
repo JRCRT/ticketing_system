@@ -23,19 +23,21 @@ namespace jts_backend.Services.UserService
             _context = context;
             _mapper = mapper;
         }
-        public async Task<ICollection<GetUserDto>> GetAllUser()
+        public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
         {
-            
+            ServiceResponse<ICollection<GetUserDto>> response = new ServiceResponse<ICollection<GetUserDto>>();
             ICollection<GetUserDto> users = await _context.user.Select(user => _mapper.Map<GetUserDto>(user)).ToListAsync();
-            return users;
+            response.data = users;
+            return response;
         }
 
-        public Task<UserModel> GetUser(int user_id)
+        public Task<ServiceResponse<UserModel>> GetUser(int user_id)
         {
              throw new NotImplementedException();
         }
 
-        public async Task<UserModel> AddUser(CreateUserDto newUser){
+        public async Task<ServiceResponse<UserModel>> AddUser(CreateUserDto newUser){
+            ServiceResponse<UserModel> response = new ServiceResponse<UserModel>();
             Helper.Helper.CreatePasswordHash(newUser.password, out byte[]passwordHash, out byte[] passwordSalt);
             UserModel user = new UserModel();
             user.first_name = newUser.first_name;
@@ -46,7 +48,8 @@ namespace jts_backend.Services.UserService
             user.password_salt = passwordSalt;
             _context.user.Add(user);
             await _context.SaveChangesAsync();
-            return user;
+            response.data = user;
+            return response;
         }
     }
 }
