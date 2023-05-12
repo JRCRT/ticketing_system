@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using AutoMapper;
 using jts_backend.Context;
-using jts_backend.Dtos;
+using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +22,10 @@ namespace jts_backend.Services
             _context = context;
             _mapper = mapper;
         }
-        public async Task<ICollection<UserDto>> GetAllUser()
+        public async Task<ICollection<GetUserDto>> GetAllUser()
         {
             
-            ICollection<UserDto> users = await _context.user.Select(user => _mapper.Map<UserDto>(user)).ToListAsync();
+            ICollection<GetUserDto> users = await _context.user.Select(user => _mapper.Map<GetUserDto>(user)).ToListAsync();
             return users;
         }
 

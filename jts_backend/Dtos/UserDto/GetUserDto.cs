@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace jts_backend.Dtos
+namespace jts_backend.Dtos.UserDto
 {
-    public class UserDto
+    public class GetUserDto
     {
         public string first_name { get; set; } = string.Empty;
         public string? middle_name { get; set; }
