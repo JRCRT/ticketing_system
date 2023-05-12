@@ -25,14 +25,13 @@ namespace jts_backend.Services.AuthService
         public async Task<ServiceResponse<GetUserDto>> Login(LoginDto request)
         {
             ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
-          
             UserModel? user = await _context.user.Where(u => u.username.ToLower() == request.username.ToLower()).FirstOrDefaultAsync();
             if(user is null){
-                response.message = "Incorrect username.";
+                response.message = "Incorrect username/password.";
                 response.success = false;
             }
             else if(!Helper.Helper.VerifyPasswordHash(request.password, user.password_hash, user.password_salt)){
-                response.message = "Incorrect password";
+                response.message = "Incorrect password/password.";
                 response.success = false;        
             }else{
                 GetUserDto userDto = _mapper.Map<GetUserDto>(user);

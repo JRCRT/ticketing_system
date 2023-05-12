@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.Marshalling;
-using System.Threading.Tasks;
 using AutoMapper;
 using jts_backend.Context;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Scaffolding.Internal;
 
 namespace jts_backend.Services.UserService
 {

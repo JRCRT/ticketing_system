@@ -147,3 +147,4 @@ C:\Users\ts226jor\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\Mono.Tex
 C:\Users\ts226jor\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\System.CodeDom.dll
 C:\Users\ts226jor\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\AutoMapper.dll
 C:\Users\ts226jor\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\ts226jor\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
