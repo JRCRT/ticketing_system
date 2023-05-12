@@ -26,8 +26,9 @@ namespace jts_backend.Controllers
         }
 
         [HttpPost("AddUser")]
-        public async Task<ActionResult> CreateUser(UserDto user){
-            return Ok(_userService.AddUser(user));
+        public async Task<ActionResult<UserModel>> CreateUser(UserModel newUser){
+            var user = await _userService.AddUser(newUser);
+            return Ok(user);
         }
     }
 }

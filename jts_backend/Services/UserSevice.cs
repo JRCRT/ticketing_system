@@ -34,12 +34,11 @@ namespace jts_backend.Services
              throw new NotImplementedException();
         }
 
-        public async Task AddUser(UserDto newUser){
-            UserModel user = _mapper.Map<UserModel>(newUser);
-            await _context.user.AddAsync(user);
+        public async Task<UserModel> AddUser(UserModel newUser){
+        
+            _context.user.Add(newUser);
             await _context.SaveChangesAsync();
+            return newUser;
         }
-
-    
     }
 }
