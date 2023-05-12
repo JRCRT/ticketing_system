@@ -11,6 +11,6 @@ namespace jts_backend.Services.UserService
     {
         Task<ICollection<GetUserDto>> GetAllUser();
         Task<UserModel> GetUser(int user_id);
-        Task<UserModel> AddUser(UserModel user);
+        Task<UserModel> AddUser(CreateUserDto user);
     }
 }

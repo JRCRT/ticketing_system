@@ -35,12 +35,18 @@ namespace jts_backend.Services.UserService
              throw new NotImplementedException();
         }
 
-        public async Task<UserModel> AddUser(UserModel newUser){
+        public async Task<UserModel> AddUser(CreateUserDto newUser){
             Helper.Helper.CreatePasswordHash(newUser.password, out byte[]passwordHash, out byte[] passwordSalt);
-          
-            _context.user.Add(newUser);
+            UserModel user = new UserModel();
+            user.first_name = newUser.first_name;
+            user.middle_name = newUser.middle_name;
+            user.last_name = newUser.last_name;
+            user.username = newUser.username;
+            user.password_hash = passwordHash;
+            user.password_salt = passwordSalt;
+            _context.user.Add(user);
             await _context.SaveChangesAsync();
-            return newUser;
+            return user;
         }
     }
 }

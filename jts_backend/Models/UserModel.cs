@@ -25,9 +25,7 @@ namespace jts_backend.Models
         [Required()]
         [MaxLength(100)]
         public string username {get; set;} = string.Empty;
-
-        [Required()]
-        [MaxLength(100)]
-        public string password {get; set;} = string.Empty;
+        public byte[] password_hash { get; set; } = new byte[0];
+        public byte[] password_salt { get; set; } = new byte[0];
     }
 }
