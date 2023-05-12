@@ -27,9 +27,9 @@ namespace jts_backend.Services.AuthService
             _mapper = mapper;
             _configuration = configuration;
         }
-        public async Task<ServiceResponse<GetUserDto>> Login(LoginDto request)
+        public async Task<ServiceResponse<string>> Login(LoginDto request)
         {
-            ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
+            ServiceResponse<string> response = new ServiceResponse<string>();
             UserModel? user = await _context.user.Where(u => u.username.ToLower() == request.username.ToLower()).FirstOrDefaultAsync();
             if(user is null){
                 response.message = "Incorrect username/password.";
@@ -40,7 +40,7 @@ namespace jts_backend.Services.AuthService
                 response.success = false;        
             }else{
                 GetUserDto userDto = _mapper.Map<GetUserDto>(user);
-                response.data = userDto;
+                response.data = CreateToken(userDto);
             }
             
             return response;

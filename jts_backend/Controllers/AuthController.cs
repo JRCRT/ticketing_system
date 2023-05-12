@@ -21,8 +21,8 @@ namespace jts_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<GetUserDto>>> Login(LoginDto request){
-            ServiceResponse<GetUserDto> response =  await _authService.Login(request);
+        public async Task<ActionResult<ServiceResponse<string>>> Login(LoginDto request){
+            ServiceResponse<string> response =  await _authService.Login(request);
             if(!response.success)
             {
                 return BadRequest(response);

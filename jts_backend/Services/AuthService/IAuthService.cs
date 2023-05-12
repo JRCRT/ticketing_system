@@ -10,6 +10,6 @@ namespace jts_backend.Services.AuthService
 {
     public interface IAuthService
     {
-        Task<ServiceResponse<GetUserDto>> Login(LoginDto request);
+        Task<ServiceResponse<string>> Login(LoginDto request);
     }
 }
