@@ -23,7 +23,7 @@
 <script>
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
-
+import axios from "@/services/api";
 import { ref, inject } from "vue";
 export default {
   name: "User",
@@ -33,7 +33,7 @@ export default {
   },
 
   setup() {
-    const axios = inject("axios");
+    /*  const axios = inject("axios"); */
     const columnDefs = [
       { headerName: "No.", field: "no", flex: 1 },
       { headerName: "Name", field: "name", flex: 2 },
@@ -64,7 +64,7 @@ export default {
     }
 
     function getAPI() {
-      axios.get("http://localhost:5148/api/User").then((response) => {
+      axios.get("/User").then((response) => {
         console.log(response.data);
       });
     }
