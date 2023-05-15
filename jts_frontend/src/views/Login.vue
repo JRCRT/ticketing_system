@@ -12,8 +12,8 @@ export default {
     function getCurrentURL() {
       console.log(router.currentRoute.value.path);
     }
-    function login() {
-      axios
+    async function login() {
+      await axios
         .post("/Auth", { username: "admin3", password: "admin123" })
         .then((response) => {
           console.log(response);

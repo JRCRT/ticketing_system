@@ -63,8 +63,8 @@ export default {
       modalActive.value = false;
     }
 
-    function getAPI() {
-      axios.get("/User").then((response) => {
+    async function getAPI() {
+      await axios.get("/User").then((response) => {
         console.log(response.data);
       });
     }
