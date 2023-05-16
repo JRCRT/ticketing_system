@@ -11,8 +11,8 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230512051358_AddPasswordHash")]
-    partial class AddPasswordHash
+    [Migration("20230516031116_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,40 @@ namespace jts_backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("jts_backend.Models.DepartmentModel", b =>
+                {
+                    b.Property<int>("department_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("department_id"));
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("department_id");
+
+                    b.ToTable("department");
+                });
+
+            modelBuilder.Entity("jts_backend.Models.RoleModel", b =>
+                {
+                    b.Property<int>("role_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("role_id"));
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("role_id");
+
+                    b.ToTable("role");
+                });
+
             modelBuilder.Entity("jts_backend.Models.UserModel", b =>
                 {
                     b.Property<int>("user_id")
@@ -31,6 +65,9 @@ namespace jts_backend.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("user_id"));
+
+                    b.Property<int>("department_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("first_name")
                         .IsRequired()
@@ -54,6 +91,9 @@ namespace jts_backend.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("role_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("username")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -61,7 +101,30 @@ namespace jts_backend.Migrations
 
                     b.HasKey("user_id");
 
+                    b.HasIndex("department_id");
+
+                    b.HasIndex("role_id");
+
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("jts_backend.Models.UserModel", b =>
+                {
+                    b.HasOne("jts_backend.Models.DepartmentModel", "department")
+                        .WithMany()
+                        .HasForeignKey("department_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("jts_backend.Models.RoleModel", "role")
+                        .WithMany()
+                        .HasForeignKey("role_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("department");
+
+                    b.Navigation("role");
                 });
 #pragma warning restore 612, 618
         }
