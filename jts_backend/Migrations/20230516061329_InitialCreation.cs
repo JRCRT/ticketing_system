@@ -5,7 +5,7 @@
 namespace jts_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,6 +45,7 @@ namespace jts_backend.Migrations
                     first_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     middle_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     last_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     password_hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     password_salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),

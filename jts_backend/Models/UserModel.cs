@@ -33,13 +33,7 @@ namespace jts_backend.Models
         public string username { get; set; } = string.Empty;
         public byte[] password_hash { get; set; } = new byte[0];
         public byte[] password_salt { get; set; } = new byte[0];
-
-        [ForeignKey("role")]
-        public int role_id { get; set; }
         public RoleModel role { get; set; }
-
-        [ForeignKey("department")]
-        public int department_id { get; set; }
         public DepartmentModel department { get; set; }
     }
 }

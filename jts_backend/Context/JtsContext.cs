@@ -9,8 +9,11 @@ namespace jts_backend.Context
 {
     public class JtsContext : DbContext
     {
-        public JtsContext(DbContextOptions<JtsContext> options) : base(options) { }
-        public DbSet<UserModel> user => Set<UserModel>();
-    }
+        public JtsContext(DbContextOptions<JtsContext> options)
+            : base(options) { }
 
+        public DbSet<UserModel> user => Set<UserModel>();
+        public DbSet<RoleModel> role => Set<RoleModel>();
+        public DbSet<DepartmentModel> department => Set<DepartmentModel>();
+    }
 }

@@ -11,8 +11,8 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230516031116_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230516061329_InitialCreation")]
+    partial class InitialCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,11 @@ namespace jts_backend.Migrations
 
                     b.Property<int>("department_id")
                         .HasColumnType("int");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("first_name")
                         .IsRequired()
