@@ -10,8 +10,7 @@ namespace jts_backend.Services.RoleService
 {
     public interface IRoleService
     {
-        public Task<ServiceResponse<GetRole>> GetRole(int role_id);
-
-        public Task<ServiceResponse<ICollection<GetRole>>> GetAllRoles();
+        public Task<ServiceResponse<RoleModel>> GetRole(int role_id);
+        public Task<ServiceResponse<ICollection<RoleModel>>> GetAllRoles();
     }
 }

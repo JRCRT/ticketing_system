@@ -21,8 +21,15 @@ namespace jts_backend.Controllers
             _roleService = roleService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ServiceResponse<GetRole>>> GetRole(int id)
+        [HttpGet("GetAllRoles")]
+        public async Task<ActionResult<ServiceResponse<RoleModel>>> GetAllRoles()
+        {
+            var roles = await _roleService.GetAllRoles();
+            return Ok(roles);
+        }
+
+        [HttpPost("GetRole")]
+        public async Task<ActionResult<ServiceResponse<RoleModel>>> GetRole(int id)
         {
             var role = await _roleService.GetRole(id);
             return Ok(role);

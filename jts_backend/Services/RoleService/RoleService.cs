@@ -22,17 +22,21 @@ namespace jts_backend.Services.RoleService
             _mapper = mapper;
         }
 
-        public Task<ServiceResponse<ICollection<GetRole>>> GetAllRoles()
+        public async Task<ServiceResponse<ICollection<RoleModel>>> GetAllRoles()
         {
-            throw new NotImplementedException();
+            ServiceResponse<ICollection<RoleModel>> response =
+                new ServiceResponse<ICollection<RoleModel>>();
+
+            var roles = await _context.role.Select(r => r).ToListAsync();
+            response.data = roles;
+            return response;
         }
 
-        public async Task<ServiceResponse<GetRole>> GetRole(int role_id)
+        public async Task<ServiceResponse<RoleModel>> GetRole(int role_id)
         {
-            ServiceResponse<GetRole> response = new ServiceResponse<GetRole>();
+            ServiceResponse<RoleModel> response = new ServiceResponse<RoleModel>();
             var role = await _context.role.Where(r => r.role_id == role_id).FirstOrDefaultAsync();
-            GetRole _role = _mapper.Map<GetRole>(role);
-            response.data = _role;
+            response.data = role;
             return response;
         }
     }
