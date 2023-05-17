@@ -2,6 +2,7 @@ using AutoMapper;
 using jts_backend.Context;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace jts_backend.Services.UserService
@@ -43,6 +44,28 @@ namespace jts_backend.Services.UserService
                 out byte[] passwordHash,
                 out byte[] passwordSalt
             );
+
+            DepartmentModel? department = await _context.department
+                .Where(d => d.department_id == newUser.department_id)
+                .FirstOrDefaultAsync();
+            RoleModel? role = await _context.role
+                .Where(r => r.role_id == newUser.role_id)
+                .FirstOrDefaultAsync();
+
+            if (department == null)
+            {
+                response.message = "Department not found.";
+                response.success = false;
+                return response;
+            }
+
+            if (role == null)
+            {
+                response.message = "Role not found.";
+                response.success = false;
+                return response;
+            }
+
             UserModel user = new UserModel();
             user.first_name = newUser.first_name;
             user.middle_name = newUser.middle_name;
@@ -51,6 +74,8 @@ namespace jts_backend.Services.UserService
             user.email = newUser.email;
             user.password_hash = passwordHash;
             user.password_salt = passwordSalt;
+            user.department = department;
+            user.role = role;
             _context.user.Add(user);
             await _context.SaveChangesAsync();
             response.data = user;

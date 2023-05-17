@@ -33,7 +33,7 @@ namespace jts_backend.Models
         public string username { get; set; } = string.Empty;
         public byte[] password_hash { get; set; } = new byte[0];
         public byte[] password_salt { get; set; } = new byte[0];
-        public RoleModel role { get; set; }
-        public DepartmentModel department { get; set; }
+        public RoleModel role { get; set; } = new RoleModel();
+        public DepartmentModel department { get; set; } = new DepartmentModel();
     }
 }

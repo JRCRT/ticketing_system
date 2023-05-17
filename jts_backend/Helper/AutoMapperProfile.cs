@@ -13,6 +13,7 @@ namespace jts_backend.Helper
         public AutoMapperProfile()
         {
             CreateMap<UserModel, GetUserDto>();
+            CreateMap<RoleModel, GetUserDto>();
         }
     }
 }

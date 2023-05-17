@@ -1,5 +1,6 @@
 using jts_backend.Context;
 using jts_backend.Services.AuthService;
+using jts_backend.Services.RoleService;
 using jts_backend.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<IUserService, UserSevice>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

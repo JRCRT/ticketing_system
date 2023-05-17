@@ -11,8 +11,8 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230516061329_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20230517052717_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
