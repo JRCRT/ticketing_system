@@ -25,8 +25,16 @@ namespace jts_backend.Services.RoleService
         public async Task<ServiceResponse<string>> CreateRole(CreateRoleDto newRole)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
-            var role = new RoleModel();
-            role.name = newRole.name;
+
+            var role = await _context.role.Where(r => r.name == newRole.name).FirstOrDefaultAsync();
+            //check if role is already exist
+            if (role == null)
+            {
+                response.message = "Role with this name is already exist.";
+                response.success = false;
+                return response;
+            }
+
             _context.role.Add(role);
             await _context.SaveChangesAsync();
             response.data = "Role added successfully.";
