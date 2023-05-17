@@ -26,16 +26,20 @@ namespace jts_backend.Services.RoleService
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
 
-            var role = await _context.role.Where(r => r.name == newRole.name).FirstOrDefaultAsync();
+            var role = await _context.role
+                .Where(r => r.name.ToLower() == newRole.name.ToLower())
+                .FirstOrDefaultAsync();
             //check if role is already exist
-            if (role == null)
+            if (role != null)
             {
                 response.message = "Role with this name is already exist.";
                 response.success = false;
                 return response;
             }
+            var _newRole = new RoleModel();
+            _newRole.name = newRole.name;
 
-            _context.role.Add(role);
+            _context.role.Add(_newRole);
             await _context.SaveChangesAsync();
             response.data = "Role added successfully.";
             return response;

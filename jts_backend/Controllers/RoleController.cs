@@ -40,6 +40,10 @@ namespace jts_backend.Controllers
         public async Task<ActionResult<ServiceResponse<string>>> CreateRole(CreateRoleDto newRole)
         {
             var _newRole = await _roleService.CreateRole(newRole);
+            if (!_newRole.success)
+            {
+                return BadRequest(_newRole);
+            }
             return Ok(_newRole);
         }
     }
