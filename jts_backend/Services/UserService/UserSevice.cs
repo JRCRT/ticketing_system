@@ -36,9 +36,9 @@ namespace jts_backend.Services.UserService
             throw new NotImplementedException();
         }
 
-        public async Task<ServiceResponse<UserModel>> AddUser(CreateUserDto newUser)
+        public async Task<ServiceResponse<string>> CreateUser(CreateUserDto newUser)
         {
-            ServiceResponse<UserModel> response = new ServiceResponse<UserModel>();
+            ServiceResponse<string> response = new ServiceResponse<string>();
             Helper.Helper.CreatePasswordHash(
                 newUser.password,
                 out byte[] passwordHash,
@@ -78,7 +78,7 @@ namespace jts_backend.Services.UserService
             user.role = role;
             _context.user.Add(user);
             await _context.SaveChangesAsync();
-            response.data = user;
+            response.data = "User created successfully.";
             return response;
         }
     }

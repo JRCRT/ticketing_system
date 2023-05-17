@@ -7,6 +7,7 @@ using jts_backend.Dtos.RoleDto;
 using jts_backend.Models;
 using jts_backend.Services.RoleService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace jts_backend.Controllers
 {
@@ -33,6 +34,13 @@ namespace jts_backend.Controllers
         {
             var role = await _roleService.GetRole(id);
             return Ok(role);
+        }
+
+        [HttpPost("CreateRole")]
+        public async Task<ActionResult<ServiceResponse<string>>> CreateRole(CreateRoleDto newRole)
+        {
+            var _newRole = await _roleService.CreateRole(newRole);
+            return Ok(_newRole);
         }
     }
 }

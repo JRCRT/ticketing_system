@@ -22,6 +22,17 @@ namespace jts_backend.Services.RoleService
             _mapper = mapper;
         }
 
+        public async Task<ServiceResponse<string>> CreateRole(CreateRoleDto newRole)
+        {
+            ServiceResponse<string> response = new ServiceResponse<string>();
+            var role = new RoleModel();
+            role.name = newRole.name;
+            _context.role.Add(role);
+            await _context.SaveChangesAsync();
+            response.data = "Role added successfully.";
+            return response;
+        }
+
         public async Task<ServiceResponse<ICollection<RoleModel>>> GetAllRoles()
         {
             ServiceResponse<ICollection<RoleModel>> response =

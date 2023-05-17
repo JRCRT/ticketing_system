@@ -28,12 +28,12 @@ namespace jts_backend.Controllers
             return Ok(users);
         }
 
-        [HttpPost("AddUser")]
+        [HttpPost("CreateUser")]
         public async Task<ActionResult<ServiceResponse<UserModel>>> CreateUser(
             CreateUserDto newUser
         )
         {
-            var user = await _userService.AddUser(newUser);
+            var user = await _userService.CreateUser(newUser);
             return Ok(user);
         }
     }

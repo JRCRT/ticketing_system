@@ -12,5 +12,6 @@ namespace jts_backend.Services.RoleService
     {
         public Task<ServiceResponse<RoleModel>> GetRole(int role_id);
         public Task<ServiceResponse<ICollection<RoleModel>>> GetAllRoles();
+        public Task<ServiceResponse<string>> CreateRole(CreateRoleDto role);
     }
 }
