@@ -36,5 +36,16 @@ namespace jts_backend.Controllers
             var user = await _userService.CreateUser(newUser);
             return Ok(user);
         }
+
+        [HttpPost("GetUser")]
+        public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetUser(int user_id)
+        {
+            var user = await _userService.GetUser(user_id);
+            if (user.data == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
     }
 }

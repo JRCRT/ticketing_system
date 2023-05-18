@@ -31,9 +31,23 @@ namespace jts_backend.Services.UserService
             return response;
         }
 
-        public Task<ServiceResponse<UserModel>> GetUser(int user_id)
+        public async Task<ServiceResponse<GetUserDto>> GetUser(int user_id)
         {
-            throw new NotImplementedException();
+            ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
+            var user = await _context.user
+                .Include(u => u.role)
+                .Include(u => u.department)
+                .Where(u => u.user_id == user_id)
+                .Select(u => _mapper.Map<GetUserDto>(u))
+                .FirstOrDefaultAsync();
+            if (user == null)
+            {
+                response.message = "User not found.";
+                response.success = false;
+                return response;
+            }
+            response.data = user;
+            return response;
         }
 
         public async Task<ServiceResponse<string>> CreateUser(CreateUserDto newUser)
