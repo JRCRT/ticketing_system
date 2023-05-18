@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using jts_backend.Context;
 using jts_backend.Dtos.DepartmentDto;
 using jts_backend.Models;
@@ -12,10 +13,12 @@ namespace jts_backend.Services.DepartmentService
     public class DepartmentService : IDepartmentService
     {
         private readonly JtsContext _context;
+        private readonly IMapper _mapper;
 
-        public DepartmentService(JtsContext context)
+        public DepartmentService(JtsContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ServiceResponse<string>> CreateDepartment(CreateDepartmentDto request)
@@ -37,6 +40,16 @@ namespace jts_backend.Services.DepartmentService
             _context.department.Add(newDeparment);
             await _context.SaveChangesAsync();
             response.data = "Added successfully.";
+            return response;
+        }
+
+        public async Task<ServiceResponse<ICollection<GetDepartmentDto>>> GetAllDepartments()
+        {
+            var response = new ServiceResponse<ICollection<GetDepartmentDto>>();
+            var departments = await _context.department
+                .Select(d => _mapper.Map<GetDepartmentDto>(d))
+                .ToListAsync();
+            response.data = departments;
             return response;
         }
     }

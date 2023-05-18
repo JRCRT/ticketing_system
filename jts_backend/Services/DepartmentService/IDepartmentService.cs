@@ -10,5 +10,6 @@ namespace jts_backend.Services.DepartmentService
     public interface IDepartmentService
     {
         public Task<ServiceResponse<string>> CreateDepartment(CreateDepartmentDto request);
+        public Task<ServiceResponse<ICollection<GetDepartmentDto>>> GetAllDepartments();
     }
 }
