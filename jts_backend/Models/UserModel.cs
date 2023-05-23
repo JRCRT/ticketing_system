@@ -25,6 +25,10 @@ namespace jts_backend.Models
         public string last_name { get; set; } = string.Empty;
 
         [Required()]
+        [MaxLength(500)]
+        public string ex_name { get; set; } = string.Empty;
+
+        [Required()]
         [MaxLength(200)]
         public string email { get; set; } = string.Empty;
 

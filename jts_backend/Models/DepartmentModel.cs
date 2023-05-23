@@ -13,6 +13,9 @@ namespace jts_backend.Models
     {
         [Key]
         public int department_id { get; set; }
+
+        [Required]
+        [MaxLength(400)]
         public string name { get; set; } = string.Empty;
     }
 }

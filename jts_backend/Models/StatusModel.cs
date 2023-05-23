@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace jts_backend.Models
 {
-    [Table("role")]
-    public class RoleModel
+    [Table("status")]
+    public class StatusModel
     {
         [Key]
-        public int role_id { get; set; }
+        public int status_id { get; set; }
 
         [Required]
         [MaxLength(400)]
