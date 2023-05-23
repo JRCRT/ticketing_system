@@ -89,6 +89,7 @@ namespace jts_backend.Services.UserService
             user.password_hash = passwordHash;
             user.password_salt = passwordSalt;
             user.department = department;
+            user.ex_name = $"{newUser.first_name} {newUser.middle_name} {newUser.last_name}";
             user.role = role;
             _context.user.Add(user);
             await _context.SaveChangesAsync();
