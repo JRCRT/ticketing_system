@@ -33,7 +33,7 @@ namespace jts_backend.Services.UserService
 
         public async Task<ServiceResponse<GetUserDto>> GetUser(int user_id)
         {
-            ServiceResponse<GetUserDto> response = new ServiceResponse<GetUserDto>();
+            var response = new ServiceResponse<GetUserDto>();
             var user = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
@@ -52,17 +52,17 @@ namespace jts_backend.Services.UserService
 
         public async Task<ServiceResponse<string>> CreateUser(CreateUserDto newUser)
         {
-            ServiceResponse<string> response = new ServiceResponse<string>();
+            var response = new ServiceResponse<string>();
             Helper.Helper.CreatePasswordHash(
                 newUser.password,
                 out byte[] passwordHash,
                 out byte[] passwordSalt
             );
 
-            DepartmentModel? department = await _context.department
+            var department = await _context.department
                 .Where(d => d.department_id == newUser.department_id)
                 .FirstOrDefaultAsync();
-            RoleModel? role = await _context.role
+            var role = await _context.role
                 .Where(r => r.role_id == newUser.role_id)
                 .FirstOrDefaultAsync();
 
@@ -94,6 +94,41 @@ namespace jts_backend.Services.UserService
             _context.user.Add(user);
             await _context.SaveChangesAsync();
             response.data = "User created successfully.";
+            return response;
+        }
+
+        public async Task<ServiceResponse<string>> UpdateUser(UpdateUserDto updateUser)
+        {
+            var response = new ServiceResponse<string>();
+            var user = await _context.user
+                .Include(u => u.role)
+                .Include(u => u.department)
+                .FirstOrDefaultAsync(c => c.user_id == updateUser.user_id);
+
+            if (user == null)
+            {
+                response.message = "User not found.";
+                response.success = false;
+                return response;
+            }
+
+            user.first_name = updateUser.first_name;
+            user.middle_name = updateUser.middle_name;
+            user.last_name = updateUser.last_name;
+            user.email = updateUser.email;
+            user.ex_name =
+                $"{updateUser.first_name} {updateUser.middle_name} {updateUser.last_name}";
+
+            Helper.Helper.CreatePasswordHash(
+                updateUser.password,
+                out byte[] passwordHash,
+                out byte[] passwordSalt
+            );
+            user.password_hash = passwordHash;
+            user.password_salt = passwordSalt;
+            user.role.role_id = updateUser.role_id;
+            user.department.department_id = updateUser.department_id;
+
             return response;
         }
     }
