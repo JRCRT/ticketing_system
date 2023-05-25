@@ -13,6 +13,7 @@ using jts_backend.Helper;
 using jts_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Validations;
 
 namespace jts_backend.Services.AuthService
 {
@@ -29,19 +30,15 @@ namespace jts_backend.Services.AuthService
             _configuration = configuration;
         }
 
-        public async Task<ServiceResponse<string>> Login(LoginDto request)
+        public async Task<ServiceResponse<AuthUserDto>> Login(LoginDto request)
         {
-            ServiceResponse<string> response = new ServiceResponse<string>();
-            UserModel? user = await _context.user
+            var response = new ServiceResponse<AuthUserDto>();
+            var user = await _context.user
                 .Where(u => u.username.ToLower() == request.username.ToLower())
                 .FirstOrDefaultAsync();
-            if (user is null)
-            {
-                response.message = "Incorrect username/password.";
-                response.success = false;
-            }
-            else if (
-                !Helper.Helper.VerifyPasswordHash(
+            if (
+                user is null
+                || !Helper.Helper.VerifyPasswordHash(
                     request.password,
                     user.password_hash,
                     user.password_salt
@@ -50,17 +47,19 @@ namespace jts_backend.Services.AuthService
             {
                 response.message = "Incorrect username/password.";
                 response.success = false;
+                return response;
             }
-            else
-            {
-                GetUserDto userDto = _mapper.Map<GetUserDto>(user);
-                response.data = CreateToken(userDto);
-            }
+
+            var authUser = new AuthUserDto();
+            authUser.user_id = user.user_id;
+            authUser.username = user.username;
+            authUser.access_token = CreateToken(user);
+            response.data = authUser;
 
             return response;
         }
 
-        private string CreateToken(GetUserDto user)
+        private string CreateToken(UserModel user)
         {
             var claims = new List<Claim>
             {

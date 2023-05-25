@@ -11,11 +11,11 @@ namespace jts_backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DeparmentController : ControllerBase
+    public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
 
-        public DeparmentController(IDepartmentService departmentService)
+        public DepartmentController(IDepartmentService departmentService)
         {
             _departmentService = departmentService;
         }

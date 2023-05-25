@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.Configuration.Annotations;
 using jts_backend.Context;
 using jts_backend.Dtos.RoleDto;
 using jts_backend.Models;
@@ -24,11 +25,11 @@ namespace jts_backend.Services.RoleService
 
         public async Task<ServiceResponse<string>> CreateRole(CreateRoleDto newRole)
         {
-            ServiceResponse<string> response = new ServiceResponse<string>();
+            var response = new ServiceResponse<string>();
 
-            var role = await _context.role
-                .Where(r => r.name.ToLower() == newRole.name.ToLower())
-                .FirstOrDefaultAsync();
+            var role = await _context.role.FirstOrDefaultAsync(
+                r => r.name.ToLower() == newRole.name.ToLower()
+            );
             //check if role is already exist
             if (role != null)
             {
@@ -47,8 +48,7 @@ namespace jts_backend.Services.RoleService
 
         public async Task<ServiceResponse<ICollection<RoleModel>>> GetAllRoles()
         {
-            ServiceResponse<ICollection<RoleModel>> response =
-                new ServiceResponse<ICollection<RoleModel>>();
+            var response = new ServiceResponse<ICollection<RoleModel>>();
 
             var roles = await _context.role.Select(r => r).ToListAsync();
             response.data = roles;
@@ -57,8 +57,8 @@ namespace jts_backend.Services.RoleService
 
         public async Task<ServiceResponse<RoleModel>> GetRole(int role_id)
         {
-            ServiceResponse<RoleModel> response = new ServiceResponse<RoleModel>();
-            var role = await _context.role.Where(r => r.role_id == role_id).FirstOrDefaultAsync();
+            var response = new ServiceResponse<RoleModel>();
+            var role = await _context.role.FirstOrDefaultAsync(r => r.role_id == role_id);
             response.data = role;
             return response;
         }

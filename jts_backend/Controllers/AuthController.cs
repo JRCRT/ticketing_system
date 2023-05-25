@@ -15,15 +15,17 @@ namespace jts_backend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+
         public AuthController(IAuthService authService)
         {
             _authService = authService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<string>>> Login(LoginDto request){
-            ServiceResponse<string> response =  await _authService.Login(request);
-            if(!response.success)
+        public async Task<ActionResult<ServiceResponse<AuthUserDto>>> Login(LoginDto request)
+        {
+            var response = await _authService.Login(request);
+            if (!response.success)
             {
                 return BadRequest(response);
             }

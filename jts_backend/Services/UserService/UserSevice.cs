@@ -20,8 +20,7 @@ namespace jts_backend.Services.UserService
 
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
         {
-            ServiceResponse<ICollection<GetUserDto>> response =
-                new ServiceResponse<ICollection<GetUserDto>>();
+            var response = new ServiceResponse<ICollection<GetUserDto>>();
             ICollection<GetUserDto> users = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
@@ -80,7 +79,7 @@ namespace jts_backend.Services.UserService
                 return response;
             }
 
-            UserModel user = new UserModel();
+            var user = new UserModel();
             user.first_name = newUser.first_name;
             user.middle_name = newUser.middle_name;
             user.last_name = newUser.last_name;

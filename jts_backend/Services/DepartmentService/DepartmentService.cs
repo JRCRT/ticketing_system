@@ -23,7 +23,7 @@ namespace jts_backend.Services.DepartmentService
 
         public async Task<ServiceResponse<string>> CreateDepartment(CreateDepartmentDto request)
         {
-            ServiceResponse<string> response = new ServiceResponse<string>();
+            var response = new ServiceResponse<string>();
             var department = await _context.department
                 .Where(d => d.name.ToLower().Equals(request.name.ToLower()))
                 .FirstOrDefaultAsync();

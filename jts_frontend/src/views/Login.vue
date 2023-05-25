@@ -13,16 +13,7 @@ export default {
       console.log(router.currentRoute.value.path);
     }
     async function login() {
-      await axios
-        .post("/Auth", { username: "admin3", password: "admin123" })
-        .then((response) => {
-          console.log(response);
-          localStorage.setItem("token", response);
-        });
-      store.commit("login");
-      console.log(store.state.user);
-      router.push("/");
-      store.commit("changePath", "");
+      store.dispatch("login", { username: "225RGR", password: "P@ssw0rd!" });
     }
 
     onMounted(async () => {
@@ -44,7 +35,7 @@ export default {
   <div
     class="flex flex-col w-80 h-screen !mt-0 justify-center items-center mx-0 px-0"
   >
-    <img class="w-60 h-16 object-cover" :src="JFPc_Logo" alt="JACCS Logo" />
+    <img class="w-60 h-16 object-cover" :src="JFP_Logo" alt="JACCS Logo" />
     <div class="w-full mt-6">
       <label>Username</label>
       <input class="input__field" type="text" />
