@@ -1,14 +1,15 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Loader from "@/components/Loader.vue";
 import store from "./store";
-
+import Alert from "@/components/Alert.vue";
 export default {
   components: {
     Sidebar,
+    Alert,
   },
   setup() {
     const router = useRouter();
@@ -17,35 +18,41 @@ export default {
     const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
     const currentPath = ref("");
 
-    function hideSidebar() {
+    const hideSidebar = () => {
       sidebarActive.value = false;
-    }
+    };
 
-    function showSidebar() {
+    const showSidebar = () => {
       sidebarActive.value = true;
-    }
+    };
+    const removeAlert = (index) => {
+      store.dispatch("app/removeAlert", index);
+    };
+    const alerts = computed(() => store.state.app.alerts);
+    const currentUrl = computed(() => store.state.app.currentUrl);
 
-    function logout() {
-      store.commit("logout");
-      console.log("Logged Out");
+    const logout = () => {
       router.push("/login");
-    }
+    };
 
     return {
       sidebarActive,
       VITE_APP_TITLE,
+      store,
       currentPath,
       hideSidebar,
       showSidebar,
-      store,
+      removeAlert,
       logout,
+      currentUrl,
+      alerts,
     };
   },
 };
 </script>
 
 <template>
-  <Sidebar :active="sidebarActive" @close="hideSidebar()">
+  <Sidebar :active="sidebarActive" @close="hideSidebar">
     <template v-slot:header>
       <router-link :to="{ name: 'Dashboard' }">
         <h1 class="text-black">{{ VITE_APP_TITLE }}</h1>
@@ -110,7 +117,7 @@ export default {
         Users
       </router-link>
 
-      <a class="sidebar-link cursor-pointer" @click="logout()">
+      <a class="sidebar-link cursor-pointer" @click="logout">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -130,7 +137,7 @@ export default {
   </Sidebar>
 
   <!-- Navbar -->
-  <nav v-if="store.state.currentURL != '/login'" class="navbar shadow-xl h-16">
+  <nav v-if="currentUrl != '/login'" class="navbar shadow-xl h-16">
     <div class="container mx-auto flex p-3 items-center">
       <!-- Sidebar Toggle -->
       <button
@@ -177,5 +184,13 @@ export default {
       </div>
     </div>
   </nav>
+
+  <div class="alerts">
+    <transition-group name="fade">
+      <div v-for="(alert, index) in alerts" :key="alert">
+        <Alert :alert="alert" @remove="removeAlert(index)" />
+      </div>
+    </transition-group>
+  </div>
   <router-view class="container mx-auto h-full px-4 mt-6" />
 </template>

@@ -276,3 +276,32 @@ button {
 .ck.ck-editor__editable.ck-rounded-corners:not(.ck-editor__nested-editable) {
   border-radius: 0.375rem !important;
 }
+
+.alerts {
+  @apply fixed top-0 left-0 right-0 m-5 z-30;
+}
+
+.alert {
+  @apply flex rounded-md border-2 p-2 mb-2 items-center transition-opacity;
+}
+
+.alert-info {
+  @apply bg-lightInfo text-darkInfo border-darkInfo opacity-100;
+}
+
+.alert-danger {
+  @apply bg-lightDanger text-darkDanger border-darkDanger opacity-100;
+}
+
+.alert-success {
+  @apply bg-lightSuccess text-darkSuccess border-darkSuccess opacity-100;
+}
+
+.alert > .message {
+  @apply flex-grow;
+}
+
+.alert > button {
+  @apply button-icon button-icon-sm;
+}
+

@@ -1,7 +1,6 @@
 <script>
 import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
-import axios from "@/services/api";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted } from "vue";
 export default {
@@ -10,16 +9,24 @@ export default {
     const store = useStore();
     const router = useRouter();
     function getCurrentURL() {
-      console.log(router.currentRoute.value.path);
+      /* console.log(router.currentRoute.value.path); */
     }
     async function login() {
-      store.dispatch("login", { username: "225RGR", password: "P@ssw0rd!" });
+      store.dispatch("auth/login", {
+        username: "225RGR",
+        password: "P@ssw0rd!",
+      });
+      store.dispatch("app/addAlert", {
+        type: "success",
+        message: "Sample Alert",
+      });
     }
 
     onMounted(async () => {
       await router.isReady();
 
-      store.commit("changePath", router.currentRoute.value.path);
+      store.dispatch("app/changeUrl", router.currentRoute.value.path);
+
       console.log(`currentPath: ${store.state.currentURL}`);
     });
     return {
