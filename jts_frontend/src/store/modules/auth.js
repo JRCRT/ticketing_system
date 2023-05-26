@@ -28,12 +28,13 @@ const actions = {
     commit("setCurrentUser", response.data);
     commit("app/setLoading", false, { root: true });
     commit("app/setCurrentUrl", "/", { root: true });
+    localStorage.setItem("user", response.data);
     router.push({ name: "Dashboard" });
   },
 
   logout({ commit }) {
     commit("removeCurrentUser");
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
   },
 };
 
