@@ -26,9 +26,16 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
 export default {
   props: ["alert"],
   emits: ["remove"],
+  setup() {
+    const store = useStore();
+    setTimeout(() => {
+      store.dispatch("app/removeAlert", store.state.app.alerts.length - 1);
+    }, 3000);
+  },
 };
 </script>
 
