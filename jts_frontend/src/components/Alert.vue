@@ -8,7 +8,10 @@
     }"
   >
     <span class="message">{{ alert.message }} </span>
-    <button @click="$emit('remove')" class="button button-icon button-icon-md">
+    <button
+      @click="$emit('remove')"
+      class="button button-transparent button-icon button-icon-md"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"

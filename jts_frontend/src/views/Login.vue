@@ -16,10 +16,6 @@ export default {
         username: "225RGR",
         password: "P@ssw0rd!",
       });
-      store.dispatch("app/addAlert", {
-        type: "success",
-        message: "Sample Alert",
-      });
     }
 
     onMounted(async () => {

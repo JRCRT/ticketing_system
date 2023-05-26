@@ -15,7 +15,7 @@ const routes = [
       title: "Login",
     },
     beforeEnter: (to, from, next) => {
-      if (store.state.user) {
+      if (store.state.auth.user) {
         router.replace({ name: "Dashboard" });
       } else {
         next();
@@ -71,10 +71,10 @@ router.afterEach((to, from) => {
 router.beforeEach((to, from, next) => {
   if (to.matched.some((route) => route.meta.authRequired)) {
     //route = dashboard
-    if (!store.state.user) next({ name: "Login" });
+    if (!store.state.auth.user) next({ name: "Login" });
     else next();
   } else if (to.matched.some((route) => route.meta.adminRequired)) {
-    if (!store.state.user) next({ name: "Login" });
+    if (!store.state.auth.user) next({ name: "Login" });
     else next();
   } else {
     next();

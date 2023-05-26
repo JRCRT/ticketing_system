@@ -21,7 +21,7 @@ namespace jts_backend.Controllers
             _userService = userSevice;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllUsers")]
         public async Task<ActionResult<ServiceResponse<IEnumerable<GetUserDto>>>> GetAllUsers()
         {
             var users = await _userService.GetAllUser();
