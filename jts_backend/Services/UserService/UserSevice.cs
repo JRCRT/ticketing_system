@@ -88,7 +88,7 @@ namespace jts_backend.Services.UserService
             user.password_hash = passwordHash;
             user.password_salt = passwordSalt;
             user.department = department;
-            user.ex_name = $"{newUser.first_name} {newUser.middle_name} {newUser.last_name}";
+            user.ext_name = $"{newUser.first_name} {newUser.middle_name} {newUser.last_name}";
             user.role = role;
             _context.user.Add(user);
             await _context.SaveChangesAsync();
@@ -115,7 +115,7 @@ namespace jts_backend.Services.UserService
             user.middle_name = updateUser.middle_name;
             user.last_name = updateUser.last_name;
             user.email = updateUser.email;
-            user.ex_name =
+            user.ext_name =
                 $"{updateUser.first_name} {updateUser.middle_name} {updateUser.last_name}";
 
             Helper.Helper.CreatePasswordHash(

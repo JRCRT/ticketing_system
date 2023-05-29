@@ -9,6 +9,7 @@ export default {
   setup() {
     const username = ref(null);
     const password = ref(null);
+    const usernameField = ref(null);
     const store = useStore();
     const router = useRouter();
     const isLoading = computed(() => store.state.app.isLoading);
@@ -22,6 +23,7 @@ export default {
     onMounted(async () => {
       await router.isReady();
       store.dispatch("app/changeUrl", router.currentRoute.value.path);
+      usernameField.value.focus();
     });
 
     return {
@@ -30,6 +32,7 @@ export default {
       username,
       password,
       isLoading,
+      usernameField,
     };
   },
 };
@@ -45,7 +48,12 @@ export default {
 
     <div class="w-full mt-6">
       <label>Username</label>
-      <input v-model="username" class="input__field" type="text" />
+      <input
+        ref="usernameField"
+        v-model="username"
+        class="input__field"
+        type="text"
+      />
     </div>
     <div class="w-full mb-3">
       <label>Password</label>

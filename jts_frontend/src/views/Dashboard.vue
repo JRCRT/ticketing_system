@@ -76,7 +76,7 @@ export default {
 </script>
 <template>
   <div class="flex flex-col gap-3">
-    <h4 @click="getSelectedRow()" class="text-primary">Dashboard</h4>
+    <h4 @click="getSelectedRow" class="text-primary">Dashboard</h4>
     <!--Cards Container-->
     <div class="flex">
       <div @click="navigateToTicket('pending')" class="card">

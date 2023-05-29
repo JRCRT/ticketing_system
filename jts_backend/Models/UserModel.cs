@@ -26,7 +26,7 @@ namespace jts_backend.Models
 
         [Required()]
         [MaxLength(500)]
-        public string ex_name { get; set; } = string.Empty;
+        public string ext_name { get; set; } = string.Empty;
 
         [Required()]
         [MaxLength(200)]

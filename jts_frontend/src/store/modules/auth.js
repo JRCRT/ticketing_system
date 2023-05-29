@@ -13,6 +13,18 @@ const getter = {
 const actions = {
   async login({ commit }, { username, password }) {
     commit("app/setLoading", true, { root: true });
+    if (!username || !password) {
+      commit(
+        "app/pushAlert",
+        {
+          type: "danger",
+          message: "Please fill up necessary field.",
+        },
+        { root: true }
+      );
+      commit("app/setLoading", false, { root: true });
+      return;
+    }
     const response = await authenticate({ username, password });
     if (!response.success) {
       commit(
@@ -24,6 +36,7 @@ const actions = {
         { root: true }
       );
       commit("app/setLoading", false, { root: true });
+
       return;
     }
 

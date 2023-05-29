@@ -17,16 +17,20 @@
         </button>
       </div>
     </div>
-    <Table :rowData="rowData" :columnDefs="columnDefs"></Table>
+    <Table
+      @grid-ready="onGridReady"
+      :rowData="rowData"
+      :columnDefs="columnDefs"
+    ></Table>
   </div>
 </template>
 
 <script>
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
-import axios from "@/services/api";
-import { ref, inject } from "vue";
+import { onMounted, ref } from "vue";
 import store from "../store";
+import { computed } from "@vue/reactivity";
 export default {
   name: "User",
   components: {
@@ -37,40 +41,41 @@ export default {
   setup() {
     /*  const axios = inject("axios"); */
     const columnDefs = [
-      { headerName: "No.", field: "no", flex: 1 },
-      { headerName: "Name", field: "name", flex: 2 },
+      { headerName: "No.", field: "user_id", flex: 1 },
+      { headerName: "Name", field: "ext_name", flex: 2 },
       {
-        headerName: "Code",
-        field: "code",
+        headerName: "Username",
+        field: "username",
         flex: 1,
       },
       {
         headerName: "Department",
-        field: "department",
+        field: "department.name",
         flex: 1,
       },
     ];
-    const rowData = [
-      {
-        no: 1,
-        name: "Juan Dela Cruz",
-        code: "226JOD",
-        department: "IT",
-      },
-    ];
+    const gridAPI = ref(null);
+    const rowData = ref([]);
+
+    onMounted(async () => {
+      await store.dispatch("user/loadUsers");
+      gridAPI.value.setRowData(store.state.user.users);
+    });
 
     const modalActive = ref(false);
 
-    function closeModal() {
+    const closeModal = () => {
       modalActive.value = false;
-    }
+    };
 
-    async function getAPI() {
-      store.dispatch("app/addAlert", { type: "success", message: "Sample" });
-    }
-    function openModal() {
+    const onGridReady = (params) => {
+      gridAPI.value = params.api;
+    };
+
+    async function getAPI() {}
+    const openModal = () => {
       modalActive.value = true;
-    }
+    };
 
     return {
       columnDefs,
@@ -79,6 +84,7 @@ export default {
       closeModal,
       openModal,
       getAPI,
+      onGridReady,
     };
   },
 };
