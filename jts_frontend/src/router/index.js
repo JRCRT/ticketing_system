@@ -6,7 +6,6 @@ import Dashboard from "@/views/Dashboard.vue";
 import Ticket from "@/views/ticket/Ticket.vue";
 import User from "@/views/User.vue";
 
-const user = localStorage.getItem("user");
 const routes = [
   {
     path: "/login",
@@ -16,6 +15,7 @@ const routes = [
       title: "Login",
     },
     beforeEnter: (to, from, next) => {
+      const user = localStorage.getItem("user");
       if (user) {
         router.replace({ name: "Dashboard" });
       } else {
@@ -70,6 +70,7 @@ router.afterEach((to, from) => {
 });
 
 router.beforeEach((to, from, next) => {
+  const user = localStorage.getItem("user");
   if (to.matched.some((route) => route.meta.authRequired)) {
     //route = dashboard
     if (!user) next({ name: "Login" });

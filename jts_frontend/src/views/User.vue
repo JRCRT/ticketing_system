@@ -20,11 +20,13 @@
     <Table :rowData="rowData" :columnDefs="columnDefs"></Table>
   </div>
 </template>
+
 <script>
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
 import axios from "@/services/api";
 import { ref, inject } from "vue";
+import store from "../store";
 export default {
   name: "User",
   components: {
@@ -64,9 +66,7 @@ export default {
     }
 
     async function getAPI() {
-      await axios.get("/User").then((response) => {
-        console.log(response.data);
-      });
+      store.dispatch("app/addAlert", { type: "success", message: "Sample" });
     }
     function openModal() {
       modalActive.value = true;

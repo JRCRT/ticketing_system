@@ -32,7 +32,8 @@ export default {
     const currentUrl = computed(() => store.state.app.currentUrl);
 
     const logout = () => {
-      router.push("/login");
+      store.dispatch("auth/logout");
+      router.replace("/login");
     };
 
     return {

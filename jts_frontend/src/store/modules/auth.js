@@ -25,27 +25,20 @@ const actions = {
       );
       return;
     }
-    commit("setCurrentUser", response.data);
+
     commit("app/setLoading", false, { root: true });
     commit("app/setCurrentUrl", "/", { root: true });
-    localStorage.setItem("user", response.data);
-    router.push({ name: "Dashboard" });
+    localStorage.setItem("user", JSON.stringify(response.data));
+    console.log(localStorage.getItem("user"));
+    router.replace({ name: "Dashboard" });
   },
 
-  logout({ commit }) {
-    commit("removeCurrentUser");
+  logout() {
     localStorage.removeItem("user");
   },
 };
 
-const mutations = {
-  setCurrentUser(state, value) {
-    state.user = value;
-  },
-  removeCurrentUser(state) {
-    state.user = null;
-  },
-};
+const mutations = {};
 
 export default {
   namespaced: true,

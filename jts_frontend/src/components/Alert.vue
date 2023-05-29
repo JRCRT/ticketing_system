@@ -37,7 +37,7 @@ export default {
     const store = useStore();
     setTimeout(() => {
       store.dispatch("app/removeAlert", store.state.app.alerts.length - 1);
-    }, 3000);
+    }, 5000);
   },
 };
 </script>
