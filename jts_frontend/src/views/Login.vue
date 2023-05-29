@@ -3,6 +3,7 @@ import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref } from "vue";
+import { computed } from "@vue/reactivity";
 export default {
   name: "Login Page",
   setup() {
@@ -10,27 +11,25 @@ export default {
     const password = ref(null);
     const store = useStore();
     const router = useRouter();
-    function getCurrentURL() {
-      /* console.log(router.currentRoute.value.path); */
-    }
-    async function login() {
+    const isLoading = computed(() => store.state.app.isLoading);
+    const login = async () => {
       await store.dispatch("auth/login", {
         username: username.value,
         password: password.value,
       });
-    }
+    };
 
     onMounted(async () => {
       await router.isReady();
-
       store.dispatch("app/changeUrl", router.currentRoute.value.path);
     });
+
     return {
-      JFP_Logo,
-      getCurrentURL,
       login,
+      JFP_Logo,
       username,
       password,
+      isLoading,
     };
   },
 };
@@ -52,6 +51,8 @@ export default {
       <label>Password</label>
       <input v-model="password" class="input__field" type="password" />
     </div>
-    <button class="mt-3 h-9 button-primary">Login</button>
+    <button class="mt-3 h-9 button-primary" :disabled="isLoading">
+      {{ isLoading ? "Login..." : "Login" }}
+    </button>
   </form>
 </template>

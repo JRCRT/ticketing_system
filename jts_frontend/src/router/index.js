@@ -72,7 +72,6 @@ router.afterEach((to, from) => {
 router.beforeEach((to, from, next) => {
   const user = localStorage.getItem("user");
   if (to.matched.some((route) => route.meta.authRequired)) {
-    //route = dashboard
     if (!user) next({ name: "Login" });
     else next();
   } else if (to.matched.some((route) => route.meta.adminRequired)) {

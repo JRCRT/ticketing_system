@@ -34,8 +34,8 @@ namespace jts_backend.Services.AuthService
         {
             var response = new ServiceResponse<AuthUserDto>();
             var user = await _context.user
-                .Where(u => u.username.ToLower() == request.username.ToLower())
-                .FirstOrDefaultAsync();
+                .Include(u => u.role)
+                .FirstOrDefaultAsync(u => u.username.ToLower() == request.username.ToLower());
             if (
                 user is null
                 || !Helper.Helper.VerifyPasswordHash(
@@ -54,6 +54,7 @@ namespace jts_backend.Services.AuthService
             authUser.user_id = user.user_id;
             authUser.username = user.username;
             authUser.access_token = CreateToken(user);
+            authUser.roleModel = user.role;
             response.data = authUser;
 
             return response;

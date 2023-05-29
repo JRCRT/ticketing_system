@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Models;
 
 namespace jts_backend.Dtos.AuthDto
 {
@@ -10,5 +11,7 @@ namespace jts_backend.Dtos.AuthDto
         public int user_id { get; set; }
         public string username { get; set; } = string.Empty;
         public string access_token { get; set; } = string.Empty;
+
+        public RoleModel roleModel { get; set; } = new RoleModel();
     }
 }

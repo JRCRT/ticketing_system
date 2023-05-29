@@ -23,6 +23,7 @@ const actions = {
         },
         { root: true }
       );
+      commit("app/setLoading", false, { root: true });
       return;
     }
 
