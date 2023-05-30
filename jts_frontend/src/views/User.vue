@@ -28,8 +28,8 @@
 <script>
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
-import { onMounted, ref } from "vue";
-import store from "../store";
+import { ref } from "vue";
+import { useStore } from "vuex";
 import { computed } from "@vue/reactivity";
 export default {
   name: "User",
@@ -39,7 +39,7 @@ export default {
   },
 
   setup() {
-    /*  const axios = inject("axios"); */
+    const store = useStore();
     const columnDefs = [
       { headerName: "No.", field: "user_id", flex: 1 },
       { headerName: "Name", field: "ext_name", flex: 2 },
@@ -53,14 +53,14 @@ export default {
         field: "department.name",
         flex: 1,
       },
+      {
+        headerName: "Role",
+        field: "role.name",
+        flex: 1,
+      },
     ];
-    const gridAPI = ref(null);
-    const rowData = ref([]);
 
-    onMounted(async () => {
-      await store.dispatch("user/loadUsers");
-      gridAPI.value.setRowData(store.state.user.users);
-    });
+    const rowData = ref([]);
 
     const modalActive = ref(false);
 
@@ -68,11 +68,12 @@ export default {
       modalActive.value = false;
     };
 
-    const onGridReady = (params) => {
-      gridAPI.value = params.api;
+    const onGridReady = async (params) => {
+      params.api.showLoadingOverlay();
+      await store.dispatch("user/loadUsers");
+      params.api.setRowData(store.state.user.users);
     };
 
-    async function getAPI() {}
     const openModal = () => {
       modalActive.value = true;
     };
@@ -83,7 +84,6 @@ export default {
       modalActive,
       closeModal,
       openModal,
-      getAPI,
       onGridReady,
     };
   },
