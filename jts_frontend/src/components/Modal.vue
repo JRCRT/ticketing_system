@@ -23,7 +23,7 @@
         </button>
       </div>
 
-      <div class="modal-content">
+      <div>
         <slot name="content"></slot>
       </div>
       <div class="modal-footer">

@@ -1,5 +1,4 @@
 import axios from "./api";
-
 const users = async () => {
   const response = await axios
     .get("/User/GetAllUsers")
@@ -12,4 +11,16 @@ const users = async () => {
   return response;
 };
 
-export { users };
+const createUser = async (User) => {
+  const response = await axios
+    .post("/User/CreateUser", User)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
+export { users, createUser };

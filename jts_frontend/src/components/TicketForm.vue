@@ -4,32 +4,34 @@
       <h5>New</h5>
     </template>
     <template v-slot:content>
-      <label>Subject</label>
-      <input class="input__field" />
-      <label>Background</label>
-      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
-      <label>Contents</label>
-      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
-      <label>Reasons</label>
-      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
-      <label>Others</label>
-      <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
-      <label>Attached Documents</label>
-      <input class="input__field" type="file" />
-      <label>Checked By</label>
-      <VueMultiselect
-        v-model="selectedChecker"
-        :options="options"
-        :multiple="true"
-        :taggable="true"
-      />
-      <label>Approvers</label>
-      <VueMultiselect
-        v-model="selectedApprover"
-        :options="options"
-        :multiple="true"
-        :taggable="true"
-      />
+      <div class="ticket_form_container">
+        <label>Subject</label>
+        <input class="input__field" />
+        <label>Background</label>
+        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <label>Contents</label>
+        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <label>Reasons</label>
+        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <label>Others</label>
+        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <label>Attached Documents</label>
+        <input class="input__field" type="file" />
+        <label>Checked By</label>
+        <VueMultiselect
+          v-model="selectedChecker"
+          :options="options"
+          :multiple="true"
+          :taggable="true"
+        />
+        <label>Approvers</label>
+        <VueMultiselect
+          v-model="selectedApprover"
+          :options="options"
+          :multiple="true"
+          :taggable="true"
+        />
+      </div>
     </template>
     <template v-slot:footer>
       <div class="w-full">

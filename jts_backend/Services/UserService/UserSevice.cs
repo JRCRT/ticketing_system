@@ -49,9 +49,9 @@ namespace jts_backend.Services.UserService
             return response;
         }
 
-        public async Task<ServiceResponse<string>> CreateUser(CreateUserDto newUser)
+        public async Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto newUser)
         {
-            var response = new ServiceResponse<string>();
+            var response = new ServiceResponse<GetUserDto>();
             Helper.Helper.CreatePasswordHash(
                 newUser.password,
                 out byte[] passwordHash,
@@ -92,7 +92,8 @@ namespace jts_backend.Services.UserService
             user.role = role;
             _context.user.Add(user);
             await _context.SaveChangesAsync();
-            response.data = "User created successfully.";
+            response.data = _mapper.Map<GetUserDto>(user);
+            response.message = "User added successfully.";
             return response;
         }
 

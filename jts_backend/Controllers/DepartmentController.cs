@@ -20,7 +20,7 @@ namespace jts_backend.Controllers
             _departmentService = departmentService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllDepartments")]
         public async Task<
             ActionResult<ServiceResponse<ICollection<GetDepartmentDto>>>
         > GetAllDepartments()

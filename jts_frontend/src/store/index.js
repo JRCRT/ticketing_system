@@ -3,6 +3,7 @@ import auth from "./modules/auth";
 import app from "./modules/app";
 import user from "./modules/user";
 import role from "./modules/role";
+import department from "./modules/department";
 
 export default createStore({
   modules: {
@@ -10,5 +11,6 @@ export default createStore({
     app,
     user,
     role,
+    department,
   },
 });
