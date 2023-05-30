@@ -5,13 +5,23 @@
     </template>
     <template v-slot:content>
       <label> Username </label>
-      <input class="input__field" />
+      <input v-model="username" class="input__field" />
       <label> Password </label>
-      <input class="input__field" type="password" />
-      <label> FullName </label>
-      <input class="input__field" />
+      <input v-model="password" class="input__field" type="password" />
+      <label> First Name </label>
+      <input v-model="firstname" class="input__field" />
+      <label> Middle Name </label>
+      <input v-model="middlename" class="input__field" />
+      <label> Last Name </label>
+      <input v-model="lastname" class="input__field" />
       <label> Email Address </label>
-      <input class="input__field" />
+      <input v-model="emailAddress" class="input__field" />
+      <label> Role </label>
+      <VueMultiselect
+        :options="roles"
+        v-model="selectedRole"
+        label="name"
+      ></VueMultiselect>
       <label> Department </label>
       <VueMultiselect
         :options="departments"
@@ -30,30 +40,50 @@
     </template>
   </Modal>
 </template>
-<script>
-import { ref } from "vue";
+
+<script lang="js">
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+
 export default {
   emits: ["close"],
   components: {
     Modal,
     VueMultiselect,
   },
+
   setup() {
+    const store = useStore();
     const selectedDepartment = ref(null);
+    const selectedRole = ref(null);
+    const username = ref(null);
+    const password = ref(null);
+    const firstname = ref(null);
+    const middlename = ref(null);
+    const lastname = ref(null);
+    const emailAddress = ref(null);
     const departments = [
-      "IT",
-      "Loan Administration",
-      "Accounting",
-      "Sales and Marketing",
-      "Collection",
-      "Internal Control",
-    ];
+      "IT","HR"
+    ]
+    const roles = ref([]);
+    onMounted(async()=>{
+      await store.dispatch("role/loadRoles");
+      roles.value = store.state.role.roles;
+    })
     return {
+      roles,
       departments,
       selectedDepartment,
+      selectedRole,
+      username,
+  password ,
+    firstname,
+middlename,
+lastname,
+emailAddress,
     };
   },
 };
