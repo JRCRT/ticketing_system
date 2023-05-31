@@ -12,36 +12,58 @@ const getter = {
 
 const actions = {
   async login({ commit }, { username, password }) {
-    commit("app/setLoading", true, { root: true });
-    if (!username || !password) {
+    commit("app/SET_LOADING", true, { root: true });
+    if (!username && !password) {
       commit(
         "app/pushAlert",
         {
           type: "danger",
-          message: "Please fill up necessary field.",
+          message: "The Username and Password Field is required.",
         },
         { root: true }
       );
-      commit("app/setLoading", false, { root: true });
+      commit("app/SET_LOADING", false, { root: true });
+      return;
+    } else if (!username) {
+      commit(
+        "app/ADD_ALERT",
+        {
+          type: "danger",
+          message: "The Username Field is required.",
+        },
+        { root: true }
+      );
+      commit("app/SET_LOADING", false, { root: true });
+      return;
+    } else if (!password) {
+      commit(
+        "app/ADD_ALERT",
+        {
+          type: "danger",
+          message: "The Password Field is required.",
+        },
+        { root: true }
+      );
+      commit("app/SET_LOADING", false, { root: true });
       return;
     }
     const response = await authenticate({ username, password });
     if (!response.success) {
       commit(
-        "app/pushAlert",
+        "app/ADD_ALERT",
         {
           type: "danger",
           message: response.message,
         },
         { root: true }
       );
-      commit("app/setLoading", false, { root: true });
+      commit("app/SET_LOADING", false, { root: true });
 
       return;
     }
 
-    commit("app/setLoading", false, { root: true });
-    commit("app/setCurrentUrl", "/", { root: true });
+    commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_CURRENT_PATH", "/", { root: true });
     localStorage.setItem("user", JSON.stringify(response.data));
     console.log(localStorage.getItem("user"));
     router.replace({ name: "Dashboard" });

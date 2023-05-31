@@ -11,27 +11,31 @@ const getter = {
 };
 const actions = {
   changeUrl({ commit }, value) {
-    commit("setCurrentUrl", value);
+    commit("SET_CURRENT_URL", value);
   },
-  addAlert({ commit }, value) {
-    commit("pushAlert", value);
+  addAlert({ commit, state }, value) {
+    commit("ADD_ALERT", value);
+
+    setTimeout(() => {
+      commit("REMOVE_ALERT", state.alerts.length - 1);
+    }, 4000);
   },
   removeAlert({ commit }, index) {
-    commit("popAlert", index);
+    commit("REMOVE_ALERT", index);
   },
 };
 
 const mutations = {
-  setLoading(state, value) {
+  SET_LOADING(state, value) {
     state.isLoading = value;
   },
-  setCurrentUrl(state, value) {
+  SET_CURRENT_URL(state, value) {
     state.currentUrl = value;
   },
-  pushAlert(state, value) {
+  ADD_ALERT(state, value) {
     state.alerts.push(value);
   },
-  popAlert(state, index) {
+  REMOVE_ALERT(state, index) {
     state.alerts.splice(index, 1);
   },
 };

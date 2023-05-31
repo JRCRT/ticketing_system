@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
 import { ref } from "vue";

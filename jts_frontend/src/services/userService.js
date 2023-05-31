@@ -11,9 +11,10 @@ const users = async () => {
   return response;
 };
 
-const createUser = async (User) => {
+const createUser = async (user) => {
+  console.log(user);
   const response = await axios
-    .post("/User/CreateUser", User)
+    .post("/User/CreateUser", user)
     .then((res) => {
       return res.data;
     })

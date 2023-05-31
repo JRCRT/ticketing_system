@@ -16,21 +16,9 @@ const actions = {
     commit("populateUsers", response.data);
   },
 
-  async createUser(
-    { commit },
-    {
-      username,
-      password,
-      firstname,
-      middlename,
-      lastname,
-      email,
-      role_id,
-      department_id,
-    }
-  ) {
+  async createUser({ commit }, user) {
     commit("app/setLoading", true, { root: true });
-    const response = await createUser(User);
+    const response = await createUser(user);
     if (!response.success) {
       commit(
         "app/pushAlert",

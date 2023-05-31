@@ -78,17 +78,16 @@ export default {
     const createUser = async (
     ) => {
       const user = new User({
-        username,
-        password,
-        first_name: firstname,
-        middle_name: middlename,
-        last_name: lastname,
-        email: emailAddress,
-        role_id: selectedRole.role_id,
-        department_id: selectedDepartment.department_id
-      })
-      console.log(user.first_name);
-      //await store.dispatch("user/createUser", user);
+      first_name: firstname.value,
+      middle_name: middlename.value,
+      last_name: lastname.value,
+      username: username.value,
+      password: password.value,
+      email:  emailAddress.value,
+      role_id: selectedRole.value.role_id,
+      department_id:  selectedDepartment.value.department_id}
+      )
+      await store.dispatch("user/createUser", user);
     };
 
     onMounted(async()=>{
