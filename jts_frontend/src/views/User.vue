@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserForm v-if="modalActive" @close="closeModal()" />
+    <UserForm v-if="modalActive" :tableApi="tableApi" @close="closeModal()" />
     <h4 class="text-primary">User</h4>
     <div class="flex justify-between items-end mt-1 mb-2">
       <div>
@@ -17,11 +17,7 @@
         </button>
       </div>
     </div>
-    <Table
-      @grid-ready="onGridReady"
-      :rowData="rowData"
-      :columnDefs="columnDefs"
-    ></Table>
+    <Table @grid-ready="onGridReady" :columnDefs="columnDefs"></Table>
   </div>
 </template>
 
@@ -38,7 +34,7 @@ export default {
     UserForm,
   },
 
-  setup() {
+    setup() {
     const store = useStore();
     const columnDefs = [
       { headerName: "No.", field: "user_id", flex: 1 },
@@ -60,19 +56,20 @@ export default {
       },
     ];
 
-    const rowData = ref([]);
+    const tableApi = ref(null);
 
     const modalActive = ref(false);
+
 
     const closeModal = () => {
       modalActive.value = false;
     };
 
     const onGridReady = async (params) => {
+      tableApi.value = params.api;
       params.api.showLoadingOverlay();
       await store.dispatch("user/fetchUsers");
-      rowData.value = store.state.user.users;
-      params.api.setRowData(rowData.value);
+      params.api.setRowData(store.state.user.users);
     };
 
     const openModal = () => {
@@ -81,7 +78,7 @@ export default {
 
     return {
       columnDefs,
-      rowData,
+      tableApi,
       modalActive,
       closeModal,
       openModal,

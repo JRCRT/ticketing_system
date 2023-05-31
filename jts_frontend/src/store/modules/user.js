@@ -16,20 +16,20 @@ const actions = {
     commit("FETCH_USERS", response.data);
   },
 
-  async createUser({ commit }, user) {
+  async createUser({ commit, dispatch }, user) {
     commit("app/SET_LOADING", true, { root: true });
     const response = await createUser(user);
     var alert;
     if (!response.success) {
       alert = { type: "danger", message: response.message };
-      commit("app/ADD_ALERT", alert, { root: true });
+      dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
       return;
     }
     alert = { type: "success", message: response.message };
     commit("ADD_USER", response.data);
     commit("app/SET_LOADING", false, { root: true });
-    commit("app/ADD_ALERT", alert, { root: true });
+    dispatch("app/addAlert", alert, { root: true });
   },
 };
 

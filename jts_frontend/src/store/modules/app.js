@@ -16,7 +16,7 @@ const actions = {
 
     setTimeout(() => {
       commit("REMOVE_ALERT", state.alerts[0]);
-    }, 4000);
+    }, 3000);
   },
 };
 
