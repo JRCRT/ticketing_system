@@ -11,59 +11,43 @@ const getter = {
 };
 
 const actions = {
-  async login({ commit }, { username, password }) {
+  async login({ commit, dispatch }, { username, password }) {
     commit("app/SET_LOADING", true, { root: true });
     if (!username && !password) {
-      commit(
-        "app/pushAlert",
-        {
-          type: "danger",
-          message: "The Username and Password Field is required.",
-        },
-        { root: true }
-      );
+      const alert = {
+        type: "danger",
+        message: "The Username and Password Field is required.",
+      };
+      dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
       return;
     } else if (!username) {
-      commit(
-        "app/ADD_ALERT",
-        {
-          type: "danger",
-          message: "The Username Field is required.",
-        },
-        { root: true }
-      );
+      const alert = {
+        type: "danger",
+        message: "The Username Field is required.",
+      };
+      dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
       return;
     } else if (!password) {
-      commit(
-        "app/ADD_ALERT",
-        {
-          type: "danger",
-          message: "The Password Field is required.",
-        },
-        { root: true }
-      );
+      const alert = {
+        type: "danger",
+        message: "The Password Field is required.",
+      };
+      dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
       return;
     }
     const response = await authenticate({ username, password });
     if (!response.success) {
-      commit(
-        "app/ADD_ALERT",
-        {
-          type: "danger",
-          message: response.message,
-        },
-        { root: true }
-      );
+      const alert = { type: "danger", message: response.message };
+      dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
-
       return;
     }
 
     commit("app/SET_LOADING", false, { root: true });
-    commit("app/SET_CURRENT_PATH", "/", { root: true });
+    commit("app/SET_CURRENT_URL", "/", { root: true });
     localStorage.setItem("user", JSON.stringify(response.data));
     console.log(localStorage.getItem("user"));
     router.replace({ name: "Dashboard" });

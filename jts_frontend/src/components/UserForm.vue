@@ -91,11 +91,12 @@ export default {
     };
 
     onMounted(async()=>{
-      await store.dispatch("role/loadRoles");
-      await store.dispatch("department/loadDepartments")
+      await store.dispatch("role/fetchRoles");
+      await store.dispatch("department/fetchDepartments")
       roles.value = store.state.role.roles;
       departments.value = store.state.department.departments;
     })
+
     return {
       roles,
       departments,

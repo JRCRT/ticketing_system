@@ -26,7 +26,7 @@ export default {
       sidebarActive.value = true;
     };
     const removeAlert = (index) => {
-      store.dispatch("app/removeAlert", index);
+      store.commit("app/REMOVE_ALERT", index);
     };
     const alerts = computed(() => store.state.app.alerts);
     const currentUrl = computed(() => store.state.app.currentUrl);

@@ -11,44 +11,33 @@ const getter = {
 };
 
 const actions = {
-  async loadUsers({ commit }) {
+  async fetchUsers({ commit }) {
     const response = await users();
-    commit("populateUsers", response.data);
+    commit("FETCH_USERS", response.data);
   },
 
   async createUser({ commit }, user) {
-    commit("app/setLoading", true, { root: true });
+    commit("app/SET_LOADING", true, { root: true });
     const response = await createUser(user);
+    var alert;
     if (!response.success) {
-      commit(
-        "app/pushAlert",
-        {
-          type: "danger",
-          message: response.message,
-        },
-        { root: true }
-      );
-      commit("app/setLoading", false, { root: true });
+      alert = { type: "danger", message: response.message };
+      commit("app/ADD_ALERT", alert, { root: true });
+      commit("app/SET_LOADING", false, { root: true });
       return;
     }
-    commit("addUser", response.data);
-    commit("app/setLoading", false, { root: true });
-    commit(
-      "app/pushAlert",
-      {
-        type: "success",
-        message: response.message,
-      },
-      { root: true }
-    );
+    alert = { type: "success", message: response.message };
+    commit("ADD_USER", response.data);
+    commit("app/SET_LOADING", false, { root: true });
+    commit("app/ADD_ALERT", alert, { root: true });
   },
 };
 
 const mutations = {
-  populateUsers(state, value) {
+  FETCH_USERS(state, value) {
     state.users = value;
   },
-  addUser(state, value) {
+  ADD_USER(state, value) {
     state.users.push(value);
   },
 };

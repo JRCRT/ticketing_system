@@ -70,8 +70,9 @@ export default {
 
     const onGridReady = async (params) => {
       params.api.showLoadingOverlay();
-      await store.dispatch("user/loadUsers");
-      params.api.setRowData(store.state.user.users);
+      await store.dispatch("user/fetchUsers");
+      rowData.value = store.state.user.users;
+      params.api.setRowData(rowData.value);
     };
 
     const openModal = () => {

@@ -6,14 +6,14 @@ const state = () => ({
 const getter = {};
 
 const actions = {
-  async loadDepartments({ commit }) {
+  async fetchDepartments({ commit }) {
     const response = await departments();
-    commit("populateDepartments", response.data);
+    commit("FETCH_DEPARTMENTS", response.data);
   },
 };
 
 const mutations = {
-  populateDepartments(state, value) {
+  FETCH_DEPARTMENTS(state, value) {
     state.departments = value;
   },
 };

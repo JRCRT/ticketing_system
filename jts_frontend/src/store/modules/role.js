@@ -6,14 +6,14 @@ const state = () => ({
 const getter = {};
 
 const actions = {
-  async loadRoles({ commit }) {
+  async fetchRoles({ commit }) {
     const response = await roles();
-    commit("populateRoles", response.data);
+    commit("FETCH_ROLES", response.data);
   },
 };
 
 const mutations = {
-  populateRoles(state, value) {
+  FETCH_ROLES(state, value) {
     state.roles = value;
   },
 };

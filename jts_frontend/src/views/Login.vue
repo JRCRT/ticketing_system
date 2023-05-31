@@ -22,7 +22,7 @@ export default {
 
     onMounted(async () => {
       await router.isReady();
-      store.dispatch("app/changeUrl", router.currentRoute.value.path);
+      store.commit("app/SET_CURRENT_URL", router.currentRoute.value.path);
       usernameField.value.focus();
     });
 

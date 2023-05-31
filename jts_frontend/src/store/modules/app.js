@@ -9,19 +9,14 @@ const getter = {
     return state.currentUrl;
   },
 };
+
 const actions = {
-  changeUrl({ commit }, value) {
-    commit("SET_CURRENT_URL", value);
-  },
   addAlert({ commit, state }, value) {
     commit("ADD_ALERT", value);
 
     setTimeout(() => {
-      commit("REMOVE_ALERT", state.alerts.length - 1);
+      commit("REMOVE_ALERT", state.alerts[0]);
     }, 4000);
-  },
-  removeAlert({ commit }, index) {
-    commit("REMOVE_ALERT", index);
   },
 };
 
