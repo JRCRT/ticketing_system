@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserForm v-if="modalActive" :tableApi="tableApi" @close="closeModal()" />
+    <UserForm v-if="isUserFormOpen" @close="closeModal()" />
     <h4 class="text-primary">User</h4>
     <div class="flex justify-between items-end mt-1 mb-2">
       <div>
@@ -60,12 +60,21 @@ export default {
 
     const tableApi = ref(null);
 
-    const modalActive = ref(false);
 
-    signalR.on('GetUser', user => console.log(user));
+    const isUserFormOpen = computed(()=> store.state.app.isUserFormOpen);
+    signalR.on('GetUser', user => {
+      console.log(user);
+      store.commit("user/ADD_USER", user);
+      tableApi.value.setRowData(store.state.user.users)
+      console.log(store.state.user.users);
+    });
 
     const closeModal = () => {
-      modalActive.value = false;
+      store.commit("app/SET_USER_FORM", false);
+    };
+
+    const openModal = () => {
+      store.commit("app/SET_USER_FORM", true);
     };
 
     const onGridReady = async (params) => {
@@ -75,14 +84,9 @@ export default {
       params.api.setRowData(store.state.user.users);
     };
 
-    const openModal = () => {
-      modalActive.value = true;
-    };
-
     return {
       columnDefs,
-      tableApi,
-      modalActive,
+      isUserFormOpen,
       closeModal,
       openModal,
       onGridReady,

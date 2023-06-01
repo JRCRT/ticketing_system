@@ -2,13 +2,10 @@ const state = () => ({
   isLoading: false,
   alerts: [],
   currentUrl: null,
+  isUserFormOpen: false,
 });
 
-const getter = {
-  currentUrl: (state) => {
-    return state.currentUrl;
-  },
-};
+const getter = {};
 
 const actions = {
   addAlert({ commit, state }, value) {
@@ -32,6 +29,9 @@ const mutations = {
   },
   REMOVE_ALERT(state, index) {
     state.alerts.splice(index, 1);
+  },
+  SET_USER_FORM(state, value) {
+    state.isUserFormOpen = value;
   },
 };
 

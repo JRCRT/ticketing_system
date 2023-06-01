@@ -56,14 +56,14 @@ import "vue-multiselect/dist/vue-multiselect.css";
 
 
 export default {
-  props: ['tableApi'],
+
   emits: ["close"],
   components: {
     Modal,
     VueMultiselect,
   },
 
-  setup(props) {
+  setup() {
     const store = useStore();
     const selectedDepartment = ref({});
     const selectedRole = ref({});
@@ -75,7 +75,7 @@ export default {
     const emailAddress = ref(null);
     const departments = ref([])
     const roles = ref([]);
-    const tableApi = props.tableApi;
+
 
     const createUser = async (
     ) => {
@@ -90,7 +90,7 @@ export default {
       department_id:  selectedDepartment.value.department_id}
       )
       await store.dispatch("user/createUser", user);
-      tableApi.setRowData(store.state.user.users);
+      //tableApi.setRowData(store.state.user.users);
     };
 
     onMounted(async()=>{

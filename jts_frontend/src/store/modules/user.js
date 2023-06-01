@@ -27,8 +27,8 @@ const actions = {
       return;
     }
     alert = { type: "success", message: response.message };
-    commit("ADD_USER", response.data);
     commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_USER_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
 };
