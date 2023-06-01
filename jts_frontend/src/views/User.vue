@@ -27,6 +27,7 @@ import Table from "@/components/Table.vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { computed } from "@vue/reactivity";
+import { useSignalR } from '@quangdao/vue-signalr';
 export default {
   name: "User",
   components: {
@@ -36,6 +37,7 @@ export default {
 
     setup() {
     const store = useStore();
+    const signalR = useSignalR();
     const columnDefs = [
       { headerName: "No.", field: "user_id", flex: 1 },
       { headerName: "Name", field: "ext_name", flex: 2 },
@@ -60,6 +62,7 @@ export default {
 
     const modalActive = ref(false);
 
+    signalR.on('GetUser', user => console.log(user));
 
     const closeModal = () => {
       modalActive.value = false;

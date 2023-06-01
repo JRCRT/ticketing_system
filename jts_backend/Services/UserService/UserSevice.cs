@@ -1,8 +1,10 @@
 using AutoMapper;
 using jts_backend.Context;
 using jts_backend.Dtos.UserDto;
+using jts_backend.Hub.User;
 using jts_backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace jts_backend.Services.UserService
@@ -12,10 +14,17 @@ namespace jts_backend.Services.UserService
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
 
-        public UserSevice(JtsContext context, IMapper mapper)
+        private readonly IHubContext<UserHub, IUserHub> _hubContext;
+
+        public UserSevice(
+            JtsContext context,
+            IMapper mapper,
+            IHubContext<UserHub, IUserHub> hubContext
+        )
         {
             _context = context;
             _mapper = mapper;
+            _hubContext = hubContext;
         }
 
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
@@ -79,20 +88,24 @@ namespace jts_backend.Services.UserService
                 return response;
             }
 
-            var user = new UserModel();
-            user.first_name = newUser.first_name;
-            user.middle_name = newUser.middle_name;
-            user.last_name = newUser.last_name;
-            user.username = newUser.username;
-            user.email = newUser.email;
-            user.password_hash = passwordHash;
-            user.password_salt = passwordSalt;
-            user.department = department;
-            user.ext_name = $"{newUser.first_name} {newUser.middle_name} {newUser.last_name}";
-            user.role = role;
+            var user = new UserModel()
+            {
+                first_name = newUser.first_name,
+                middle_name = newUser.middle_name,
+                last_name = newUser.last_name,
+                username = newUser.username,
+                email = newUser.email,
+                password_hash = passwordHash,
+                password_salt = passwordSalt,
+                department = department,
+                ext_name = $"{newUser.first_name} {newUser.middle_name} {newUser.last_name}",
+                role = role
+            };
+
             _context.user.Add(user);
             await _context.SaveChangesAsync();
             response.data = _mapper.Map<GetUserDto>(user);
+            await _hubContext.Clients.All.GetUser(response.data);
             response.message = "User added successfully.";
             return response;
         }

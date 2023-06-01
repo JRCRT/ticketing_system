@@ -1,4 +1,5 @@
 using jts_backend.Context;
+using jts_backend.Hub.User;
 using jts_backend.Services.AuthService;
 using jts_backend.Services.DepartmentService;
 using jts_backend.Services.RoleService;
@@ -17,7 +18,6 @@ builder.Services.AddDbContext<JtsContext>(
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<IUserService, UserSevice>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -40,7 +40,7 @@ builder.Services
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,9 +51,17 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
+
+//app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
+app.UseCors(
+    builder =>
+        builder
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+);
 app.UseAuthorization();
-
+app.MapHub<UserHub>("/user-hub");
 app.MapControllers();
-
 app.Run();

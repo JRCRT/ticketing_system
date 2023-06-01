@@ -10,6 +10,7 @@ export default {
   components: {
     Sidebar,
     Alert,
+    Loader,
   },
   setup() {
     const router = useRouter();
@@ -30,7 +31,7 @@ export default {
     };
     const alerts = computed(() => store.state.app.alerts);
     const currentUrl = computed(() => store.state.app.currentUrl);
-
+    const isLoading = computed(() => store.state.app.isLoading);
     const logout = () => {
       store.dispatch("auth/logout");
       router.replace("/login");
@@ -47,12 +48,14 @@ export default {
       logout,
       currentUrl,
       alerts,
+      isLoading,
     };
   },
 };
 </script>
 
 <template>
+  <Loader v-if="isLoading" />
   <Sidebar :active="sidebarActive" @close="hideSidebar">
     <template v-slot:header>
       <router-link :to="{ name: 'Dashboard' }">
