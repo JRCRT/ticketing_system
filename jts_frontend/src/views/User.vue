@@ -60,13 +60,12 @@ export default {
 
     const tableApi = ref(null);
 
-
     const isUserFormOpen = computed(()=> store.state.app.isUserFormOpen);
     signalR.on('GetUser', user => {
-      console.log(user);
+
       store.commit("user/ADD_USER", user);
       tableApi.value.setRowData(store.state.user.users)
-      console.log(store.state.user.users);
+
     });
 
     const closeModal = () => {
