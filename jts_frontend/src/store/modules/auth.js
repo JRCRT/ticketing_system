@@ -49,7 +49,6 @@ const actions = {
     commit("app/SET_LOADING", false, { root: true });
     commit("app/SET_CURRENT_URL", "/", { root: true });
     localStorage.setItem("user", JSON.stringify(response.data));
-    console.log(localStorage.getItem("user"));
     router.replace({ name: "Dashboard" });
   },
 

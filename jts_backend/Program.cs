@@ -2,8 +2,11 @@ using jts_backend.Context;
 using jts_backend.Hub.User;
 using jts_backend.Services.AuthService;
 using jts_backend.Services.DepartmentService;
+using jts_backend.Services.PriorityService;
 using jts_backend.Services.RoleService;
+using jts_backend.Services.StatusService;
 using jts_backend.Services.UserService;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,6 +25,9 @@ builder.Services.AddScoped<IUserService, UserSevice>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
+builder.Services.AddScoped<IPriorityService, PriorityService>();
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

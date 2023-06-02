@@ -28,5 +28,14 @@ namespace jts_backend.Controllers
             var departments = await _departmentService.GetAllDepartments();
             return Ok(departments);
         }
+
+        [HttpPost("CreateDepartment")]
+        public async Task<ActionResult<ServiceResponse<GetDepartmentDto>>> CreateDepartment(
+            CreateDepartmentDto request
+        )
+        {
+            var departments = await _departmentService.CreateDepartment(request);
+            return Ok(departments);
+        }
     }
 }

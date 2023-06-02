@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace jts_backend.Dtos.RoleDto
+namespace jts_backend.Dtos.StatusDto
 {
-    public class GetRoleDto
+    public class CreateStatusDto
     {
-        public int role_id { get; set; }
         public string name { get; set; } = string.Empty;
     }
 }

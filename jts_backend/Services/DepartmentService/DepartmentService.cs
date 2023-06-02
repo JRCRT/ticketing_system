@@ -21,9 +21,11 @@ namespace jts_backend.Services.DepartmentService
             _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<string>> CreateDepartment(CreateDepartmentDto request)
+        public async Task<ServiceResponse<GetDepartmentDto>> CreateDepartment(
+            CreateDepartmentDto request
+        )
         {
-            var response = new ServiceResponse<string>();
+            var response = new ServiceResponse<GetDepartmentDto>();
             var department = await _context.department
                 .Where(d => d.name.ToLower().Equals(request.name.ToLower()))
                 .FirstOrDefaultAsync();
@@ -39,7 +41,7 @@ namespace jts_backend.Services.DepartmentService
 
             _context.department.Add(newDeparment);
             await _context.SaveChangesAsync();
-            response.data = "Added successfully.";
+            response.data = _mapper.Map<GetDepartmentDto>(newDeparment);
             return response;
         }
 

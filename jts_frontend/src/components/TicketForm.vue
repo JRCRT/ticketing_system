@@ -8,7 +8,11 @@
         <label>Subject</label>
         <input class="input__field" />
         <label>Background</label>
-        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <ckeditor
+          v-model="backgroundField"
+          :editor="editor"
+          :config="editorConfig"
+        ></ckeditor>
         <label>Contents</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
         <label>Reasons</label>
@@ -23,6 +27,7 @@
           :options="options"
           :multiple="true"
           :taggable="true"
+          :show-labels="false"
         />
         <label>Approvers</label>
         <VueMultiselect
@@ -30,13 +35,14 @@
           :options="options"
           :multiple="true"
           :taggable="true"
+          :show-labels="false"
         />
       </div>
     </template>
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2">Submit</button>
+          <button class="button-primary mr-2" @click="save">Submit</button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -72,6 +78,7 @@ export default {
 
   setup() {
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
+    const backgroundField = ref("");
     const editor = BalloonEditor;
     const options = [
       "option 1",
@@ -101,13 +108,19 @@ export default {
         items: ["bold", "italic", "|", "insertTable", "alignment", "highlight"],
       },
     };
+
+    const save = () => {
+      console.log(backgroundField.value);
+    };
     return {
+      save,
       VITE_TINY_API_KEY,
       editor,
       editorConfig,
       options,
       selectedChecker,
       selectedApprover,
+      backgroundField,
     };
   },
 };

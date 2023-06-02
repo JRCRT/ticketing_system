@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-3">
-    <TicketForm v-if="modalActive" @close="closeModal()" />
+    <TicketForm v-if="modalActive" @close="closeModal" />
 
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
@@ -20,9 +20,7 @@
           </div>
         </div>
 
-        <button class="w-14 button-transparent" @click="openModal()">
-          New
-        </button>
+        <button class="w-14 button-transparent" @click="openModal">New</button>
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>

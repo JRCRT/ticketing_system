@@ -18,17 +18,16 @@ namespace jts_backend.Models
         public string subject { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(500)]
         public string background { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(500)]
         public string content { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(500)]
         public string reason { get; set; } = string.Empty;
 
+        [MaxLength(500)]
+        public string declined_reason { get; set; } = string.Empty;
         public StatusModel status { get; set; } = new StatusModel();
         public UserModel user { get; set; } = new UserModel();
 

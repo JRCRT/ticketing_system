@@ -34,11 +34,6 @@ export default {
   props: ["alert"],
   emits: ["remove"],
   setup() {
-
-   /*  setTimeout(() => {
-      store.dispatch("app/removeAlert", length - 1);
-
-    }, 4000); */
   },
 };
 </script>
