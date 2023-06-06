@@ -36,8 +36,7 @@ namespace jts_backend.Services.DepartmentService
                 return response;
             }
 
-            var newDeparment = new DepartmentModel();
-            newDeparment.name = request.name;
+            var newDeparment = new DepartmentModel() { name = request.name };
 
             _context.department.Add(newDeparment);
             await _context.SaveChangesAsync();

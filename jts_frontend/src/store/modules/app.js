@@ -3,6 +3,7 @@ const state = () => ({
   alerts: [],
   currentUrl: null,
   isUserFormOpen: false,
+  isLoggingIn: false,
 });
 
 const getter = {};
@@ -32,6 +33,9 @@ const mutations = {
   },
   SET_USER_FORM(state, value) {
     state.isUserFormOpen = value;
+  },
+  SET_LOGIN_LOADING(state, value) {
+    state.isLoggingIn = value;
   },
 };
 

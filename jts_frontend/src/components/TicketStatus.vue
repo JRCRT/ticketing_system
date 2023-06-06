@@ -1,5 +1,12 @@
 <template>
-  <p :class="setStatusColor(params.value)">{{ params.value }}</p>
+  <div class="flex justify-center items-center h-full">
+    <div
+      class="flex justify-center items-center rounded-lg h-5 w-20 text-center text-white"
+      :class="setStatusColor(params.value)"
+    >
+      <p>{{ params.value }}</p>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -7,11 +14,11 @@ export default {
     function setStatusColor(status) {
       switch (status) {
         case "Pending":
-          return "text-orange";
+          return "bg-orange";
         case "Approved":
-          return "text-primary";
+          return "bg-primary";
         case "Declined":
-          return "text-red";
+          return "bg-red";
       }
     }
     return {

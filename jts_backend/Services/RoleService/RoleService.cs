@@ -23,12 +23,12 @@ namespace jts_backend.Services.RoleService
             _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<string>> CreateRole(CreateRoleDto newRole)
+        public async Task<ServiceResponse<GetRoleDto>> CreateRole(CreateRoleDto request)
         {
-            var response = new ServiceResponse<string>();
+            var response = new ServiceResponse<GetRoleDto>();
 
             var role = await _context.role.FirstOrDefaultAsync(
-                r => r.name.ToLower() == newRole.name.ToLower()
+                r => r.name.ToLower() == request.name.ToLower()
             );
             //check if role is already exist
             if (role != null)
@@ -37,12 +37,12 @@ namespace jts_backend.Services.RoleService
                 response.success = false;
                 return response;
             }
-            var _newRole = new RoleModel();
-            _newRole.name = newRole.name;
+            var newRole = new RoleModel() { name = request.name };
 
-            _context.role.Add(_newRole);
+            _context.role.Add(newRole);
             await _context.SaveChangesAsync();
-            response.data = "Role added successfully.";
+            response.data = _mapper.Map<GetRoleDto>(newRole);
+            response.message = "Role added successfully.";
             return response;
         }
 

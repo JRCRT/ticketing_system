@@ -12,7 +12,7 @@ export default {
     const usernameField = ref(null);
     const store = useStore();
     const router = useRouter();
-    const isLoading = computed(() => store.state.app.isLoading);
+    const isLoading = computed(() => store.state.app.isLoggingIn);
     const login = async () => {
       await store.dispatch("auth/login", {
         username: username.value,
@@ -60,7 +60,7 @@ export default {
       <input v-model="password" class="input__field" type="password" />
     </div>
     <button class="mt-3 h-9 button-primary" :disabled="isLoading">
-      {{ isLoading ? "Login..." : "Login" }}
+      {{ isLoading ? "Logging..." : "Login" }}
     </button>
   </form>
 </template>

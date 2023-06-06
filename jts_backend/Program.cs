@@ -5,6 +5,7 @@ using jts_backend.Services.DepartmentService;
 using jts_backend.Services.PriorityService;
 using jts_backend.Services.RoleService;
 using jts_backend.Services.StatusService;
+using jts_backend.Services.TicketService;
 using jts_backend.Services.UserService;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +28,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IPriorityService, PriorityService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

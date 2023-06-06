@@ -50,6 +50,13 @@ export default {
         dateCreated: "04/12/2023",
         status: "Approved",
       },
+      {
+        ticketId: 3,
+        subject: "Additional Unit",
+        preparedBy: "Pedro",
+        dateCreated: "04/12/2023",
+        status: "Declined",
+      },
     ];
 
     function navigateToTicket(status) {
