@@ -1,5 +1,5 @@
 <template>
-  <Table :rowData="rowData" :columnDefs="columnDefs" />
+  <Table @grid-ready="onGridReady" :columnDefs="columnDefs" />
 </template>
 <script>
 import Table from "@/components/Table.vue";
@@ -10,11 +10,11 @@ export default {
 
   setup() {
     const columnDefs = [
-      { headerName: "Ticket ID", field: "ticketId", flex: 1 },
+      { headerName: "Ticket ID", field: "ticket_id", flex: 1 },
       { headerName: "Subject", field: "subject", flex: 2 },
       {
         headerName: "Prepared By",
-        field: "preparedBy",
+        field: "user.ext_name",
         flex: 1,
       },
       {
@@ -23,18 +23,18 @@ export default {
         flex: 1,
       },
     ];
-    const rowData = [
-      {
-        ticketId: 1,
-        subject: "Additional Unit",
-        preparedBy: "Juan Dela Cruz",
-        datePrepared: "04/12/2023",
-      },
-    ];
+
+    const onGridReady = async (params) => {
+      tableApi.value = params.api;
+      params.api.showLoadingOverlay();
+      await store.dispatch("ticket/fetchAllPendingTickets");
+      params.api.setRowData(store.state.ticket.pendingTickets);
+    };
 
     return {
       columnDefs,
-      rowData,
+
+      onGridReady,
     };
   },
 };

@@ -12,5 +12,6 @@ export default createStore({
     user,
     role,
     department,
+    ticket,
   },
 });

@@ -8,6 +8,7 @@ using AutoMapper;
 using Azure;
 using jts_backend.Context;
 using jts_backend.Dtos.TicketDto;
+using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,7 +61,7 @@ namespace jts_backend.Services.TicketService
             await _context.SaveChangesAsync();
 
             var signatories = request.signatories;
-            var _signatories = new Collection<UserModel>();
+            var _signatories = new Collection<GetUserDto>();
             foreach (var signatory in signatories)
             {
                 var user = await _context.user
@@ -78,7 +79,7 @@ namespace jts_backend.Services.TicketService
                     response.message = "Something went wrong.";
                     return response;
                 }
-                _signatories.Add(user);
+                _signatories.Add(_mapper.Map<GetUserDto>(user));
             }
 
             var responseData = new GetTicketDto()
@@ -100,24 +101,79 @@ namespace jts_backend.Services.TicketService
                 .Include(t => t.priority)
                 .Include(t => t.status)
                 .Include(t => t.user)
+                .Include(u => u.user.role)
+                .Include(u => u.user.department)
                 .Select(t => t)
                 .ToListAsync();
+
             foreach (var ticket in tickets)
             {
-                var approvers = new Collection<UserModel>();
+                var approvers = new Collection<GetUserDto>();
                 var signatories = await _context.approver
-                    .Select(a => a)
+                    .Include(a => a.user)
+                    .Include(a => a.ticket)
                     .Where(a => a.ticket!.ticket_id == ticket.ticket_id)
+                    .Select(a => a)
                     .ToListAsync();
-
+                /* var _signatories = signatories.Where(s => s.ticket!.ticket_id == ticket.ticket_id); */
                 foreach (var signatory in signatories)
                 {
                     var user = await _context.user
                         .Include(u => u.role)
                         .Include(u => u.department)
                         .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
-                    approvers.Add(user!);
+                    approvers.Add(_mapper.Map<GetUserDto>(user!));
                 }
+
+                var data = new GetTicketDto()
+                {
+                    ticket = _mapper.Map<TicketDto>(ticket),
+                    signatories = approvers
+                };
+
+                responseData.Add(data);
+            }
+
+            response.data = responseData;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByStatus(
+            string status
+        )
+        {
+            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var responseData = new Collection<GetTicketDto>();
+            var tickets = await _context.ticket
+                .Include(t => t.priority)
+                .Include(t => t.status)
+                .Include(t => t.user)
+                .Include(u => u.user.role)
+                .Include(u => u.user.department)
+                .Where(t => t.status.name.Equals(status))
+                .Select(t => t)
+                .ToListAsync();
+
+            foreach (var ticket in tickets)
+            {
+                var approvers = new Collection<GetUserDto>();
+                var signatories = await _context.approver
+                    .Include(a => a.user)
+                    .Include(a => a.ticket)
+                    .Where(a => a.ticket!.ticket_id == ticket.ticket_id)
+                    .Select(a => a)
+                    .ToListAsync();
+                /* var _signatories = signatories.Where(s => s.ticket!.ticket_id == ticket.ticket_id); */
+                foreach (var signatory in signatories)
+                {
+                    var user = await _context.user
+                        .Include(u => u.role)
+                        .Include(u => u.department)
+                        .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
+                    approvers.Add(_mapper.Map<GetUserDto>(user!));
+                }
+
                 var data = new GetTicketDto()
                 {
                     ticket = _mapper.Map<TicketDto>(ticket),
