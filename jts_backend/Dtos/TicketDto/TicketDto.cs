@@ -20,6 +20,7 @@ namespace jts_backend.Dtos.TicketDto
         public string reason { get; set; } = string.Empty;
 
         public string declined_reason { get; set; } = string.Empty;
+        public DateTime date_created { get; set; }
         public StatusModel status { get; set; } = new StatusModel();
         public GetUserDto user { get; set; } = new GetUserDto();
 

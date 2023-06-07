@@ -22,6 +22,7 @@ namespace jts_backend.Dtos.TicketDto
         public int user_id { get; set; }
 
         public int priority_id { get; set; }
+        public DateTime date_created { get; set; }
 
         public ICollection<int> signatories { get; set; } = new Collection<int>();
     }

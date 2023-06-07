@@ -26,7 +26,7 @@ namespace jts_backend.Models
         [Required]
         public string reason { get; set; } = string.Empty;
 
-        public DateTime datePrepared { get; set; }
+        public DateTime date_created { get; set; }
 
         [MaxLength(500)]
         public string declined_reason { get; set; } = string.Empty;

@@ -14,8 +14,9 @@ const tickets = async () => {
 
 const ticketsByStatus = async (status) => {
   const response = await axios
-    .get("/Ticket/GetAllTicketsByStatus", { status: status })
+    .post(`/Ticket/GetAllTicketByStatus?status=${status}`)
     .then((res) => {
+      console.log("res", res);
       return res.data;
     })
     .catch((err) => {

@@ -3,32 +3,35 @@
 </template>
 <script>
 import Table from "@/components/Table.vue";
+import { useStore } from "vuex";
 export default {
   components: {
     Table,
   },
 
   setup() {
+    const store = useStore();
     const columnDefs = [
-      { headerName: "Ticket ID", field: "ticket_id", flex: 1 },
-      { headerName: "Subject", field: "subject", flex: 2 },
+      { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
+      { headerName: "Subject", field: "ticket.subject", flex: 2 },
       {
         headerName: "Prepared By",
-        field: "user.ext_name",
+        field: "ticket.user.ext_name",
         flex: 1,
       },
       {
-        headerName: "Date Prepared",
-        field: "datePrepared",
+        headerName: "Date Created",
+        field: "ticket.date_created",
         flex: 1,
       },
     ];
 
     const onGridReady = async (params) => {
-      tableApi.value = params.api;
+      // tableApi.value = params.api;
       params.api.showLoadingOverlay();
       await store.dispatch("ticket/fetchAllPendingTickets");
       params.api.setRowData(store.state.ticket.pendingTickets);
+      console.log(store.state.ticket.pendingTickets);
     };
 
     return {

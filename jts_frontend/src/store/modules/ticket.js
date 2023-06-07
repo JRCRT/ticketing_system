@@ -17,14 +17,14 @@ const actions = {
     const response = await ticketsByStatus("Pending");
     commit("FETCH_PENDING_TICKETS", response.data);
   },
-  async fetchAllApprovedTickets({ commit }) {
+  /*   async fetchAllApprovedTickets({ commit }) {
     const response = await ticketsByStatus("Approved");
     commit("FETCH_APPROVED_TICKETS", response.data);
   },
   async fetchAllDeclinedTickets({ commit }) {
     const response = await ticketsByStatus("Declined");
     commit("FETCH_DECLINED_TICKETS", response.data);
-  },
+  }, */
 };
 
 const mutations = {
