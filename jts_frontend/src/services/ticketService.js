@@ -25,4 +25,16 @@ const ticketsByStatus = async (status) => {
   return response;
 };
 
-export { tickets, ticketsByStatus };
+const ticketsToday = async () => {
+  const response = await axios
+    .get("/Ticket/GetAllTicketsToday")
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
+export { tickets, ticketsByStatus, ticketsToday };

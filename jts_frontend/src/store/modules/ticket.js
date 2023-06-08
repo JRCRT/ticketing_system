@@ -1,9 +1,14 @@
-import { tickets, ticketsByStatus } from "@/services/ticketService.js";
+import {
+  tickets,
+  ticketsByStatus,
+  ticketsToday,
+} from "@/services/ticketService.js";
 const state = () => ({
   tickets: [],
   pendingTickets: [],
   approvedTickets: [],
   declinedTickets: [],
+  todaysTickets: [],
 });
 
 const getter = {};
@@ -25,6 +30,10 @@ const actions = {
     const response = await ticketsByStatus("Declined");
     commit("FETCH_DECLINED_TICKETS", response.data);
   },
+  async fetchAllTodaysTickets({ commit }) {
+    const response = await ticketsToday();
+    commit("FETCH_TODAYS_TICKETS", response.data);
+  },
 };
 
 const mutations = {
@@ -39,6 +48,9 @@ const mutations = {
   },
   FETCH_DECLINED_TICKETS(state, value) {
     state.declinedTickets = value;
+  },
+  FETCH_TODAYS_TICKETS(state, value) {
+    state.todaysTickets = value;
   },
 };
 

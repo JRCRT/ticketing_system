@@ -1,7 +1,9 @@
 <script>
 import Table from "@/components/Table.vue";
 import TicketStatus from "@/components/TicketStatus.vue";
+import FormattedDate from "@/components/FormattedDate.vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { ref } from "vue";
 export default {
   name: "Dashboard",
@@ -9,53 +11,33 @@ export default {
   components: {
     Table,
     TicketStatus,
+    FormattedDate,
   },
   setup() {
+    const store = useStore();
     const router = useRouter();
     const gridAPI = ref(null);
     const rowSelection = "single";
     const selectedRow = ref(null);
     const columnDefs = [
-      { headerName: "Ticket ID", field: "ticketId", flex: 1 },
-      { headerName: "Subject", field: "subject", flex: 2 },
+      { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
+      { headerName: "Subject", field: "ticket.subject", flex: 2 },
       {
         headerName: "Prepared By",
-        field: "preparedBy",
+        field: "ticket.user.ext_name",
         flex: 1,
       },
       {
         headerName: "Date created",
-        field: "dateCreated",
+        field: "ticket.date_created",
         flex: 1,
+        cellRenderer: FormattedDate,
       },
       {
         headerName: "Status",
-        field: "status",
+        field: "ticket.status.name",
         flex: 1,
         cellRenderer: TicketStatus,
-      },
-    ];
-    const rowData = [
-      {
-        ticketId: 1,
-        subject: "Additional Unit",
-        preparedBy: "Juan Dela Cruz",
-        dateCreated: "04/12/2023",
-        status: "Pending",
-      },
-      {
-        ticketId: 2,
-        subject: "Additional Unit",
-        preparedBy: "Pedro",
-        dateCreated: "04/12/2023",
-        status: "Approved",
-      },
-      {
-        ticketId: 3,
-        subject: "Additional Unit",
-        preparedBy: "Pedro",
-        dateCreated: "04/12/2023",
-        status: "Declined",
       },
     ];
 
@@ -63,9 +45,12 @@ export default {
       router.replace({ name: "Ticket", params: { status: status } });
     }
 
-    function onGridReady(params) {
+    const onGridReady = async (params) => {
       gridAPI.value = params.api;
-    }
+      params.api.showLoadingOverlay();
+      await store.dispatch("ticket/fetchAllTodaysTickets");
+      params.api.setRowData(store.state.ticket.todaysTickets);
+    };
 
     function getSelectedRow() {
       console.log(gridAPI.value.getSelectedRows());
@@ -73,7 +58,6 @@ export default {
 
     return {
       columnDefs,
-      rowData,
       navigateToTicket,
       onGridReady,
       getSelectedRow,
@@ -107,11 +91,7 @@ export default {
     </div>
     <!--Today's Transactions-->
     <div>
-      <Table
-        :rowData="rowData"
-        :columnDefs="columnDefs"
-        @grid-ready="onGridReady"
-      ></Table>
+      <Table :columnDefs="columnDefs" @grid-ready="onGridReady"></Table>
     </div>
   </div>
 </template>
