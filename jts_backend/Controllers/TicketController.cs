@@ -44,5 +44,12 @@ namespace jts_backend.Controllers
             var response = await _ticketService.GetTicketByStatus(status);
             return Ok(response);
         }
+
+        [HttpGet("GetAllTicketsToday")]
+        public async Task<ActionResult<ICollection<GetTicketDto>>> GetAllTicketsToday()
+        {
+            var response = await _ticketService.GetTodayTickets();
+            return Ok(response);
+        }
     }
 }

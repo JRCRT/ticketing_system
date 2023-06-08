@@ -144,5 +144,18 @@ namespace jts_backend.Services.UserService
 
             return response;
         }
+
+        public async Task<ServiceResponse<ICollection<GetUserDto>>> GetUsersByRole(string role)
+        {
+            var response = new ServiceResponse<ICollection<GetUserDto>>();
+            ICollection<GetUserDto> users = await _context.user
+                .Include(u => u.role)
+                .Include(u => u.department)
+                .Where(u => u.role.name.Equals(role))
+                .Select(u => _mapper.Map<GetUserDto>(u))
+                .ToListAsync();
+            response.data = users;
+            return response;
+        }
     }
 }

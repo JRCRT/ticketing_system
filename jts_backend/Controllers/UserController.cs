@@ -49,5 +49,14 @@ namespace jts_backend.Controllers
             }
             return Ok(user);
         }
+
+        [HttpGet("GetUsersByRole")]
+        public async Task<ActionResult<ServiceResponse<ICollection<GetUserDto>>>> GetUsersByRole(
+            string role
+        )
+        {
+            var response = await _userService.GetUsersByRole(role);
+            return Ok(response);
+        }
     }
 }

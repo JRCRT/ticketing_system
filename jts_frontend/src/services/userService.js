@@ -11,8 +11,20 @@ const users = async () => {
   return response;
 };
 
+const usersByRole = async (role) => {
+  const response = await axios
+    .get(`/User/GetUsersByRole?role=${role}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+
+  return response;
+};
+
 const createUser = async (user) => {
-  console.log(user);
   const response = await axios
     .post("/User/CreateUser", user)
     .then((res) => {
@@ -24,4 +36,4 @@ const createUser = async (user) => {
   return response;
 };
 
-export { users, createUser };
+export { users, createUser, usersByRole };

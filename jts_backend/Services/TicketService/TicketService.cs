@@ -54,7 +54,8 @@ namespace jts_backend.Services.TicketService
                 subject = request.subject,
                 priority = priority,
                 status = status,
-                user = preparedBy
+                user = preparedBy,
+                date_created = request.date_created.Date
             };
 
             _context.ticket.Add(ticket);
@@ -152,6 +153,53 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.user.role)
                 .Include(u => u.user.department)
                 .Where(t => t.status.name.Equals(status))
+                .Select(t => t)
+                .ToListAsync();
+
+            foreach (var ticket in tickets)
+            {
+                var approvers = new Collection<GetUserDto>();
+                var signatories = await _context.approver
+                    .Include(a => a.user)
+                    .Include(a => a.ticket)
+                    .Where(a => a.ticket!.ticket_id == ticket.ticket_id)
+                    .Select(a => a)
+                    .ToListAsync();
+                /* var _signatories = signatories.Where(s => s.ticket!.ticket_id == ticket.ticket_id); */
+                foreach (var signatory in signatories)
+                {
+                    var user = await _context.user
+                        .Include(u => u.role)
+                        .Include(u => u.department)
+                        .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
+                    approvers.Add(_mapper.Map<GetUserDto>(user!));
+                }
+
+                var data = new GetTicketDto()
+                {
+                    ticket = _mapper.Map<TicketDto>(ticket),
+                    signatories = approvers
+                };
+
+                responseData.Add(data);
+            }
+
+            response.data = responseData;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets()
+        {
+            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var responseData = new Collection<GetTicketDto>();
+            var tickets = await _context.ticket
+                .Include(t => t.priority)
+                .Include(t => t.status)
+                .Include(t => t.user)
+                .Include(u => u.user.role)
+                .Include(u => u.user.department)
+                .Where(t => t.date_created.Equals(DateTime.Today.Date))
                 .Select(t => t)
                 .ToListAsync();
 

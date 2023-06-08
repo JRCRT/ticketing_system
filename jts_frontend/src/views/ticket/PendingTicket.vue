@@ -3,10 +3,12 @@
 </template>
 <script>
 import Table from "@/components/Table.vue";
+import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 export default {
   components: {
     Table,
+    FormattedDate,
   },
 
   setup() {
@@ -23,6 +25,7 @@ export default {
         headerName: "Date Created",
         field: "ticket.date_created",
         flex: 1,
+        cellRenderer: FormattedDate,
       },
     ];
 
@@ -36,7 +39,6 @@ export default {
 
     return {
       columnDefs,
-
       onGridReady,
     };
   },

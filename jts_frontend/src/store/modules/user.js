@@ -1,7 +1,10 @@
-import { users, createUser } from "@/services/userService.js";
+import { users, createUser, usersByRole } from "@/services/userService.js";
 import { User } from "@/models/User";
 const state = () => ({
   users: [],
+  admins: [],
+  approvers: [],
+  checkers: [],
 });
 
 const getter = {
@@ -14,6 +17,21 @@ const actions = {
   async fetchUsers({ commit }) {
     const response = await users();
     commit("FETCH_USERS", response.data);
+  },
+
+  async fetchAdmins({ commit }) {
+    const response = await usersByRole("Admin");
+    commit("FETCH_ADMINS", response.data);
+  },
+
+  async fetchApprovers({ commit }) {
+    const response = await usersByRole("Approver");
+    commit("FETCH_APPROVERS", response.data);
+  },
+
+  async fetchCheckers({ commit }) {
+    const response = await usersByRole("Checker");
+    commit("FETCH_CHECKERS", response.data);
   },
 
   async createUser({ commit, dispatch }, user) {
@@ -36,6 +54,15 @@ const actions = {
 const mutations = {
   FETCH_USERS(state, value) {
     state.users = value;
+  },
+  FETCH_ADMINS(state, value) {
+    state.admins = value;
+  },
+  FETCH_APPROVERS(state, value) {
+    state.approvers = value;
+  },
+  FETCH_CHECKERS(state, value) {
+    state.checkers = value;
   },
   ADD_USER(state, value) {
     state.users.push(value);

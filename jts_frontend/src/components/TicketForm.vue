@@ -24,7 +24,7 @@
         <label>Checked By</label>
         <VueMultiselect
           v-model="selectedChecker"
-          :options="options"
+          :options="approvers"
           :multiple="true"
           :taggable="true"
           :show-labels="false"
@@ -32,7 +32,8 @@
         <label>Approvers</label>
         <VueMultiselect
           v-model="selectedApprover"
-          :options="options"
+          label="ext_name"
+          :options="approvers"
           :multiple="true"
           :taggable="true"
           :show-labels="false"
@@ -68,7 +69,8 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { computed, onMounted, ref } from "vue";
 export default {
   emits: ["close"],
   components: {
@@ -77,19 +79,26 @@ export default {
   },
 
   setup() {
+    const store = useStore();
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
     const backgroundField = ref("");
     const editor = BalloonEditor;
-    const options = [
-      "option 1",
-      "option 2",
-      "option 3",
-      "option 4",
-      "option 5",
-    ];
+    const options = ["option 1"];
+    const approvers = ref([]);
+    const checkers = ref([]);
 
-    const selectedChecker = ref(null);
-    const selectedApprover = ref(null);
+    onMounted(async () => {
+      store.commit("app/SET_LOADING", true);
+      await store.dispatch("user/fetchApprovers");
+      await store.dispatch("user/fetchCheckers");
+      store.commit("app/SET_LOADING", false);
+      approvers.value = store.state.user.approvers;
+      checkers.value = store.state.user.checkers;
+      console.log(approvers.value);
+    });
+
+    const selectedChecker = ref();
+    const selectedApprover = ref();
     const editorConfig = {
       plugins: [
         EssentialsPlugin,
@@ -121,6 +130,8 @@ export default {
       selectedChecker,
       selectedApprover,
       backgroundField,
+      approvers,
+      checkers,
     };
   },
 };

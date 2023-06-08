@@ -46,17 +46,15 @@
   </Modal>
 </template>
 
-<script lang="js">
+<script>
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import {User} from "@/models/User"
+import { User } from "@/models/User";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 
-
 export default {
-
   emits: ["close"],
   components: {
     Modal,
@@ -73,32 +71,30 @@ export default {
     const middlename = ref(null);
     const lastname = ref(null);
     const emailAddress = ref(null);
-    const departments = ref([])
+    const departments = ref([]);
     const roles = ref([]);
 
-
-    const createUser = async (
-    ) => {
+    const createUser = async () => {
       const user = new User({
-      first_name: firstname.value,
-      middle_name: middlename.value,
-      last_name: lastname.value,
-      username: username.value,
-      password: password.value,
-      email:  emailAddress.value,
-      role_id: selectedRole.value.role_id,
-      department_id:  selectedDepartment.value.department_id}
-      )
+        first_name: firstname.value,
+        middle_name: middlename.value,
+        last_name: lastname.value,
+        username: username.value,
+        password: password.value,
+        email: emailAddress.value,
+        role_id: selectedRole.value.role_id,
+        department_id: selectedDepartment.value.department_id,
+      });
       await store.dispatch("user/createUser", user);
       //tableApi.setRowData(store.state.user.users);
     };
 
-    onMounted(async()=>{
+    onMounted(async () => {
       await store.dispatch("role/fetchRoles");
-      await store.dispatch("department/fetchDepartments")
+      await store.dispatch("department/fetchDepartments");
       roles.value = store.state.role.roles;
       departments.value = store.state.department.departments;
-    })
+    });
 
     return {
       roles,
@@ -106,12 +102,12 @@ export default {
       selectedDepartment,
       selectedRole,
       username,
-      password ,
+      password,
       firstname,
       middlename,
       lastname,
       emailAddress,
-      createUser
+      createUser,
     };
   },
 };
