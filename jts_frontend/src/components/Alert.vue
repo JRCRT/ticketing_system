@@ -28,13 +28,12 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
 import { useStore } from "vuex";
 export default {
   props: ["alert"],
   emits: ["remove"],
-  setup() {
-  },
+  setup() {},
 };
 </script>
 
