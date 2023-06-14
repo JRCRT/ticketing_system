@@ -1,6 +1,7 @@
 <template>
   <div>
-    <UserForm v-if="isUserFormOpen" @close="closeModal()" />
+    <UserForm v-if="isUserFormOpen" @close="closeModal" />
+    <RequestTicketForm v-if="isRequestFormOpen" @close="closeRequestModal" />
     <h4 class="text-primary">User</h4>
     <div class="flex justify-between items-end mt-1 mb-2">
       <div>
@@ -8,11 +9,14 @@
         <input class="input__field !w-56 !p-[0.30rem]" />
       </div>
       <div class="flex">
-        <button @click="getAPI()" class="button-transparent !w-fit mr-2">
+        <button
+          @click="openRequestFormModal"
+          class="button-transparent !w-fit mr-2"
+        >
           Open
         </button>
 
-        <button @click="openModal()" class="button-transparent !w-fit">
+        <button @click="openModal" class="button-transparent !w-fit">
           New user
         </button>
       </div>
@@ -23,6 +27,7 @@
 
 <script lang="js">
 import UserForm from "@/components/UserForm.vue";
+import RequestTicketForm from "@/components/RequestTicketForm.vue";
 import Table from "@/components/Table.vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
@@ -33,6 +38,7 @@ export default {
   components: {
     Table,
     UserForm,
+    RequestTicketForm
   },
 
     setup() {
@@ -61,11 +67,20 @@ export default {
     const tableApi = ref(null);
 
     const isUserFormOpen = computed(()=> store.state.app.isUserFormOpen);
+    const isRequestFormOpen = ref(false);
 
     signalR.on('GetUser', user => {
       store.commit("user/ADD_USER", user);
       tableApi.value.setRowData(store.state.user.users)
     });
+
+    const openRequestFormModal  = () =>{
+      isRequestFormOpen.value = true;
+    }
+
+    const closeRequestModal = () =>{
+      isRequestFormOpen.value = false;
+    }
 
     const closeModal = () => {
       store.commit("app/SET_USER_FORM", false);
@@ -86,6 +101,9 @@ export default {
     return {
       columnDefs,
       isUserFormOpen,
+      isRequestFormOpen,
+      openRequestFormModal,
+      closeRequestModal,
       closeModal,
       openModal,
       onGridReady,

@@ -7,12 +7,15 @@
       <div class="ticket_form_container">
         <label>Subject</label>
         <input class="input__field" />
+        <label>Condition</label>
+        <input class="input__field" />
         <label>Background</label>
         <ckeditor
           v-model="backgroundField"
           :editor="editor"
           :config="editorConfig"
         ></ckeditor>
+
         <label>Contents</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
         <label>Reasons</label>
@@ -24,19 +27,24 @@
         <label>Checked By</label>
         <VueMultiselect
           v-model="selectedChecker"
-          :options="approvers"
+          :options="checkers"
+          label="ext_name"
           :multiple="true"
           :taggable="true"
           :show-labels="false"
+          :loading="isLoading"
+          track-by="user_id"
         />
         <label>Approvers</label>
         <VueMultiselect
           v-model="selectedApprover"
-          label="ext_name"
           :options="approvers"
           :multiple="true"
           :taggable="true"
           :show-labels="false"
+          :loading="isLoading"
+          track-by="user_id"
+          label="ext_name"
         />
       </div>
     </template>
@@ -83,22 +91,22 @@ export default {
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
     const backgroundField = ref("");
     const editor = BalloonEditor;
-    const options = ["option 1"];
     const approvers = ref([]);
     const checkers = ref([]);
+    const isLoading = ref(false);
+    const selectedChecker = ref([]);
+    const selectedApprover = ref([]);
 
     onMounted(async () => {
       store.commit("app/SET_LOADING", true);
       await store.dispatch("user/fetchApprovers");
       await store.dispatch("user/fetchCheckers");
       store.commit("app/SET_LOADING", false);
+      isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
-      console.log(approvers.value);
     });
 
-    const selectedChecker = ref();
-    const selectedApprover = ref();
     const editorConfig = {
       plugins: [
         EssentialsPlugin,
@@ -126,12 +134,12 @@ export default {
       VITE_TINY_API_KEY,
       editor,
       editorConfig,
-      options,
       selectedChecker,
       selectedApprover,
       backgroundField,
       approvers,
       checkers,
+      isLoading,
     };
   },
 };

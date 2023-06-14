@@ -297,3 +297,7 @@ button {
 .alert > button {
   @apply button-icon button-icon-sm;
 }
+
+.rf-detail-container {
+  @apply p-2 w-full border border-borderColor border-solid rounded-md shadow-sm;
+}
