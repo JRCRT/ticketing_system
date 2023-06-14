@@ -95,7 +95,7 @@ export default {
       params.api.showLoadingOverlay();
       await store.dispatch("user/fetchUsers");
       params.api.setRowData(store.state.user.users);
-      console.log('user', store.state.user.users)
+      ""
     };
 
     return {

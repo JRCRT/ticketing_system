@@ -127,7 +127,7 @@ export default {
     };
 
     const save = () => {
-      console.log(backgroundField.value);
+      "";
     };
     return {
       save,

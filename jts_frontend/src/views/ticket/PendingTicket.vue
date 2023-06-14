@@ -34,7 +34,6 @@ export default {
       params.api.showLoadingOverlay();
       await store.dispatch("ticket/fetchAllPendingTickets");
       params.api.setRowData(store.state.ticket.pendingTickets);
-      console.log(store.state.ticket.pendingTickets);
     };
 
     return {
