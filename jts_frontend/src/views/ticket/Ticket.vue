@@ -60,7 +60,7 @@ export default {
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus));
-    ("");
+
     const tabs = [
       { name: "PendingTicket", label: "Pending", status: "pending" },
       { name: "ApprovedTicket", label: "Approved", status: "approved" },
