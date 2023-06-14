@@ -23,7 +23,7 @@
         <label>Others</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
         <label>Attached Documents</label>
-        <input class="input__field" type="file" />
+        <input class="input__field" type="file" multiple />
         <label>Checked By</label>
         <VueMultiselect
           v-model="selectedChecker"

@@ -76,11 +76,11 @@ export default {
 
     const openRequestFormModal  = () =>{
       isRequestFormOpen.value = true;
-    }
+    };
 
     const closeRequestModal = () =>{
       isRequestFormOpen.value = false;
-    }
+    };
 
     const closeModal = () => {
       store.commit("app/SET_USER_FORM", false);

@@ -5,6 +5,7 @@ import FormattedDate from "@/components/FormattedDate.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref } from "vue";
+import { StylesProcessor } from "@ckeditor/ckeditor5-engine";
 export default {
   name: "Dashboard",
 
@@ -59,10 +60,11 @@ export default {
     }
 
     onMounted(async () => {
+      store.commit("SET_LOADING", true);
       await store.dispatch("ticket/fetchAllPendingTickets");
       await store.dispatch("ticket/fetchAllApprovedTickets");
       await store.dispatch("ticket/fetchAllDeclinedTickets");
-
+      store.commit("SET_LOADING", false);
       pendingNum.value = store.state.ticket.pendingTickets.length;
       approvedNum.value = store.state.ticket.approvedTickets.length;
       declinedNum.value = store.state.ticket.declinedTickets.length;
