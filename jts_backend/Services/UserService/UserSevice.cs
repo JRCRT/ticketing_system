@@ -58,21 +58,32 @@ namespace jts_backend.Services.UserService
             return response;
         }
 
-        public async Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto newUser)
+        public async Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto request)
         {
             var response = new ServiceResponse<GetUserDto>();
             Helper.Helper.CreatePasswordHash(
-                newUser.password,
+                request.password,
                 out byte[] passwordHash,
                 out byte[] passwordSalt
             );
 
+            var user = await _context.user.FirstOrDefaultAsync(
+                u => u.username.ToLower().Equals(request.username.ToLower())
+            );
+
             var department = await _context.department
-                .Where(d => d.department_id == newUser.department_id)
+                .Where(d => d.department_id == request.department_id)
                 .FirstOrDefaultAsync();
             var role = await _context.role
-                .Where(r => r.role_id == newUser.role_id)
+                .Where(r => r.role_id == request.role_id)
                 .FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                response.message = "Username already used.";
+                response.success = false;
+                return response;
+            }
 
             if (department == null)
             {
@@ -88,23 +99,23 @@ namespace jts_backend.Services.UserService
                 return response;
             }
 
-            var user = new UserModel()
+            var newUser = new UserModel()
             {
-                first_name = newUser.first_name,
-                middle_name = newUser.middle_name,
-                last_name = newUser.last_name,
-                username = newUser.username,
-                email = newUser.email,
+                first_name = request.first_name,
+                middle_name = request.middle_name,
+                last_name = request.last_name,
+                username = request.username,
+                email = request.email,
                 password_hash = passwordHash,
                 password_salt = passwordSalt,
                 department = department,
-                ext_name = $"{newUser.first_name} {newUser.middle_name} {newUser.last_name}",
+                ext_name = $"{request.first_name} {request.middle_name} {request.last_name}",
                 role = role
             };
 
-            _context.user.Add(user);
+            _context.user.Add(newUser);
             await _context.SaveChangesAsync();
-            response.data = _mapper.Map<GetUserDto>(user);
+            response.data = _mapper.Map<GetUserDto>(newUser);
             await _hubContext.Clients.All.GetUser(response.data);
             response.message = "User added successfully.";
             return response;

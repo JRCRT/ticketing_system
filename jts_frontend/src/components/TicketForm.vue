@@ -126,9 +126,7 @@ export default {
       },
     };
 
-    const save = () => {
-      "";
-    };
+    const save = () => {};
     return {
       save,
       VITE_TINY_API_KEY,
