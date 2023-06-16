@@ -39,6 +39,7 @@ const actions = {
     const response = await createUser(user);
     var alert;
     if (!response.success) {
+      console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
