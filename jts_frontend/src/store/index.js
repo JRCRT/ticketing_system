@@ -5,6 +5,7 @@ import user from "./modules/user";
 import role from "./modules/role";
 import department from "./modules/department";
 import ticket from "./modules/ticket";
+import file from "./modules/file";
 
 export default createStore({
   modules: {
@@ -14,5 +15,6 @@ export default createStore({
     role,
     department,
     ticket,
+    file,
   },
 });

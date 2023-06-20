@@ -23,7 +23,7 @@
         <label>Others</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
         <label>Attached Documents</label>
-        <input class="input__field" type="file" multiple />
+        <FileUploader />
         <label>Checked By</label>
         <VueMultiselect
           v-model="selectedChecker"
@@ -61,6 +61,7 @@
   </Modal>
 </template>
 <script>
+import FileUploader from "@/components/FileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
@@ -84,6 +85,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
+    FileUploader,
   },
 
   setup() {
@@ -105,6 +107,7 @@ export default {
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
+      console.log(store.state.file.files.length);
     });
 
     const editorConfig = {
