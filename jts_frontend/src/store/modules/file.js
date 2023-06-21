@@ -13,6 +13,7 @@ const mutations = {
       .map((file) => new File(file))
       .filter((file) => !state.files.some(({ id }) => id === file.id));
     state.files = state.files.concat(newUploadableFiles);
+    console.log(state.files);
   },
 
   REMOVE_FILE(state, value) {

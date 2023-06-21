@@ -19,7 +19,7 @@
 
         <input type="file" id="file-input" multiple @change="onInputChange" />
       </label>
-      <ul class="image-list" v-show="files.length">
+      <ul class="image-list" v-show="files">
         <FilePreview
           v-for="file of files"
           :key="file.id"
@@ -44,7 +44,7 @@ const store = useStore();
 // File Management
 //import useFileList from "./compositions/file-list";
 //const { files, addFiles, removeFile } = useFileList();
-const files = computed(() => store.state.file.files.length);
+const files = computed(() => store.state.file.files);
 
 const addFiles = (files) => {
   store.commit("file/ADD_FILE", files);
@@ -67,38 +67,21 @@ function onInputChange(e) {
 <style scoped>
 .drop-area {
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
-  padding: 50px;
+  padding: 30px;
   background: #ffffff55;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: 0.2s ease;
-
-  &[data-active="true"] {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    background: #ffffffcc;
-  }
+  border-radius: 0.375rem /* 6px */;
+  border: 1px solid rgb(176 176 176 / 1);
 }
 
 label {
   font-size: 36px;
   cursor: pointer;
-  display: block;
+  display: flex;
+  justify-content: center;
 
   span {
     display: block;
-  }
-
-  input[type="file"]:not(:focus-visible) {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
   }
 
   .smaller {
@@ -111,20 +94,6 @@ label {
   list-style: none;
   flex-wrap: wrap;
   padding: 0;
-}
-
-.upload-button {
-  display: block;
-  appearance: none;
-  border: 0;
-  border-radius: 50px;
-  padding: 0.75rem 3rem;
-  margin: 1rem auto;
-  font-size: 1.25rem;
-  font-weight: bold;
-  background: #369;
-  color: #fff;
-  text-transform: uppercase;
 }
 
 button {
