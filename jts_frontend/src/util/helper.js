@@ -7,7 +7,11 @@ const setIcon = (file) => {
   switch (file.name.split(".").pop()) {
     case EXTENSIONS.DOC:
       return DocsIcon;
-    case EXTENSIONS.EXCEL:
+    case EXTENSIONS.DOCX:
+      return DocsIcon;
+    case EXTENSIONS.XLS:
+      return ExcelIcon;
+    case EXTENSIONS.XLSX:
       return ExcelIcon;
     case EXTENSIONS.PDF:
       return PdfIcon;

@@ -4,9 +4,11 @@ const FILE_STATUS = Object.freeze({
 });
 
 const EXTENSIONS = Object.freeze({
-  DOC: "docx",
+  DOCX: "docx",
+  DOC: "doc",
   PDF: "pdf",
-  EXCEL: "xls",
+  XLS: "xls",
+  XLSX: "xlsx",
 });
 
 export { FILE_STATUS, EXTENSIONS };
