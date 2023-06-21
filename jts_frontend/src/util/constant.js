@@ -3,4 +3,10 @@ const FILE_STATUS = Object.freeze({
   LOADING: "LOADING",
 });
 
-export { FILE_STATUS };
+const EXTENSIONS = Object.freeze({
+  DOC: "docx",
+  PDF: "pdf",
+  EXCEL: "xls",
+});
+
+export { FILE_STATUS, EXTENSIONS };

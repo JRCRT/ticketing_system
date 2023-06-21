@@ -28,16 +28,17 @@ export default {
     tag: "li",
   },
   emits: ["remove"],
-  setup(props) {},
+  setup(props) {
+    console.log(props.file.file);
+  },
 };
 </script>
 
 <style scoped>
 .file-preview {
   width: 20%;
-  margin: 1rem 2.5%;
+  margin: 1rem;
   position: relative;
-  aspect-ratio: 1/1;
   overflow: hidden;
 
   img {
