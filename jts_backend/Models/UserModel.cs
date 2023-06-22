@@ -38,6 +38,7 @@ namespace jts_backend.Models
         public byte[] password_hash { get; set; } = new byte[0];
         public byte[] password_salt { get; set; } = new byte[0];
         public RoleModel role { get; set; } = new RoleModel();
+        public JobTitleModel job_title { get; set; } = new JobTitleModel();
         public DepartmentModel department { get; set; } = new DepartmentModel();
     }
 }

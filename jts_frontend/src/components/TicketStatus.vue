@@ -9,15 +9,16 @@
   </div>
 </template>
 <script>
+import { TICKET_STATUS } from "@/util/constant";
 export default {
   setup() {
     function setStatusColor(status) {
       switch (status) {
-        case "Pending":
+        case TICKET_STATUS.PENDING:
           return "bg-orange";
-        case "Approved":
+        case TICKET_STATUS.APPROVED:
           return "bg-primary";
-        case "Declined":
+        case TICKET_STATUS.DECLINED:
           return "bg-red";
       }
     }

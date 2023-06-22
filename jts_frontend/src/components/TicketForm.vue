@@ -5,26 +5,26 @@
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
-        <label>Subject</label>
+        <label>Subject (Required)</label>
         <input class="input__field" />
         <label>Condition</label>
         <input class="input__field" />
-        <label>Background</label>
+        <label>Background (Required)</label>
         <ckeditor
           v-model="backgroundField"
           :editor="editor"
           :config="editorConfig"
         ></ckeditor>
 
-        <label>Contents</label>
+        <label>Contents (Required)</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
-        <label>Reasons</label>
+        <label>Reasons (Required)</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
         <label>Others</label>
         <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
         <label>Attached Documents</label>
         <FileUploader />
-        <label>Checked By</label>
+        <label>Checked By (Required)</label>
         <VueMultiselect
           v-model="selectedChecker"
           :options="checkers"
@@ -35,7 +35,7 @@
           :loading="isLoading"
           track-by="user_id"
         />
-        <label>Approvers</label>
+        <label>Approvers (Required)</label>
         <VueMultiselect
           v-model="selectedApprover"
           :options="approvers"
@@ -118,7 +118,6 @@ export default {
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
-      console.log(store.state.file.files.length);
     });
 
     const editorConfig = {

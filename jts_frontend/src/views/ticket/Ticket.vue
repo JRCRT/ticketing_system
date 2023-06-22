@@ -37,6 +37,7 @@ import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import { useRouter } from "vue-router";
 import { TICKET_STATUS } from "@/util/constant";
+import { ref } from "vue";
 
 export default {
   components: {
