@@ -35,8 +35,8 @@ import PendingTicket from "@/views/Ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 import TicketForm from "@/components/TicketForm.vue";
-import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { TICKET_STATUS } from "@/util/constant";
 
 export default {
   components: {
@@ -51,20 +51,32 @@ export default {
     const currentStatus = router.currentRoute.value.params.status;
     const setTabOnMount = (status) => {
       switch (status) {
-        case "pending":
+        case TICKET_STATUS.PENDING:
           return "PendingTicket";
-        case "approved":
+        case TICKET_STATUS.APPROVED:
           return "ApprovedTicket";
-        case "declined":
+        case TICKET_STATUS.DECLINED:
           return "DeclinedTicket";
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus));
 
     const tabs = [
-      { name: "PendingTicket", label: "Pending", status: "pending" },
-      { name: "ApprovedTicket", label: "Approved", status: "approved" },
-      { name: "DeclinedTicket", label: "Declined", status: "declined" },
+      {
+        name: "PendingTicket",
+        label: "Pending",
+        status: TICKET_STATUS.PENDING,
+      },
+      {
+        name: "ApprovedTicket",
+        label: "Approved",
+        status: TICKET_STATUS.APPROVED,
+      },
+      {
+        name: "DeclinedTicket",
+        label: "Declined",
+        status: TICKET_STATUS.DECLINED,
+      },
     ];
     const modalActive = ref(false);
 

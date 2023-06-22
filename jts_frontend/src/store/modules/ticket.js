@@ -3,6 +3,7 @@ import {
   ticketsByStatus,
   ticketsToday,
 } from "@/services/ticketService.js";
+import { TICKET_STATUS } from "@/util/constant";
 const state = () => ({
   tickets: [],
   pendingTickets: [],
@@ -19,15 +20,15 @@ const actions = {
     commit("FETCH_TICKETS", response.data);
   },
   async fetchAllPendingTickets({ commit }) {
-    const response = await ticketsByStatus("Pending");
+    const response = await ticketsByStatus(TICKET_STATUS.PENDING);
     commit("FETCH_PENDING_TICKETS", response.data);
   },
   async fetchAllApprovedTickets({ commit }) {
-    const response = await ticketsByStatus("Approved");
+    const response = await ticketsByStatus(TICKET_STATUS.APPROVED);
     commit("FETCH_APPROVED_TICKETS", response.data);
   },
   async fetchAllDeclinedTickets({ commit }) {
-    const response = await ticketsByStatus("Declined");
+    const response = await ticketsByStatus(TICKET_STATUS.DECLINED);
     commit("FETCH_DECLINED_TICKETS", response.data);
   },
   async fetchAllTodaysTickets({ commit }) {

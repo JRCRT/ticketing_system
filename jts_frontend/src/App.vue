@@ -3,8 +3,8 @@ import Sidebar from "@/components/Sidebar.vue";
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { TICKET_STATUS } from "@/util/constant";
 import Loader from "@/components/Loader.vue";
-import store from "./store";
 import Alert from "@/components/Alert.vue";
 export default {
   components: {
@@ -17,6 +17,7 @@ export default {
     const store = useStore();
     const sidebarActive = ref(false);
     const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
+
     const currentPath = ref("");
 
     const hideSidebar = () => {
@@ -49,6 +50,7 @@ export default {
       currentUrl,
       alerts,
       isLoading,
+      TICKET_STATUS,
     };
   },
 };
@@ -84,7 +86,7 @@ export default {
       <!--Ticket-->
       <router-link
         class="sidebar-link"
-        :to="{ name: 'Ticket', params: { status: 'pending' } }"
+        :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

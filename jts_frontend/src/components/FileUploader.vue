@@ -29,7 +29,6 @@
         />
       </ul>
     </DropZone>
-    <!-- <button @click.prevent="uploadFiles(files)" class="upload-button">Upload</button> -->
   </div>
 </template>
 
@@ -56,12 +55,8 @@ const removeFile = (file) => {
 
 function onInputChange(e) {
   addFiles(e.target.files);
-  e.target.value = null; // reset so that selecting the same file again will still cause it to fire this change
+  e.target.value = null;
 }
-
-// Uploader
-//import createUploader from "./compositions/file-uploader";
-//const { uploadFiles } = createUploader("YOUR URL HERE");
 </script>
 
 <style scoped>
@@ -75,20 +70,19 @@ function onInputChange(e) {
 }
 
 label {
-  font-size: 36px;
+  font-size: 20px;
   cursor: pointer;
   display: flex;
   justify-content: center;
-
-  span {
-    display: block;
-  }
-
-  .smaller {
-    font-size: 16px;
-  }
 }
 
+span {
+  display: block;
+}
+
+.smaller {
+  font-size: 14px;
+}
 .image-list {
   display: flex;
   list-style: none;

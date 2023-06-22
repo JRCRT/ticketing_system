@@ -5,7 +5,7 @@ import FormattedDate from "@/components/FormattedDate.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref } from "vue";
-import { StylesProcessor } from "@ckeditor/ckeditor5-engine";
+import { TICKET_STATUS } from "@/util/constant";
 export default {
   name: "Dashboard",
 
@@ -78,6 +78,7 @@ export default {
       navigateToTicket,
       onGridReady,
       getSelectedRow,
+      TICKET_STATUS,
     };
   },
 };
@@ -87,19 +88,19 @@ export default {
     <h4 @click="getSelectedRow" class="text-primary">Dashboard</h4>
     <!--Cards Container-->
     <div class="flex">
-      <div @click="navigateToTicket('pending')" class="card">
+      <div @click="navigateToTicket(TICKET_STATUS.PENDING)" class="card">
         <div class="card-content">
           <h1>{{ pendingNum }}</h1>
           <p>Pending</p>
         </div>
       </div>
-      <div @click="navigateToTicket('approved')" class="card">
+      <div @click="navigateToTicket(TICKET_STATUS.APPROVED)" class="card">
         <div class="card-content">
           <h1>{{ approvedNum }}</h1>
           <p>Approved</p>
         </div>
       </div>
-      <div @click="navigateToTicket('declined')" class="card">
+      <div @click="navigateToTicket(TICKET_STATUS.DECLINED)" class="card">
         <div class="card-content">
           <h1>{{ declinedNum }}</h1>
           <p>Declined</p>

@@ -11,4 +11,10 @@ const EXTENSIONS = Object.freeze({
   XLSX: "xlsx",
 });
 
-export { FILE_STATUS, EXTENSIONS };
+const TICKET_STATUS = Object.freeze({
+  PENDING: "Pending",
+  APPROVED: "Approved",
+  DECLINED: "Declined",
+});
+
+export { FILE_STATUS, EXTENSIONS, TICKET_STATUS };

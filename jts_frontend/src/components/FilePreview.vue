@@ -15,9 +15,6 @@ export default {
     tag: "li",
   },
   emits: ["remove"],
-  setup(props) {
-    console.log(props.file.file);
-  },
 };
 </script>
 

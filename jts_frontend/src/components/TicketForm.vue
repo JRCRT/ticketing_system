@@ -46,6 +46,17 @@
           track-by="user_id"
           label="ext_name"
         />
+        <label>Related Partys</label>
+        <VueMultiselect
+          v-model="selectedApprover"
+          :options="approvers"
+          :multiple="true"
+          :taggable="true"
+          :show-labels="false"
+          :loading="isLoading"
+          track-by="user_id"
+          label="ext_name"
+        />
       </div>
     </template>
     <template v-slot:footer>
