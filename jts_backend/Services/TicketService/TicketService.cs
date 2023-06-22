@@ -52,6 +52,7 @@ namespace jts_backend.Services.TicketService
                 declined_reason = request.declined_reason,
                 reason = request.reason,
                 subject = request.subject,
+                condition = request.condition,
                 priority = priority,
                 status = status,
                 user = preparedBy,
@@ -68,8 +69,13 @@ namespace jts_backend.Services.TicketService
                 var user = await _context.user
                     .Include(u => u.role)
                     .Include(u => u.department)
-                    .FirstOrDefaultAsync(u => u.user_id == signatory);
-                var approver = new SignatoryModel() { ticket = ticket, user = user };
+                    .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
+                var approver = new SignatoryModel()
+                {
+                    ticket = ticket,
+                    user = user,
+                    type = signatory.type
+                };
 
                 await _context.approver.AddAsync(approver);
                 await _context.SaveChangesAsync();

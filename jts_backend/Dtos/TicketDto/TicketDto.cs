@@ -13,6 +13,8 @@ namespace jts_backend.Dtos.TicketDto
 
         public string subject { get; set; } = string.Empty;
 
+        public string condition { get; set; } = string.Empty;
+
         public string background { get; set; } = string.Empty;
 
         public string content { get; set; } = string.Empty;

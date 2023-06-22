@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Models;
 
 namespace jts_backend.Dtos.TicketDto
@@ -12,7 +13,7 @@ namespace jts_backend.Dtos.TicketDto
         public string subject { get; set; } = string.Empty;
 
         public string background { get; set; } = string.Empty;
-
+        public string condition { get; set; } = string.Empty;
         public string content { get; set; } = string.Empty;
 
         public string reason { get; set; } = string.Empty;
@@ -24,6 +25,7 @@ namespace jts_backend.Dtos.TicketDto
         public int priority_id { get; set; }
         public DateTime date_created { get; set; }
 
-        public ICollection<int> signatories { get; set; } = new Collection<int>();
+        public ICollection<CreateSignatoryDto> signatories { get; set; } =
+            new Collection<CreateSignatoryDto>();
     }
 }
