@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Azure;
 using jts_backend.Context;
+using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Dtos.TicketDto;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
@@ -63,7 +64,7 @@ namespace jts_backend.Services.TicketService
             await _context.SaveChangesAsync();
 
             var signatories = request.signatories;
-            var _signatories = new Collection<GetUserDto>();
+            var _signatories = new Collection<GetSignatoryDto>();
             foreach (var signatory in signatories)
             {
                 var user = await _context.user
@@ -86,7 +87,12 @@ namespace jts_backend.Services.TicketService
                     response.message = "Something went wrong.";
                     return response;
                 }
-                _signatories.Add(_mapper.Map<GetUserDto>(user));
+                var signatoryData = new GetSignatoryDto()
+                {
+                    user = _mapper.Map<GetUserDto>(user),
+                    type = signatory.type
+                };
+                _signatories.Add(signatoryData);
             }
 
             var responseData = new GetTicketDto()
@@ -115,7 +121,7 @@ namespace jts_backend.Services.TicketService
 
             foreach (var ticket in tickets)
             {
-                var approvers = new Collection<GetUserDto>();
+                var approvers = new Collection<GetSignatoryDto>();
                 var signatories = await _context.approver
                     .Include(a => a.user)
                     .Include(a => a.ticket)
@@ -129,7 +135,12 @@ namespace jts_backend.Services.TicketService
                         .Include(u => u.role)
                         .Include(u => u.department)
                         .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
-                    approvers.Add(_mapper.Map<GetUserDto>(user!));
+                    var approverData = new GetSignatoryDto()
+                    {
+                        user = _mapper.Map<GetUserDto>(user!),
+                        type = signatory.type
+                    };
+                    approvers.Add(approverData);
                 }
 
                 var data = new GetTicketDto()
@@ -164,7 +175,7 @@ namespace jts_backend.Services.TicketService
 
             foreach (var ticket in tickets)
             {
-                var approvers = new Collection<GetUserDto>();
+                var approvers = new Collection<GetSignatoryDto>();
                 var signatories = await _context.approver
                     .Include(a => a.user)
                     .Include(a => a.ticket)
@@ -178,7 +189,12 @@ namespace jts_backend.Services.TicketService
                         .Include(u => u.role)
                         .Include(u => u.department)
                         .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
-                    approvers.Add(_mapper.Map<GetUserDto>(user!));
+                    var approverData = new GetSignatoryDto()
+                    {
+                        user = _mapper.Map<GetUserDto>(user!),
+                        type = signatory.type
+                    };
+                    approvers.Add(approverData);
                 }
 
                 var data = new GetTicketDto()
@@ -211,7 +227,7 @@ namespace jts_backend.Services.TicketService
 
             foreach (var ticket in tickets)
             {
-                var approvers = new Collection<GetUserDto>();
+                var approvers = new Collection<GetSignatoryDto>();
                 var signatories = await _context.approver
                     .Include(a => a.user)
                     .Include(a => a.ticket)
@@ -225,7 +241,12 @@ namespace jts_backend.Services.TicketService
                         .Include(u => u.role)
                         .Include(u => u.department)
                         .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
-                    approvers.Add(_mapper.Map<GetUserDto>(user!));
+                    var approverData = new GetSignatoryDto()
+                    {
+                        user = _mapper.Map<GetUserDto>(user!),
+                        type = signatory.type
+                    };
+                    approvers.Add(approverData);
                 }
 
                 var data = new GetTicketDto()

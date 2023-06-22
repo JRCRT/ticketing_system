@@ -24,6 +24,8 @@ namespace jts_backend.Dtos.TicketDto
 
         public int priority_id { get; set; }
         public DateTime date_created { get; set; }
+        public DateTime date_approved { get; set; }
+        public DateTime date_declined { get; set; }
 
         public ICollection<CreateSignatoryDto> signatories { get; set; } =
             new Collection<CreateSignatoryDto>();
