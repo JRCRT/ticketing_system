@@ -18,5 +18,6 @@ namespace jts_backend.Dtos.UserDto
         public string email { get; set; } = string.Empty;
         public RoleModel role { get; set; } = new RoleModel();
         public DepartmentModel department { get; set; } = new DepartmentModel();
+        public JobTitleModel job_title { get; set; } = new JobTitleModel();
     }
 }

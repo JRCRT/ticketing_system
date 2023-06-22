@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -21,6 +22,19 @@ namespace jts_backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_department", x => x.department_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "job_title",
+                columns: table => new
+                {
+                    job_title_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_job_title", x => x.job_title_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,12 +85,13 @@ namespace jts_backend.Migrations
                     first_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     middle_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     last_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    ex_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    ext_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     password_hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     password_salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     role_id = table.Column<int>(type: "int", nullable: false),
+                    job_title_id = table.Column<int>(type: "int", nullable: false),
                     department_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -87,6 +102,12 @@ namespace jts_backend.Migrations
                         column: x => x.department_id,
                         principalTable: "department",
                         principalColumn: "department_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_user_job_title_job_title_id",
+                        column: x => x.job_title_id,
+                        principalTable: "job_title",
+                        principalColumn: "job_title_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_user_role_role_id",
@@ -103,9 +124,11 @@ namespace jts_backend.Migrations
                     ticket_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     subject = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    background = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    background = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    declined_reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false),
                     user_id = table.Column<int>(type: "int", nullable: false),
                     priority_id = table.Column<int>(type: "int", nullable: false)
@@ -160,7 +183,8 @@ namespace jts_backend.Migrations
                     signatory_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_id = table.Column<int>(type: "int", nullable: true),
-                    ticket_id = table.Column<int>(type: "int", nullable: true)
+                    ticket_id = table.Column<int>(type: "int", nullable: true),
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,6 +237,11 @@ namespace jts_backend.Migrations
                 column: "department_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_job_title_id",
+                table: "user",
+                column: "job_title_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_role_id",
                 table: "user",
                 column: "role_id");
@@ -241,6 +270,9 @@ namespace jts_backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "department");
+
+            migrationBuilder.DropTable(
+                name: "job_title");
 
             migrationBuilder.DropTable(
                 name: "role");

@@ -20,6 +20,7 @@ namespace jts_backend.Context
         public DbSet<TicketModel> ticket => Set<TicketModel>();
         public DbSet<SignatoryModel> approver => Set<SignatoryModel>();
         public DbSet<FileModel> file => Set<FileModel>();
+        public DbSet<JobTitleModel> jobTitle => Set<JobTitleModel>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

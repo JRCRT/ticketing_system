@@ -17,12 +17,18 @@ namespace jts_backend.Models
         [MaxLength(500)]
         public string subject { get; set; } = string.Empty;
 
+        [MaxLength(200)]
+        public string condition { get; set; } = string.Empty;
+
+        [MaxLength(500)]
         [Required]
         public string background { get; set; } = string.Empty;
 
+        [MaxLength(500)]
         [Required]
         public string content { get; set; } = string.Empty;
 
+        [MaxLength(500)]
         [Required]
         public string reason { get; set; } = string.Empty;
 

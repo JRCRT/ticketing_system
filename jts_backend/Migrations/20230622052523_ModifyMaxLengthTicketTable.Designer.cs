@@ -12,8 +12,8 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230606002724_DeclinedReasonColumnAdded")]
-    partial class DeclinedReasonColumnAdded
+    [Migration("20230622052523_ModifyMaxLengthTicketTable")]
+    partial class ModifyMaxLengthTicketTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,23 @@ namespace jts_backend.Migrations
                     b.ToTable("file");
                 });
 
+            modelBuilder.Entity("jts_backend.Models.JobTitleModel", b =>
+                {
+                    b.Property<int>("job_title_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("job_title_id"));
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("job_title_id");
+
+                    b.ToTable("job_title");
+                });
+
             modelBuilder.Entity("jts_backend.Models.PriorityModel", b =>
                 {
                     b.Property<int>("priority_id")
@@ -110,10 +127,14 @@ namespace jts_backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("signatory_id"));
 
-                    b.Property<int>("ticket_id")
+                    b.Property<int?>("ticket_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("user_id")
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("user_id")
                         .HasColumnType("int");
 
                     b.HasKey("signatory_id");
@@ -153,11 +174,21 @@ namespace jts_backend.Migrations
 
                     b.Property<string>("background")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("condition")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("date_created")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("declined_reason")
                         .IsRequired()
@@ -169,7 +200,8 @@ namespace jts_backend.Migrations
 
                     b.Property<string>("reason")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("status_id")
                         .HasColumnType("int");
@@ -219,6 +251,9 @@ namespace jts_backend.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int>("job_title_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("last_name")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -247,6 +282,8 @@ namespace jts_backend.Migrations
                     b.HasKey("user_id");
 
                     b.HasIndex("department_id");
+
+                    b.HasIndex("job_title_id");
 
                     b.HasIndex("role_id");
 
@@ -314,6 +351,12 @@ namespace jts_backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("jts_backend.Models.JobTitleModel", "job_title")
+                        .WithMany()
+                        .HasForeignKey("job_title_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("jts_backend.Models.RoleModel", "role")
                         .WithMany()
                         .HasForeignKey("role_id")
@@ -321,6 +364,8 @@ namespace jts_backend.Migrations
                         .IsRequired();
 
                     b.Navigation("department");
+
+                    b.Navigation("job_title");
 
                     b.Navigation("role");
                 });

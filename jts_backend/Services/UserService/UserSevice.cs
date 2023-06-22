@@ -33,6 +33,7 @@ namespace jts_backend.Services.UserService
             ICollection<GetUserDto> users = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
+                .Include(u => u.job_title)
                 .Select(u => _mapper.Map<GetUserDto>(u))
                 .ToListAsync();
             response.data = users;
@@ -78,6 +79,10 @@ namespace jts_backend.Services.UserService
                 .Where(r => r.role_id == request.role_id)
                 .FirstOrDefaultAsync();
 
+            var jobTitle = await _context.jobTitle
+                .Where(j => j.job_title_id == request.job_title_id)
+                .FirstOrDefaultAsync();
+
             if (user != null)
             {
                 response.message = "Username already used.";
@@ -99,6 +104,13 @@ namespace jts_backend.Services.UserService
                 return response;
             }
 
+            if (jobTitle == null)
+            {
+                response.message = "Job Title not found.";
+                response.success = false;
+                return response;
+            }
+
             var newUser = new UserModel()
             {
                 first_name = request.first_name,
@@ -110,7 +122,8 @@ namespace jts_backend.Services.UserService
                 password_salt = passwordSalt,
                 department = department,
                 ext_name = $"{request.first_name} {request.middle_name} {request.last_name}",
-                role = role
+                role = role,
+                job_title = jobTitle
             };
 
             _context.user.Add(newUser);

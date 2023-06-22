@@ -5,24 +5,26 @@
 namespace jts_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class EditDatePrepared : Migration
+    public partial class ModifyTicketTableAddCondition : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "datePrepared",
+            migrationBuilder.AddColumn<string>(
+                name: "condition",
                 table: "ticket",
-                newName: "date_prepared");
+                type: "nvarchar(200)",
+                maxLength: 200,
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "date_prepared",
-                table: "ticket",
-                newName: "datePrepared");
+            migrationBuilder.DropColumn(
+                name: "condition",
+                table: "ticket");
         }
     }
 }
