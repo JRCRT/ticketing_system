@@ -3,7 +3,7 @@ import DocsIcon from "@/assets/doc.png";
 import ExcelIcon from "@/assets/xls.png";
 import PdfIcon from "@/assets/pdf.png";
 
-const setIcon = (file) => {
+const setIconUrl = (file) => {
   switch (file.name.split(".").pop()) {
     case EXTENSIONS.DOC:
       return DocsIcon;
@@ -18,4 +18,4 @@ const setIcon = (file) => {
   }
 };
 
-export { setIcon };
+export { setIconUrl };

@@ -1,4 +1,5 @@
-import { File } from "@/models/File";
+import { UploadedFile } from "@/models/File";
+
 const state = () => ({
   files: [],
 });
@@ -10,7 +11,7 @@ const actions = {};
 const mutations = {
   ADD_FILE(state, value) {
     let newUploadableFiles = [...value]
-      .map((file) => new File(file))
+      .map((file) => new UploadedFile(file))
       .filter((file) => !state.files.some(({ id }) => id === file.id));
     state.files = state.files.concat(newUploadableFiles);
     console.log(state.files);
