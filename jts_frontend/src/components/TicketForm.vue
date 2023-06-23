@@ -6,9 +6,9 @@
     <template v-slot:content>
       <div class="ticket_form_container">
         <label>Subject (Required)</label>
-        <input class="input__field" />
+        <input class="input__field" v-model="subject" />
         <label>Condition</label>
-        <input class="input__field" />
+        <input class="input__field" v-model="condition" />
         <label>Background (Required)</label>
         <ckeditor
           v-model="background"
@@ -17,11 +17,23 @@
         ></ckeditor>
 
         <label>Contents (Required)</label>
-        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <ckeditor
+          :editor="editor"
+          :config="editorConfig"
+          v-model="content"
+        ></ckeditor>
         <label>Reasons (Required)</label>
-        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <ckeditor
+          :editor="editor"
+          :config="editorConfig"
+          v-model="reason"
+        ></ckeditor>
         <label>Others</label>
-        <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
+        <ckeditor
+          :editor="editor"
+          :config="editorConfig"
+          v-model="other"
+        ></ckeditor>
         <label>Attached Documents</label>
         <FileUploader />
         <label>Checked By (Required)</label>
@@ -107,6 +119,7 @@ export default {
     const condition = ref("");
     const content = ref("");
     const reason = ref("");
+    const other = ref("");
 
     const editor = BalloonEditor;
     const approvers = ref([]);
@@ -158,6 +171,11 @@ export default {
       selectedApprover,
       selectedRelatedPary,
       background,
+      subject,
+      condition,
+      content,
+      reason,
+      other,
       approvers,
       checkers,
       relatedParty,

@@ -2,6 +2,7 @@ using jts_backend.Context;
 using jts_backend.Hub.User;
 using jts_backend.Services.AuthService;
 using jts_backend.Services.DepartmentService;
+using jts_backend.Services.FileService;
 using jts_backend.Services.JobTitleService;
 using jts_backend.Services.PriorityService;
 using jts_backend.Services.RoleService;
@@ -31,6 +32,7 @@ builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IPriorityService, PriorityService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IJobTitleService, JobTitleService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
