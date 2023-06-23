@@ -148,6 +148,7 @@ namespace jts_backend.Services.TicketService
                     .ToListAsync();
 
                 var files = await _context.file
+                    .Include(f => f.ticket)
                     .Where(f => f.ticket.ticket_id == ticket.ticket_id)
                     .Select(f => _mapper.Map<GetFileDto>(f))
                     .ToListAsync();
@@ -209,6 +210,7 @@ namespace jts_backend.Services.TicketService
                     .ToListAsync();
 
                 var files = await _context.file
+                    .Include(f => f.ticket)
                     .Where(f => f.ticket.ticket_id == ticket.ticket_id)
                     .Select(f => _mapper.Map<GetFileDto>(f))
                     .ToListAsync();
