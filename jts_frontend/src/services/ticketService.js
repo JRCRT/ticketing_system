@@ -12,6 +12,18 @@ const tickets = async () => {
   return response;
 };
 
+const createTicket = async (ticket) => {
+  const response = await axios
+    .post("/Ticket/CreateTicket", ticket)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
 const ticketsByStatus = async (status) => {
   const response = await axios
     .post(`/Ticket/GetAllTicketByStatus?status=${status}`)
@@ -36,4 +48,4 @@ const ticketsToday = async () => {
   return response;
 };
 
-export { tickets, ticketsByStatus, ticketsToday };
+export { tickets, ticketsByStatus, ticketsToday, createTicket };

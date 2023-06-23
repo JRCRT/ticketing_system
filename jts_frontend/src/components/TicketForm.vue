@@ -11,7 +11,7 @@
         <input class="input__field" />
         <label>Background (Required)</label>
         <ckeditor
-          v-model="backgroundField"
+          v-model="background"
           :editor="editor"
           :config="editorConfig"
         ></ckeditor>
@@ -48,8 +48,8 @@
         />
         <label>Related Partys</label>
         <VueMultiselect
-          v-model="selectedApprover"
-          :options="approvers"
+          v-model="selectedRelatedPary"
+          :options="relatedParty"
           :multiple="true"
           :taggable="true"
           :show-labels="false"
@@ -102,22 +102,31 @@ export default {
   setup() {
     const store = useStore();
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
-    const backgroundField = ref("");
+    const background = ref("");
+    const subject = ref("");
+    const condition = ref("");
+    const content = ref("");
+    const reason = ref("");
+
     const editor = BalloonEditor;
     const approvers = ref([]);
     const checkers = ref([]);
+    const relatedParty = ref([]);
     const isLoading = ref(false);
     const selectedChecker = ref([]);
     const selectedApprover = ref([]);
+    const selectedRelatedPary = ref([]);
 
     onMounted(async () => {
       store.commit("app/SET_LOADING", true);
       await store.dispatch("user/fetchApprovers");
       await store.dispatch("user/fetchCheckers");
+      await store.dispatch("user/fetchAllUsers");
       store.commit("app/SET_LOADING", false);
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
+      relatedParty.value = store.state.user.users;
     });
 
     const editorConfig = {
@@ -147,9 +156,11 @@ export default {
       editorConfig,
       selectedChecker,
       selectedApprover,
-      backgroundField,
+      selectedRelatedPary,
+      background,
       approvers,
       checkers,
+      relatedParty,
       isLoading,
     };
   },

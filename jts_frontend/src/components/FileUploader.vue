@@ -46,6 +46,9 @@ const store = useStore();
 const files = computed(() => store.state.file.files);
 
 const addFiles = (files) => {
+  /* var myObject = new ActiveXObject("Scripting.FileSystemObject");
+  var file = myObject.GetFile(URL.createObjectURL(files[0]));
+  file.Move("D:\\"); */
   store.commit("file/ADD_FILE", files);
 };
 

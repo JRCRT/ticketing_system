@@ -93,7 +93,7 @@ export default {
     const onGridReady = async (params) => {
       tableApi.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("user/fetchUsers");
+      await store.dispatch("user/fetchAllUsers");
       params.api.setRowData(store.state.user.users);
 
     };

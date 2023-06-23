@@ -14,7 +14,7 @@ const getter = {
 };
 
 const actions = {
-  async fetchUsers({ commit }) {
+  async fetchAllUsers({ commit }) {
     const response = await users();
     commit("FETCH_USERS", response.data);
   },

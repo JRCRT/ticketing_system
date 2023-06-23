@@ -1,4 +1,4 @@
-import { UploadedFile } from "@/models/File";
+import { UploadedFile } from "@/models/UploadedFile";
 
 const state = () => ({
   files: [],
