@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Models;
 
@@ -29,5 +30,7 @@ namespace jts_backend.Dtos.TicketDto
 
         public ICollection<CreateSignatoryDto> signatories { get; set; } =
             new Collection<CreateSignatoryDto>();
+
+        public ICollection<CreateFileDto> files { get; set; } = new Collection<CreateFileDto>();
     }
 }

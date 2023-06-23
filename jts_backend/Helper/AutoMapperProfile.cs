@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using jts_backend.Dtos.AuthDto;
 using jts_backend.Dtos.DepartmentDto;
+using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.JobTitleDto;
 using jts_backend.Dtos.PriorityDto;
 using jts_backend.Dtos.RoleDto;
@@ -27,6 +28,7 @@ namespace jts_backend.Helper
             CreateMap<PriorityModel, GetPriorityDto>();
             CreateMap<TicketModel, TicketDto>();
             CreateMap<JobTitleModel, GetJobTitleDto>();
+            CreateMap<FileModel, GetFileDto>();
         }
     }
 }
