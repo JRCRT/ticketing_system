@@ -21,10 +21,13 @@ namespace jts_backend.Services.TicketService
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
 
-        public TicketService(JtsContext context, IMapper mapper)
+        private readonly IWebHostEnvironment _env;
+
+        public TicketService(JtsContext context, IMapper mapper, IWebHostEnvironment env)
         {
             _context = context;
             _mapper = mapper;
+            _env = env;
         }
 
         public async Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request)
@@ -103,11 +106,9 @@ namespace jts_backend.Services.TicketService
             var _files = new Collection<GetFileDto>();
             foreach (var file in files)
             {
-                var fileData = new FileModel() { file_url = file.file_url, ticket = ticket };
-
+                var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath);
                 await _context.file.AddAsync(fileData);
                 await _context.SaveChangesAsync();
-
                 _files.Add(_mapper.Map<GetFileDto>(fileData));
             }
 

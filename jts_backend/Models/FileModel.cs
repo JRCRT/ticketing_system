@@ -16,6 +16,9 @@ namespace jts_backend.Models
         [Required]
         [MaxLength(500)]
         public string file_url { get; set; } = string.Empty;
+        public string stored_file_name { get; set; } = string.Empty;
+        public string original_file_name { get; set; } = string.Empty;
+        public string content_type { get; set; } = string.Empty;
         public TicketModel ticket { get; set; } = new TicketModel();
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Context;
 using jts_backend.Models;
 using Microsoft.VisualBasic;
 
@@ -9,11 +10,13 @@ namespace jts_backend.Services.FileService
 {
     public class FileService : IFileService
     {
-        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
+        private readonly JtsContext _context;
 
-        public FileService(IConfiguration configuration)
+        public FileService(IWebHostEnvironment env, JtsContext context)
         {
-            _configuration = configuration;
+            _env = env;
+            _context = context;
         }
 
         public async Task<ServiceResponse<ICollection<string>>> UploadFiles(
@@ -25,10 +28,11 @@ namespace jts_backend.Services.FileService
             {
                 if (formFile.Length > 0)
                 {
-                    var filePath = Path.Combine(
-                        _configuration.GetSection("AppSettings:FilePath").Value!,
-                        Path.GetRandomFileName()
-                    );
+                    var storedFileName = Path.GetRandomFileName();
+                    var originalFileName = formFile.FileName;
+                    var contentType = formFile.ContentType;
+
+                    var filePath = Path.Combine(_env.ContentRootPath, storedFileName);
 
                     using (var stream = System.IO.File.Create(filePath))
                     {
