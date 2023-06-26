@@ -74,7 +74,9 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="save">Submit</button>
+          <button class="button-primary mr-2" @click="submitTicket">
+            Submit
+          </button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -103,6 +105,10 @@ import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
 import { useStore } from "vuex";
 import { computed, onMounted, ref } from "vue";
+import { SIGNATORY_TYPE } from "@/util/constant";
+
+import { Ticket } from "@/models/Ticket";
+import { Signatory } from "@/models/Signatory";
 export default {
   emits: ["close"],
   components: {
@@ -112,6 +118,8 @@ export default {
   },
 
   setup() {
+    const PENDING_STATUS = 1;
+    const DEFAULT_DATE_TIME = "2023-06-26T03:51:19.632Z";
     const store = useStore();
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
     const background = ref("");
@@ -129,6 +137,72 @@ export default {
     const selectedChecker = ref([]);
     const selectedApprover = ref([]);
     const selectedRelatedPary = ref([]);
+    const uploadedFiles = computed(() => {
+      let formData = new FormData();
+      [...store.state.file.files].forEach((file) => {
+        formData.append("files", file.file);
+      });
+      return formData;
+    });
+
+    const currentUser = localStorage.getItem("user");
+
+    const selectedSignatories = () => {
+      var formattedApprover = [...selectedApprover.value].map(
+        (approver) =>
+          new Signatory({
+            user_id: approver.user_id,
+            type: SIGNATORY_TYPE.APPROVER,
+          })
+      );
+
+      console.log(formattedApprover);
+
+      var formattedChecker = [...selectedChecker.value].map(
+        (checker) =>
+          new Signatory({
+            user_id: checker.user_id,
+            type: SIGNATORY_TYPE.CHECKER,
+          })
+      );
+
+      var formattedParty = [...selectedRelatedPary.value].map(
+        (party) =>
+          new Signatory({
+            user_id: party.user_id,
+            type: SIGNATORY_TYPE.PARTY,
+          })
+      );
+
+      var signatories = formattedApprover.concat(
+        formattedChecker,
+        formattedParty
+      );
+
+      return signatories;
+    };
+
+    const submitTicket = async () => {
+      console.log(uploadedFiles.value);
+      console.log(selectedSignatories());
+      const ticket = new Ticket({
+        subject: subject.value,
+        condition: condition.value,
+        background: background.value,
+        content: content.value,
+        reason: reason.value,
+        declined_reason: "",
+        status_id: PENDING_STATUS,
+        user_id: 1,
+        priority_id: 1,
+        date_created: DEFAULT_DATE_TIME,
+        date_approved: DEFAULT_DATE_TIME,
+        date_declined: DEFAULT_DATE_TIME,
+        signatories: selectedSignatories(),
+        files: uploadedFiles.value,
+      });
+      await store.dispatch("ticket/createTicket", ticket);
+    };
 
     onMounted(async () => {
       store.commit("app/SET_LOADING", true);
@@ -161,9 +235,8 @@ export default {
       },
     };
 
-    const save = () => {};
     return {
-      save,
+      submitTicket,
       VITE_TINY_API_KEY,
       editor,
       editorConfig,

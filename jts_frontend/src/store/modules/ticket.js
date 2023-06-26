@@ -2,6 +2,7 @@ import {
   tickets,
   ticketsByStatus,
   ticketsToday,
+  createTicket,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
 const state = () => ({
@@ -34,6 +35,23 @@ const actions = {
   async fetchAllTodaysTickets({ commit }) {
     const response = await ticketsToday();
     commit("FETCH_TODAYS_TICKETS", response.data);
+  },
+
+  async createTicket({ commit, dispatch }, ticket) {
+    commit("app/SET_LOADING", true, { root: true });
+    const response = await createTicket(ticket);
+    var alert;
+    if (!response.success) {
+      console.log(response);
+      alert = { type: "danger", message: response.message };
+      dispatch("app/addAlert", alert, { root: true });
+      commit("app/SET_LOADING", false, { root: true });
+      return;
+    }
+    alert = { type: "success", message: response.message };
+    commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_USER_FORM", false, { root: true });
+    dispatch("app/addAlert", alert, { root: true });
   },
 };
 

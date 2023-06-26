@@ -33,95 +33,106 @@ namespace jts_backend.Services.TicketService
         public async Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request)
         {
             var response = new ServiceResponse<GetTicketDto>();
-            var preparedBy = await _context.user
-                .Include(u => u.role)
-                .Include(u => u.department)
-                .FirstOrDefaultAsync(u => u.user_id == request.user_id);
 
-            var priority = await _context.priority.FirstOrDefaultAsync(
-                p => p.priority_id == request.priority_id
-            );
-
-            var status = await _context.status.FirstOrDefaultAsync(
-                s => s.status_id == request.status_id
-            );
-
-            if (preparedBy == null || priority == null || status == null)
+            try
             {
-                response.success = false;
-                return response;
-            }
-
-            var ticket = new TicketModel()
-            {
-                background = request.background,
-                content = request.content,
-                declined_reason = request.declined_reason,
-                reason = request.reason,
-                subject = request.subject,
-                condition = request.condition,
-                priority = priority,
-                status = status,
-                user = preparedBy,
-                date_created = request.date_created.Date
-            };
-
-            _context.ticket.Add(ticket);
-            await _context.SaveChangesAsync();
-
-            var signatories = request.signatories;
-            var _signatories = new Collection<GetSignatoryDto>();
-            foreach (var signatory in signatories)
-            {
-                var user = await _context.user
+                var preparedBy = await _context.user
                     .Include(u => u.role)
                     .Include(u => u.department)
-                    .Include(u => u.job_title)
-                    .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
-                var approver = new SignatoryModel()
-                {
-                    ticket = ticket,
-                    user = user,
-                    type = signatory.type
-                };
+                    .FirstOrDefaultAsync(u => u.user_id == request.user_id);
 
-                await _context.approver.AddAsync(approver);
-                await _context.SaveChangesAsync();
+                var priority = await _context.priority.FirstOrDefaultAsync(
+                    p => p.priority_id == request.priority_id
+                );
 
-                if (user == null)
+                var status = await _context.status.FirstOrDefaultAsync(
+                    s => s.status_id == request.status_id
+                );
+
+                if (preparedBy == null || priority == null || status == null)
                 {
+                    response.message = "Null";
                     response.success = false;
-                    response.message = "Something went wrong.";
                     return response;
                 }
-                var signatoryData = new GetSignatoryDto()
+
+                var ticket = new TicketModel()
                 {
-                    user = _mapper.Map<GetUserDto>(user),
-                    type = signatory.type
+                    background = request.background,
+                    content = request.content,
+                    declined_reason = request.declined_reason,
+                    reason = request.reason,
+                    subject = request.subject,
+                    condition = request.condition,
+                    priority = priority,
+                    status = status,
+                    user = preparedBy,
+                    date_created = request.date_created.Date
                 };
-                _signatories.Add(signatoryData);
-            }
 
-            var files = request.files;
-            var _files = new Collection<GetFileDto>();
-            foreach (var file in files)
-            {
-                var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath);
-                await _context.file.AddAsync(fileData);
+                _context.ticket.Add(ticket);
                 await _context.SaveChangesAsync();
-                _files.Add(_mapper.Map<GetFileDto>(fileData));
+
+                var signatories = request.signatories;
+                var _signatories = new Collection<GetSignatoryDto>();
+
+                foreach (var signatory in signatories)
+                {
+                    var user = await _context.user
+                        .Include(u => u.role)
+                        .Include(u => u.department)
+                        .Include(u => u.job_title)
+                        .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
+                    var approver = new SignatoryModel()
+                    {
+                        ticket = ticket,
+                        user = user,
+                        type = signatory.type
+                    };
+
+                    await _context.approver.AddAsync(approver);
+                    await _context.SaveChangesAsync();
+
+                    if (user == null)
+                    {
+                        response.success = false;
+                        response.message = "Something went wrong.";
+                        return response;
+                    }
+                    var signatoryData = new GetSignatoryDto()
+                    {
+                        user = _mapper.Map<GetUserDto>(user),
+                        type = signatory.type
+                    };
+                    _signatories.Add(signatoryData);
+                }
+
+                var files = request.files;
+                var _files = new Collection<GetFileDto>();
+                foreach (var file in files)
+                {
+                    var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath);
+                    await _context.file.AddAsync(fileData);
+                    await _context.SaveChangesAsync();
+                    _files.Add(_mapper.Map<GetFileDto>(fileData));
+                }
+
+                var responseData = new GetTicketDto()
+                {
+                    ticket = _mapper.Map<TicketDto>(ticket),
+                    signatories = _signatories,
+                    files = _files
+                };
+                response.data = responseData;
+                response.message = "Ticket successfully created.";
+
+                return response;
             }
-
-            var responseData = new GetTicketDto()
+            catch (Exception e)
             {
-                ticket = _mapper.Map<TicketDto>(ticket),
-                signatories = _signatories,
-                files = _files
-            };
-            response.data = responseData;
-            response.message = "Ticket successfully created.";
-
-            return response;
+                response.message = e.Message;
+                return response;
+            }
         }
 
         public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetAllTickets()

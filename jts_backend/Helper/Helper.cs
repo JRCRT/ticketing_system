@@ -46,7 +46,7 @@ namespace jts_backend.Helper
                 var originalFileName = file.FileName;
                 var contentType = file.ContentType;
 
-                var filePath = Path.Combine(rootPath, storedFileName);
+                var filePath = Path.Combine(rootPath, "Uploads", storedFileName);
 
                 using (var stream = System.IO.File.Create(filePath))
                 {
