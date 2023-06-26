@@ -137,12 +137,9 @@ export default {
     const selectedChecker = ref([]);
     const selectedApprover = ref([]);
     const selectedRelatedPary = ref([]);
+
     const uploadedFiles = computed(() => {
-      let formData = new FormData();
-      [...store.state.file.files].forEach((file) => {
-        formData.append("files", file.file);
-      });
-      return formData;
+      return [...store.state.file.files].map((file) => file.file);
     });
 
     const currentUser = localStorage.getItem("user");
@@ -184,7 +181,12 @@ export default {
 
     const submitTicket = async () => {
       console.log(uploadedFiles.value);
-      console.log(selectedSignatories());
+      let formData = new FormData();
+      for (let i = 0; i < uploadedFiles.value.length; i++) {
+        formData.append("files", uploadedFiles.value.indexOf(i));
+        console.log(formData);
+      }
+
       const ticket = new Ticket({
         subject: subject.value,
         condition: condition.value,
@@ -199,7 +201,7 @@ export default {
         date_approved: DEFAULT_DATE_TIME,
         date_declined: DEFAULT_DATE_TIME,
         signatories: selectedSignatories(),
-        files: uploadedFiles.value,
+        files: formData,
       });
       await store.dispatch("ticket/createTicket", ticket);
     };
