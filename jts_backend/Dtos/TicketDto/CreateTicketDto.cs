@@ -31,6 +31,6 @@ namespace jts_backend.Dtos.TicketDto
 
         public ICollection<CreateSignatoryDto> signatories { get; set; } =
             new Collection<CreateSignatoryDto>();
-        public IFormCollection? files { get; set; }
+        public IFormCollection files { get; set; }
     }
 }
