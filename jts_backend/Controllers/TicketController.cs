@@ -22,7 +22,7 @@ namespace jts_backend.Controllers
 
         [HttpPost("CreateTicket")]
         public async Task<ActionResult<ServiceResponse<GetTicketDto>>> CreateTicket(
-            CreateTicketDto request
+            [FromForm] CreateTicketDto request
         )
         {
             var response = await _ticketService.CreateTicket(request);
