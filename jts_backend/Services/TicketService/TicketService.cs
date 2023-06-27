@@ -36,6 +36,7 @@ namespace jts_backend.Services.TicketService
 
             try
             {
+                Console.WriteLine(request);
                 var preparedBy = await _context.user
                     .Include(u => u.role)
                     .Include(u => u.department)
@@ -49,9 +50,23 @@ namespace jts_backend.Services.TicketService
                     s => s.status_id == request.status_id
                 );
 
-                if (preparedBy == null || priority == null || status == null)
+                if (preparedBy == null)
                 {
-                    response.message = "Null";
+                    response.message = "No prepared by";
+                    response.success = false;
+                    return response;
+                }
+
+                if (priority == null)
+                {
+                    response.message = "No priority";
+                    response.success = false;
+                    return response;
+                }
+
+                if (status == null)
+                {
+                    response.message = "No status";
                     response.success = false;
                     return response;
                 }
