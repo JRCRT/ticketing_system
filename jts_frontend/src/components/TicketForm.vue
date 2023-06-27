@@ -215,6 +215,7 @@ export default {
         signatories: selectedSignatories(),
         files: formData,
       });
+
       await store.dispatch("ticket/createTicket", formData);
     };
 
