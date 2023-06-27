@@ -36,7 +36,7 @@ namespace jts_backend.Services.TicketService
 
             try
             {
-                /* var preparedBy = await _context.user
+                var preparedBy = await _context.user
                     .Include(u => u.role)
                     .Include(u => u.department)
                     .FirstOrDefaultAsync(u => u.user_id == request.user_id);
@@ -106,25 +106,25 @@ namespace jts_backend.Services.TicketService
                     };
                     _signatories.Add(signatoryData);
                 }
- */
+
                 var files = request.files;
                 var _files = new Collection<GetFileDto>();
                 foreach (var file in files.Files)
                 {
                     var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath);
-                    /*  await _context.file.AddAsync(fileData);
-                     await _context.SaveChangesAsync();
-                     _files.Add(_mapper.Map<GetFileDto>(fileData)); */
+                    await _context.file.AddAsync(fileData);
+                    await _context.SaveChangesAsync();
+                    _files.Add(_mapper.Map<GetFileDto>(fileData));
                 }
-                /*  */
-                /*                 var responseData = new GetTicketDto() */
-                /*                 { */
-                /*                     ticket = _mapper.Map<TicketDto>(ticket), */
-                /*                     signatories = _signatories, */
-                /*                     files = _files */
-                /*                 }; */
-                /*                 response.data = responseData; */
-                /*                 response.message = "Ticket successfully created."; */
+
+                var responseData = new GetTicketDto()
+                {
+                    ticket = _mapper.Map<TicketDto>(ticket),
+                    signatories = _signatories,
+                    files = _files
+                };
+                response.data = responseData;
+                response.message = "Ticket successfully created.";
 
                 return response;
             }
