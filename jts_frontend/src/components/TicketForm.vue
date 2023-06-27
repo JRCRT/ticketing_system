@@ -201,7 +201,7 @@ export default {
         signatories: selectedSignatories(),
         files: formData,
       });
-      await store.dispatch("ticket/uploadFile", formData);
+      await store.dispatch("ticket/createTicket", ticket);
     };
 
     onMounted(async () => {
