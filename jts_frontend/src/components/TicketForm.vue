@@ -153,8 +153,6 @@ export default {
           })
       );
 
-      console.log(formattedApprover);
-
       var formattedChecker = [...selectedChecker.value].map(
         (checker) =>
           new Signatory({
@@ -180,12 +178,16 @@ export default {
     };
 
     const submitTicket = async () => {
-      console.log(uploadedFiles.value);
-      let formData = new FormData();
+      var formData = new FormData();
       for (let i = 0; i < uploadedFiles.value.length; i++) {
-        formData.append("files", uploadedFiles.value.indexOf(i));
-        console.log(formData);
+        formData.append(
+          "files",
+          uploadedFiles.value[i],
+          uploadedFiles.value[i].name
+        );
       }
+
+      console.log([...formData]);
 
       const ticket = new Ticket({
         subject: subject.value,

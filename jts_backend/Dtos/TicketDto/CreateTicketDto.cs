@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace jts_backend.Dtos.TicketDto
 {
@@ -30,7 +31,6 @@ namespace jts_backend.Dtos.TicketDto
 
         public ICollection<CreateSignatoryDto> signatories { get; set; } =
             new Collection<CreateSignatoryDto>();
-
-        public ICollection<IFormFile> files { get; set; } = new Collection<IFormFile>();
+        public IFormCollection? files { get; set; }
     }
 }

@@ -109,7 +109,7 @@ namespace jts_backend.Services.TicketService
 
                 var files = request.files;
                 var _files = new Collection<GetFileDto>();
-                foreach (var file in files)
+                foreach (var file in files.Files)
                 {
                     var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath);
                     await _context.file.AddAsync(fileData);
