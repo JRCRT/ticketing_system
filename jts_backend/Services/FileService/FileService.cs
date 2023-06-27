@@ -19,9 +19,7 @@ namespace jts_backend.Services.FileService
             _context = context;
         }
 
-        public async Task<ServiceResponse<ICollection<string>>> UploadFiles(
-            ICollection<IFormFile> files
-        )
+        public async Task<ServiceResponse<ICollection<string>>> UploadFiles(List<IFormFile> files)
         {
             // var filePaths = new Collection<string>();
             foreach (var formFile in files)
@@ -32,7 +30,7 @@ namespace jts_backend.Services.FileService
                     var originalFileName = formFile.FileName;
                     var contentType = formFile.ContentType;
 
-                    var filePath = Path.Combine(_env.ContentRootPath, storedFileName);
+                    var filePath = Path.Combine(_env.ContentRootPath, "Uploads", storedFileName);
 
                     using (var stream = System.IO.File.Create(filePath))
                     {

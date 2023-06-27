@@ -8,6 +8,6 @@ namespace jts_backend.Services.FileService
 {
     public interface IFileService
     {
-        public Task<ServiceResponse<ICollection<string>>> UploadFiles(ICollection<IFormFile> files);
+        public Task<ServiceResponse<ICollection<string>>> UploadFiles(List<IFormFile> files);
     }
 }

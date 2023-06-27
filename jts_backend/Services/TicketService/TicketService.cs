@@ -107,9 +107,9 @@ namespace jts_backend.Services.TicketService
                     _signatories.Add(signatoryData);
                 }
 
-                var files = request.files;
+                var files = request.files.Files;
                 var _files = new Collection<GetFileDto>();
-                foreach (var file in files.Files)
+                foreach (var file in files)
                 {
                     var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath);
                     await _context.file.AddAsync(fileData);
