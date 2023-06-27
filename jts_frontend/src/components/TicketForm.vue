@@ -183,6 +183,20 @@ export default {
         formData.append("files", uploadedFiles.value[i]);
       }
 
+      formData.append("subject", subject.value);
+      formData.append("condition", condition.value);
+      formData.append("background", background.value);
+      formData.append("content", content.value);
+      formData.append("reason", reason.value);
+      formData.append("decline_reason", "");
+      formData.append("status_id", PENDING_STATUS);
+      formData.append("user_id", 1);
+      formData.append("priority_id", 1);
+      formData.append("date_created", DEFAULT_DATE_TIME);
+      formData.append("date_approved", DEFAULT_DATE_TIME);
+      formData.append("date_declined", DEFAULT_DATE_TIME);
+      formData.append("signatories", selectedSignatories());
+
       console.log([...formData]);
 
       const ticket = new Ticket({
@@ -201,7 +215,7 @@ export default {
         signatories: selectedSignatories(),
         files: formData,
       });
-      await store.dispatch("ticket/createTicket", ticket);
+      await store.dispatch("ticket/createTicket", formData);
     };
 
     onMounted(async () => {
