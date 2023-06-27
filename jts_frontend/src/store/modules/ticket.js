@@ -3,6 +3,7 @@ import {
   ticketsByStatus,
   ticketsToday,
   createTicket,
+  uploadFile,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
 const state = () => ({
@@ -40,6 +41,23 @@ const actions = {
   async createTicket({ commit, dispatch }, ticket) {
     commit("app/SET_LOADING", true, { root: true });
     const response = await createTicket(ticket);
+    var alert;
+    if (!response.success) {
+      console.log(response);
+      alert = { type: "danger", message: response.message };
+      dispatch("app/addAlert", alert, { root: true });
+      commit("app/SET_LOADING", false, { root: true });
+      return;
+    }
+    alert = { type: "success", message: response.message };
+    commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_USER_FORM", false, { root: true });
+    dispatch("app/addAlert", alert, { root: true });
+  },
+
+  async uploadFile({ commit, dispatch }, file) {
+    commit("app/SET_LOADING", true, { root: true });
+    const response = await uploadFile(file);
     var alert;
     if (!response.success) {
       console.log(response);

@@ -180,11 +180,7 @@ export default {
     const submitTicket = async () => {
       var formData = new FormData();
       for (let i = 0; i < uploadedFiles.value.length; i++) {
-        formData.append(
-          "files",
-          uploadedFiles.value[i],
-          uploadedFiles.value[i].name
-        );
+        formData.append("files", uploadedFiles.value[i]);
       }
 
       console.log([...formData]);
@@ -205,7 +201,7 @@ export default {
         signatories: selectedSignatories(),
         files: formData,
       });
-      await store.dispatch("ticket/createTicket", ticket);
+      await store.dispatch("ticket/uploadFile", formData);
     };
 
     onMounted(async () => {

@@ -12,6 +12,18 @@ const tickets = async () => {
   return response;
 };
 
+const uploadFile = async (file) => {
+  const response = await axios
+    .post("/File/UploadFiles", file)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
 const createTicket = async (ticket) => {
   const response = await axios
     .post("/Ticket/CreateTicket", ticket)
@@ -48,4 +60,4 @@ const ticketsToday = async () => {
   return response;
 };
 
-export { tickets, ticketsByStatus, ticketsToday, createTicket };
+export { tickets, ticketsByStatus, ticketsToday, createTicket, uploadFile };
