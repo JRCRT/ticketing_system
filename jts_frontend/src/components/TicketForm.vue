@@ -203,7 +203,7 @@ export default {
         date_approved: DEFAULT_DATE_TIME,
         date_declined: DEFAULT_DATE_TIME,
         signatories: selectedSignatories(),
-        files: formData,
+        files: [...formData],
       });
       await store.dispatch("ticket/createTicket", ticket);
     };
