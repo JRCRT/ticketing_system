@@ -24,6 +24,15 @@
           label="name"
           :show-labels="false"
         ></VueMultiselect>
+
+        <label> Job Title </label>
+        <VueMultiselect
+          :options="jobTitles"
+          v-model="selectedJobTitle"
+          label="name"
+          :show-labels="false"
+        ></VueMultiselect>
+
         <label> Department </label>
         <VueMultiselect
           :options="departments"
@@ -65,6 +74,7 @@ export default {
     const store = useStore();
     const selectedDepartment = ref({});
     const selectedRole = ref({});
+    const selectedJobTitle = ref({});
     const username = ref(null);
     const password = ref(null);
     const firstname = ref(null);
@@ -73,6 +83,7 @@ export default {
     const emailAddress = ref(null);
     const departments = ref([]);
     const roles = ref([]);
+    const jobTitles = ref([]);
 
     const createUser = async () => {
       const user = new User({
@@ -84,7 +95,9 @@ export default {
         email: emailAddress.value,
         role_id: selectedRole.value.role_id,
         department_id: selectedDepartment.value.department_id,
+        job_title_id: selectedJobTitle.value.job_title_id,
       });
+
       await store.dispatch("user/createUser", user);
       //tableApi.setRowData(store.state.user.users);
     };
@@ -92,15 +105,19 @@ export default {
     onMounted(async () => {
       await store.dispatch("role/fetchRoles");
       await store.dispatch("department/fetchDepartments");
+      await store.dispatch("jobTitle/fetchJobTitles");
       roles.value = store.state.role.roles;
       departments.value = store.state.department.departments;
+      jobTitles.value = store.state.jobTitle.jobTitles;
     });
 
     return {
       roles,
       departments,
+      jobTitles,
       selectedDepartment,
       selectedRole,
+      selectedJobTitle,
       username,
       password,
       firstname,

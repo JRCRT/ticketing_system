@@ -138,9 +138,7 @@ export default {
     const selectedApprover = ref([]);
     const selectedRelatedPary = ref([]);
 
-    const uploadedFiles = computed(() => {
-      return [...store.state.file.files].map((file) => file.file);
-    });
+    const uploadedFiles = computed(() => store.state.files.file);
 
     const currentUser = localStorage.getItem("user");
 
@@ -180,9 +178,8 @@ export default {
     const submitTicket = async () => {
       var formData = new FormData();
       for (let i = 0; i < uploadedFiles.value.length; i++) {
-        formData.append("files", uploadedFiles.value[i]);
+        formData.append("files", uploadedFiles.value[i].file);
       }
-
       formData.append("subject", subject.value);
       formData.append("condition", condition.value);
       formData.append("background", background.value);
@@ -196,25 +193,6 @@ export default {
       formData.append("date_approved", DEFAULT_DATE_TIME);
       formData.append("date_declined", DEFAULT_DATE_TIME);
       formData.append("signatories", selectedSignatories());
-
-      console.log([...formData]);
-
-      const ticket = new Ticket({
-        subject: subject.value,
-        condition: condition.value,
-        background: background.value,
-        content: content.value,
-        reason: reason.value,
-        declined_reason: "",
-        status_id: PENDING_STATUS,
-        user_id: 1,
-        priority_id: 1,
-        date_created: DEFAULT_DATE_TIME,
-        date_approved: DEFAULT_DATE_TIME,
-        date_declined: DEFAULT_DATE_TIME,
-        signatories: selectedSignatories(),
-        files: formData,
-      });
 
       await store.dispatch("ticket/createTicket", formData);
     };
