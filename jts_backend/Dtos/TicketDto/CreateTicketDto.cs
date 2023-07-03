@@ -29,10 +29,8 @@ namespace jts_backend.Dtos.TicketDto
         public DateTime date_approved { get; set; }
         public DateTime date_declined { get; set; }
 
-        public ICollection<CreateSignatoryDto> signatories { get; set; } =
-            new Collection<CreateSignatoryDto>();
+        public List<CreateSignatoryDto> signatories { get; set; } = new List<CreateSignatoryDto>();
 
-        [FromForm]
         public List<IFormFile> files { get; set; } = new List<IFormFile>();
     }
 }

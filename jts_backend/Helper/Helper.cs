@@ -36,7 +36,11 @@ namespace jts_backend.Helper
             }
         }
 
-        public static async Task<FileModel> UploadFiles(IFormFile file, string rootPath)
+        public static async Task<FileModel> UploadFiles(
+            IFormFile file,
+            string rootPath,
+            TicketModel ticket
+        )
         {
             FileModel uploadedFile = new FileModel();
 
@@ -58,7 +62,8 @@ namespace jts_backend.Helper
                     file_url = filePath,
                     content_type = contentType,
                     original_file_name = originalFileName,
-                    stored_file_name = storedFileName
+                    stored_file_name = storedFileName,
+                    ticket = ticket
                 };
 
                 uploadedFile = fileData;

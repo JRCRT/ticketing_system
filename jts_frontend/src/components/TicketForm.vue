@@ -138,7 +138,7 @@ export default {
     const selectedApprover = ref([]);
     const selectedRelatedPary = ref([]);
 
-    const uploadedFiles = computed(() => store.state.files.file);
+    const uploadedFiles = computed(() => store.state.file.files);
 
     const currentUser = localStorage.getItem("user");
 
@@ -192,7 +192,7 @@ export default {
       formData.append("date_created", DEFAULT_DATE_TIME);
       formData.append("date_approved", DEFAULT_DATE_TIME);
       formData.append("date_declined", DEFAULT_DATE_TIME);
-      formData.append("signatories", selectedSignatories());
+      formData.append("signatories", JSON.stringify(selectedSignatories()));
 
       await store.dispatch("ticket/createTicket", formData);
     };
