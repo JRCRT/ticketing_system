@@ -160,7 +160,7 @@ namespace jts_backend.Services.TicketService
                  }; */
 
                 // response.data = responseData;
-                response.message = request.signatories.ToString();
+                response.message = request.signatories[0].type;
 
                 return response;
             }
