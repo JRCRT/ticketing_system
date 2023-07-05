@@ -138,7 +138,7 @@ export default {
     const selectedApprover = ref([]);
     const selectedRelatedPary = ref([]);
 
-    const uploadedFiles = computed(() => store.getters.files);
+    const uploadedFiles = computed(() => store.getters["file/files"]);
 
     const currentUser = localStorage.getItem("user");
 
@@ -176,11 +176,8 @@ export default {
     };
 
     const submitTicket = async () => {
-      console.log(uploadedFiles.value);
-      /* var formData = new FormData();
-      for (let i = 0; i < uploadedFiles.value.length; i++) {
-        formData.append("files", uploadedFiles.value[i].file);
-      }
+      var formData = new FormData();
+      formData.append("files", uploadedFiles.value);
       formData.append("subject", subject.value);
       formData.append("condition", condition.value);
       formData.append("background", background.value);
@@ -194,7 +191,7 @@ export default {
       formData.append("date_approved", DEFAULT_DATE_TIME);
       formData.append("date_declined", DEFAULT_DATE_TIME);
       formData.append("signatories", JSON.stringify(selectedSignatories()));
-      await store.dispatch("ticket/createTicket", formData); */
+      await store.dispatch("ticket/createTicket", formData);
     };
 
     onMounted(async () => {

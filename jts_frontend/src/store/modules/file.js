@@ -5,8 +5,8 @@ const state = () => ({
 });
 
 const getters = {
-  files(state) {
-    return state.files;
+  files: (state) => {
+    return state.files.map((file) => file.file);
   },
 };
 
