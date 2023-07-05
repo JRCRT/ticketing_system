@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Azure;
@@ -12,6 +14,7 @@ using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Dtos.TicketDto;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
+using jts_backend.Helper;
 using Microsoft.EntityFrameworkCore;
 
 namespace jts_backend.Services.TicketService
@@ -87,6 +90,10 @@ namespace jts_backend.Services.TicketService
 
                 await _context.ticket.AddAsync(ticket);
                 await _context.SaveChangesAsync();
+                var serializeOptions = new JsonSerializerOptions()
+                {
+                    Converters = { new StringConverter() }
+                };
 
                 /* var signatories = request.signatories;
                 var _signatories = new Collection<GetSignatoryDto>();
@@ -121,9 +128,13 @@ namespace jts_backend.Services.TicketService
                     };
                     _signatories.Add(signatoryData);
                 } */
-                var json = System.Text.Json.JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
-                    request.signatories.ToString()
+                var json = JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
+                    JsonSerializer
+                        .Serialize<List<CreateSignatoryDto>>(request.signatories)
+                        .ToString(),
+                    serializeOptions
                 );
+
                 var signatories = await GetSignatories(json, ticket);
                 var files = await GetFiles(request.files, ticket);
                 /* var files = request.files;
@@ -149,7 +160,7 @@ namespace jts_backend.Services.TicketService
                 };
 
                 response.data = responseData;
-                response.message = signatories.Count().ToString();
+                response.message = json.ToString();
 
                 return response;
             }

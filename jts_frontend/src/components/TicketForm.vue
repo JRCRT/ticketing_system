@@ -194,6 +194,7 @@ export default {
       formData.append("date_declined", DEFAULT_DATE_TIME);
       formData.append("signatories", JSON.stringify(selectedSignatories()));
 
+      console.log(JSON.stringify(selectedSignatories()));
       await store.dispatch("ticket/createTicket", formData);
     };
 
