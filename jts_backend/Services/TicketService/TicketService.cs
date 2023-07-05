@@ -128,14 +128,12 @@ namespace jts_backend.Services.TicketService
                     };
                     _signatories.Add(signatoryData);
                 } */
-                /*   var json = JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
-                      JsonSerializer
-                          .Serialize<List<CreateSignatoryDto>>(request.signatories)
-                          .ToString(),
-                      serializeOptions
-                  );
-  
-                  var signatories = await GetSignatories(json, ticket); */
+                var json = JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
+                    request.signatories,
+                    serializeOptions
+                );
+
+                var signatories = await GetSignatories(json, ticket);
                 var files = await GetFiles(request.files, ticket);
                 /* var files = request.files;
                 var _files = new Collection<GetFileDto>();
@@ -152,14 +150,14 @@ namespace jts_backend.Services.TicketService
                     _files.Add(_mapper.Map<GetFileDto>(fileData));
                 } */
 
-                /*  var responseData = new GetTicketDto()
-                 {
-                     ticket = _mapper.Map<TicketDto>(ticket),
-                     signatories = signatories,
-                     files = files
-                 }; */
+                var responseData = new GetTicketDto()
+                {
+                    ticket = _mapper.Map<TicketDto>(ticket),
+                    signatories = signatories,
+                    files = files
+                };
 
-                // response.data = responseData;
+                response.data = responseData;
                 response.message = request.signatories[0].type;
 
                 return response;
