@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BrunoZell.ModelBinding;
 using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Models;
@@ -29,6 +30,7 @@ namespace jts_backend.Dtos.TicketDto
         public DateTime date_approved { get; set; }
         public DateTime date_declined { get; set; }
 
+        [ModelBinder(BinderType = typeof(JsonModelBinder))]
         public List<CreateSignatoryDto> signatories { get; set; } = new List<CreateSignatoryDto>();
 
         public List<IFormFile> files { get; set; } = new List<IFormFile>();

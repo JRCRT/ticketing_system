@@ -4,7 +4,11 @@ const state = () => ({
   files: [],
 });
 
-const getter = {};
+const getters = {
+  files(state) {
+    return state.files;
+  },
+};
 
 const actions = {};
 
@@ -25,7 +29,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getter,
+  getters,
   actions,
   mutations,
 };

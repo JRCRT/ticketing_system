@@ -128,12 +128,12 @@ namespace jts_backend.Services.TicketService
                     };
                     _signatories.Add(signatoryData);
                 } */
-                var json = JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
-                    request.signatories,
-                    serializeOptions
-                );
+                /*  var json = JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
+                     request.signatories,
+                     serializeOptions
+                 ); */
 
-                var signatories = await GetSignatories(json, ticket);
+                var signatories = await GetSignatories(request.signatories, ticket);
                 var files = await GetFiles(request.files, ticket);
                 /* var files = request.files;
                 var _files = new Collection<GetFileDto>();
