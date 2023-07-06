@@ -136,8 +136,8 @@ namespace jts_backend.Services.TicketService
                      serializeOptions
                  ); */
 
-                var signatories = await GetSignatories(request.signatories, ticket);
-                var files = await GetFiles(request.files, ticket);
+                /*   var signatories = await GetSignatories(request.signatories, ticket);
+                  var files = await GetFiles(request.files, ticket); */
                 /* var files = request.files;
                 var _files = new Collection<GetFileDto>();
 
@@ -153,15 +153,15 @@ namespace jts_backend.Services.TicketService
                     _files.Add(_mapper.Map<GetFileDto>(fileData));
                 } */
 
-                var responseData = new GetTicketDto()
-                {
-                    ticket = _mapper.Map<TicketDto>(ticket),
-                    signatories = signatories,
-                    files = files
-                };
-
-                response.data = responseData;
-                response.message = file[0].FileName;
+                /*    var responseData = new GetTicketDto()
+                   {
+                       ticket = _mapper.Map<TicketDto>(ticket),
+                       signatories = signatories,
+                       files = files
+                   };
+   
+                   response.data = responseData; */
+                response.message = file[1].FileName;
 
                 return response;
             }
