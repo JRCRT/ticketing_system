@@ -25,7 +25,8 @@ namespace jts_backend.Controllers
             [FromForm] CreateTicketDto request
         )
         {
-            var response = await _ticketService.CreateTicket(request);
+            var file = Request.Form.Files;
+            var response = await _ticketService.CreateTicket(request, file);
             return Ok(response);
         }
 

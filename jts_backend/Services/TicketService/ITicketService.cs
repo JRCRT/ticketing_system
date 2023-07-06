@@ -9,7 +9,10 @@ namespace jts_backend.Services.TicketService
 {
     public interface ITicketService
     {
-        Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request);
+        Task<ServiceResponse<GetTicketDto>> CreateTicket(
+            CreateTicketDto request,
+            IFormFileCollection file
+        );
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetAllTickets();
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByStatus(string status);
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets();

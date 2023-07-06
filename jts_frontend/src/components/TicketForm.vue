@@ -177,7 +177,10 @@ export default {
 
     const submitTicket = async () => {
       var formData = new FormData();
-      formData.append("files", uploadedFiles.value);
+      uploadedFiles.value.forEach((file) => {
+        formData.append("files", file);
+      });
+
       formData.append("subject", subject.value);
       formData.append("condition", condition.value);
       formData.append("background", background.value);

@@ -73,6 +73,15 @@ app.UseCors(
             .AllowAnyHeader()
             .AllowCredentials()
 );
+
+app.Use(
+    async (context, next) =>
+    {
+        context.Request.EnableBuffering();
+        await next();
+    }
+);
+
 app.UseAuthorization();
 app.MapHub<UserHub>("/user-hub");
 app.MapControllers();

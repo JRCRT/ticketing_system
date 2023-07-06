@@ -33,7 +33,10 @@ namespace jts_backend.Services.TicketService
             _env = env;
         }
 
-        public async Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request)
+        public async Task<ServiceResponse<GetTicketDto>> CreateTicket(
+            CreateTicketDto request,
+            IFormFileCollection file
+        )
         {
             var response = new ServiceResponse<GetTicketDto>();
 
@@ -158,7 +161,7 @@ namespace jts_backend.Services.TicketService
                 };
 
                 response.data = responseData;
-                response.message = request.signatories[0].type;
+                response.message = file[0].FileName;
 
                 return response;
             }
