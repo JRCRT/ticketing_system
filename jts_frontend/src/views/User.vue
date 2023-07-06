@@ -1,7 +1,7 @@
 <template>
   <div>
-    <UserForm v-if="isUserFormOpen" @close="closeModal" />
-    <RequestTicketForm v-if="isRequestFormOpen" @close="closeRequestModal" />
+    <NewUserForm v-if="isUserFormOpen" @close="closeModal" />
+    <TicketForm v-if="isRequestFormOpen" @close="closeRequestModal" />
     <h4 class="text-primary">User</h4>
     <div class="flex justify-between items-end mt-1 mb-2">
       <div>
@@ -26,8 +26,8 @@
 </template>
 
 <script lang="js">
-import UserForm from "@/components/UserForm.vue";
-import RequestTicketForm from "@/components/RequestTicketForm.vue";
+import NewUserForm from "@/components/NewUserForm.vue";
+import TicketForm from "@/components/TicketForm.vue";
 import Table from "@/components/Table.vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
@@ -37,8 +37,8 @@ export default {
   name: "User",
   components: {
     Table,
-    UserForm,
-    RequestTicketForm
+    NewUserForm,
+   TicketForm
   },
 
     setup() {

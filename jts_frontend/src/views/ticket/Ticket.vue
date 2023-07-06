@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-3">
-    <TicketForm v-if="modalActive" @close="closeModal" />
+    <NewTicketForm v-if="modalActive" @close="closeModal" />
 
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
@@ -34,7 +34,7 @@
 import PendingTicket from "@/views/Ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
-import TicketForm from "@/components/TicketForm.vue";
+import NewTicketForm from "@/components/NewTicketForm.vue";
 import { useRouter } from "vue-router";
 import { TICKET_STATUS } from "@/util/constant";
 import { ref } from "vue";
@@ -44,7 +44,7 @@ export default {
     PendingTicket,
     ApprovedTicket,
     DeclinedTicket,
-    TicketForm,
+    NewTicketForm,
   },
 
   setup() {
