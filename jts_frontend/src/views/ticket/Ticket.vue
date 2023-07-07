@@ -19,8 +19,14 @@
             {{ tab.label }}
           </div>
         </div>
-
-        <button class="w-14 button-transparent" @click="openModal">New</button>
+        <div>
+          <button class="w-14 button-transparent mr-2" @click="printSelection">
+            Open
+          </button>
+          <button class="w-14 button-transparent" @click="openModal">
+            New
+          </button>
+        </div>
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
@@ -36,6 +42,7 @@ import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
 import { ref } from "vue";
 
@@ -49,6 +56,7 @@ export default {
 
   setup() {
     const router = useRouter();
+    const store = useStore();
     const currentStatus = router.currentRoute.value.params.status;
     const setTabOnMount = (status) => {
       switch (status) {
@@ -94,6 +102,10 @@ export default {
       router.replace({ name: "Ticket", params: { status: tab.status } });
     }
 
+    const printSelection = () => {
+      console.log(store.state.app.selectedRow);
+    };
+
     return {
       currentTab,
       tabs,
@@ -104,6 +116,7 @@ export default {
       openModal,
       changeTab,
       setTabOnMount,
+      printSelection,
     };
   },
 };

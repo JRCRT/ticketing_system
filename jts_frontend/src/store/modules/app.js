@@ -4,6 +4,7 @@ const state = () => ({
   currentUrl: null,
   isUserFormOpen: false,
   isLoggingIn: false,
+  selectedRow: {},
 });
 
 const getter = {};
@@ -36,6 +37,9 @@ const mutations = {
   },
   SET_LOGIN_LOADING(state, value) {
     state.isLoggingIn = value;
+  },
+  SET_SELECTED_ROW(state, value) {
+    state.selectedRow = value;
   },
 };
 

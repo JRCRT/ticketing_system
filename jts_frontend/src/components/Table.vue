@@ -9,6 +9,7 @@
       @grid-ready="onGridReady"
       :rowSelection="rowSelection"
       :paginationPageSize="50"
+      @selection-changed="onSelectionChanged"
     >
     </ag-grid-vue>
   </div>
@@ -22,11 +23,12 @@ export default {
   components: {
     AgGridVue,
   },
-  props: ["columnDefs", "rowData", "onGridReady", "onSelectionChange"],
+  props: ["columnDefs", "rowData", "onGridReady", "onSelectionChanged"],
   setup(props) {
     const columnDefs = props.columnDefs;
     const rowData = props.rowData;
     const onGridReady = props.onGridReady;
+    const onSelectionChanged = props.onSelectionChanged;
 
     const defaultColDef = {
       resizable: true,
@@ -39,6 +41,7 @@ export default {
       defaultColDef,
       onGridReady,
       rowSelection,
+      onSelectionChanged,
     };
   },
 };
