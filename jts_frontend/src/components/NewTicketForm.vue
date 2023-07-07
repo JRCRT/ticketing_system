@@ -120,7 +120,18 @@ export default {
   setup() {
     const PENDING_STATUS = 1;
     const DEFAULT_DATE_TIME = "2023-06-26T03:51:19.632Z";
-    const DATE_TODAY = Date.now();
+    const currentDate = new Date();
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "UTC",
+    });
+    const formattedDatetime = formatter.format(currentDate);
+
     const store = useStore();
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
     const background = ref("");
@@ -191,7 +202,7 @@ export default {
       formData.append("status_id", PENDING_STATUS);
       formData.append("user_id", 1);
       formData.append("priority_id", 1);
-      formData.append("date_created", DATE_TODAY.toString());
+      formData.append("date_created", formattedDatetime);
       formData.append("date_approved", DEFAULT_DATE_TIME);
       formData.append("date_declined", DEFAULT_DATE_TIME);
       formData.append("signatories", JSON.stringify(selectedSignatories()));
