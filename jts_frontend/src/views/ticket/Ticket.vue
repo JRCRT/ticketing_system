@@ -108,13 +108,14 @@ export default {
       currentTab.value = tab.name;
       currentStatus.value = tab.status;
       router.replace({ name: "Ticket", params: { status: tab.status } });
+      store.commit("app/SET_SELECTED_ROW", {});
     }
 
     const openTicket = () => {
       const ticketId = store.state.app.selectedRow.ticket.ticket_id;
       router.replace({
         name: "Ticket",
-        params: { status: currentStatus },
+        params: { status: currentStatus.value },
         query: { TicketId: ticketId },
       });
     };
