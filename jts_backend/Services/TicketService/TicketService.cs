@@ -90,10 +90,10 @@ namespace jts_backend.Services.TicketService
 
                 await _context.ticket.AddAsync(ticket);
                 await _context.SaveChangesAsync();
-                var serializeOptions = new JsonSerializerOptions()
-                {
-                    Converters = { new StringConverter() }
-                };
+                /*  var serializeOptions = new JsonSerializerOptions()
+                 {
+                     Converters = { new StringConverter() }
+                 }; */
 
                 /* var signatories = request.signatories;
                 var _signatories = new Collection<GetSignatoryDto>();

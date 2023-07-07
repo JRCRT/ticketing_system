@@ -6,7 +6,7 @@
     <template v-slot:content>
       <div class="ticket_form_container">
         <label>Subject</label>
-        <div class="rf-detail-container"></div>
+        <div class="rf-detail-container"><div v-html="test"></div></div>
         <label>Background</label>
         <div class="rf-detail-container"></div>
         <label>Contents</label>
@@ -45,7 +45,11 @@ export default {
   },
 
   setup() {
-    return {};
+    const store = useStore();
+
+    const test = ref("<p>Hello</p>");
+
+    return { test };
   },
 };
 </script>

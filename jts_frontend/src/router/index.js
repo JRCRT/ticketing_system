@@ -8,7 +8,7 @@ import User from "@/views/User.vue";
 
 const routes = [
   {
-    path: "/login",
+    path: "/Login",
     name: "Login",
     component: Login,
     meta: {
@@ -33,7 +33,7 @@ const routes = [
     },
   },
   {
-    path: "/ticket/:status",
+    path: "/Ticket/:status",
     name: "Ticket",
     component: Ticket,
     meta: {
@@ -43,7 +43,7 @@ const routes = [
   },
 
   {
-    path: "/user",
+    path: "/User",
     name: "User",
     component: User,
     meta: {
