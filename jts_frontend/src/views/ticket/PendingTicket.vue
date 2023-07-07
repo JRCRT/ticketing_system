@@ -1,9 +1,8 @@
 <template>
-  <button @click="onSelectionChanged">Click</button>
   <Table
     @grid-ready="onGridReady"
     :columnDefs="columnDefs"
-    @onSelectionChange="onSelectionChanged"
+    @selection-changed="onSelectionChanged"
   />
 </template>
 <script>
@@ -48,8 +47,10 @@ export default {
     };
 
     const onSelectionChanged = () => {
-      store.commit("app/SET_SELECTED_ROW", gridAPI.value.getSelectedRows());
-      console.log(gridAPI.value.getSelectedRows());
+      const selectedRow = gridAPI.value.getSelectedRows();
+      store.commit("app/SET_SELECTED_ROW", selectedRow[0]);
+
+      console.log(store.state.app.selectedRow.ticket);
     };
 
     return {

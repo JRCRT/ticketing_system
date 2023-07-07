@@ -1,10 +1,15 @@
 <template>
-  <Table @grid-ready="onGridReady" :columnDefs="columnDefs" />
+  <Table
+    @grid-ready="onGridReady"
+    :columnDefs="columnDefs"
+    @selection-changed="onSelectionChanged"
+  />
 </template>
 <script>
 import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
+import { ref } from "vue";
 export default {
   components: {
     Table,
@@ -13,6 +18,7 @@ export default {
 
   setup() {
     const store = useStore();
+    const gridAPI = ref(null);
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
@@ -31,14 +37,23 @@ export default {
 
     const onGridReady = async (params) => {
       // tableApi.value = params.api;
+      gridAPI.value = params.api;
       params.api.showLoadingOverlay();
       await store.dispatch("ticket/fetchAllApprovedTickets");
       params.api.setRowData(store.state.ticket.approvedTickets);
     };
 
+    const onSelectionChanged = () => {
+      const selectedRow = gridAPI.value.getSelectedRows();
+      store.commit("app/SET_SELECTED_ROW", selectedRow[0]);
+
+      console.log(store.state.app.selectedRow.ticket);
+    };
+
     return {
       columnDefs,
       onGridReady,
+      onSelectionChanged,
     };
   },
 };
