@@ -20,7 +20,11 @@
           </div>
         </div>
         <div>
-          <button class="w-14 button-transparent mr-2" @click="printSelection">
+          <button
+            class="w-14 button-transparent mr-2 disabled:bg-borderColor"
+            :disabled="isSelectedRowEmpty"
+            @click="openTicket"
+          >
             Open
           </button>
           <button class="w-14 button-transparent" @click="openModal">
@@ -44,7 +48,7 @@ import NewTicketForm from "@/components/NewTicketForm.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export default {
   components: {
@@ -57,7 +61,7 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
-    const currentStatus = router.currentRoute.value.params.status;
+    const currentStatus = ref(router.currentRoute.value.params.status);
     const setTabOnMount = (status) => {
       switch (status) {
         case TICKET_STATUS.PENDING:
@@ -68,8 +72,11 @@ export default {
           return "DeclinedTicket";
       }
     };
-    const currentTab = ref(setTabOnMount(currentStatus));
+    const currentTab = ref(setTabOnMount(currentStatus.value));
 
+    const isSelectedRowEmpty = computed(() =>
+      store.state.app.selectedRow.ticket == null ? true : false
+    );
     const tabs = [
       {
         name: "PendingTicket",
@@ -99,11 +106,17 @@ export default {
 
     function changeTab(tab) {
       currentTab.value = tab.name;
+      currentStatus.value = tab.status;
       router.replace({ name: "Ticket", params: { status: tab.status } });
     }
 
-    const printSelection = () => {
-      console.log(store.state.app.selectedRow);
+    const openTicket = () => {
+      const ticketId = store.state.app.selectedRow.ticket.ticket_id;
+      router.replace({
+        name: "Ticket",
+        params: { status: currentStatus },
+        query: { TicketId: ticketId },
+      });
     };
 
     return {
@@ -116,7 +129,8 @@ export default {
       openModal,
       changeTab,
       setTabOnMount,
-      printSelection,
+      openTicket,
+      isSelectedRowEmpty,
     };
   },
 };
