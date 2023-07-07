@@ -36,6 +36,14 @@
         ></ckeditor>
         <label>Attached Documents</label>
         <FileUploader />
+        <label>Priority</label>
+        <VueMultiselect
+          v-model="selectedPriority"
+          :options="priorities"
+          label="name"
+          :show-labels="false"
+          :allow-empty="false"
+        />
         <label>Checked By (Required)</label>
         <VueMultiselect
           v-model="selectedChecker"
@@ -47,7 +55,7 @@
           :loading="isLoading"
           track-by="user_id"
         />
-        <label>Approvers (Required)</label>
+        <label>Approved By (Required)</label>
         <VueMultiselect
           v-model="selectedApprover"
           :options="approvers"
@@ -106,9 +114,8 @@ import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 import { useStore } from "vuex";
 import { computed, onMounted, ref } from "vue";
 import { SIGNATORY_TYPE } from "@/util/constant";
-
-import { Ticket } from "@/models/Ticket";
 import { Signatory } from "@/models/Signatory";
+
 export default {
   emits: ["close"],
   components: {
@@ -145,14 +152,17 @@ export default {
     const approvers = ref([]);
     const checkers = ref([]);
     const relatedParty = ref([]);
+    const priorities = ref([]);
+
     const isLoading = ref(false);
     const selectedChecker = ref([]);
     const selectedApprover = ref([]);
     const selectedRelatedPary = ref([]);
+    const selectedPriority = ref(priorities.value[0]);
 
     const uploadedFiles = computed(() => store.getters["file/files"]);
 
-    const currentUser = localStorage.getItem("user");
+    const currentUser = JSON.parse(localStorage.getItem("user"));
 
     const selectedSignatories = () => {
       var formattedApprover = [...selectedApprover.value].map(
@@ -200,12 +210,13 @@ export default {
       formData.append("reason", reason.value);
       formData.append("decline_reason", "");
       formData.append("status_id", PENDING_STATUS);
-      formData.append("user_id", 1);
-      formData.append("priority_id", 1);
+      formData.append("user_id", currentUser.user_id);
+      formData.append("priority_id", selectedPriority.value.priority_id);
       formData.append("date_created", formattedDatetime);
       formData.append("date_approved", DEFAULT_DATE_TIME);
       formData.append("date_declined", DEFAULT_DATE_TIME);
       formData.append("signatories", JSON.stringify(selectedSignatories()));
+
       await store.dispatch("ticket/createTicket", formData);
     };
 
@@ -214,11 +225,15 @@ export default {
       await store.dispatch("user/fetchApprovers");
       await store.dispatch("user/fetchCheckers");
       await store.dispatch("user/fetchAllUsers");
+      await store.dispatch("priority/fetchPriorities");
       store.commit("app/SET_LOADING", false);
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
       relatedParty.value = store.state.user.users;
+      priorities.value = store.state.priority.priorities;
+
+      selectedPriority.value = store.state.priority.priorities[0];
     });
 
     const editorConfig = {
@@ -258,6 +273,8 @@ export default {
       checkers,
       relatedParty,
       isLoading,
+      priorities,
+      selectedPriority,
     };
   },
 };

@@ -1,13 +1,14 @@
 <template>
   <div class="ag-theme-alpine">
     <ag-grid-vue
-      class="h-80 w-full"
+      class="h-[450px] w-full"
       :columnDefs="columnDefs"
       :rowData="rowData"
       :defaultColDef="defaultColDef"
       :pagination="true"
       @grid-ready="onGridReady"
       :rowSelection="rowSelection"
+      :paginationPageSize="50"
     >
     </ag-grid-vue>
   </div>

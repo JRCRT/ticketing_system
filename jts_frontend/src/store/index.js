@@ -7,6 +7,7 @@ import department from "./modules/department";
 import ticket from "./modules/ticket";
 import file from "./modules/file";
 import jobTitle from "./modules/jobTitle";
+import priority from "./modules/priority";
 
 export default createStore({
   modules: {
@@ -18,5 +19,6 @@ export default createStore({
     ticket,
     file,
     jobTitle,
+    priority,
   },
 });
