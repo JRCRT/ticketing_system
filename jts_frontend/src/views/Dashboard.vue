@@ -44,9 +44,9 @@ export default {
       },
     ];
 
-    function navigateToTicket(status) {
+    const navigateToTicket = (status) => {
       router.replace({ name: "Ticket", params: { status: status } });
-    }
+    };
 
     const onGridReady = async (params) => {
       gridAPI.value = params.api;
@@ -55,9 +55,9 @@ export default {
       params.api.setRowData(store.state.ticket.todaysTickets);
     };
 
-    function getSelectedRow() {
+    const getSelectedRow = () => {
       console.log(gridAPI.value.getSelectedRows());
-    }
+    };
 
     onMounted(async () => {
       store.commit("app/SET_LOADING", true);
