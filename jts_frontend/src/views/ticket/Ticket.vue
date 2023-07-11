@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <NewTicketForm v-if="modalActive" @close="closeModal" />
-
+    <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
     <h4 class="text-primary">Ticket</h4>
     <div class="relative">
       <div class="flex justify-between">
@@ -45,6 +45,7 @@ import PendingTicket from "@/views/Ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
+import TicketForm from "@/components/TicketForm.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
@@ -56,6 +57,7 @@ export default {
     ApprovedTicket,
     DeclinedTicket,
     NewTicketForm,
+    TicketForm,
   },
 
   setup() {
@@ -73,7 +75,7 @@ export default {
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus.value));
-
+    const isTicketFormOpen = ref(false);
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedRow.ticket == null ? true : false
     );
@@ -100,6 +102,10 @@ export default {
       modalActive.value = false;
     }
 
+    const closeTicketForm = () => {
+      isTicketFormOpen.value = false;
+    };
+
     function openModal() {
       modalActive.value = true;
     }
@@ -118,6 +124,8 @@ export default {
         params: { status: currentStatus.value },
         query: { TicketId: ticketId },
       });
+
+      isTicketFormOpen.value = true;
     };
 
     return {
@@ -132,6 +140,8 @@ export default {
       setTabOnMount,
       openTicket,
       isSelectedRowEmpty,
+      isTicketFormOpen,
+      closeTicketForm,
     };
   },
 };

@@ -6,15 +6,23 @@
     <template v-slot:content>
       <div class="ticket_form_container">
         <label>Subject</label>
-        <div class="rf-detail-container"><div v-html="test"></div></div>
+        <div class="rf-detail-container">{{ ticket.ticket.subject }}</div>
         <label>Background</label>
-        <div class="rf-detail-container"></div>
+        <div class="rf-detail-container">
+          <div v-html="ticket.ticket.background"></div>
+        </div>
         <label>Contents</label>
-        <div class="rf-detail-container"></div>
+        <div class="rf-detail-container">
+          <div v-html="ticket.ticket.content"></div>
+        </div>
         <label>Reasons</label>
-        <div class="rf-detail-container"></div>
+        <div class="rf-detail-container">
+          <div v-html="ticket.ticket.reason"></div>
+        </div>
         <label>Others</label>
-        <div class="rf-detail-container"></div>
+        <div class="rf-detail-container">
+          <div v-html="ticket.ticket.background"></div>
+        </div>
         <label>Attached Documents</label>
         <div class="rf-detail-container"></div>
         <label>Prepared By</label>
@@ -37,6 +45,7 @@
 import Modal from "@/components/Modal.vue";
 
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 export default {
   emits: ["close"],
@@ -46,10 +55,16 @@ export default {
 
   setup() {
     const store = useStore();
+    const router = useRouter();
+    const ticket = ref({});
 
-    const test = ref("<p>Hello</p>");
-
-    return { test };
+    onMounted(async () => {
+      const ticketId = router.currentRoute.value.query.TicketId;
+      await store.dispatch("ticket/fetchTicket", ticketId);
+      ticket.value = store.state.ticket.ticket;
+      console.log(store.state.ticket.ticket);
+    });
+    return { ticket };
   },
 };
 </script>

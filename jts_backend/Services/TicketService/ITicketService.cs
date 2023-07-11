@@ -13,5 +13,7 @@ namespace jts_backend.Services.TicketService
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetAllTickets();
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByStatus(string status);
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets();
+
+        Task<ServiceResponse<GetTicketDto>> GetTicketById(int id);
     }
 }

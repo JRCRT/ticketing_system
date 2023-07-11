@@ -4,6 +4,7 @@ import {
   ticketsToday,
   createTicket,
   uploadFile,
+  ticketById,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
 const state = () => ({
@@ -12,6 +13,7 @@ const state = () => ({
   approvedTickets: [],
   declinedTickets: [],
   todaysTickets: [],
+  ticket: {},
 });
 
 const getter = {};
@@ -36,6 +38,11 @@ const actions = {
   async fetchAllTodaysTickets({ commit }) {
     const response = await ticketsToday();
     commit("FETCH_TODAYS_TICKETS", response.data);
+  },
+
+  async fetchTicket({ commit }, id) {
+    const response = await ticketById(id);
+    commit("FETCH_TICKET", response.data);
   },
 
   async createTicket({ commit, dispatch }, ticket) {
@@ -87,6 +94,10 @@ const mutations = {
   },
   FETCH_TODAYS_TICKETS(state, value) {
     state.todaysTickets = value;
+  },
+
+  FETCH_TICKET(state, value) {
+    state.ticket = value;
   },
 };
 

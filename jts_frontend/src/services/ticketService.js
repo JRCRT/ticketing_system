@@ -60,4 +60,23 @@ const ticketsToday = async () => {
   return response;
 };
 
-export { tickets, ticketsByStatus, ticketsToday, createTicket, uploadFile };
+const ticketById = async (id) => {
+  const response = await axios
+    .post(`/Ticket/GetTicketById?id=${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
+export {
+  tickets,
+  ticketsByStatus,
+  ticketsToday,
+  ticketById,
+  createTicket,
+  uploadFile,
+};

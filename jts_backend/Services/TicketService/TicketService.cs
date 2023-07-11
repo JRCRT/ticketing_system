@@ -85,7 +85,8 @@ namespace jts_backend.Services.TicketService
                     priority = priority,
                     status = status,
                     user = preparedBy,
-                    date_created = request.date_created.Date
+                    date_created = request.date_created.Date,
+                    others = request.others
                 };
 
                 await _context.ticket.AddAsync(ticket);
@@ -352,6 +353,7 @@ namespace jts_backend.Services.TicketService
                 .Include(t => t.user)
                 .Include(u => u.user.role)
                 .Include(u => u.user.department)
+                .Include(u => u.user.job_title)
                 .Where(t => t.date_created.Equals(DateTime.Today.Date))
                 .Select(t => t)
                 .ToListAsync();
@@ -397,6 +399,58 @@ namespace jts_backend.Services.TicketService
             }
 
             response.data = responseData;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetTicketDto>> GetTicketById(int id)
+        {
+            var response = new ServiceResponse<GetTicketDto>();
+            var ticket = await _context.ticket
+                .Include(t => t.priority)
+                .Include(t => t.status)
+                .Include(t => t.user)
+                .Include(u => u.user.role)
+                .Include(u => u.user.department)
+                .Include(u => u.user.job_title)
+                .FirstOrDefaultAsync(t => t.ticket_id.Equals(id));
+
+            var approvers = new Collection<GetSignatoryDto>();
+            var signatories = await _context.approver
+                .Include(a => a.user)
+                .Include(a => a.ticket)
+                .Where(a => a.ticket!.ticket_id == ticket!.ticket_id)
+                .Select(a => a)
+                .ToListAsync();
+
+            var files = await _context.file
+                .Where(f => f.ticket.ticket_id == ticket!.ticket_id)
+                .Select(f => _mapper.Map<GetFileDto>(f))
+                .ToListAsync();
+
+            foreach (var signatory in signatories)
+            {
+                var user = await _context.user
+                    .Include(u => u.role)
+                    .Include(u => u.department)
+                    .Include(u => u.job_title)
+                    .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
+                var approverData = new GetSignatoryDto()
+                {
+                    user = _mapper.Map<GetUserDto>(user!),
+                    type = signatory.type
+                };
+                approvers.Add(approverData);
+            }
+
+            var data = new GetTicketDto()
+            {
+                ticket = _mapper.Map<TicketDto>(ticket),
+                signatories = approvers,
+                files = files
+            };
+
+            response.data = data;
 
             return response;
         }

@@ -21,10 +21,13 @@ namespace jts_backend.Models
         public string condition { get; set; } = string.Empty;
 
         [MaxLength(500)]
+        public string others { get; set; } = string.Empty;
+
+        [MaxLength(1000)]
         [Required]
         public string background { get; set; } = string.Empty;
 
-        [MaxLength(500)]
+        [MaxLength(1000)]
         [Required]
         public string content { get; set; } = string.Empty;
 

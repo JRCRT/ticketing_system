@@ -21,6 +21,8 @@ namespace jts_backend.Dtos.TicketDto
 
         public string reason { get; set; } = string.Empty;
 
+        public string others { get; set; } = string.Empty;
+
         public string declined_reason { get; set; } = string.Empty;
 
         private DateTime _date_created;

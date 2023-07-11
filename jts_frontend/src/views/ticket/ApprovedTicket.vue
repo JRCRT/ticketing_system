@@ -43,11 +43,10 @@ export default {
       params.api.setRowData(store.state.ticket.approvedTickets);
     };
 
-    const onSelectionChanged = () => {
+    const onSelectionChanged = async () => {
       const selectedRow = gridAPI.value.getSelectedRows();
-      store.commit("app/SET_SELECTED_ROW", selectedRow[0]);
 
-      console.log(store.state.app.selectedRow.ticket);
+      store.commit("app/SET_SELECTED_ROW", selectedRow[0]);
     };
 
     return {
