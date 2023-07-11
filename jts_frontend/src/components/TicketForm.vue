@@ -6,22 +6,24 @@
     <template v-slot:content>
       <div class="ticket_form_container">
         <label>Subject</label>
-        <div class="rf-detail-container">{{ ticket.ticket.subject }}</div>
+        <div class="rf-detail-container">
+          {{ ticket?.ticket?.subject }}
+        </div>
         <label>Background</label>
         <div class="rf-detail-container">
-          <div v-html="ticket.ticket.background"></div>
+          <!-- <div v-html="ticket.ticket.background"></div> -->
         </div>
         <label>Contents</label>
         <div class="rf-detail-container">
-          <div v-html="ticket.ticket.content"></div>
+          <!--  <div v-html="ticket.ticket.content"></div> -->
         </div>
         <label>Reasons</label>
         <div class="rf-detail-container">
-          <div v-html="ticket.ticket.reason"></div>
+          <!--  <div v-html="ticket.ticket.reason"></div> -->
         </div>
         <label>Others</label>
         <div class="rf-detail-container">
-          <div v-html="ticket.ticket.others"></div>
+          <!-- <div v-html="ticket.ticket.others"></div> -->
         </div>
         <label>Attached Documents</label>
         <div class="rf-detail-container"></div>
@@ -32,7 +34,7 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="save">Submit</button>
+          <button class="button-primary mr-2">Submit</button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -45,7 +47,7 @@
 import Modal from "@/components/Modal.vue";
 
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 export default {
   emits: ["close"],
@@ -56,14 +58,16 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const ticket = ref({});
 
     onMounted(async () => {
-      /* const ticketId = router.currentRoute.value.query.TicketId;
-      console.log(ticketId); */
-      await store.dispatch("ticket/fetchTicket", 1);
+      await router.isReady();
+
+      const ticketId = router.currentRoute.value.query.TicketId;
+      console.log(route.query);
+      await store.dispatch("ticket/fetchTicket", ticketId);
       ticket.value = store.state.ticket.ticket;
-      console.log(store.state.ticket.ticket);
     });
     return { ticket };
   },

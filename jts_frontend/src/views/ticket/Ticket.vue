@@ -104,6 +104,10 @@ export default {
 
     const closeTicketForm = () => {
       isTicketFormOpen.value = false;
+      router.replace({
+        name: "Ticket",
+        params: { status: currentStatus.value },
+      });
     };
 
     function openModal() {
