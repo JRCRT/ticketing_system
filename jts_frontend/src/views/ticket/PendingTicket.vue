@@ -49,8 +49,6 @@ export default {
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_ROW", selectedRow[0]);
-
-      console.log(store.state.app.selectedRow.ticket);
     };
 
     return {

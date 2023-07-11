@@ -63,12 +63,12 @@ export default {
 
     onMounted(async () => {
       await router.isReady();
-
-      const ticketId = router.currentRoute.value.query.TicketId;
+      //const ticketId = router.currentRoute.value.query.TicketId;
       console.log(route.query);
-      await store.dispatch("ticket/fetchTicket", ticketId);
-      ticket.value = store.state.ticket.ticket;
+      //await store.dispatch("ticket/fetchTicket", ticketId);
+      //ticket.value = store.state.ticket.ticket;
     });
+
     return { ticket };
   },
 };

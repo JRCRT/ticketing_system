@@ -46,7 +46,7 @@ import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import TicketForm from "@/components/TicketForm.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
 import { computed, ref } from "vue";
@@ -63,7 +63,8 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
-    const currentStatus = ref(router.currentRoute.value.params.status);
+    const route = useRoute();
+    const currentStatus = ref(route.params.status);
     const setTabOnMount = (status) => {
       switch (status) {
         case TICKET_STATUS.PENDING:
@@ -121,15 +122,17 @@ export default {
       store.commit("app/SET_SELECTED_ROW", {});
     }
 
-    const openTicket = () => {
+    const openTicket = async () => {
       const ticketId = store.state.app.selectedRow.ticket.ticket_id;
-      router.replace({
+      router.push({
         name: "Ticket",
         params: { status: currentStatus.value },
         query: { TicketId: ticketId },
       });
 
+      await router.isReady();
       isTicketFormOpen.value = true;
+      console.log(route.query);
     };
 
     return {
