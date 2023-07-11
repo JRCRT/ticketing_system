@@ -21,7 +21,7 @@
         </div>
         <label>Others</label>
         <div class="rf-detail-container">
-          <div v-html="ticket.ticket.background"></div>
+          <div v-html="ticket.ticket.others"></div>
         </div>
         <label>Attached Documents</label>
         <div class="rf-detail-container"></div>
@@ -59,8 +59,9 @@ export default {
     const ticket = ref({});
 
     onMounted(async () => {
-      const ticketId = router.currentRoute.value.query.TicketId;
-      await store.dispatch("ticket/fetchTicket", ticketId);
+      /* const ticketId = router.currentRoute.value.query.TicketId;
+      console.log(ticketId); */
+      await store.dispatch("ticket/fetchTicket", 1);
       ticket.value = store.state.ticket.ticket;
       console.log(store.state.ticket.ticket);
     });
