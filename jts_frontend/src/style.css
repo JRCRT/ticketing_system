@@ -304,7 +304,7 @@ button {
 }
 
 .rf-detail-container {
-  @apply p-2 w-full border border-borderColor border-solid rounded-md shadow-sm;
+  @apply p-2 w-full border border-borderColor border-solid rounded-md shadow-sm h-10;
 }
 
 input[type="file"]:not(:focus-visible) {

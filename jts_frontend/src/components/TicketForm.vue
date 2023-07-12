@@ -1,7 +1,7 @@
 <template>
   <Modal @close="$emit('close')">
     <template v-slot:header>
-      <h5>New</h5>
+      <h5>{{ ticket?.ticket?.ticket_id }}</h5>
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
@@ -11,24 +11,26 @@
         </div>
         <label>Background</label>
         <div class="rf-detail-container">
-          <!-- <div v-html="ticket.ticket.background"></div> -->
+          <div v-html="ticket?.ticket?.background"></div>
         </div>
         <label>Contents</label>
         <div class="rf-detail-container">
-          <!--  <div v-html="ticket.ticket.content"></div> -->
+          <div v-html="ticket?.ticket?.content"></div>
         </div>
         <label>Reasons</label>
         <div class="rf-detail-container">
-          <!--  <div v-html="ticket.ticket.reason"></div> -->
+          <div v-html="ticket?.ticket?.reason"></div>
         </div>
         <label>Others</label>
         <div class="rf-detail-container">
-          <!-- <div v-html="ticket.ticket.others"></div> -->
+          <div v-html="ticket?.ticket?.others"></div>
         </div>
         <label>Attached Documents</label>
         <div class="rf-detail-container"></div>
         <label>Prepared By</label>
-        <div class="rf-detail-container"></div>
+        <div class="rf-detail-container">
+          <div v-html="ticket?.ticket?.user?.ext_name"></div>
+        </div>
       </div>
     </template>
     <template v-slot:footer>
@@ -47,8 +49,8 @@
 import Modal from "@/components/Modal.vue";
 
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
-import { computed, onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { ref, watch } from "vue";
 export default {
   emits: ["close"],
   components: {
@@ -66,6 +68,7 @@ export default {
         if (newTicketId) {
           await store.dispatch("ticket/fetchTicket", newTicketId);
           ticket.value = store.state.ticket.ticket;
+          console.log(ticket.value);
         }
       },
       { immediate: true }
