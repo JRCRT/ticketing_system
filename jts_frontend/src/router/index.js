@@ -41,7 +41,15 @@ const routes = [
       authRequired: true,
     },
   },
-
+  {
+    path: "/Ticket/:status/Id/:ticketId",
+    name: "TicketById",
+    component: Ticket,
+    meta: {
+      title: "Ticket",
+      authRequired: true,
+    },
+  },
   {
     path: "/User",
     name: "User",

@@ -48,7 +48,7 @@ import Modal from "@/components/Modal.vue";
 
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 export default {
   emits: ["close"],
   components: {
@@ -57,18 +57,19 @@ export default {
 
   setup() {
     const store = useStore();
-    const router = useRouter();
     const route = useRoute();
     const ticket = ref({});
 
-    onMounted(async () => {
-      await router.isReady();
-      //const ticketId = router.currentRoute.value.query.TicketId;
-      console.log(route.query);
-      //await store.dispatch("ticket/fetchTicket", ticketId);
-      //ticket.value = store.state.ticket.ticket;
-    });
-
+    watch(
+      () => route.params.ticketId,
+      async (newTicketId, oldTicketId) => {
+        if (newTicketId) {
+          await store.dispatch("ticket/fetchTicket", newTicketId);
+          ticket.value = store.state.ticket.ticket;
+        }
+      },
+      { immediate: true }
+    );
     return { ticket };
   },
 };

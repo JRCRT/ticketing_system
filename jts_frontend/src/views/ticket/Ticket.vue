@@ -125,14 +125,10 @@ export default {
     const openTicket = async () => {
       const ticketId = store.state.app.selectedRow.ticket.ticket_id;
       router.push({
-        name: "Ticket",
-        params: { status: currentStatus.value },
-        query: { TicketId: ticketId },
+        name: "TicketById",
+        params: { status: currentStatus.value, ticketId: ticketId },
       });
-
-      await router.isReady();
-      isTicketFormOpen.value = true;
-      console.log(route.query);
+      await router.isReady().then(() => (isTicketFormOpen.value = true));
     };
 
     return {

@@ -14,4 +14,4 @@ app.use(CKEditor);
 app.use(VueSignalR, {
   url: "http://localhost:5148/user-hub",
 });
-app.mount("#app");
+router.isReady().then(() => app.mount("#app"));
