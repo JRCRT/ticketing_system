@@ -5,6 +5,7 @@ const state = () => ({
   isUserFormOpen: false,
   isLoggingIn: false,
   selectedRow: {},
+  isTicketFormOpen: false,
 });
 
 const getter = {};
@@ -40,6 +41,9 @@ const mutations = {
   },
   SET_SELECTED_ROW(state, value) {
     state.selectedRow = value;
+  },
+  SET_TICKET_FORM(state, value) {
+    state.isTicketFormOpen = value;
   },
 };
 

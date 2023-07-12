@@ -21,7 +21,7 @@
         </div>
         <div>
           <button
-            class="w-14 button-transparent mr-2 disabled:bg-borderColor"
+            class="w-14 button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
             @click="openTicket"
           >
@@ -65,6 +65,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const currentStatus = ref(route.params.status);
+    const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const setTabOnMount = (status) => {
       switch (status) {
         case TICKET_STATUS.PENDING:
@@ -76,7 +77,6 @@ export default {
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus.value));
-    const isTicketFormOpen = ref(false);
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedRow.ticket == null ? true : false
     );
@@ -104,7 +104,7 @@ export default {
     }
 
     const closeTicketForm = () => {
-      isTicketFormOpen.value = false;
+      store.commit("app/SET_TICKET_FORM", false);
       router.replace({
         name: "Ticket",
         params: { status: currentStatus.value },
@@ -128,7 +128,6 @@ export default {
         name: "TicketById",
         params: { status: currentStatus.value, ticketId: ticketId },
       });
-      await router.isReady().then(() => (isTicketFormOpen.value = true));
     };
 
     return {

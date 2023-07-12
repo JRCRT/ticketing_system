@@ -49,6 +49,10 @@ const routes = [
       title: "Ticket",
       authRequired: true,
     },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_TICKET_FORM", true);
+      next();
+    },
   },
   {
     path: "/User",
