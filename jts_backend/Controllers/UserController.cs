@@ -39,10 +39,10 @@ namespace jts_backend.Controllers
             return Ok(user);
         }
 
-        [HttpPost("GetUser")]
+        [HttpPost("GetUserById")]
         public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetUser(int user_id)
         {
-            var user = await _userService.GetUser(user_id);
+            var user = await _userService.GetUserById(user_id);
             if (user.data == null)
             {
                 return NotFound();

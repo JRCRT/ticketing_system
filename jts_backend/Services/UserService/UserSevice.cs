@@ -40,12 +40,13 @@ namespace jts_backend.Services.UserService
             return response;
         }
 
-        public async Task<ServiceResponse<GetUserDto>> GetUser(int user_id)
+        public async Task<ServiceResponse<GetUserDto>> GetUserById(int user_id)
         {
             var response = new ServiceResponse<GetUserDto>();
             var user = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
+                .Include(u => u.job_title)
                 .Where(u => u.user_id == user_id)
                 .Select(u => _mapper.Map<GetUserDto>(u))
                 .FirstOrDefaultAsync();

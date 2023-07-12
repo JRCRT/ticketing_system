@@ -1,10 +1,16 @@
-import { users, createUser, usersByRole } from "@/services/userService.js";
+import {
+  users,
+  createUser,
+  usersByRole,
+  userById,
+} from "@/services/userService.js";
 import { User } from "@/models/User";
 const state = () => ({
   users: [],
   admins: [],
   approvers: [],
   checkers: [],
+  user: {},
 });
 
 const getter = {
@@ -17,6 +23,11 @@ const actions = {
   async fetchAllUsers({ commit }) {
     const response = await users();
     commit("FETCH_USERS", response.data);
+  },
+
+  async fetchUser({ commit }, id) {
+    const response = await userById(id);
+    commit("FETCH_USER", response.data);
   },
 
   async fetchAdmins({ commit }) {
@@ -67,6 +78,9 @@ const mutations = {
   },
   ADD_USER(state, value) {
     state.users.push(value);
+  },
+  FETCH_USER(state, value) {
+    state.user = value;
   },
 };
 

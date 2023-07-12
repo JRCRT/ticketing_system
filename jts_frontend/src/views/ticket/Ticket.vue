@@ -78,8 +78,9 @@ export default {
     };
     const currentTab = ref(setTabOnMount(currentStatus.value));
     const isSelectedRowEmpty = computed(() =>
-      store.state.app.selectedRow.ticket == null ? true : false
+      store.state.app.selectedTicket.ticket == null ? true : false
     );
+
     const tabs = [
       {
         name: "PendingTicket",
@@ -119,11 +120,11 @@ export default {
       currentTab.value = tab.name;
       currentStatus.value = tab.status;
       router.replace({ name: "Ticket", params: { status: tab.status } });
-      store.commit("app/SET_SELECTED_ROW", {});
+      store.commit("app/SET_SELECTED_TICKET", {});
     }
 
     const openTicket = async () => {
-      const ticketId = store.state.app.selectedRow.ticket.ticket_id;
+      const ticketId = store.state.app.selectedTicket.ticket.ticket_id;
       router.push({
         name: "TicketById",
         params: { status: currentStatus.value, ticketId: ticketId },

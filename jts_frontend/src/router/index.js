@@ -63,6 +63,19 @@ const routes = [
       adminRequired: true,
     },
   },
+  {
+    path: "/User/Id/:userId",
+    name: "UserById",
+    component: User,
+    meta: {
+      title: "User",
+      adminRequired: true,
+    },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_USER_FORM", true);
+      next();
+    },
+  },
 ];
 
 const router = createRouter({

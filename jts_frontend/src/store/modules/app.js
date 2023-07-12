@@ -2,10 +2,12 @@ const state = () => ({
   isLoading: false,
   alerts: [],
   currentUrl: null,
-  isUserFormOpen: false,
+  isNewUserFormOpen: false,
   isLoggingIn: false,
-  selectedRow: {},
+  selectedTicket: {},
+  selectedUser: {},
   isTicketFormOpen: false,
+  isUserFormOpen: false,
 });
 
 const getter = {};
@@ -33,17 +35,23 @@ const mutations = {
   REMOVE_ALERT(state, index) {
     state.alerts.splice(index, 1);
   },
-  SET_USER_FORM(state, value) {
-    state.isUserFormOpen = value;
+  SET_NEW_USER_FORM(state, value) {
+    state.isNewUserForm = value;
   },
   SET_LOGIN_LOADING(state, value) {
     state.isLoggingIn = value;
   },
-  SET_SELECTED_ROW(state, value) {
-    state.selectedRow = value;
+  SET_SELECTED_TICKET(state, value) {
+    state.selectedTicket = value;
+  },
+  SET_SELECTED_USER(state, value) {
+    state.selectedUser = value;
   },
   SET_TICKET_FORM(state, value) {
     state.isTicketFormOpen = value;
+  },
+  SET_USER_FORM(state, value) {
+    state.isUserFormOpen = value;
   },
 };
 

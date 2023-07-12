@@ -11,6 +11,18 @@ const users = async () => {
   return response;
 };
 
+const userById = async (id) => {
+  const response = await axios
+    .post(`/User/GetUserById?user_id=${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
 const usersByRole = async (role) => {
   const response = await axios
     .get(`/User/GetUsersByRole?role=${role}`)
@@ -36,4 +48,4 @@ const createUser = async (user) => {
   return response;
 };
 
-export { users, createUser, usersByRole };
+export { users, createUser, usersByRole, userById };
