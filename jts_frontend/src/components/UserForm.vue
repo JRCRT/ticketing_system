@@ -116,6 +116,7 @@ export default {
           middlename.value = user.middle_name;
           lastname.value = user.last_name;
           emailAddress.value = user.email;
+          password.value = user.password_hash;
           selectedDepartment.value = user.department;
           selectedRole.value = user.role;
           selectedJobTitle.value = user.job_title;
