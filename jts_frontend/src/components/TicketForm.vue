@@ -5,6 +5,10 @@
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
+        <label>Requested Date</label>
+        <div class="rf-detail-container">
+          {{ requestedDate }}
+        </div>
         <label>Subject</label>
         <div class="rf-detail-container">
           {{ ticket?.ticket?.subject }}
@@ -61,6 +65,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const ticket = ref({});
+    const requestedDate = ref(null);
 
     watch(
       () => route.params.ticketId,
@@ -68,12 +73,16 @@ export default {
         if (newTicketId) {
           await store.dispatch("ticket/fetchTicket", newTicketId);
           ticket.value = store.state.ticket.ticket;
+          requestedDate.value = Intl.DateTimeFormat("en-US").format(
+            new Date(ticket.value.ticket.date_created)
+          );
+
           console.log(ticket.value);
         }
       },
       { immediate: true }
     );
-    return { ticket };
+    return { ticket, requestedDate };
   },
 };
 </script>

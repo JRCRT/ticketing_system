@@ -1,6 +1,9 @@
 <template>
   <div class="modal">
     <div class="modal-backdrop"></div>
+    <!-- <div v-if="isModalLoading" class="modal-container m-auto">
+      <LoadingSpinner />
+    </div> -->
     <div class="modal-container">
       <div class="modal-header">
         <slot name="header"></slot>
@@ -34,6 +37,10 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
+
 export default {
   emits: ["close"],
   mounted() {
@@ -41,6 +48,18 @@ export default {
   },
   unmounted() {
     document.body.classList.remove("prevent-scroll");
+  },
+  components: {
+    LoadingSpinner,
+  },
+
+  setup() {
+    const store = useStore();
+    const isModalLoading = computed(() => store.state.app.isModalLoading);
+
+    return {
+      isModalLoading,
+    };
   },
 };
 </script>

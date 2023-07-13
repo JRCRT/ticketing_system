@@ -35,7 +35,7 @@
 import NewUserForm from "@/components/NewUserForm.vue";
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
@@ -124,6 +124,10 @@ export default {
       console.log(selectedRow[0])
       store.commit("app/SET_SELECTED_USER", selectedRow[0]);
     };
+
+    onUnmounted(()=>{
+      store.commit("app/SET_SELECTED_USER", {});
+    })
 
     return {
       columnDefs,

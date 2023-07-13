@@ -8,6 +8,7 @@ const state = () => ({
   selectedUser: {},
   isTicketFormOpen: false,
   isUserFormOpen: false,
+  isModalLoading: false,
 });
 
 const getter = {};
@@ -52,6 +53,9 @@ const mutations = {
   },
   SET_USER_FORM(state, value) {
     state.isUserFormOpen = value;
+  },
+  SET_MODAL_LOADING(state, value) {
+    state.isModalLoading = value;
   },
 };
 

@@ -107,6 +107,8 @@ import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import PasteFromOffice from "@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice";
 import Table from "@ckeditor/ckeditor5-table/src/table";
 import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
+import TableProperties from "@ckeditor/ckeditor5-table/src/tableproperties";
+import TableCellProperties from "@ckeditor/ckeditor5-table/src/tablecellproperties";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
@@ -245,11 +247,40 @@ export default {
         PasteFromOffice,
         Table,
         TableToolbar,
+        TableProperties,
+        TableCellProperties,
         Highlight,
         Alignment,
         TableColumnResize,
       ],
-
+      table: {
+        contentToolbar: [
+          "tableColumn",
+          "tableRow",
+          "mergeTableCells",
+          "tableProperties",
+          "tableCellProperties",
+        ],
+        tableProperties: {
+          defaultProperties: {
+            borderStyle: "solid",
+            borderColor: "black",
+            borderWidth: "3px",
+            alignment: "left",
+            width: "550px",
+            height: "450px",
+          },
+          // The default styles for table cells in the editor.
+          // They should be synchronized with the content styles.
+          tableCellProperties: {
+            defaultProperties: {
+              horizontalAlignment: "center",
+              verticalAlignment: "bottom",
+              padding: "10px",
+            },
+          },
+        },
+      },
       toolbar: {
         items: ["bold", "italic", "|", "insertTable", "alignment", "highlight"],
       },
