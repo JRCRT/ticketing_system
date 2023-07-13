@@ -116,9 +116,9 @@ export default {
           middlename.value = user.middle_name;
           lastname.value = user.last_name;
           emailAddress.value = user.email;
-          selectedDepartment.value = user.department.name;
-          selectedRole.value = user.role.name;
-          selectedJobTitle.value = user.job_title.name;
+          selectedDepartment.value = user.department;
+          selectedRole.value = user.role;
+          selectedJobTitle.value = user.job_title;
         }
       },
       { immediate: true }

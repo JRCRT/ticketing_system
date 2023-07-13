@@ -108,7 +108,7 @@ export default {
     };
 
     const openNewUserForm = () => {
-      store.commit("app/SET_NEw_USER_FORM", true);
+      store.commit("app/SET_NEW_USER_FORM", true);
     };
 
     const onGridReady = async (params) => {

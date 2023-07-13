@@ -36,7 +36,7 @@ const mutations = {
     state.alerts.splice(index, 1);
   },
   SET_NEW_USER_FORM(state, value) {
-    state.isNewUserForm = value;
+    state.isNewUserFormOpen = value;
   },
   SET_LOGIN_LOADING(state, value) {
     state.isLoggingIn = value;
