@@ -113,6 +113,8 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
+import "@stylesheet/content-style.css";
+
 import { useStore } from "vuex";
 import { computed, onMounted, ref } from "vue";
 import { SIGNATORY_TYPE } from "@/util/constant";
@@ -265,19 +267,22 @@ export default {
           defaultProperties: {
             borderStyle: "solid",
             borderColor: "black",
-            borderWidth: "3px",
+            borderWidth: "1px",
             alignment: "left",
             width: "550px",
             height: "450px",
           },
           // The default styles for table cells in the editor.
           // They should be synchronized with the content styles.
-          tableCellProperties: {
-            defaultProperties: {
-              horizontalAlignment: "center",
-              verticalAlignment: "bottom",
-              padding: "10px",
-            },
+        },
+        tableCellProperties: {
+          defaultProperties: {
+            borderStyle: "solid",
+            borderColor: "black",
+            borderWidth: "1px",
+            horizontalAlignment: "center",
+            verticalAlignment: "bottom",
+            padding: "10px",
           },
         },
       },
