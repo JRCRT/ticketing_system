@@ -5,10 +5,17 @@
 
     <h4 class="text-primary">User</h4>
     <div class="flex justify-between items-end mt-1 mb-2">
-      <div>
-        <label>Search</label>
-        <input class="input__field !w-56 !p-[0.30rem]" />
+      <div class="flex gap-4">
+        <div>
+          <label>Full Name</label>
+          <input class="input__field !w-56 !p-[0.30rem]" v-model="fullname" />
+        </div>
+        <div>
+          <label>Username</label>
+          <input class="input__field !w-56 !p-[0.30rem]" v-model="username" />
+        </div>
       </div>
+
       <div class="flex">
         <button
           @click="openUserForm"
@@ -73,7 +80,8 @@ export default {
     ];
 
     const gridAPI = ref(null);
-
+    const fullname = ref(null);
+    const username = ref(null);
     const isUserFormOpen = computed(()=> store.state.app.isUserFormOpen);
     const isNewUserFormOpen = computed(() => store.state.app.isNewUserFormOpen)
 
@@ -134,6 +142,8 @@ export default {
       isUserFormOpen,
       isNewUserFormOpen,
       isSelectedRowEmpty,
+      fullname,
+      username,
       openNewUserForm,
       closeNewUserForm,
       openUserForm,

@@ -40,9 +40,9 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2">Submit</button>
+          <button class="button-primary mr-2">Approved</button>
           <button class="button-transparent" @click="$emit('close')">
-            Cancel
+            Declined
           </button>
         </div>
       </div>

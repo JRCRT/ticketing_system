@@ -14,6 +14,7 @@ namespace jts_backend.Models
         public int signatory_id { get; set; }
         public UserModel? user { get; set; } = new UserModel();
         public TicketModel? ticket { get; set; } = new TicketModel();
+        public StatusModel? approval_status { get; set; } = new StatusModel();
         public string type { get; set; } = string.Empty;
     }
 }
