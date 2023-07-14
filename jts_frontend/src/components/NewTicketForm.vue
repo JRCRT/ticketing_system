@@ -113,7 +113,7 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
-import "@stylesheet/content-style.css";
+import "@/stylesheet/content-style.css";
 
 import { useStore } from "vuex";
 import { computed, onMounted, ref } from "vue";
@@ -201,27 +201,71 @@ export default {
       return signatories;
     };
 
+    const validation = () => {
+      var alert;
+      var hasError = false;
+      if (!subject.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the subject field.",
+        };
+        hasError = true;
+      } else if (!background.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the background field.",
+        };
+        hasError = true;
+      } else if (!content.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the content field.",
+        };
+        hasError = true;
+      } else if (!reason.value) {
+        alert = { type: "danger", message: "Please fill up the reason field." };
+        hasError = true;
+      } else if (!selectedApprover.value.length) {
+        alert = {
+          type: "danger",
+          message: "Please select at least 1 approver.",
+        };
+        hasError = true;
+      } else if (!selectedChecker.value.length) {
+        alert = {
+          type: "danger",
+          message: "Please select at least 1 checker.",
+        };
+        hasError = true;
+      }
+
+      store.commit("app/ADD_ALERT", alert);
+      return hasError;
+    };
+
     const submitTicket = async () => {
-      var formData = new FormData();
-      uploadedFiles.value.forEach((file) => {
-        formData.append("files", file);
-      });
+      if (!validation()) {
+        var formData = new FormData();
+        uploadedFiles.value.forEach((file) => {
+          formData.append("files", file);
+        });
 
-      formData.append("subject", subject.value);
-      formData.append("condition", condition.value);
-      formData.append("background", background.value);
-      formData.append("content", content.value);
-      formData.append("reason", reason.value);
-      formData.append("decline_reason", "");
-      formData.append("status_id", PENDING_STATUS);
-      formData.append("user_id", currentUser.user_id);
-      formData.append("priority_id", selectedPriority.value.priority_id);
-      formData.append("date_created", formattedDatetime);
-      formData.append("date_approved", DEFAULT_DATE_TIME);
-      formData.append("date_declined", DEFAULT_DATE_TIME);
-      formData.append("signatories", JSON.stringify(selectedSignatories()));
+        formData.append("subject", subject.value);
+        formData.append("condition", condition.value);
+        formData.append("background", background.value);
+        formData.append("content", content.value);
+        formData.append("reason", reason.value);
+        formData.append("decline_reason", "");
+        formData.append("status_id", PENDING_STATUS);
+        formData.append("user_id", currentUser.user_id);
+        formData.append("priority_id", selectedPriority.value.priority_id);
+        formData.append("date_created", formattedDatetime);
+        formData.append("date_approved", DEFAULT_DATE_TIME);
+        formData.append("date_declined", DEFAULT_DATE_TIME);
+        formData.append("signatories", JSON.stringify(selectedSignatories()));
 
-      await store.dispatch("ticket/createTicket", formData);
+        await store.dispatch("ticket/createTicket", formData);
+      }
     };
 
     onMounted(async () => {
