@@ -49,7 +49,7 @@ import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { computed, ref } from "vue";
+import { computed, ref, onUnmounted } from "vue";
 
 export default {
   components: {
@@ -130,6 +130,10 @@ export default {
         params: { status: currentStatus.value, ticketId: ticketId },
       });
     };
+
+    onUnmounted(() => {
+      store.commit("app/SET_SELECTED_TICKET", {});
+    });
 
     return {
       currentTab,

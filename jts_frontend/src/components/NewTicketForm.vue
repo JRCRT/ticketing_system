@@ -201,7 +201,7 @@ export default {
       return signatories;
     };
 
-    const validation = () => {
+    const validate = () => {
       var alert;
       var hasError = false;
       if (!subject.value) {
@@ -239,12 +239,15 @@ export default {
         hasError = true;
       }
 
-      store.commit("app/ADD_ALERT", alert);
+      if (hasError) {
+        store.dispatch("app/addAlert", alert);
+      }
+
       return hasError;
     };
 
     const submitTicket = async () => {
-      if (!validation()) {
+      if (!validate()) {
         var formData = new FormData();
         uploadedFiles.value.forEach((file) => {
           formData.append("files", file);

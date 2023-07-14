@@ -85,20 +85,83 @@ export default {
     const roles = ref([]);
     const jobTitles = ref([]);
 
-    const createUser = async () => {
-      const user = new User({
-        first_name: firstname.value,
-        middle_name: middlename.value,
-        last_name: lastname.value,
-        username: username.value,
-        password: password.value,
-        email: emailAddress.value,
-        role_id: selectedRole.value.role_id,
-        department_id: selectedDepartment.value.department_id,
-        job_title_id: selectedJobTitle.value.job_title_id,
-      });
+    const validate = () => {
+      var alert;
+      var hasError = false;
+      if (!username.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the username field.",
+        };
+        hasError = true;
+      } else if (!password.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the password field.",
+        };
+        hasError = true;
+      } else if (!firstname.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the firstname field.",
+        };
+        hasError = true;
+      } else if (!lastname.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the lastname field.",
+        };
+        hasError = true;
+      } else if (!emailAddress.value) {
+        alert = {
+          type: "danger",
+          message: "Please fill up the email field.",
+        };
+        hasError = true;
+      } else if (!selectedDepartment.value.name) {
+        alert = {
+          type: "danger",
+          message: "Please select department.",
+        };
+        hasError = true;
+      } else if (!selectedRole.value.name) {
+        alert = {
+          type: "danger",
+          message: "Please select role.",
+        };
+        hasError = true;
+      } else if (!selectedJobTitle.value.name) {
+        alert = {
+          type: "danger",
+          message: "Please select job title.",
+        };
+        hasError = true;
+      }
 
-      await store.dispatch("user/createUser", user);
+      if (hasError) {
+        store.dispatch("app/addAlert", alert);
+      }
+
+      return hasError;
+    };
+
+    const createUser = async () => {
+      if (!validate()) {
+        const user = new User({
+          first_name: firstname.value,
+          middle_name: middlename.value,
+          last_name: lastname.value,
+          username: username.value,
+          password: password.value,
+          email: emailAddress.value,
+          role_id: selectedRole.value.role_id,
+          department_id: selectedDepartment.value.department_id,
+          job_title_id: selectedJobTitle.value.job_title_id,
+        });
+
+        await store.dispatch("user/createUser", user);
+      }
+
       //tableApi.setRowData(store.state.user.users);
     };
 
