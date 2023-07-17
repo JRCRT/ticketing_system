@@ -4144,19 +4144,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ts226jor\\.nuget\\packages\\": {}
+    "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+      "projectUniqueName": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
       "projectName": "jts_backend",
-      "projectPath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
-      "packagesPath": "C:\\Users\\ts226jor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ts226jor\\Desktop\\ticketing_system\\jts_backend\\obj\\",
+      "projectPath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+      "packagesPath": "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ts226jor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ts226jor.JACCS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

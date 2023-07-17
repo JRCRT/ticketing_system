@@ -162,7 +162,7 @@ button {
 }
 
 .sidebar-link {
-  @apply flex items-center w-full text-2xl bg-light hover:bg-darkPrimary hover:text-light transition-colors py-5 px-10;
+  @apply flex items-center w-full text-lg bg-light hover:bg-darkPrimary hover:text-light transition-colors py-5 px-10;
 }
 
 .sidebar-link > svg {
