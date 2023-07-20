@@ -3,7 +3,8 @@ import { nextTick } from "vue";
 import store from "@/store";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
-import Ticket from "@/views/my_ticket/Ticket.vue";
+import MyTicket from "@/views/my_ticket/Ticket.vue";
+
 import User from "@/views/User.vue";
 
 const routes = [
@@ -33,20 +34,20 @@ const routes = [
     },
   },
   {
-    path: "/Ticket/:status",
-    name: "Ticket",
-    component: Ticket,
+    path: "/MyTicket/:status",
+    name: "MyTicket",
+    component: MyTicket,
     meta: {
-      title: "Ticket",
+      title: "My Ticket",
       authRequired: true,
     },
   },
   {
-    path: "/Ticket/:status/Id/:ticketId",
-    name: "TicketById",
-    component: Ticket,
+    path: "/MyTicket/:status/Id/:ticketId",
+    name: "MyTicketById",
+    component: MyTicket,
     meta: {
-      title: "Ticket",
+      title: "My Ticket",
       authRequired: true,
     },
     beforeEnter: (to, from, next) => {

@@ -39,8 +39,9 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllDeclinedTickets");
-      params.api.setRowData(store.state.ticket.declinedTickets);
+      await store.dispatch("ticket/fetchMyTickets");
+      const myDeclinedTickets = store.getters["ticket/myDeclinedTickets"]
+      params.api.setRowData(myDeclinedTickets);
     };
 
     const onSelectionChanged = () => {
