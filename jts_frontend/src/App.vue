@@ -107,7 +107,7 @@ export default {
 
       <router-link
         class="sidebar-link"
-        :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
+        :to="{ name: 'MyTicket', params: { status: TICKET_STATUS.PENDING } }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

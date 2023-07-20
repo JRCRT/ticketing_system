@@ -4,6 +4,7 @@ import store from "@/store";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import MyTicket from "@/views/my_ticket/Ticket.vue";
+import Ticket from "@/views/all_ticket/Ticket.vue"
 
 import User from "@/views/User.vue";
 
@@ -48,6 +49,29 @@ const routes = [
     component: MyTicket,
     meta: {
       title: "My Ticket",
+      authRequired: true,
+    },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_TICKET_FORM", true);
+      next();
+    },
+  },
+
+  {
+    path: "/Ticket/:status",
+    name: "Ticket",
+    component: Ticket,
+    meta: {
+      title: "Ticket",
+      authRequired: true,
+    },
+  },
+  {
+    path: "/Ticket/:status/Id/:ticketId",
+    name: "TicketById",
+    component: Ticket,
+    meta: {
+      title: "Ticket",
       authRequired: true,
     },
     beforeEnter: (to, from, next) => {

@@ -16,24 +16,24 @@ const state = () => ({
 
 const getters = {
   pendingTickets: (state) => {
-    
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.status.name = 'Pending');
+    console.log(state.tickets)
+    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == 'Pending');
   },
   approvedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.status.name = 'Approved');
+    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == 'Approved');
   },
   declinedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.status.name = 'Declined');
+    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == 'Declined');
   }, 
 
   myPendingTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.status.name = 'Pending');
+    return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == 'Pending');
   },
   myApprovedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.status.name = 'Approved');
+    return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name== 'Approved');
   },
   myDeclinedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.status.name = 'Declined');
+    return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name== 'Declined');
   },
 };
 
