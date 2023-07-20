@@ -26,6 +26,7 @@ export default {
     onMounted(async () => {
       await router.isReady();
       store.commit("app/SET_CURRENT_URL", router.currentRoute.value.path);
+      console.log(router.currentRoute.value.path);
       usernameField.value.focus();
     });
 

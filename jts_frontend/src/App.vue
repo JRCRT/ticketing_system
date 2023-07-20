@@ -31,7 +31,7 @@ export default {
       store.commit("app/REMOVE_ALERT", index);
     };
     const alerts = computed(() => store.state.app.alerts);
-    const currentUrl = computed(() => store.state.app.currentUrl);
+    const currentUrl = computed(() => store.state.app.currentUrl == '/Login');
     const isLoading = computed(() => store.state.app.isLoading);
     const logout = () => {
       store.dispatch("auth/logout");
@@ -184,7 +184,7 @@ export default {
   </Sidebar>
 
   <!-- Navbar -->
-  <nav v-if="currentUrl != '/login'" class="navbar shadow-xl h-16">
+<nav v-if="!currentUrl" class="navbar shadow-xl h-16">
     <div class="container mx-auto flex p-3 items-center">
       <!-- Sidebar Toggle -->
       <button
@@ -231,7 +231,7 @@ export default {
       </div>
     </div>
   </nav>
-
+ 
   <div class="alerts">
     <transition-group name="fade">
       <div v-for="(alert, index) in alerts" :key="alert">

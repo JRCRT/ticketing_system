@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import PendingTicket from "@/views/Ticket/PendingTicket.vue";
-import ApprovedTicket from "@/views/Ticket/ApprovedTicket.vue";
-import DeclinedTicket from "@/views/Ticket/DeclinedTicket.vue";
+import PendingTicket from "@/views/ticket_for_approval/PendingTicket.vue";
+import ApprovedTicket from "@/views/ticket_for_approval/ApprovedTicket.vue";
+import DeclinedTicket from "@/views/ticket_for_approval/DeclinedTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";

@@ -14,6 +14,7 @@ const state = () => ({
   declinedTickets: [],
   todaysTickets: [],
   ticket: {},
+  myTickets: []
 });
 
 const getter = {};
@@ -26,7 +27,7 @@ const actions = {
   async fetchAllPendingTickets({ commit }) {
     const response = await ticketsByStatus(TICKET_STATUS.PENDING);
     commit("FETCH_PENDING_TICKETS", response.data);
-  },
+  },  
   async fetchAllApprovedTickets({ commit }) {
     const response = await ticketsByStatus(TICKET_STATUS.APPROVED);
     commit("FETCH_APPROVED_TICKETS", response.data);
