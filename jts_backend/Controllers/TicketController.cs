@@ -65,5 +65,12 @@ namespace jts_backend.Controllers
             var response = await _ticketService.GetTicketByUser(userId);
             return Ok(response);
         }
+
+        [HttpPost("GetTicketsForApproval")]
+         public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(int userId)
+        {
+            var response = await _ticketService.GetTicketsForApproval(userId);
+            return Ok(response);
+        }
     }
 }
