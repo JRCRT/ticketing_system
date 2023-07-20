@@ -5,13 +5,16 @@ import {
   createTicket,
   uploadFile,
   ticketById,
+  myTickets,
+  ticketsForApproval
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
-import { myTickets } from "../../services/ticketService";
+
 const state = () => ({
   tickets: [],
   ticket: {},
-  myTickets: []
+  myTickets: [],
+  ticketsForApproval: []
 });
 
 const getters = {
@@ -34,6 +37,16 @@ const getters = {
   },
   myDeclinedTickets: (state) => {
     return state.tickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name== 'Declined');
+  },
+
+  approvedTicketsForApproval: (state) => {
+    return state.tickets.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name == 'Pending');
+  },
+  declinedTicketsForApproval: (state) => {
+    return state.tickets.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name== 'Approved');
+  },
+  pendingTicketsForApproval: (state) => {
+    return state.tickets.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name== 'Declined');
   },
 };
 
@@ -60,6 +73,7 @@ const actions = {
     const response = await ticketsByStatus(TICKET_STATUS.DECLINED);
     commit("FETCH_DECLINED_TICKETS", response.data);
   },
+
   async fetchAllTodaysTickets({ commit }) {
     const response = await ticketsToday();
     commit("FETCH_TODAYS_TICKETS", response.data);
@@ -68,6 +82,11 @@ const actions = {
   async fetchTicket({ commit }, id) {
     const response = await ticketById(id);
     commit("FETCH_TICKET", response.data);
+  },
+
+  async fetchTicketsForApproval({ commit }, id) {
+    const response = await ticketsForApproval(id);
+    commit("FETCH_TICKETS_FOR_APPROVAL", response.data);
   },
 
   async createTicket({ commit, dispatch }, ticket) {
@@ -129,6 +148,10 @@ const mutations = {
   FETCH_TICKET(state, value) {
     state.ticket = value;
   },
+
+  FETCH_TICKETS_FOR_APPROVAL(state, value){
+    state.ticketsForApproval = value
+  }
 };
 
 export default {

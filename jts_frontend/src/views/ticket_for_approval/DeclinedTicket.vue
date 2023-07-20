@@ -19,6 +19,7 @@ export default {
   setup() {
     const store = useStore();
     const gridAPI = ref(null);
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
@@ -39,8 +40,9 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllDeclinedTickets");
-      params.api.setRowData(store.state.ticket.declinedTickets);
+      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
+      const declinedTicketsForApproval = store.getters["ticket/declinedTicketsForApproval"]
+      params.api.setRowData(declinedTicketsForApproval);
     };
 
     const onSelectionChanged = () => {

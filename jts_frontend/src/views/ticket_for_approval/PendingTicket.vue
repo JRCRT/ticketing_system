@@ -21,7 +21,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     const gridAPI = ref(null);
-
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
@@ -42,8 +42,9 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllPendingTickets");
-      params.api.setRowData(store.state.ticket.pendingTickets);
+      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
+      const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
+      params.api.setRowData(pendingTicketsForApproval);
     };
 
     const onSelectionChanged = () => {
