@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace jts_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,8 +88,8 @@ namespace jts_backend.Migrations
                     ext_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    password_hash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    password_salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    password_hash = table.Column<byte[]>(type: "varbinary(200)", maxLength: 200, nullable: false),
+                    password_salt = table.Column<byte[]>(type: "varbinary(200)", maxLength: 200, nullable: false),
                     role_id = table.Column<int>(type: "int", nullable: false),
                     job_title_id = table.Column<int>(type: "int", nullable: false),
                     department_id = table.Column<int>(type: "int", nullable: false)
@@ -124,10 +124,14 @@ namespace jts_backend.Migrations
                     ticket_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     subject = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    background = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    condition = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    others = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    background = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     date_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_approved = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_declined = table.Column<DateTime>(type: "datetime2", nullable: false),
                     declined_reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     status_id = table.Column<int>(type: "int", nullable: false),
                     user_id = table.Column<int>(type: "int", nullable: false),
@@ -163,6 +167,9 @@ namespace jts_backend.Migrations
                     file_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     file_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    stored_file_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    original_file_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    content_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ticket_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -184,11 +191,17 @@ namespace jts_backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_id = table.Column<int>(type: "int", nullable: true),
                     ticket_id = table.Column<int>(type: "int", nullable: true),
+                    approval_statusstatus_id = table.Column<int>(type: "int", nullable: true),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_signatory", x => x.signatory_id);
+                    table.ForeignKey(
+                        name: "FK_signatory_status_approval_statusstatus_id",
+                        column: x => x.approval_statusstatus_id,
+                        principalTable: "status",
+                        principalColumn: "status_id");
                     table.ForeignKey(
                         name: "FK_signatory_ticket_ticket_id",
                         column: x => x.ticket_id,
@@ -205,6 +218,11 @@ namespace jts_backend.Migrations
                 name: "IX_file_ticket_id",
                 table: "file",
                 column: "ticket_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_signatory_approval_statusstatus_id",
+                table: "signatory",
+                column: "approval_statusstatus_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_signatory_ticket_id",

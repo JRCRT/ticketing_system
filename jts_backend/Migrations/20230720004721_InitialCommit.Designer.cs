@@ -12,8 +12,8 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230711015215_AddTicketOtherColumn")]
-    partial class AddTicketOtherColumn
+    [Migration("20230720004721_InitialCommit")]
+    partial class InitialCommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,6 +139,9 @@ namespace jts_backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("signatory_id"));
 
+                    b.Property<int?>("approval_statusstatus_id")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ticket_id")
                         .HasColumnType("int");
 
@@ -150,6 +153,8 @@ namespace jts_backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("signatory_id");
+
+                    b.HasIndex("approval_statusstatus_id");
 
                     b.HasIndex("ticket_id");
 
@@ -288,11 +293,13 @@ namespace jts_backend.Migrations
 
                     b.Property<byte[]>("password_hash")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varbinary(200)");
 
                     b.Property<byte[]>("password_salt")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varbinary(200)");
 
                     b.Property<int>("role_id")
                         .HasColumnType("int");
@@ -326,6 +333,10 @@ namespace jts_backend.Migrations
 
             modelBuilder.Entity("jts_backend.Models.SignatoryModel", b =>
                 {
+                    b.HasOne("jts_backend.Models.StatusModel", "approval_status")
+                        .WithMany()
+                        .HasForeignKey("approval_statusstatus_id");
+
                     b.HasOne("jts_backend.Models.TicketModel", "ticket")
                         .WithMany()
                         .HasForeignKey("ticket_id");
@@ -333,6 +344,8 @@ namespace jts_backend.Migrations
                     b.HasOne("jts_backend.Models.UserModel", "user")
                         .WithMany()
                         .HasForeignKey("user_id");
+
+                    b.Navigation("approval_status");
 
                     b.Navigation("ticket");
 
