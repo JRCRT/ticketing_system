@@ -7,23 +7,46 @@ import {
   ticketById,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
+import { myTickets } from "../../services/ticketService";
 const state = () => ({
   tickets: [],
-  pendingTickets: [],
-  approvedTickets: [],
-  declinedTickets: [],
-  todaysTickets: [],
   ticket: {},
   myTickets: []
 });
 
-const getter = {};
+const getters = {
+  pendingTickets: (state) => {
+    return state.tickets.filter(ticket => ticket.status.name = 'Pending');
+  },
+  approvedTickets: (state) => {
+    return state.tickets.filter(ticket => ticket.status.name = 'Approved');
+  },
+  declinedTickets: (state) => {
+    return state.tickets.filter(ticket => ticket.status.name = 'Declined');
+  },
+
+  myPendingTickets: (state) => {
+    return state.myTickets.filter(ticket => ticket.status.name = 'Pending');
+  },
+  myApprovedTickets: (state) => {
+    return state.myTickets.filter(ticket => ticket.status.name = 'Approved');
+  },
+  myDeclinedTickets: (state) => {
+    return state.myTickets.filter(ticket => ticket.status.name = 'Declined');
+  },
+};
 
 const actions = {
   async fetchAllTickets({ commit }) {
     const response = await tickets();
     commit("FETCH_TICKETS", response.data);
   },
+
+  async fetchMyTickets({ commit }) {
+    const response = await myTickets();
+    commit("FETCH_MY_TICKETS", response.data);
+  },
+
   async fetchAllPendingTickets({ commit }) {
     const response = await ticketsByStatus(TICKET_STATUS.PENDING);
     commit("FETCH_PENDING_TICKETS", response.data);
@@ -84,6 +107,11 @@ const mutations = {
   FETCH_TICKETS(state, value) {
     state.tickets = value;
   },
+
+  FETCH_MY_TICKETS(state, value) {
+    state.myTickets = value;
+  },
+
   FETCH_PENDING_TICKETS(state, value) {
     state.pendingTickets = value;
   },
@@ -105,7 +133,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getter,
+  getters,
   actions,
   mutations,
 };

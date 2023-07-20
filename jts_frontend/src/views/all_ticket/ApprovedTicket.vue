@@ -39,8 +39,9 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllApprovedTickets");
-      params.api.setRowData(store.state.ticket.approvedTickets);
+      await store.dispatch("ticket/fetchAllTickets");
+      const approvedTickets = store.getters["ticket/approvedTickets"]
+      params.api.setRowData(approvedTickets);
     };
 
     const onSelectionChanged = async () => {

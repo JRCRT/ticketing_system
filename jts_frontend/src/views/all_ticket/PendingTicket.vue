@@ -42,8 +42,9 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllPendingTickets");
-      params.api.setRowData(store.state.ticket.pendingTickets);
+      await store.dispatch("ticket/fetchAllTickets");
+      const pendingTickets = store.getters["ticket/pendingTickets"]
+      params.api.setRowData(pendingTickets);
     };
 
     const onSelectionChanged = () => {
