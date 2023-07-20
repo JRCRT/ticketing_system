@@ -12,9 +12,9 @@ const tickets = async () => {
   return response;
 };
 
-const myTickets = async () => {
+const myTickets = async (userId) => {
   const response = await axios
-    .get("/Ticket/GetAllTickets")
+    .get(`/Ticket/GetTicketByUser?userId=${userId}`)
     .then((res) => {
       return res.data;
     })

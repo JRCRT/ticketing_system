@@ -43,8 +43,8 @@ const actions = {
     commit("FETCH_TICKETS", response.data);
   },
 
-  async fetchMyTickets({ commit }) {
-    const response = await myTickets();
+  async fetchMyTickets({ commit }, userId) {
+    const response = await myTickets(userId);
     commit("FETCH_MY_TICKETS", response.data);
   },
 
