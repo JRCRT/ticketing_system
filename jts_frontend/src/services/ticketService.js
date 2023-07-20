@@ -14,7 +14,7 @@ const tickets = async () => {
 
 const myTickets = async (userId) => {
   const response = await axios
-    .get(`/Ticket/GetTicketByUser?userId=${userId}`)
+    .post(`/Ticket/GetTicketByUser?userId=${userId}`)
     .then((res) => {
       return res.data;
     })

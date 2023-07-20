@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-3">
     <NewTicketForm v-if="modalActive" @close="closeModal" />
     <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
-    <h4 class="text-primary">Ticket</h4>
+    <h4 class="text-primary">My Tickets</h4>
     <div class="relative">
       <div class="flex justify-between">
         <div class="flex">

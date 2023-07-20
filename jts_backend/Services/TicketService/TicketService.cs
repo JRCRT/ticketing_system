@@ -514,5 +514,61 @@ namespace jts_backend.Services.TicketService
 
             return response;
         }
+
+        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketsForApproval(int userId)
+        {
+            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var responseData = new Collection<GetTicketDto>();
+            var tickets = await _context.approver
+                    .Include(a => a.user)
+                    .Include(a => a.ticket)
+                    .Where(a => a.user.user_id == userId)
+                    .Select(a => a.ticket)
+                    .ToListAsync();
+
+            foreach (var ticket in tickets)
+            {
+                var approvers = new Collection<GetSignatoryDto>();
+                var signatories = await _context.approver
+                    .Include(a => a.user)
+                    .Include(a => a.ticket)
+                    .Where(a => a.ticket!.ticket_id == ticket.ticket_id)
+                    .Select(a => a)
+                    .ToListAsync();
+
+                var files = await _context.file
+                    .Where(f => f.ticket.ticket_id == ticket.ticket_id)
+                    .Select(f => _mapper.Map<GetFileDto>(f))
+                    .ToListAsync();
+
+                foreach (var signatory in signatories)
+                {
+                    var user = await _context.user
+                        .Include(u => u.role)
+                        .Include(u => u.department)
+                        .Include(u => u.job_title)
+                        .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
+                    var approverData = new GetSignatoryDto()
+                    {
+                        user = _mapper.Map<GetUserDto>(user!),
+                        type = signatory.type
+                    };
+                    approvers.Add(approverData);
+                }
+
+                var data = new GetTicketDto()
+                {
+                    ticket = _mapper.Map<TicketDto>(ticket),
+                    signatories = approvers,
+                    files = files
+                };
+
+                responseData.Add(data);
+            }
+
+            response.data = responseData;
+
+            return response;
+        }
     }
 }
