@@ -5,6 +5,7 @@ import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import MyTicket from "@/views/my_ticket/Ticket.vue";
 import Ticket from "@/views/all_ticket/Ticket.vue"
+import TicketForApproval from "@/views/ticket_for_approval/Ticket.vue";
 
 import User from "@/views/User.vue";
 
@@ -34,6 +35,30 @@ const routes = [
       authRequired: true,
     },
   },
+
+  {
+    path: "/Ticket/:status",
+    name: "Ticket",
+    component: Ticket,
+    meta: {
+      title: "All Tickets",
+      authRequired: true,
+    },
+  },
+  {
+    path: "/Ticket/:status/Id/:ticketId",
+    name: "TicketById",
+    component: Ticket,
+    meta: {
+      title: "All Tickets",
+      authRequired: true,
+    },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_TICKET_FORM", true);
+      next();
+    },
+  },
+
   {
     path: "/MyTicket/:status",
     name: "MyTicket",
@@ -56,22 +81,22 @@ const routes = [
       next();
     },
   },
-
+  
   {
-    path: "/Ticket/:status",
-    name: "Ticket",
-    component: Ticket,
+    path: "/TicketForApproval/:status",
+    name: "TicketForApproval",
+    component: TicketForApproval,
     meta: {
-      title: "Ticket",
+      title: "Ticket For Approval",
       authRequired: true,
     },
   },
   {
-    path: "/Ticket/:status/Id/:ticketId",
-    name: "TicketById",
-    component: Ticket,
+    path: "/TicketForApproval/:status/Id/:ticketId",
+    name: "TicketForApprovalById",
+    component: TicketForApproval,
     meta: {
-      title: "Ticket",
+      title: "Ticket For Approval",
       authRequired: true,
     },
     beforeEnter: (to, from, next) => {
@@ -79,6 +104,7 @@ const routes = [
       next();
     },
   },
+
   {
     path: "/User",
     name: "User",
@@ -88,6 +114,7 @@ const routes = [
       adminRequired: true,
     },
   },
+
   {
     path: "/User/Id/:userId",
     name: "UserById",

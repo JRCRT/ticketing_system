@@ -107,7 +107,7 @@ export default {
     const closeTicketForm = () => {
       store.commit("app/SET_TICKET_FORM", false);
       router.replace({
-        name: "Ticket",
+        name: "TicketForApproval",
         params: { status: currentStatus.value },
       });
     };
@@ -119,14 +119,14 @@ export default {
     function changeTab(tab) {
       currentTab.value = tab.name;
       currentStatus.value = tab.status;
-      router.replace({ name: "Ticket", params: { status: tab.status } });
+      router.replace({ name: "TicketForApproval", params: { status: tab.status } });
       store.commit("app/SET_SELECTED_TICKET", {});
     }
 
     const openTicket = async () => {
       const ticketId = store.state.app.selectedTicket.ticket.ticket_id;
       router.push({
-        name: "TicketById",
+        name: "TicketForApprovalById",
         params: { status: currentStatus.value, ticketId: ticketId },
       });
     };

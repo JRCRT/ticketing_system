@@ -13,6 +13,7 @@ export default {
     Loader,
   },
   setup() {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const router = useRouter();
     const store = useStore();
     const sidebarActive = ref(false);
@@ -38,6 +39,8 @@ export default {
       router.replace("/login");
     };
 
+    console.log(currentUser)
+
     return {
       sidebarActive,
       VITE_APP_TITLE,
@@ -51,6 +54,7 @@ export default {
       alerts,
       isLoading,
       TICKET_STATUS,
+      currentUser
     };
   },
 };
@@ -86,6 +90,7 @@ export default {
       <!--Ticket-->
 
       <router-link
+      v-if="currentUser.roleModel.name == 'Admin'"
         class="sidebar-link"
         :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
       >
@@ -127,7 +132,7 @@ export default {
 
       <router-link
         class="sidebar-link"
-        :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
+        :to="{ name: 'TicketForApproval', params: { status: TICKET_STATUS.PENDING } }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
