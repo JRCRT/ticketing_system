@@ -1,7 +1,7 @@
 <template>
   <Modal @close="$emit('close')">
     <template v-slot:header>
-      <h5>{{ ticket?.ticket?.ticket_id }}</h5>
+      <h5 class="modal-title">{{ ticket?.ticket?.ticket_id }}</h5>
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">

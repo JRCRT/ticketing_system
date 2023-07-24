@@ -1,7 +1,7 @@
 <template>
   <Modal @close="$emit('close')">
     <template v-slot:header>
-      <h5>New</h5>
+      <h5 class="modal-title">New</h5>
     </template>
     <template v-slot:content>
       <div>

@@ -330,3 +330,7 @@ input[type="file"]:focus {
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+.modal-title{
+  @apply font-bold;
+}
