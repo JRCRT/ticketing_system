@@ -4,7 +4,7 @@ const currentUser = JSON.parse(localStorage.getItem("user"));
 export default axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Authorization": `Brearer ${currentUser.access_token}`
+    "Authorization": `Bearer ${currentUser.access_token}`
   }, 
 });
 
