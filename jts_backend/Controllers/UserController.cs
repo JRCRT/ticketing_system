@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace jts_backend.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase

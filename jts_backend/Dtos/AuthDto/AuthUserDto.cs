@@ -11,7 +11,6 @@ namespace jts_backend.Dtos.AuthDto
         public int user_id { get; set; }
         public string username { get; set; } = string.Empty;
         public string access_token { get; set; } = string.Empty;
-
         public RoleModel roleModel { get; set; } = new RoleModel();
     }
 }

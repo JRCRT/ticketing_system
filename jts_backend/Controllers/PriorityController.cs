@@ -6,9 +6,11 @@ using jts_backend.Dtos.PriorityDto;
 using jts_backend.Models;
 using jts_backend.Services.PriorityService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace jts_backend.Controllers
 {
+   
     [ApiController]
     [Route("api/[controller]")]
     public class PriorityController : ControllerBase

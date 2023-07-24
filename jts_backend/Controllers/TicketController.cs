@@ -6,9 +6,11 @@ using jts_backend.Dtos.TicketDto;
 using jts_backend.Models;
 using jts_backend.Services.TicketService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace jts_backend.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TicketController : ControllerBase

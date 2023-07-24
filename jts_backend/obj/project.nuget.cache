@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Wn+m4eLb4pBBseE05pFQcsfNb1n+QW7JCe+/g1bI8DAf7o2YeWiGFwFZgABbi0l2JweVLhjXCYQTM3G2o6IoyA==",
+  "dgSpecHash": "UDw/tGia5A327FIUFHugxEGKKXSXZEShhh9z+Ayy2n8/2/j9xlFvTOtSdFMsFStxBzVN7UFWXqE0hfO0Pi8LDw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+  "projectFilePath": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
@@ -52,7 +52,10 @@
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\scrutor\\3.3.0\\scrutor.3.3.0.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\swashbuckle.aspnetcore.filters\\7.0.6\\swashbuckle.aspnetcore.filters.7.0.6.nupkg.sha512",
+    "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\swashbuckle.aspnetcore.filters.abstractions\\7.0.6\\swashbuckle.aspnetcore.filters.abstractions.7.0.6.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
     "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512",
