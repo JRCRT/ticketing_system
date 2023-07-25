@@ -24,8 +24,9 @@ namespace jts_backend.Services.EmailService
         public async Task<ServiceResponse<string>> Send(CreateEmailDto request)
         {
             var response = new ServiceResponse<string>();
-            
-            try{
+            try
+            {
+
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(request.from));
             email.To.Add(MailboxAddress.Parse(request.to));
@@ -33,7 +34,7 @@ namespace jts_backend.Services.EmailService
             email.Body = new TextPart(TextFormat.Html) { Text = request.body };
 
             using var smtp = new SmtpClient(new ProtocolLogger (Console.OpenStandardOutput ()));
-            await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls);
+            await smtp.ConnectAsync(_settings.Host, _settings.Port, _settings.SSL);
             await smtp.AuthenticateAsync(_settings.Username, _settings.Password);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
@@ -41,10 +42,14 @@ namespace jts_backend.Services.EmailService
             response.data = request.body;
             response.message = "Email successfully sent";
 
-            }catch(Exception e){
+            }
+
+            catch(Exception e)
+            {
                 response.message = e.Message;
                 response.success = false;
             }
+
             return response;
         }
     }

@@ -11,5 +11,6 @@ namespace jts_backend.Configuration
         public int Port {get;set;}
         public string? Username {get;set;}
         public string? Password {get;set;}
+        public bool SSL{get;set;}
     }
 }
