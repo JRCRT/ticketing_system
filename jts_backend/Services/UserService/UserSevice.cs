@@ -13,9 +13,7 @@ namespace jts_backend.Services.UserService
     {
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
-
         private readonly IHubContext<UserHub, IUserHub> _hubContext;
-
         public UserSevice(
             JtsContext context,
             IMapper mapper,
@@ -26,7 +24,6 @@ namespace jts_backend.Services.UserService
             _mapper = mapper;
             _hubContext = hubContext;
         }
-
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
         {
             var response = new ServiceResponse<ICollection<GetUserDto>>();
@@ -39,7 +36,6 @@ namespace jts_backend.Services.UserService
             response.data = users;
             return response;
         }
-
         public async Task<ServiceResponse<GetUserDto>> GetUserById(int user_id)
         {
             var response = new ServiceResponse<GetUserDto>();
@@ -129,8 +125,9 @@ namespace jts_backend.Services.UserService
 
             _context.user.Add(newUser);
             await _context.SaveChangesAsync();
-            response.data = _mapper.Map<GetUserDto>(newUser);
-            await _hubContext.Clients.All.GetUser(response.data);
+            var data = _mapper.Map<GetUserDto>(newUser);
+            response.data = data;
+            await _hubContext.Clients.All.GetUser(data);
             response.message = "User added successfully.";
             return response;
         }

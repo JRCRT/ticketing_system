@@ -158,7 +158,6 @@ export default {
           department_id: selectedDepartment.value.department_id,
           job_title_id: selectedJobTitle.value.job_title_id,
         });
-
         await store.dispatch("user/createUser", user);
       }
 

@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
 import NewUserForm from "@/components/NewUserForm.vue";
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
@@ -92,8 +92,8 @@ export default {
 
     signalR.on('GetUser', user => {
       store.commit("user/ADD_USER", user);
-      console.log('signal r')
-      tableApi.value.setRowData(store.state.user.users)
+      console.log(user);
+      gridAPI.value.setRowData(store.state.user.users)
     });
 
     const openUserForm = () =>{

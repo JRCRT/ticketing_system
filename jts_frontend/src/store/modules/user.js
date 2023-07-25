@@ -58,7 +58,7 @@ const actions = {
     }
     alert = { type: "success", message: response.message };
     commit("app/SET_LOADING", false, { root: true });
-    commit("app/SET_USER_FORM", false, { root: true });
+    commit("app/SET_NEW_USER_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
 };
