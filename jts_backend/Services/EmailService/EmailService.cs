@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Configuration;
 using jts_backend.Dtos.EmailDto;
 using jts_backend.Models;
 using MailKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 
@@ -14,10 +16,10 @@ namespace jts_backend.Services.EmailService
 {
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
-        public EmailService(IConfiguration configuration)
+        private readonly MailSettings _settings;
+        public EmailService(IOptions<MailSettings> settings)
         {
-            _configuration = configuration;
+            _settings = settings.Value;
         }
         public async Task<ServiceResponse<string>> Send(CreateEmailDto request)
         {
@@ -30,10 +32,9 @@ namespace jts_backend.Services.EmailService
             email.Subject = request.subject;
             email.Body = new TextPart(TextFormat.Html) { Text = request.body };
 
-            // send email
             using var smtp = new SmtpClient(new ProtocolLogger (Console.OpenStandardOutput ()));
-            await smtp.ConnectAsync(_configuration.GetSection("AppSettings:SmtpHost").Value, int.Parse(_configuration.GetSection("AppSettings:SmtpPort").Value!), SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(_configuration.GetSection("AppSettings:SmtpUser").Value, _configuration.GetSection("AppSettings:SmtpPassword").Value);
+            await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(_settings.Username, _settings.Password);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
             
