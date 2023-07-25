@@ -12,6 +12,6 @@ app.use(router);
 app.use(store);
 app.use(CKEditor);
 app.use(VueSignalR, {
-  url: "http://localhost:5148/user-hub",
+  url: `${BASE_URL}/user-hub`,
 });
-router.isReady().then(() => app.mount("#app"));
+app.mount("#app");

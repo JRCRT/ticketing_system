@@ -86,22 +86,6 @@ export default {
     const departments = ref([]);
     const roles = ref([]);
     const jobTitles = ref([]);
-    /*    const createUser = async () => {
-      const user = new User({
-        first_name: firstname.value,
-        middle_name: middlename.value,
-        last_name: lastname.value,
-        username: username.value,
-        password: password.value,
-        email: emailAddress.value,
-        role_id: selectedRole.value.role_id,
-        department_id: selectedDepartment.value.department_id,
-        job_title_id: selectedJobTitle.value.job_title_id,
-      });
-
-      await store.dispatch("user/createUser", user);
-      //tableApi.setRowData(store.state.user.users);
-    }; */
 
     watch(
       () => route.params.userId,
@@ -109,8 +93,6 @@ export default {
         if (newUserId) {
           await store.dispatch("user/fetchUser", newUserId);
           const user = store.state.user.user;
-          console.log(user);
-          console.log("userId", newUserId);
           username.value = user.username;
           firstname.value = user.first_name;
           middlename.value = user.middle_name;

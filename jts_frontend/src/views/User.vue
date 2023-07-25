@@ -92,6 +92,7 @@ export default {
 
     signalR.on('GetUser', user => {
       store.commit("user/ADD_USER", user);
+      console.log('signal r')
       tableApi.value.setRowData(store.state.user.users)
     });
 
@@ -101,7 +102,7 @@ export default {
         name: "UserById",
         params: {userId: userId},
       });
-      console.log(isUserFormOpen.value)
+
     }
 
     const closeUserForm = () =>{
@@ -124,12 +125,10 @@ export default {
       params.api.showLoadingOverlay();
       await store.dispatch("user/fetchAllUsers");
       params.api.setRowData(store.state.user.users);
-
     };
 
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
-      console.log(selectedRow[0])
       store.commit("app/SET_SELECTED_USER", selectedRow[0]);
     };
 

@@ -24,6 +24,10 @@ const mutations = {
     const index = state.files.indexOf(value);
     if (index > -1) state.files.splice(index, 1);
   },
+
+  EMPTY_FILE(state, value){
+    state.files = value;
+  }
 };
 
 export default {

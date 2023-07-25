@@ -116,7 +116,7 @@ import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 import "@/stylesheet/content-style.css";
 
 import { useStore } from "vuex";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { SIGNATORY_TYPE } from "@/util/constant";
 import { Signatory } from "@/models/Signatory";
 
@@ -277,14 +277,18 @@ export default {
       await store.dispatch("user/fetchCheckers");
       await store.dispatch("user/fetchAllUsers");
       await store.dispatch("priority/fetchPriorities");
+      
       store.commit("app/SET_LOADING", false);
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
       relatedParty.value = store.state.user.users;
       priorities.value = store.state.priority.priorities;
-
       selectedPriority.value = store.state.priority.priorities[0];
+    });
+
+    onUnmounted(()=> {
+      store.commit("file/EMPTY_FILE", []);
     });
 
     const editorConfig = {
@@ -319,8 +323,6 @@ export default {
             width: "550px",
             height: "450px",
           },
-          // The default styles for table cells in the editor.
-          // They should be synchronized with the content styles.
         },
         tableCellProperties: {
           defaultProperties: {
