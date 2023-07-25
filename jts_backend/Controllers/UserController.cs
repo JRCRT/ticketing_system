@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace jts_backend.Controllers
 {
-    [Authorize]
+    [Authorize] 
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -57,6 +57,15 @@ namespace jts_backend.Controllers
         )
         {
             var response = await _userService.GetUsersByRole(role);
+            return Ok(response);
+        }
+
+        [HttpPost("UpdateUser")]
+        public async Task<ActionResult<ServiceResponse<string>>> GetUsersByRole(
+            UpdateUserDto request
+        )
+        {
+            var response = await _userService.UpdateUser(request);
             return Ok(response);
         }
     }

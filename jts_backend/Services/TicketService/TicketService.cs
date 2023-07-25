@@ -16,6 +16,8 @@ using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
 using jts_backend.Helper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
+using jts_backend.Hub;
 
 namespace jts_backend.Services.TicketService
 {
@@ -25,12 +27,13 @@ namespace jts_backend.Services.TicketService
         private readonly IMapper _mapper;
 
         private readonly IWebHostEnvironment _env;
-
-        public TicketService(JtsContext context, IMapper mapper, IWebHostEnvironment env)
+        private readonly IHubContext<JtsHub, IJtsHub> _hubContext;
+        public TicketService(JtsContext context, IMapper mapper, IWebHostEnvironment env,  IHubContext<JtsHub, IJtsHub> hubContext)
         {
             _context = context;
             _mapper = mapper;
             _env = env;
+            _hubContext = hubContext;
         }
 
         public async Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request)
@@ -157,7 +160,8 @@ namespace jts_backend.Services.TicketService
                     signatories = signatories,
                     files = files
                 };
-
+                
+                await _hubContext.Clients.All.GetTicket(responseData);
                 response.data = responseData;
                 response.message = "Ticket created successfully";
 

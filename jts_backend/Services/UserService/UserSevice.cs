@@ -164,6 +164,10 @@ namespace jts_backend.Services.UserService
             user.role.role_id = updateUser.role_id;
             user.department.department_id = updateUser.department_id;
 
+            _context.user.Update(user);
+            await _context.SaveChangesAsync();
+            response.data = "Successfully updated";
+            response.message = "Successfully updated";
             return response;
         }
 

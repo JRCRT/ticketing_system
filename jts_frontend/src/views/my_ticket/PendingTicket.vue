@@ -47,6 +47,12 @@ export default {
       params.api.setRowData(myPendingTickets);
     };
 
+  /*  signalR.on('GetUser', user => {
+      store.commit("user/ADD_USER", user);
+      console.log(user);
+      gridAPI.value.setRowData(store.state.user.users)
+    }); */
+
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
