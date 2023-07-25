@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using jts_backend.Dtos.UserDto;
-using jts_backend.Hub.User;
+
 using jts_backend.Models;
 using jts_backend.Services.UserService;
 using Microsoft.AspNetCore.Authorization;

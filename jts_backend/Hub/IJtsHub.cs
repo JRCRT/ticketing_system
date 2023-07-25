@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using jts_backend.Dtos.UserDto;
-using jts_backend.Models;
 
-namespace jts_backend.Hub.User
+namespace jts_backend.Hub
 {
-    public interface IUserHub
+    public interface IJtsHub
     {
-        Task GetUser(GetUserDto user);
+         Task GetUser(GetUserDto user);
     }
 }

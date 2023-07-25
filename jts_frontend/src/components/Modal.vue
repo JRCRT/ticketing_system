@@ -1,4 +1,5 @@
 <template>
+<Transition name="fade">
   <div class="modal">
     <div class="modal-backdrop"></div>
     <!-- <div v-if="isModalLoading" class="modal-container m-auto">
@@ -34,6 +35,7 @@
       </div>
     </div>
   </div>
+</Transition>
 </template>
 
 <script>

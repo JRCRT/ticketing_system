@@ -1,7 +1,7 @@
 using AutoMapper;
 using jts_backend.Context;
 using jts_backend.Dtos.UserDto;
-using jts_backend.Hub.User;
+using jts_backend.Hub;
 using jts_backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
@@ -13,11 +13,11 @@ namespace jts_backend.Services.UserService
     {
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
-        private readonly IHubContext<UserHub, IUserHub> _hubContext;
+        private readonly IHubContext<JtsHub, IJtsHub> _hubContext;
         public UserSevice(
             JtsContext context,
             IMapper mapper,
-            IHubContext<UserHub, IUserHub> hubContext
+            IHubContext<JtsHub, IJtsHub> hubContext
         )
         {
             _context = context;

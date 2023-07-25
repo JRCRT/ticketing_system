@@ -1,5 +1,4 @@
 using jts_backend.Context;
-using jts_backend.Hub.User;
 using jts_backend.Services.AuthService;
 using jts_backend.Services.DepartmentService;
 using jts_backend.Services.FileService;
@@ -17,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using jts_backend.Services.EmailService;
 using jts_backend.Configuration;
+using jts_backend.Hub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,6 +100,6 @@ app.Use(
 );
 
 app.UseAuthorization();
-app.MapHub<UserHub>("/user-hub");
+app.MapHub<JtsHub>("/jts-hub");
 app.MapControllers();
 app.Run();

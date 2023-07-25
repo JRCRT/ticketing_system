@@ -7,7 +7,7 @@
     <div class="flex justify-between items-end mt-1 mb-2">
       <div class="flex gap-4">
         <div>
-          <label>Full Name</label>
+          <label>Name</label>
           <input class="input__field !w-56 !p-[0.30rem]" v-model="fullname" />
         </div>
         <div>
