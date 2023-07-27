@@ -526,7 +526,11 @@ namespace jts_backend.Services.TicketService
         {
             var response = new ServiceResponse<ICollection<GetTicketForApprovalDto>>();
             var responseData = new Collection<GetTicketForApprovalDto>();
-            var signatories = await _context.approver
+            var signatories = await _context.approver           
+                    .Include(a => a.ticket.user)
+                    .Include(a => a.ticket.user.department)
+                    .Include(a => a.ticket.user.role)
+                    .Include(a => a.ticket.user.job_title)
                     .Include(a => a.user)
                     .Include(u => u.user.department)
                     .Include(u => u.user.job_title)
