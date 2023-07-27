@@ -5,7 +5,7 @@
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
-        <label>Requested Date</label>
+        <label>Date Requested</label>
         <div class="rf-detail-container">
           {{ requestedDate }}
         </div>
@@ -76,8 +76,7 @@ export default {
           requestedDate.value = Intl.DateTimeFormat("en-US").format(
             new Date(ticket.value.ticket.date_created)
           );
-
-          console.log(ticket.value);
+        
         }
       },
       { immediate: true }
