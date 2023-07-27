@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace jts_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCommit : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -191,15 +191,15 @@ namespace jts_backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_id = table.Column<int>(type: "int", nullable: true),
                     ticket_id = table.Column<int>(type: "int", nullable: true),
-                    approval_statusstatus_id = table.Column<int>(type: "int", nullable: true),
+                    status_id = table.Column<int>(type: "int", nullable: true),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_signatory", x => x.signatory_id);
                     table.ForeignKey(
-                        name: "FK_signatory_status_approval_statusstatus_id",
-                        column: x => x.approval_statusstatus_id,
+                        name: "FK_signatory_status_status_id",
+                        column: x => x.status_id,
                         principalTable: "status",
                         principalColumn: "status_id");
                     table.ForeignKey(
@@ -220,9 +220,9 @@ namespace jts_backend.Migrations
                 column: "ticket_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_signatory_approval_statusstatus_id",
+                name: "IX_signatory_status_id",
                 table: "signatory",
-                column: "approval_statusstatus_id");
+                column: "status_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_signatory_ticket_id",

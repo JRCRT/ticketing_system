@@ -12,8 +12,8 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230720004721_InitialCommit")]
-    partial class InitialCommit
+    [Migration("20230727035212_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ namespace jts_backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("signatory_id"));
 
-                    b.Property<int?>("approval_statusstatus_id")
+                    b.Property<int?>("status_id")
                         .HasColumnType("int");
 
                     b.Property<int?>("ticket_id")
@@ -154,7 +154,7 @@ namespace jts_backend.Migrations
 
                     b.HasKey("signatory_id");
 
-                    b.HasIndex("approval_statusstatus_id");
+                    b.HasIndex("status_id");
 
                     b.HasIndex("ticket_id");
 
@@ -333,9 +333,9 @@ namespace jts_backend.Migrations
 
             modelBuilder.Entity("jts_backend.Models.SignatoryModel", b =>
                 {
-                    b.HasOne("jts_backend.Models.StatusModel", "approval_status")
+                    b.HasOne("jts_backend.Models.StatusModel", "status")
                         .WithMany()
-                        .HasForeignKey("approval_statusstatus_id");
+                        .HasForeignKey("status_id");
 
                     b.HasOne("jts_backend.Models.TicketModel", "ticket")
                         .WithMany()
@@ -345,7 +345,7 @@ namespace jts_backend.Migrations
                         .WithMany()
                         .HasForeignKey("user_id");
 
-                    b.Navigation("approval_status");
+                    b.Navigation("status");
 
                     b.Navigation("ticket");
 

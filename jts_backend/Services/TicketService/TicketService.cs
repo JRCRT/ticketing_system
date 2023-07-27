@@ -179,6 +179,7 @@ namespace jts_backend.Services.TicketService
             TicketModel ticket
         )
         {
+            var status = await _context.status.FirstOrDefaultAsync(s => s.status_id == 1);
             var _signatories = new Collection<GetSignatoryDto>();
             foreach (var signatory in signatories)
             {
@@ -186,13 +187,15 @@ namespace jts_backend.Services.TicketService
                     .Include(u => u.role)
                     .Include(u => u.department)
                     .Include(u => u.job_title)
+                    
                     .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
 
                 var newSignatory = new SignatoryModel()
                 {
                     ticket = ticket,
                     user = user,
-                    type = signatory.type
+                    type = signatory.type,
+                    status = status
                 };
 
                 await _context.approver.AddAsync(newSignatory);
@@ -200,7 +203,7 @@ namespace jts_backend.Services.TicketService
                 var signatoryData = new GetSignatoryDto()
                 {
                     user = _mapper.Map<GetUserDto>(user),
-                    type = signatory.type
+                    type = signatory.type,
                 };
                 _signatories.Add(signatoryData);
             }
@@ -519,60 +522,33 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketsForApproval(int userId)
+        public async Task<ServiceResponse<ICollection<GetTicketForApprovalDto>>> GetTicketsForApproval(int userId)
         {
-            var response = new ServiceResponse<ICollection<GetTicketDto>>();
-            var responseData = new Collection<GetTicketDto>();
-            var tickets = await _context.approver
+            var response = new ServiceResponse<ICollection<GetTicketForApprovalDto>>();
+            var responseData = new Collection<GetTicketForApprovalDto>();
+            var signatories = await _context.approver
                     .Include(a => a.user)
+                    .Include(u => u.user.department)
+                    .Include(u => u.user.job_title)
+                    .Include(u => u.user.role)
                     .Include(a => a.ticket)
+                    .Include(t => t.ticket.status)
+                    .Include(t => t.ticket.priority)
                     .Where(a => a.user!.user_id == userId)
-                    .Select(a => a.ticket)
-                    .ToListAsync();
-
-            foreach (var ticket in tickets)
-            {
-                var _ticket = await _context.ticket
-                .Include(t => t.priority)
-                .Include(t => t.status)
-                .Include(t => t.user)
-                .Include(u => u.user.role)
-                .Include(u => u.user.department)
-                .Include(u => u.user.job_title)
-                .FirstOrDefaultAsync(t => t.ticket_id == ticket!.ticket_id);
-                
-                var approvers = new Collection<GetSignatoryDto>();
-                var signatories = await _context.approver
-                    .Include(a => a.user)
-                    .Include(a => a.ticket)
-                    .Where(a => a.ticket!.ticket_id == ticket!.ticket_id)
                     .Select(a => a)
                     .ToListAsync();
 
+            foreach (var signatory in signatories)
+            {
                 var files = await _context.file
-                    .Where(f => f.ticket.ticket_id == ticket!.ticket_id)
+                    .Where(f => f.ticket.ticket_id == signatory!.ticket!.ticket_id)
                     .Select(f => _mapper.Map<GetFileDto>(f))
                     .ToListAsync();
 
-                foreach (var signatory in signatories)
+                var data = new GetTicketForApprovalDto()
                 {
-                    var user = await _context.user
-                        .Include(u => u.role)
-                        .Include(u => u.department)
-                        .Include(u => u.job_title)
-                        .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
-                    var approverData = new GetSignatoryDto()
-                    {
-                        user = _mapper.Map<GetUserDto>(user!),
-                        type = signatory.type
-                    };
-                    approvers.Add(approverData);
-                }
-
-                var data = new GetTicketDto()
-                {
-                    ticket = _mapper.Map<TicketDto>(_ticket),
-                    signatories = approvers,
+                    ticket = _mapper.Map<TicketDto>(signatory.ticket),
+                    signatory = _mapper.Map<GetSignatoryDto>(signatory),
                     files = files
                 };
 

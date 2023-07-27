@@ -39,8 +39,6 @@ export default {
       router.replace("/login");
     };
 
-    console.log(currentUser)
-
     return {
       sidebarActive,
       VITE_APP_TITLE,
@@ -90,7 +88,7 @@ export default {
       <!--Ticket-->
 
       <router-link
-      v-if="currentUser.roleModel.name == 'Admin'"
+      v-if="currentUser?.roleModel.name == 'Admin'"
         class="sidebar-link"
         :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
       >

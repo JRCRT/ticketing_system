@@ -19,7 +19,6 @@ namespace jts_backend.Controllers
         public AuthController(IAuthService authService)
         {
             _authService = authService;
-            
         }
 
         [HttpPost]

@@ -27,9 +27,6 @@
           >
             Open
           </button>
-          <button class="w-14 button-transparent" @click="openModal">
-            New
-          </button>
         </div>
       </div>
       <div class="border-b w-full absolute bottom-0"></div>

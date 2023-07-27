@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace jts_backend.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TicketController : ControllerBase

@@ -9,6 +9,7 @@ using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.JobTitleDto;
 using jts_backend.Dtos.PriorityDto;
 using jts_backend.Dtos.RoleDto;
+using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Dtos.TicketDto;
 using jts_backend.Dtos.UserDto;
@@ -29,6 +30,7 @@ namespace jts_backend.Helper
             CreateMap<TicketModel, TicketDto>();
             CreateMap<JobTitleModel, GetJobTitleDto>();
             CreateMap<FileModel, GetFileDto>();
+            CreateMap<SignatoryModel, GetSignatoryDto>();
         }
     }
 }
