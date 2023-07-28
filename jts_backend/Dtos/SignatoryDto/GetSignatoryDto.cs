@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Dtos.StatusDto;
 using jts_backend.Dtos.UserDto;
 
 namespace jts_backend.Dtos.SignatoryDto
@@ -10,5 +11,6 @@ namespace jts_backend.Dtos.SignatoryDto
     {
         public GetUserDto user { get; set; } = new GetUserDto();
         public string type { get; set; } = string.Empty;
+        public GetStatusDto status {get;set;} = new GetStatusDto();
     }
 }

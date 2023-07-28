@@ -526,7 +526,8 @@ namespace jts_backend.Services.TicketService
         {
             var response = new ServiceResponse<ICollection<GetTicketForApprovalDto>>();
             var responseData = new Collection<GetTicketForApprovalDto>();
-            var signatories = await _context.approver           
+            var signatories = await _context.approver 
+                    .Include(t => t.status)          
                     .Include(a => a.ticket.user)
                     .Include(a => a.ticket.user.department)
                     .Include(a => a.ticket.user.role)
@@ -555,12 +556,9 @@ namespace jts_backend.Services.TicketService
                     signatory = _mapper.Map<GetSignatoryDto>(signatory),
                     files = files
                 };
-
                 responseData.Add(data);
             }
-
             response.data = responseData;
-
             return response;
         }
     }
