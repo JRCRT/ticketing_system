@@ -42,13 +42,13 @@ const getters = {
   },  
 
   approvedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.PENDING);
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.APPROVED));
   },
   declinedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.DECLINED);
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.DECLINED));
   },
   pendingTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.PENDING);
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.PENDING));
   },
 };
 
