@@ -11,6 +11,7 @@ import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 export default {
   components: {
     Table,
@@ -20,6 +21,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const signalR = useSignalR();
     const gridAPI = ref(null);
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
@@ -46,6 +48,12 @@ export default {
       const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
       params.api.setRowData(pendingTicketsForApproval);
     };
+
+    signalR.on('GetTicketForApproval', async () => {
+      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
+      const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
+      gridAPI.value.setRowData(pendingTicketsForApproval)
+    });
 
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();

@@ -7,6 +7,7 @@ using jts_backend.Models;
 using jts_backend.Services.TicketService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using jts_backend.Dtos.SignatoryDto;
 
 namespace jts_backend.Controllers
 {
@@ -72,6 +73,13 @@ namespace jts_backend.Controllers
          public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(int userId)
         {
             var response = await _ticketService.GetTicketsForApproval(userId);
+            return Ok(response);
+        }
+
+        [HttpPost("ChangeApprovalStatus")]
+         public async Task<ActionResult<GetTicketDto>> ChangeApprovalStatus(UpdateSignatoryDto request)
+        {
+            var response = await _ticketService.ChangeApprovalStatus(request);
             return Ok(response);
         }
     }

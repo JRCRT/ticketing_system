@@ -94,65 +94,10 @@ namespace jts_backend.Services.TicketService
 
                 await _context.ticket.AddAsync(ticket);
                 await _context.SaveChangesAsync();
-                /*  var serializeOptions = new JsonSerializerOptions()
-                 {
-                     Converters = { new StringConverter() }
-                 }; */
-
-                /* var signatories = request.signatories;
-                var _signatories = new Collection<GetSignatoryDto>();
-
-                foreach (var signatory in signatories)
-                {
-                    var user = await _context.user
-                        .Include(u => u.role)
-                        .Include(u => u.department)
-                        .Include(u => u.job_title)
-                        .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
-                    var approver = new SignatoryModel()
-                    {
-                        ticket = ticket,
-                        user = user,
-                        type = signatory.type
-                    };
-
-                    _context.approver.Add(approver);
-                    await _context.SaveChangesAsync();
-
-                    if (user == null)
-                    {
-                        response.success = false;
-                        response.message = "Something went wrong.";
-                        return response;
-                    }
-                    var signatoryData = new GetSignatoryDto()
-                    {
-                        user = _mapper.Map<GetUserDto>(user),
-                        type = signatory.type
-                    };
-                    _signatories.Add(signatoryData);
-                } */
-                /*  var json = JsonSerializer.Deserialize<List<CreateSignatoryDto>>(
-                     request.signatories,
-                     serializeOptions
-                 ); */
-
+               
                 var signatories = await GetSignatories(request.signatories, ticket);
                 var files = await GetFiles(request.files, ticket);
-                /* var files = request.files;
-                var _files = new Collection<GetFileDto>();
-
-                foreach (var file in files)
-                {
-                    var fileData = await Helper.Helper.UploadFiles(
-                        file,
-                        _env.ContentRootPath,
-                        ticket
-                    );
-                    _context.file.Add(fileData);
-                    await _context.SaveChangesAsync();
-                    _files.Add(_mapper.Map<GetFileDto>(fileData));
-                } */
+                
 
                 var responseData = new GetTicketDto()
                 {
@@ -161,7 +106,7 @@ namespace jts_backend.Services.TicketService
                     files = files
                 };
                 
-                await _hubContext.Clients.All.GetTicket(responseData);
+                await _hubContext.Clients.All.GetTicket();
                 response.data = responseData;
                 response.message = "Ticket created successfully";
 
@@ -567,7 +512,9 @@ namespace jts_backend.Services.TicketService
             var newSignatory = await _context.approver.FirstOrDefaultAsync(s => s.signatory_id == signatory.signatory_id);
             newSignatory!.status!.status_id = signatory.status_id;
             _context.approver.Update(newSignatory!);
-            await _context.SaveChangesAsync();       
+            await _context.SaveChangesAsync(); 
+            await _hubContext.Clients.All.GetTicketForApproval();
+            response.message = "Approved Successfully";      
             return response;
         }
     }
