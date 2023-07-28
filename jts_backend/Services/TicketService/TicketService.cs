@@ -18,6 +18,7 @@ using jts_backend.Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR;
 using jts_backend.Hub;
+using jts_backend.Dtos.StatusDto;
 
 namespace jts_backend.Services.TicketService
 {
@@ -326,6 +327,7 @@ namespace jts_backend.Services.TicketService
                 var signatories = await _context.approver
                     .Include(a => a.user)
                     .Include(a => a.ticket)
+                    .Include(a => a.status)
                     .Where(a => a.ticket!.ticket_id == ticket.ticket_id)
                     .Select(a => a)
                     .ToListAsync();
@@ -346,7 +348,8 @@ namespace jts_backend.Services.TicketService
                     {
                         signatory_id = signatory.signatory_id,
                         user = _mapper.Map<GetUserDto>(user!),
-                        type = signatory.type
+                        type = signatory.type,
+                        status = _mapper.Map<GetStatusDto>(signatory.status)
                     };
                     approvers.Add(approverData);
                 }
@@ -369,6 +372,7 @@ namespace jts_backend.Services.TicketService
             var signatories = await _context.approver
                 .Include(a => a.user)
                 .Include(a => a.ticket)
+                .Include(a => a.status)
                 .Where(a => a.ticket!.ticket_id == ticket.ticket_id)
                 .Select(a => a)
                 .ToListAsync();
@@ -389,7 +393,8 @@ namespace jts_backend.Services.TicketService
                 {
                     signatory_id = signatory.signatory_id,
                     user = _mapper.Map<GetUserDto>(user!),
-                    type = signatory.type
+                    type = signatory.type,
+                    status = _mapper.Map<GetStatusDto>(signatory.status)
                 };
                 approvers.Add(approverData);
             }
