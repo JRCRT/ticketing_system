@@ -14,6 +14,7 @@ namespace jts_backend.Services.UserService
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
         private readonly IHubContext<JtsHub, IJtsHub> _hubContext;
+
         public UserSevice(
             JtsContext context,
             IMapper mapper,
@@ -24,6 +25,7 @@ namespace jts_backend.Services.UserService
             _mapper = mapper;
             _hubContext = hubContext;
         }
+
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
         {
             var response = new ServiceResponse<ICollection<GetUserDto>>();
@@ -36,6 +38,7 @@ namespace jts_backend.Services.UserService
             response.data = users;
             return response;
         }
+
         public async Task<ServiceResponse<GetUserDto>> GetUserById(int user_id)
         {
             var response = new ServiceResponse<GetUserDto>();
@@ -140,7 +143,15 @@ namespace jts_backend.Services.UserService
                 .Include(u => u.department)
                 .Include(u => u.job_title)
                 .FirstOrDefaultAsync(c => c.user_id == updateUser.user_id);
-
+            var role = await _context.role.FirstOrDefaultAsync(
+                r => r.role_id == updateUser.role_id
+            );
+            var department = await _context.department.FirstOrDefaultAsync(
+                d => d.department_id == updateUser.department_id
+            );
+            var jobTitle = await _context.jobTitle.FirstOrDefaultAsync(
+                j => j.job_title_id == updateUser.job_title_id
+            );
             if (user == null)
             {
                 response.message = "User not found.";
@@ -162,8 +173,9 @@ namespace jts_backend.Services.UserService
             );
             user.password_hash = passwordHash;
             user.password_salt = passwordSalt;
-            user.role.role_id = updateUser.role_id;
-            user.department.department_id = updateUser.department_id;
+            user.role = role!;
+            user.department = department!;
+            user.job_title = jobTitle!;
 
             _context.user.Update(user);
             await _context.SaveChangesAsync();
