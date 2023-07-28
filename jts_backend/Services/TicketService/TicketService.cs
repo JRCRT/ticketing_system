@@ -361,17 +361,17 @@ namespace jts_backend.Services.TicketService
            
             var ticket = await _context.approver 
                     .Include(t => t.status)          
-                    .Include(a => a.ticket.user)
-                    .Include(a => a.ticket.user.department)
-                    .Include(a => a.ticket.user.role)
-                    .Include(a => a.ticket.user.job_title)
+                    .Include(a => a.ticket!.user)
+                    .Include(a => a.ticket!.user.department)
+                    .Include(a => a.ticket!.user.role)
+                    .Include(a => a.ticket!.user.job_title)
                     .Include(a => a.user)
-                    .Include(u => u.user.department)
-                    .Include(u => u.user.job_title)
-                    .Include(u => u.user.role)
+                    .Include(u => u.user!.department)
+                    .Include(u => u.user!.job_title)
+                    .Include(u => u.user!.role)
                     .Include(a => a.ticket)
-                    .Include(t => t.ticket.status)
-                    .Include(t => t.ticket.priority)
+                    .Include(t => t.ticket!.status)
+                    .Include(t => t.ticket!.priority)
                     .FirstOrDefaultAsync(t => t.signatory_id == id);
 
              var files = await _context.file
@@ -456,17 +456,17 @@ namespace jts_backend.Services.TicketService
             var responseData = new Collection<GetTicketForApprovalDto>();
             var signatories = await _context.approver 
                     .Include(t => t.status)          
-                    .Include(a => a.ticket.user)
-                    .Include(a => a.ticket.user.department)
-                    .Include(a => a.ticket.user.role)
-                    .Include(a => a.ticket.user.job_title)
+                    .Include(a => a.ticket!.user)
+                    .Include(a => a.ticket!.user.department)
+                    .Include(a => a.ticket!.user.role)
+                    .Include(a => a.ticket!.user.job_title)
                     .Include(a => a.user)
-                    .Include(u => u.user.department)
-                    .Include(u => u.user.job_title)
-                    .Include(u => u.user.role)
+                    .Include(u => u.user!.department)
+                    .Include(u => u.user!.job_title)
+                    .Include(u => u.user!.role)
                     .Include(a => a.ticket)
-                    .Include(t => t.ticket.status)
-                    .Include(t => t.ticket.priority)
+                    .Include(t => t.ticket!.status)
+                    .Include(t => t.ticket!.priority)
                     .Where(a => a.user!.user_id == userId)
                     .Select(a => a)
                     .ToListAsync();
