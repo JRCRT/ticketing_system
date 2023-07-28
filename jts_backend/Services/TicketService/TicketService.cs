@@ -303,15 +303,16 @@ namespace jts_backend.Services.TicketService
         }
 
         public async Task<ServiceResponse<GetTicketForApprovalDto>> ChangeApprovalStatus(
-            UpdateSignatoryDto signatory
+            UpdateSignatoryDto request
         )
         {
             var response = new ServiceResponse<GetTicketForApprovalDto>();
-            var newSignatory = await _context.approver
+            var signatory = await _context.approver
                 .Include(s => s.status)
-                .FirstOrDefaultAsync(s => s.signatory_id == signatory.signatory_id);
-            newSignatory!.status!.status_id = signatory.status_id;
-            _context.approver.Update(newSignatory!);
+                .Include(s => s.user)
+                .FirstOrDefaultAsync(s => s.signatory_id == request.signatory_id);
+            signatory!.status!.status_id = request.status_id;
+            _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.GetTicketForApproval();
             response.message = "Approved Successfully";
