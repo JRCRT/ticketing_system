@@ -39,10 +39,10 @@ const getters = {
   },
   myDeclinedTickets: (state) => {
     return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.DECLINED);
-  },
+  },  
 
   approvedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.APPROVED);
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.PENDING);
   },
   declinedTicketsForApproval: (state) => {
     return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.DECLINED);
