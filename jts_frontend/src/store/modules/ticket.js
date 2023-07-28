@@ -10,6 +10,7 @@ import {
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
 
+
 const state = () => ({
   tickets: [],
   ticket: {},
@@ -20,33 +21,33 @@ const state = () => ({
 const getters = {
   pendingTickets: (state) => {
     console.log(state.tickets)
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == 'Pending');
+    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.PENDING);
   },
   approvedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == 'Approved');
+    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.APPROVED);
   },
   declinedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == 'Declined');
+    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.DECLINED);
   }, 
 
   myPendingTickets: (state) => {
-    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == 'Pending');
+    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.PENDING);
   },
   myApprovedTickets: (state) => {
-    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == 'Approved');
+    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.APPROVED);
   },
   myDeclinedTickets: (state) => {
-    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == 'Declined');
+    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.DECLINED);
   },
 
   approvedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name == 'Approved');
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.APPROVED);
   },
   declinedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name == 'Declined');
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.DECLINED);
   },
   pendingTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.ticket.status.name == 'Pending');
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatory.status.name == TICKET_STATUS.PENDING);
   },
 };
 

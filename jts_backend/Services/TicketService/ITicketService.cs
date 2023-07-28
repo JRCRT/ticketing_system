@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Dtos.TicketDto;
 using jts_backend.Models;
 
@@ -15,7 +16,7 @@ namespace jts_backend.Services.TicketService
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets();
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByUser(int userId);
         Task<ServiceResponse<GetTicketDto>> GetTicketById(int id);
-
         Task<ServiceResponse<ICollection<GetTicketForApprovalDto>>> GetTicketsForApproval(int userId);
+        Task<ServiceResponse<GetTicketForApprovalDto>> ChangeApprovalStatus(UpdateSignatoryDto signatory);
     }
 }

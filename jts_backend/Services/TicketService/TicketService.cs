@@ -561,5 +561,14 @@ namespace jts_backend.Services.TicketService
             response.data = responseData;
             return response;
         }
+        public async Task<ServiceResponse<GetTicketForApprovalDto>> ChangeApprovalStatus(UpdateSignatoryDto signatory)
+        {
+            var response = new ServiceResponse<GetTicketForApprovalDto>();
+            var newSignatory = await _context.approver.FirstOrDefaultAsync(s => s.signatory_id == signatory.signatory_id);
+            newSignatory!.status!.status_id = signatory.status_id;
+            _context.approver.Update(newSignatory!);
+            await _context.SaveChangesAsync();       
+            return response;
+        }
     }
 }

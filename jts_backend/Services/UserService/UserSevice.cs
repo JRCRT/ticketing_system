@@ -138,6 +138,7 @@ namespace jts_backend.Services.UserService
             var user = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
+                .Include(u => u.job_title)
                 .FirstOrDefaultAsync(c => c.user_id == updateUser.user_id);
 
             if (user == null)
