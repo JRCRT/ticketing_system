@@ -145,7 +145,7 @@ namespace jts_backend.Services.TicketService
                     ticket = ticket,
                     user = user,
                     type = signatory.type,
-                    status = status
+                    status = status!
                 };
 
                 await _context.approver.AddAsync(newSignatory);
