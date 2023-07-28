@@ -44,19 +44,18 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await fetchTicketsForApproval();
+      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
+      const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
+      params.api.setRowData(pendingTicketsForApproval);
     };
 
     signalR.on('GetTicketForApproval', async () => {
-      await fetchTicketsForApproval();
-    });
-
-    const fetchTicketsForApproval = async () => {
       await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
-      console.log(store.state.ticket.ticketsForApproval);
       const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
       gridAPI.value.setRowData(pendingTicketsForApproval)
-    }
+    });
+
+
 
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
