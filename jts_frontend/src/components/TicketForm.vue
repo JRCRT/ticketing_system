@@ -40,7 +40,7 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2">Approved</button>
+          <button class="button-primary mr-2" @click="approved">Approved</button>
           <button class="button-transparent" @click="$emit('close')">
             Declined
           </button>
@@ -66,6 +66,16 @@ export default {
     const route = useRoute();
     const ticket = ref({});
     const requestedDate = ref(null);
+    const APPROVED_STATUS_ID = 2;
+
+    const approved = async () =>{
+      const signatory = {
+        signatory_id: ticket.signatory.signatory_id,
+        status_id: APPROVED_STATUS_ID
+      }
+      await store.dispatch("ticket/changeApprovalStatus", signatory);
+
+    }
 
     watch(
       () => route.params.ticketId,
@@ -81,7 +91,7 @@ export default {
       },
       { immediate: true }
     );
-    return { ticket, requestedDate };
+    return { ticket, requestedDate, approved };
   },
 };
 </script>

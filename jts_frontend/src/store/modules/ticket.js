@@ -6,7 +6,8 @@ import {
   uploadFile,
   ticketById,
   myTickets,
-  ticketsForApproval
+  ticketsForApproval,
+  changeForApprovalStatus
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
 
@@ -52,6 +53,10 @@ const getters = {
 };
 
 const actions = {
+  async changeApprovalStatus({commit}, signatory){
+    const response = await changeForApprovalStatus(signatory);
+  },
+
   async fetchAllTickets({ commit }) {
     const response = await tickets();
     commit("FETCH_TICKETS", response.data);
