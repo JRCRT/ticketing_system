@@ -311,6 +311,7 @@ namespace jts_backend.Services.TicketService
                 .Include(s => s.status)
                 .Include(s => s.user)
                 .FirstOrDefaultAsync(s => s.signatory_id == request.signatory_id);
+
             signatory!.status!.status_id = request.status_id;
             _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
