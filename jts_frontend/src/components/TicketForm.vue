@@ -67,10 +67,12 @@ export default {
     const ticket = ref({});
     const requestedDate = ref(null);
     const APPROVED_STATUS_ID = 2;
+    const currentUser = JSON.parse(localStorage.getItem("user"));
 
     const approved = async () =>{
+      const signatoryId = ticket.value.signtories.find(s => s.user.user_id == currentUser.user_id)
       const signatory = {
-        signatory_id: ticket.signatory.signatory_id,
+        signatory_id: signatoryId,
         status_id: APPROVED_STATUS_ID
       }
       await store.dispatch("ticket/changeApprovalStatus", signatory);
