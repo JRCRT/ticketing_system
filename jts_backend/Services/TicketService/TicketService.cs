@@ -372,20 +372,20 @@ namespace jts_backend.Services.TicketService
                     .Include(a => a.ticket)
                     .Include(t => t.ticket.status)
                     .Include(t => t.ticket.priority)
-                    .FirstOrDefaultAsync(t => t.ticket.ticket_id == id);
+                    .FirstOrDefaultAsync(t => t.signatory_id == id);
 
              var files = await _context.file
                     .Where(f => f.ticket.ticket_id == ticket!.ticket!.ticket_id)
                     .Select(f => _mapper.Map<GetFileDto>(f))
                     .ToListAsync();
 
-                var data = new GetTicketForApprovalDto()
+            var data = new GetTicketForApprovalDto()
                 {
                     ticket = _mapper.Map<TicketDto>(ticket!.ticket),
                     signatory = _mapper.Map<GetSignatoryDto>(ticket),
                     files = files
                 };
-                
+
             response.data = data;
             return response;
         }
