@@ -9,6 +9,7 @@ namespace jts_backend.Dtos.SignatoryDto
 {
     public class GetSignatoryDto
     {
+        public int signatory_id {get;set;}
         public GetUserDto user { get; set; } = new GetUserDto();
         public string type { get; set; } = string.Empty;
         public GetStatusDto status {get;set;} = new GetStatusDto();
