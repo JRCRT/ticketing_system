@@ -42,13 +42,16 @@ const getters = {
   },  
 
   approvedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.APPROVED));
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.APPROVED && s.user.user_id == currentUser.user_id));
   },
   declinedTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.DECLINED));
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.DECLINED && s.user.user_id == currentUser.user_id));
   },
   pendingTicketsForApproval: (state) => {
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.PENDING));
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.PENDING && s.user.user_id == currentUser.user_id));
   },
 };
 

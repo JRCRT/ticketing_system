@@ -49,14 +49,6 @@ export default {
       params.api.setRowData(pendingTicketsForApproval);
     };
 
-    signalR.on('GetTicketForApproval', async () => {
-      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
-      const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
-      gridAPI.value.setRowData(pendingTicketsForApproval)
-    });
-
-
-
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
