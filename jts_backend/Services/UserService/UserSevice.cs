@@ -131,6 +131,7 @@ namespace jts_backend.Services.UserService
             var data = _mapper.Map<GetUserDto>(newUser);
             response.data = data;
             await _hubContext.Clients.All.GetUser(data);
+
             response.message = "User added successfully.";
             return response;
         }

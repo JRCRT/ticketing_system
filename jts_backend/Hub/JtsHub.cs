@@ -6,8 +6,5 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace jts_backend.Hub
 {
-    public class JtsHub : Hub<IJtsHub>
-    {
-        
-    }
+    public class JtsHub : Hub<IJtsHub> { }
 }

@@ -8,11 +8,10 @@ using jts_backend.Dtos.UserDto;
 namespace jts_backend.Hub
 {
     public interface IJtsHub
-    {   
+    {
         Task GetUser(GetUserDto user);
         Task GetTicket();
         Task GetMyTicket();
-        Task GetTicketForApproval();  
-
+        Task GetTicketForApproval();
     }
 }
