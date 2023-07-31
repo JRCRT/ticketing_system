@@ -275,7 +275,8 @@ namespace jts_backend.Services.TicketService
         }
 
         public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketsForApproval(
-            int userId
+            int userId,
+            string status
         )
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
@@ -293,7 +294,7 @@ namespace jts_backend.Services.TicketService
                 .Include(a => a.ticket)
                 .Include(t => t.ticket!.status)
                 .Include(t => t.ticket!.priority)
-                .Where(a => a.user!.user_id == userId)
+                .Where(a => a.user!.user_id == userId && a.status.name == status)
                 .Select(a => a.ticket)
                 .ToListAsync();
 
