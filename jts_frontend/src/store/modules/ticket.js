@@ -7,15 +7,14 @@ import {
   ticketById,
   myTickets,
   ticketsForApproval,
-  changeForApprovalStatus
+  changeForApprovalStatus,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
-
 
 const state = () => ({
   tickets: [],
   ticket: {},
-  
+
   myTickets: [],
   myPendingTickets: [],
   myApprovedTickets: [],
@@ -24,51 +23,101 @@ const state = () => ({
   ticketsForApproval: [],
   pendingTicketsForApproval: [],
   declinedTicketsForApproval: [],
-  approvedTicketsForApproval : []
+  approvedTicketsForApproval: [],
 });
 
 const getters = {
   pendingTickets: (state) => {
-    console.log(state.tickets)
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.PENDING);
+    console.log(state.tickets);
+    return state.tickets.length == 0
+      ? []
+      : state.tickets.filter(
+          (ticket) => ticket.ticket.status.name == TICKET_STATUS.PENDING
+        );
   },
 
   approvedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.APPROVED);
+    return state.tickets.length == 0
+      ? []
+      : state.tickets.filter(
+          (ticket) => ticket.ticket.status.name == TICKET_STATUS.APPROVED
+        );
   },
 
   declinedTickets: (state) => {
-    return state.tickets.length == 0 ? [] : state.tickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.DECLINED);
-  }, 
+    return state.tickets.length == 0
+      ? []
+      : state.tickets.filter(
+          (ticket) => ticket.ticket.status.name == TICKET_STATUS.DECLINED
+        );
+  },
 
   myPendingTickets: (state) => {
-    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.PENDING);
+    return state.myTickets.length == 0
+      ? []
+      : state.myTickets.filter(
+          (ticket) => ticket.ticket.status.name == TICKET_STATUS.PENDING
+        );
   },
+
   myApprovedTickets: (state) => {
-    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.APPROVED);
+    return state.myTickets.length == 0
+      ? []
+      : state.myTickets.filter(
+          (ticket) => ticket.ticket.status.name == TICKET_STATUS.APPROVED
+        );
   },
+
   myDeclinedTickets: (state) => {
-    return state.myTickets.length == 0 ? [] : state.myTickets.filter(ticket => ticket.ticket.status.name == TICKET_STATUS.DECLINED);
-  },  
+    return state.myTickets.length == 0
+      ? []
+      : state.myTickets.filter(
+          (ticket) => ticket.ticket.status.name == TICKET_STATUS.DECLINED
+        );
+  },
 
   approvedTicketsForApproval: (state) => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.APPROVED && s.user.user_id == currentUser.user_id));
+    return state.ticketsForApproval.length == 0
+      ? []
+      : state.ticketsForApproval.filter((ticket) =>
+          ticket.signatories.find(
+            (s) =>
+              s.status.name == TICKET_STATUS.APPROVED &&
+              s.user.user_id == currentUser.user_id
+          )
+        );
   },
 
   declinedTicketsForApproval: (state) => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.DECLINED && s.user.user_id == currentUser.user_id));
+    return state.ticketsForApproval.length == 0
+      ? []
+      : state.ticketsForApproval.filter((ticket) =>
+          ticket.signatories.find(
+            (s) =>
+              s.status.name == TICKET_STATUS.DECLINED &&
+              s.user.user_id == currentUser.user_id
+          )
+        );
   },
 
   pendingTicketsForApproval: (state) => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
-    return state.ticketsForApproval.length == 0 ? [] : state.ticketsForApproval.filter(ticket => ticket.signatories.find(s => s.status.name == TICKET_STATUS.PENDING && s.user.user_id == currentUser.user_id));
+    return state.ticketsForApproval.length == 0
+      ? []
+      : state.ticketsForApproval.filter((ticket) =>
+          ticket.signatories.find(
+            (s) =>
+              s.status.name == TICKET_STATUS.PENDING &&
+              s.user.user_id == currentUser.user_id
+          )
+        );
   },
 };
 
 const actions = {
-  async changeApprovalStatus({commit}, signatory){
+  async changeApprovalStatus({ commit }, signatory) {
     const response = await changeForApprovalStatus(signatory);
   },
 
@@ -85,7 +134,7 @@ const actions = {
   async fetchAllPendingTickets({ commit }) {
     const response = await ticketsByStatus(TICKET_STATUS.PENDING);
     commit("FETCH_PENDING_TICKETS", response.data);
-  },  
+  },
   async fetchAllApprovedTickets({ commit }) {
     const response = await ticketsByStatus(TICKET_STATUS.APPROVED);
     commit("FETCH_APPROVED_TICKETS", response.data);
@@ -105,9 +154,24 @@ const actions = {
     commit("FETCH_TICKET", response.data);
   },
 
-  async fetchTicketsForApproval({ commit }, id) {
-    const response = await ticketsForApproval(id);
+  async fetchTicketsForApproval({ commit }, param) {
+    const response = await ticketsForApproval(param);
     commit("FETCH_TICKETS_FOR_APPROVAL", response.data);
+  },
+
+  async fetchPendingTicketsForApproval({ commit }, param) {
+    const response = await ticketsForApproval(param);
+    commit("FETCH_PENDING_TICKETS_FOR_APPROVAL", response.data);
+  },
+
+  async fetchApprovedTicketsForApproval({ commit }, param) {
+    const response = await ticketsForApproval(param);
+    commit("FETCH_APPROVED_TICKETS_FOR_APPROVAL", response.data);
+  },
+
+  async fetchDeclinedTicketsForApproval({ commit }, param) {
+    const response = await ticketsForApproval(param);
+    commit("FETCH_DECLINED_TICKETS_FOR_APPROVAL", response.data);
   },
 
   async createTicket({ commit, dispatch }, ticket) {
@@ -123,23 +187,6 @@ const actions = {
     }
     alert = { type: "success", message: response.message };
     commit("app/SET_LOADING", false, { root: true });
-    dispatch("app/addAlert", alert, { root: true });
-  },
-
-  async uploadFile({ commit, dispatch }, file) {
-    commit("app/SET_LOADING", true, { root: true });
-    const response = await uploadFile(file);
-    var alert;
-    if (!response.success) {
-      console.log(response);
-      alert = { type: "danger", message: response.message };
-      dispatch("app/addAlert", alert, { root: true });
-      commit("app/SET_LOADING", false, { root: true });
-      return;
-    }
-    alert = { type: "success", message: response.message };
-    commit("app/SET_LOADING", false, { root: true });
-    commit("app/SET_USER_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
 };
@@ -170,9 +217,21 @@ const mutations = {
     state.ticket = value;
   },
 
-  FETCH_TICKETS_FOR_APPROVAL(state, value){
-    state.ticketsForApproval = value
-  }
+  FETCH_PENDING_TICKETS_FOR_APPROVAL(state, value) {
+    state.pendingTicketsForApproval = value;
+  },
+
+  FETCH_DECLINED_TICKETS_FOR_APPROVAL(state, value) {
+    state.declinedTicketsForApproval = value;
+  },
+
+  FETCH_APPROVED_TICKETS_FOR_APPROVAL(state, value) {
+    state.approvedTicketsForApproval = value;
+  },
+
+  FETCH_TICKETS_FOR_APPROVAL(state, value) {
+    state.ticketsForApproval = value;
+  },
 };
 
 export default {

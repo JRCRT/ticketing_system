@@ -10,6 +10,8 @@ import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
+import { TICKET_STATUS } from "@/util/constant";
+
 export default {
   components: {
     Table,
@@ -40,7 +42,7 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
+      await store.dispatch("ticket/fetchTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.DECLINED});
       const declinedTicketsForApproval = store.getters["ticket/declinedTicketsForApproval"]
       params.api.setRowData(declinedTicketsForApproval);
     };

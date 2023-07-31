@@ -319,7 +319,8 @@ namespace jts_backend.Services.TicketService
             signatory!.status = status!;
             _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.GetTicketForApproval();
+            await _hubContext.Clients.User(request.connectionId).GetTicketForApproval();
+
             response.message = "Approved Successfully";
             return response;
         }

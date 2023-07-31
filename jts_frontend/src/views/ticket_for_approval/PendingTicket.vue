@@ -12,6 +12,8 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
+import { TICKET_STATUS } from "@/util/constant";
+
 export default {
   components: {
     Table,
@@ -41,11 +43,10 @@ export default {
     ];
 
     const onGridReady = async (params) => {
-      // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchTicketsForApproval", currentUser.user_id);
-      const pendingTicketsForApproval = store.getters["ticket/pendingTicketsForApproval"]
+      await store.dispatch("ticket/fetchPendingTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.PENDING});
+      const pendingTicketsForApproval = store.state.ticket.pendingTicketsForApproval;
       params.api.setRowData(pendingTicketsForApproval);
     };
 

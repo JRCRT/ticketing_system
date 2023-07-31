@@ -11,7 +11,7 @@ using jts_backend.Dtos.SignatoryDto;
 
 namespace jts_backend.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TicketController : ControllerBase
@@ -63,21 +63,26 @@ namespace jts_backend.Controllers
         }
 
         [HttpPost("GetTicketByUser")]
-         public async Task<ActionResult<GetTicketDto>> GetTicketByUser(int userId)
+        public async Task<ActionResult<GetTicketDto>> GetTicketByUser(int userId)
         {
             var response = await _ticketService.GetTicketByUser(userId);
             return Ok(response);
         }
 
         [HttpPost("GetTicketsForApproval")]
-         public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(int userId)
+        public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(
+            int userId,
+            string status
+        )
         {
-            var response = await _ticketService.GetTicketsForApproval(userId);
+            var response = await _ticketService.GetTicketsForApproval(userId, status);
             return Ok(response);
         }
 
         [HttpPost("ChangeApprovalStatus")]
-         public async Task<ActionResult<GetTicketDto>> ChangeApprovalStatus(UpdateSignatoryDto request)
+        public async Task<ActionResult<GetTicketDto>> ChangeApprovalStatus(
+            UpdateSignatoryDto request
+        )
         {
             var response = await _ticketService.ChangeApprovalStatus(request);
             return Ok(response);

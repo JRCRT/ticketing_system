@@ -7,7 +7,8 @@ namespace jts_backend.Dtos.SignatoryDto
 {
     public class UpdateSignatoryDto
     {
-        public int signatory_id {get;set;}
-        public int status_id{get;set;} 
+        public int signatory_id { get; set; }
+        public int status_id { get; set; }
+        public string connectionId { get; set; } = string.Empty;
     }
 }

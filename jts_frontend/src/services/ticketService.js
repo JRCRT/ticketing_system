@@ -24,9 +24,9 @@ const myTickets = async (userId) => {
   return response;
 };
 
-const ticketsForApproval = async (userId) => {
+const ticketsForApproval = async (param) => {
   const response = await axios
-    .post(`/Ticket/GetTicketsForApproval?userId=${userId}`)
+    .post(`/Ticket/GetTicketsForApproval?userId=${param.userId}&status=${param.status}`)
     .then((res) => {
       return res.data;
     })
