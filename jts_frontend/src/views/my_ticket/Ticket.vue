@@ -34,9 +34,7 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <KeepAlive>
-      <component :is="currentTab" />
-    </KeepAlive>
+    <component :is="currentTab" />
   </div>
 </template>
 
@@ -64,7 +62,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
-    
+
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const setTabOnMount = (status) => {

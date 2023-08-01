@@ -42,16 +42,19 @@ export default {
       },
     ];
 
-    signalR.on('GetTicketForApproval', ticket => {
+    signalR.on("GetTicketForApproval", (ticket) => {
       store.commit("ticket/REMOVE_PENDING_TICKETS_FOR_APPROVAL", ticket);
-      gridAPI.value.setRowData(store.state.user.users)
     });
 
     const onGridReady = async (params) => {
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchPendingTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.PENDING});
-      const pendingTicketsForApproval = store.state.ticket.pendingTicketsForApproval;
+      await store.dispatch("ticket/fetchPendingTicketsForApproval", {
+        userId: currentUser.user_id,
+        status: TICKET_STATUS.PENDING,
+      });
+      const pendingTicketsForApproval =
+        store.state.ticket.pendingTicketsForApproval;
       params.api.setRowData(pendingTicketsForApproval);
     };
 

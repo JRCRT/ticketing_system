@@ -31,9 +31,7 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <KeepAlive>
-      <component :is="currentTab" />
-    </KeepAlive>
+    <component :is="currentTab" />
   </div>
 </template>
 
