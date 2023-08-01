@@ -13,5 +13,6 @@ namespace jts_backend.Hub
         Task GetTicket();
         Task GetMyTicket();
         Task GetTicketForApproval(GetTicketDto ticket);
+        Task Test(string test);
     }
 }

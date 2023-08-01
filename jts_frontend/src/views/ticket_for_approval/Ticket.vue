@@ -47,6 +47,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
 import { computed, ref, onUnmounted } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
@@ -58,6 +59,8 @@ export default {
   },
 
   setup() {
+
+    const signalR = useSignalR();
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
@@ -77,6 +80,14 @@ export default {
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
     );
+
+    signalR.on('GetTicketForApproval', ticket => {
+      console.log(ticket);
+    });
+
+    signalR.on('Test', test => {
+      console.log(test);
+    });
 
     const tabs = [
       {

@@ -278,7 +278,7 @@ namespace jts_backend.Services.TicketService
             signatory!.status = status!;
             _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
-
+            await _hubContext.Clients.All.Test("Test");
             await _hubContext.Clients.All.GetTicketForApproval(ticket);
             response.data = ticket;
             response.message = "Approved Successfully";
