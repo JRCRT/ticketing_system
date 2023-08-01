@@ -26,7 +26,9 @@ const myTickets = async (userId) => {
 
 const ticketsForApproval = async (param) => {
   const response = await axios
-    .post(`/Ticket/GetTicketsForApproval?userId=${param.userId}&status=${param.status}`)
+    .post(
+      `/Ticket/GetTicketsForApproval?userId=${param.userId}&status=${param.status}`
+    )
     .then((res) => {
       return res.data;
     })
@@ -117,5 +119,5 @@ export {
   uploadFile,
   myTickets,
   ticketsForApproval,
-  changeForApprovalStatus
+  changeForApprovalStatus,
 };

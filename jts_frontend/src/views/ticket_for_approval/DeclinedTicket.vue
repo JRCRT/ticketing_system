@@ -39,11 +39,10 @@ export default {
     ];
 
     const onGridReady = async (params) => {
-      // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.DECLINED});
-      const declinedTicketsForApproval = store.getters["ticket/declinedTicketsForApproval"]
+      await store.dispatch("ticket/fetchDeclinedTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.DECLINED});
+      const declinedTicketsForApproval = store.state.ticket.declinedTicketsForApproval;
       params.api.setRowData(declinedTicketsForApproval);
     };
 

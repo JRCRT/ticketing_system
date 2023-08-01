@@ -159,6 +159,7 @@ const actions = {
     commit("FETCH_TICKETS_FOR_APPROVAL", response.data);
   },
 
+  //Tickets For Approval
   async fetchPendingTicketsForApproval({ commit }, param) {
     const response = await ticketsForApproval(param);
     commit("FETCH_PENDING_TICKETS_FOR_APPROVAL", response.data);

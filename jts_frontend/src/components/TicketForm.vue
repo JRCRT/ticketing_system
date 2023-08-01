@@ -39,8 +39,15 @@
     </template>
     <template v-slot:footer>
       <div class="w-full">
-        <div class="w-44 flex mx-auto">
+        <div v-if="isPending" class="w-44 flex mx-auto">
           <button class="button-primary mr-2" @click="approved">Approved</button>
+          <button class="button-transparent" @click="$emit('close')">
+            Declined
+          </button>
+        </div>
+
+        <div v-else class="w-44 flex mx-auto">
+          <button class="button-primary mr-2" >Download</button>
           <button class="button-transparent" @click="$emit('close')">
             Declined
           </button>
@@ -68,15 +75,17 @@ export default {
     const requestedDate = ref(null);
     const APPROVED_STATUS_ID = 2;
     const currentUser = JSON.parse(localStorage.getItem("user"));
+    const isPending = ref(false);
+    const signatory = ref({});
 
     const approved = async () =>{
-      const signatoryId = ticket.value.signatories.find(s => s.user.user_id == currentUser.user_id).signatory_id;
-      const signatory = {
+      const signatoryId = signatory.value.signatory_id;
+      const approver = {
         signatory_id: signatoryId,
         status_id: APPROVED_STATUS_ID
       }
-      console.log(signatory)
-      await store.dispatch("ticket/changeApprovalStatus", signatory);
+      console.log(approver)
+      await store.dispatch("ticket/changeApprovalStatus", approver);
     }
 
     watch(
@@ -84,7 +93,10 @@ export default {
       async (newTicketId, oldTicketId) => {
         if (newTicketId) {
           await store.dispatch("ticket/fetchTicket", newTicketId);
-          ticket.value = store.state.ticket.ticket;
+          const fetchedTicket = store.state.ticket.ticket;
+          signatory.value = fetchedTicket.signatories.find(s => s.user.user_id == currentUser.user_id);
+          isPending.value = signatory.value.status.name === 'Pending'; 
+          ticket.value = fetchedTicket;
           requestedDate.value = Intl.DateTimeFormat("en-US").format(
             new Date(ticket.value.ticket.date_created)
           );
@@ -93,7 +105,7 @@ export default {
       },
       { immediate: true }
     );
-    return { ticket, requestedDate, approved };
+    return { ticket, requestedDate, isPending, approved };
   },
 };
 </script>

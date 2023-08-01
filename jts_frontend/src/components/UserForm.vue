@@ -59,7 +59,6 @@
 import { onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { User } from "@/models/User";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";

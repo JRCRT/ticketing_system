@@ -41,8 +41,8 @@ export default {
     const onGridReady = async (params) => {
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.APPROVED});
-      const approvedTicketsForApproval = store.getters["ticket/approvedTicketsForApproval"]
+      await store.dispatch("ticket/fetchApprovedTicketsForApproval", {userId: currentUser.user_id, status: TICKET_STATUS.APPROVED});
+      const approvedTicketsForApproval = store.ticket.approvedTicketsForApproval;
       params.api.setRowData(approvedTicketsForApproval);
     };
 
