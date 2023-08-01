@@ -233,6 +233,16 @@ const mutations = {
   FETCH_TICKETS_FOR_APPROVAL(state, value) {
     state.ticketsForApproval = value;
   },
+  REMOVE_PENDING_TICKETS_FOR_APPROVAL(state, value) {
+    const ticketId = value.ticket_id;
+    const newValue = [...state.pendingTicketsForApproval].filter(
+      (t) => t.ticket_id != ticketId
+    );
+    state.pendingTicketsForApproval = newValue;
+  },
+  ADD_APPROVED_TICKETS_FOR_APPROVAL(state, value) {
+    state.approvedTicketsForApproval.push(value);
+  },
 };
 
 export default {

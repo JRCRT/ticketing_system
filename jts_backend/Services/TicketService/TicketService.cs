@@ -125,59 +125,6 @@ namespace jts_backend.Services.TicketService
             }
         }
 
-        private async Task<ICollection<GetSignatoryDto>> GetSignatories(
-            List<CreateSignatoryDto> signatories,
-            TicketModel ticket
-        )
-        {
-            var status = await _context.status.FirstOrDefaultAsync(s => s.status_id == 1);
-            var _signatories = new Collection<GetSignatoryDto>();
-            foreach (var signatory in signatories)
-            {
-                var user = await _context.user
-                    .Include(u => u.role)
-                    .Include(u => u.department)
-                    .Include(u => u.job_title)
-                    .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
-
-                var newSignatory = new SignatoryModel()
-                {
-                    ticket = ticket,
-                    user = user,
-                    type = signatory.type,
-                    status = status!
-                };
-
-                await _context.approver.AddAsync(newSignatory);
-                await _context.SaveChangesAsync();
-                var signatoryData = new GetSignatoryDto()
-                {
-                    user = _mapper.Map<GetUserDto>(user),
-                    type = signatory.type,
-                };
-                _signatories.Add(signatoryData);
-            }
-
-            return _signatories;
-        }
-
-        private async Task<ICollection<GetFileDto>> GetFiles(
-            List<IFormFile> files,
-            TicketModel ticket
-        )
-        {
-            var _files = new Collection<GetFileDto>();
-            foreach (var file in files)
-            {
-                var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath, ticket);
-                await _context.file.AddAsync(fileData);
-                await _context.SaveChangesAsync();
-                _files.Add(_mapper.Map<GetFileDto>(fileData));
-            }
-
-            return _files;
-        }
-
         public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetAllTickets()
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
@@ -303,26 +250,92 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<GetTicketForApprovalDto>> ChangeApprovalStatus(
+        public async Task<ServiceResponse<GetTicketDto>> ChangeApprovalStatus(
             UpdateSignatoryDto request
         )
         {
-            var response = new ServiceResponse<GetTicketForApprovalDto>();
+            var response = new ServiceResponse<GetTicketDto>();
             var status = await _context.status.FirstOrDefaultAsync(
                 s => s.status_id == request.status_id
             );
             var signatory = await _context.approver
-                .Include(s => s.status)
-                .Include(s => s.user)
+                .Include(t => t.status)
+                .Include(a => a.ticket!.user)
+                .Include(a => a.ticket!.user.department)
+                .Include(a => a.ticket!.user.role)
+                .Include(a => a.ticket!.user.job_title)
+                .Include(a => a.user)
+                .Include(u => u.user!.department)
+                .Include(u => u.user!.job_title)
+                .Include(u => u.user!.role)
+                .Include(a => a.ticket)
+                .Include(t => t.ticket!.status)
+                .Include(t => t.ticket!.priority)
                 .FirstOrDefaultAsync(s => s.signatory_id == request.signatory_id);
+
+            var ticket = await GetTicketData(signatory!.ticket!);
 
             signatory!.status = status!;
             _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.User(request.connectionId).GetTicketForApproval();
+
+            await _hubContext.Clients.User(request.connection_id).GetTicketForApproval(ticket);
 
             response.message = "Approved Successfully";
             return response;
+        }
+
+        private async Task<ICollection<GetSignatoryDto>> GetSignatories(
+            List<CreateSignatoryDto> signatories,
+            TicketModel ticket
+        )
+        {
+            var status = await _context.status.FirstOrDefaultAsync(s => s.status_id == 1);
+            var _signatories = new Collection<GetSignatoryDto>();
+            foreach (var signatory in signatories)
+            {
+                var user = await _context.user
+                    .Include(u => u.role)
+                    .Include(u => u.department)
+                    .Include(u => u.job_title)
+                    .FirstOrDefaultAsync(u => u.user_id == signatory.user_id);
+
+                var newSignatory = new SignatoryModel()
+                {
+                    ticket = ticket,
+                    user = user,
+                    type = signatory.type,
+                    status = status!
+                };
+
+                await _context.approver.AddAsync(newSignatory);
+                await _context.SaveChangesAsync();
+                var signatoryData = new GetSignatoryDto()
+                {
+                    user = _mapper.Map<GetUserDto>(user),
+                    type = signatory.type,
+                };
+                _signatories.Add(signatoryData);
+            }
+
+            return _signatories;
+        }
+
+        private async Task<ICollection<GetFileDto>> GetFiles(
+            List<IFormFile> files,
+            TicketModel ticket
+        )
+        {
+            var _files = new Collection<GetFileDto>();
+            foreach (var file in files)
+            {
+                var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath, ticket);
+                await _context.file.AddAsync(fileData);
+                await _context.SaveChangesAsync();
+                _files.Add(_mapper.Map<GetFileDto>(fileData));
+            }
+
+            return _files;
         }
 
         private async Task<Collection<GetTicketDto>> GetTicketsData(List<TicketModel> tickets)

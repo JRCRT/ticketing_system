@@ -50,6 +50,7 @@ export default {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
     };
+    
     return {
       columnDefs,
       onGridReady,

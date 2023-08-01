@@ -20,8 +20,6 @@ namespace jts_backend.Services.TicketService
             int userId,
             string status
         );
-        Task<ServiceResponse<GetTicketForApprovalDto>> ChangeApprovalStatus(
-            UpdateSignatoryDto signatory
-        );
+        Task<ServiceResponse<GetTicketDto>> ChangeApprovalStatus(UpdateSignatoryDto signatory);
     }
 }

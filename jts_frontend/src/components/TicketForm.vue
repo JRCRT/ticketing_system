@@ -48,8 +48,8 @@
 
         <div v-else class="w-44 flex mx-auto">
           <button class="button-primary mr-2" >Download</button>
-          <button class="button-transparent" @click="$emit('close')">
-            Declined
+          <button class="button-transparent">
+            Print
           </button>
         </div>
       </div>
@@ -62,6 +62,7 @@ import Modal from "@/components/Modal.vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 export default {
   emits: ["close"],
   components: {
@@ -69,6 +70,7 @@ export default {
   },
 
   setup() {
+    const signalR = useSignalR();
     const store = useStore();
     const route = useRoute();
     const ticket = ref({});
@@ -80,11 +82,12 @@ export default {
 
     const approved = async () =>{
       const signatoryId = signatory.value.signatory_id;
+      const connectionId = signalR.connection.connectionId;
       const approver = {
         signatory_id: signatoryId,
-        status_id: APPROVED_STATUS_ID
+        status_id: APPROVED_STATUS_ID,
+        connection_id: connectionId
       }
-      console.log(approver)
       await store.dispatch("ticket/changeApprovalStatus", approver);
     }
 

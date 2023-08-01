@@ -12,6 +12,6 @@ namespace jts_backend.Hub
         Task GetUser(GetUserDto user);
         Task GetTicket();
         Task GetMyTicket();
-        Task GetTicketForApproval();
+        Task GetTicketForApproval(GetTicketDto ticket);
     }
 }

@@ -9,6 +9,6 @@ namespace jts_backend.Dtos.SignatoryDto
     {
         public int signatory_id { get; set; }
         public int status_id { get; set; }
-        public string connectionId { get; set; } = string.Empty;
+        public string connection_id { get; set; } = string.Empty;
     }
 }
