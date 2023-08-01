@@ -44,7 +44,8 @@ export default {
 
     signalR.on('GetTicketForApproval', ticket => {
       store.commit("ticket/REMOVE_PENDING_TICKETS_FOR_APPROVAL", ticket);
-      gridAPI.value.setRowData(store.state.user.users)
+      console.log("Approved")
+      //gridAPI.value.setRowData(store.state.user.users)
     });
 
     const onGridReady = async (params) => {

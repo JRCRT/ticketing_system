@@ -83,11 +83,13 @@ export default {
     const approved = async () =>{
       const signatoryId = signatory.value.signatory_id;
       const connectionId = signalR.connection.connectionId;
+      
       const approver = {
         signatory_id: signatoryId,
         status_id: APPROVED_STATUS_ID,
         connection_id: connectionId
       }
+      console.log(approver)
       await store.dispatch("ticket/changeApprovalStatus", approver);
     }
 
