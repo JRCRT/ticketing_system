@@ -118,7 +118,7 @@ const getters = {
 
 const actions = {
   async changeApprovalStatus({ commit }, signatory) {
-    const response = await changeForApprovalStatus(signatory);
+    await changeForApprovalStatus(signatory);
   },
 
   async fetchAllTickets({ commit }) {

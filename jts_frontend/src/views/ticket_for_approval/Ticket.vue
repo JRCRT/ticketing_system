@@ -81,12 +81,14 @@ export default {
       store.state.app.selectedTicket.ticket == null ? true : false
     );
 
-    signalR.on('GetTicketForApproval', ticket => {
+    signalR.on("GetTicketForApproval", ticket => {
       console.log(ticket);
+      console.log('GetTicketForApproval')
     });
 
     signalR.on('Test', test => {
       console.log(test);
+      console.log("test")
     });
 
     const tabs = [
