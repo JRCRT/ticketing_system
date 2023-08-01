@@ -95,7 +95,8 @@ export default {
       console.log(user);
       gridAPI.value.setRowData(store.state.user.users)
     });
-
+    
+    
     const openUserForm = () =>{
       const userId = store.state.app.selectedUser.user_id;
       router.push({

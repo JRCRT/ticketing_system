@@ -105,7 +105,6 @@ export default {
           requestedDate.value = Intl.DateTimeFormat("en-US").format(
             new Date(ticket.value.ticket.date_created)
           );
-        
         }
       },
       { immediate: true }
