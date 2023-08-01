@@ -40,17 +40,17 @@
     <template v-slot:footer>
       <div class="w-full">
         <div v-if="isPending" class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="approved">Approved</button>
+          <button class="button-primary mr-2" @click="approved">
+            Approved
+          </button>
           <button class="button-transparent" @click="$emit('close')">
             Declined
           </button>
         </div>
 
         <div v-else class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" >Download</button>
-          <button class="button-transparent">
-            Print
-          </button>
+          <button class="button-primary mr-2">Download</button>
+          <button class="button-transparent">Print</button>
         </div>
       </div>
     </template>
@@ -79,18 +79,17 @@ export default {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const isPending = ref(false);
     const signatory = ref({});
-
-    const approved = async () =>{
+    const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
       const connectionId = signalR.connection.connectionId;
-      
+
       const approver = {
         signatory_id: signatoryId,
         status_id: APPROVED_STATUS_ID,
-        connection_id: connectionId
-      }
+        connection_id: connectionId,
+      };
       await store.dispatch("ticket/changeApprovalStatus", approver);
-    }
+    };
 
     watch(
       () => route.params.ticketId,
@@ -98,8 +97,10 @@ export default {
         if (newTicketId) {
           await store.dispatch("ticket/fetchTicket", newTicketId);
           const fetchedTicket = store.state.ticket.ticket;
-          signatory.value = fetchedTicket.signatories.find(s => s.user.user_id == currentUser.user_id);
-          isPending.value = signatory.value.status.name === 'Pending'; 
+          signatory.value = fetchedTicket.signatories.find(
+            (s) => s.user.user_id == currentUser.user_id
+          );
+          isPending.value = signatory.value.status.name === "Pending";
           ticket.value = fetchedTicket;
           requestedDate.value = Intl.DateTimeFormat("en-US").format(
             new Date(ticket.value.ticket.date_created)

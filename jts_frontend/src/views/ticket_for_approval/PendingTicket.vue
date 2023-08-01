@@ -26,6 +26,7 @@ export default {
     const signalR = useSignalR();
     const gridAPI = ref(null);
     const currentUser = JSON.parse(localStorage.getItem("user"));
+
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
@@ -44,6 +45,9 @@ export default {
 
     signalR.on("GetTicketForApproval", (ticket) => {
       store.commit("ticket/REMOVE_PENDING_TICKETS_FOR_APPROVAL", ticket);
+      const pendingTicketsForApproval =
+        store.state.ticket.pendingTicketsForApproval;
+      gridAPI.value.setRowData(pendingTicketsForApproval);
     });
 
     const onGridReady = async (params) => {

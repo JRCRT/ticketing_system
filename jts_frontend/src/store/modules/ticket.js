@@ -117,8 +117,19 @@ const getters = {
 };
 
 const actions = {
-  async changeApprovalStatus({ commit }, signatory) {
-    await changeForApprovalStatus(signatory);
+  async changeApprovalStatus({ commit, dispatch }, signatory) {
+    const response = await changeForApprovalStatus(signatory);
+    var alert;
+    if (!response.success) {
+      console.log(response);
+      alert = { type: "danger", message: response.message };
+      dispatch("app/addAlert", alert, { root: true });
+      return;
+    }
+    alert = { type: "success", message: response.message };
+
+    commit("app/SET_TICKET_FORM", false, { root: true });
+    dispatch("app/addAlert", alert, { root: true });
   },
 
   async fetchAllTickets({ commit }) {
@@ -150,7 +161,12 @@ const actions = {
   },
 
   async fetchTicket({ commit }, id) {
+    commit("app/SET_MODAL_LOADING", true, { root: true });
     const response = await ticketById(id);
+    if (response.success) {
+      commit("app/SET_MODAL_LOADING", false, { root: true });
+    }
+
     commit("FETCH_TICKET", response.data);
   },
 
@@ -234,14 +250,11 @@ const mutations = {
     state.ticketsForApproval = value;
   },
   REMOVE_PENDING_TICKETS_FOR_APPROVAL(state, value) {
-    const ticketId = value.ticket_id;
-    const newValue = [...state.pendingTicketsForApproval].filter(
-      (t) => t.ticket_id != ticketId
+    const ticketId = value.ticket.ticket_id;
+    const newValue = state.pendingTicketsForApproval.filter(
+      (t) => t.ticket.ticket_id != ticketId
     );
     state.pendingTicketsForApproval = newValue;
-  },
-  ADD_APPROVED_TICKETS_FOR_APPROVAL(state, value) {
-    state.approvedTicketsForApproval.push(value);
   },
 };
 
