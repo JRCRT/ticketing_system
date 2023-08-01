@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar.vue";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { TICKET_STATUS } from "@/util/constant";
+import { TICKET_STATUS, ROLE } from "@/util/constant";
 import Loader from "@/components/Loader.vue";
 import Alert from "@/components/Alert.vue";
 export default {
@@ -55,6 +55,7 @@ export default {
       isLoading,
       TICKET_STATUS,
       currentUser,
+      ROLE,
     };
   },
 };
@@ -90,7 +91,7 @@ export default {
       <!--Ticket-->
 
       <router-link
-        v-if="currentUser?.roleModel.name == 'Admin'"
+        v-if="currentUser?.roleModel.name == ROLE.ADMIN"
         class="sidebar-link"
         :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
       >

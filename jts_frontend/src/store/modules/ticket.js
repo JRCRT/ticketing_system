@@ -198,12 +198,14 @@ const actions = {
     if (!response.success) {
       console.log(response);
       alert = { type: "danger", message: response.message };
-      dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_LOADING", false, { root: true });
+      commit("app/SET_NEW_TICKET_FORM", false, { root: true });
+      dispatch("app/addAlert", alert, { root: true });
       return;
     }
     alert = { type: "success", message: response.message };
     commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_NEW_TICKET_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
 };

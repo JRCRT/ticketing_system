@@ -3,6 +3,7 @@ const state = () => ({
   alerts: [],
   currentUrl: null,
   isNewUserFormOpen: false,
+  isNewTicketFormOpen: false,
   isLoggingIn: false,
   selectedTicket: {},
   selectedUser: {},
@@ -38,6 +39,9 @@ const mutations = {
   },
   SET_NEW_USER_FORM(state, value) {
     state.isNewUserFormOpen = value;
+  },
+  SET_NEW_TICKET_FORM(state, value) {
+    state.isNewTicketFormOpen = value;
   },
   SET_LOGIN_LOADING(state, value) {
     state.isLoggingIn = value;

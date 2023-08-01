@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-3">
-    <NewTicketForm v-if="modalActive" @close="closeModal" />
+    <NewTicketForm v-if="isNewTicketFormOpen" @close="closeModal" />
     <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
     <h4 class="text-primary">My Tickets</h4>
     <div class="relative">
@@ -97,10 +97,12 @@ export default {
         status: TICKET_STATUS.DECLINED,
       },
     ];
-    const modalActive = ref(false);
+    const isNewTicketFormOpen = computed(
+      () => store.state.app.isNewTicketFormOpen
+    );
 
     function closeModal() {
-      modalActive.value = false;
+      store.commit("app/SET_NEW_TICKET_FORM", false);
     }
 
     const closeTicketForm = () => {
@@ -112,7 +114,7 @@ export default {
     };
 
     function openModal() {
-      modalActive.value = true;
+      store.commit("app/SET_NEW_TICKET_FORM", true);
     }
 
     function changeTab(tab) {
@@ -137,7 +139,7 @@ export default {
     return {
       currentTab,
       tabs,
-      modalActive,
+      isNewTicketFormOpen,
       router,
       currentStatus,
       closeModal,

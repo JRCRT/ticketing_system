@@ -39,7 +39,7 @@
     </template>
     <template v-slot:footer>
       <div class="w-full">
-        <div v-if="isPending" class="w-44 flex mx-auto">
+        <div v-if="isPending && isSignatory" class="w-44 flex mx-auto">
           <button class="button-primary mr-2" @click="approved">
             Approved
           </button>
@@ -63,6 +63,8 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
+import { TICKET_STATUS, ROLE } from "@/util/constant";
+
 export default {
   emits: ["close"],
   components: {
@@ -79,6 +81,8 @@ export default {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const isPending = ref(false);
     const signatory = ref({});
+    const isSignatory = ref(false);
+
     const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
       const connectionId = signalR.connection.connectionId;
@@ -97,10 +101,20 @@ export default {
         if (newTicketId) {
           await store.dispatch("ticket/fetchTicket", newTicketId);
           const fetchedTicket = store.state.ticket.ticket;
-          signatory.value = fetchedTicket.signatories.find(
-            (s) => s.user.user_id == currentUser.user_id
-          );
-          isPending.value = signatory.value.status.name === "Pending";
+
+          if (
+            currentUser.roleModel.name == ROLE.ADMIN ||
+            currentUser.roleModel.name == ROLE.CHECKER ||
+            currentUser.roleModel.name == ROLE.APPROVER
+          ) {
+            isSignatory.value = true;
+            signatory.value = fetchedTicket.signatories.find(
+              (s) => s.user.user_id == currentUser.user_id
+            );
+            isPending.value =
+              signatory.value?.status?.name === TICKET_STATUS.PENDING;
+          }
+
           ticket.value = fetchedTicket;
           requestedDate.value = Intl.DateTimeFormat("en-US").format(
             new Date(ticket.value.ticket.date_created)
@@ -109,7 +123,7 @@ export default {
       },
       { immediate: true }
     );
-    return { ticket, requestedDate, isPending, approved };
+    return { ticket, requestedDate, isPending, isSignatory, approved };
   },
 };
 </script>

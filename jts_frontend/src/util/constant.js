@@ -17,10 +17,17 @@ const TICKET_STATUS = Object.freeze({
   DECLINED: "Declined",
 });
 
+const ROLE = Object.freeze({
+  ADMIN: "Admin",
+  APPROVER: "Approver",
+  CHECKER: "Checker",
+  USER: "User",
+});
+
 const SIGNATORY_TYPE = Object.freeze({
   APPROVER: "Approver",
   PARTY: "Party",
   CHECKER: "Checker",
 });
 
-export { FILE_STATUS, EXTENSIONS, TICKET_STATUS, SIGNATORY_TYPE };
+export { FILE_STATUS, EXTENSIONS, TICKET_STATUS, SIGNATORY_TYPE, ROLE };
