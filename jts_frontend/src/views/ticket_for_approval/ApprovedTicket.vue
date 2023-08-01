@@ -11,6 +11,7 @@ import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
 import { TICKET_STATUS } from "@/util/constant";
+import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
@@ -19,6 +20,7 @@ export default {
   },
 
   setup() {
+    const signalR = useSignalR();
     const store = useStore();
     const gridAPI = ref(null);
     const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -50,6 +52,13 @@ export default {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
     };
+
+    signalR.on("GetTicketForApproval", ticket => {
+      if(ticket.status.name == TICKET_STATUS.APPROVED){
+        store.commit("ticket/ADD_APPROVED_TICKETS_FOR_APPROVAL", ticket)
+        gridAPI.value.setRowData(store.state.ticket.approvedTicketsForApproval);
+      }
+    });
 
     return {
       columnDefs,

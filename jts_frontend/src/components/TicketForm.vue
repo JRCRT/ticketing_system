@@ -89,7 +89,6 @@ export default {
         status_id: APPROVED_STATUS_ID,
         connection_id: connectionId
       }
-      console.log(approver)
       await store.dispatch("ticket/changeApprovalStatus", approver);
     }
 
