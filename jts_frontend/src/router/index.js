@@ -4,7 +4,7 @@ import store from "@/store";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import MyTicket from "@/views/my_ticket/Ticket.vue";
-import Ticket from "@/views/all_ticket/Ticket.vue"
+import Ticket from "@/views/all_ticket/Ticket.vue";
 import TicketForApproval from "@/views/ticket_for_approval/Ticket.vue";
 
 import User from "@/views/User.vue";
@@ -81,7 +81,7 @@ const routes = [
       next();
     },
   },
-  
+
   {
     path: "/TicketForApproval/:status",
     name: "TicketForApproval",

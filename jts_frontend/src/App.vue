@@ -1,6 +1,6 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
-import { ref, onMounted, computed } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
@@ -12,13 +12,14 @@ export default {
     Alert,
     Loader,
   },
+
   setup() {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const router = useRouter();
     const store = useStore();
     const sidebarActive = ref(false);
     const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
-
+    const LOGIN_PATH = "/Login";
     const currentPath = ref("");
 
     const hideSidebar = () => {
@@ -31,12 +32,13 @@ export default {
     const removeAlert = (index) => {
       store.commit("app/REMOVE_ALERT", index);
     };
+
     const alerts = computed(() => store.state.app.alerts);
-    const currentUrl = computed(() => store.state.app.currentUrl == '/Login');
+    const currentUrl = computed(() => store.state.app.currentUrl == LOGIN_PATH);
     const isLoading = computed(() => store.state.app.isLoading);
     const logout = () => {
       store.dispatch("auth/logout");
-      router.replace("/login");
+      router.replace({ name: "Login" });
     };
 
     return {
@@ -52,7 +54,7 @@ export default {
       alerts,
       isLoading,
       TICKET_STATUS,
-      currentUser
+      currentUser,
     };
   },
 };
@@ -88,7 +90,7 @@ export default {
       <!--Ticket-->
 
       <router-link
-      v-if="currentUser?.roleModel.name == 'Admin'"
+        v-if="currentUser?.roleModel.name == 'Admin'"
         class="sidebar-link"
         :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
       >
@@ -130,7 +132,10 @@ export default {
 
       <router-link
         class="sidebar-link"
-        :to="{ name: 'TicketForApproval', params: { status: TICKET_STATUS.PENDING } }"
+        :to="{
+          name: 'TicketForApproval',
+          params: { status: TICKET_STATUS.PENDING },
+        }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +192,7 @@ export default {
   </Sidebar>
 
   <!-- Navbar -->
-<nav v-if="!currentUrl" class="navbar shadow-xl h-16">
+  <nav v-if="!currentUrl" class="navbar shadow-xl h-16">
     <div class="container mx-auto flex p-3 items-center">
       <!-- Sidebar Toggle -->
       <button
@@ -234,7 +239,7 @@ export default {
       </div>
     </div>
   </nav>
- 
+
   <div class="alerts">
     <transition-group name="fade">
       <div v-for="(alert, index) in alerts" :key="alert">
