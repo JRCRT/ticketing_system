@@ -28,6 +28,8 @@ namespace jts_backend.Dtos.TicketDto
         public int user_id { get; set; }
 
         public int priority_id { get; set; }
+
+        public string connection_id { get; set; } = string.Empty;
         public DateTime date_created { get; set; }
         public DateTime date_approved { get; set; }
         public DateTime date_declined { get; set; }

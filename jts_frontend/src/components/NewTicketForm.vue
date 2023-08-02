@@ -119,6 +119,7 @@ import { useStore } from "vuex";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { SIGNATORY_TYPE } from "@/util/constant";
 import { Signatory } from "@/models/Signatory";
+import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   emits: ["close"],
@@ -129,6 +130,7 @@ export default {
   },
 
   setup() {
+    const signalR = useSignalR();
     const PENDING_STATUS = 1;
     const DEFAULT_DATE_TIME = "2023-06-26T03:51:19.632Z";
     const currentDate = new Date();
@@ -141,6 +143,7 @@ export default {
       second: "2-digit",
       timeZone: "UTC",
     });
+    const connectionId = signalR.connection.connectionId;
     const formattedDatetime = formatter.format(currentDate);
 
     const store = useStore();
@@ -253,6 +256,7 @@ export default {
           formData.append("files", file);
         });
 
+        formData.append("connection_id", connectionId);
         formData.append("subject", subject.value);
         formData.append("condition", condition.value);
         formData.append("background", background.value);
@@ -277,7 +281,7 @@ export default {
       await store.dispatch("user/fetchCheckers");
       await store.dispatch("user/fetchAllUsers");
       await store.dispatch("priority/fetchPriorities");
-      
+
       store.commit("app/SET_LOADING", false);
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
@@ -287,7 +291,7 @@ export default {
       selectedPriority.value = store.state.priority.priorities[0];
     });
 
-    onUnmounted(()=> {
+    onUnmounted(() => {
       store.commit("file/EMPTY_FILE", []);
     });
 

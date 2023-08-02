@@ -112,7 +112,8 @@ namespace jts_backend.Services.TicketService
                     files = files
                 };
 
-                await _hubContext.Clients.All.GetTicket();
+                await _hubContext.Clients.All.GetTicket(responseData);
+                await _hubContext.Clients.Client(request.connection_id).GetMyTicket(responseData);
                 response.data = responseData;
                 response.message = "Ticket created successfully";
 
