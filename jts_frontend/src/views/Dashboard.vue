@@ -65,9 +65,9 @@ export default {
       await store.dispatch("ticket/fetchAllApprovedTickets");
       await store.dispatch("ticket/fetchAllDeclinedTickets");
       store.commit("app/SET_LOADING", false);
-      pendingNum.value = store.state.ticket.pendingTickets.length;
-      approvedNum.value = store.state.ticket.approvedTickets.length;
-      declinedNum.value = store.state.ticket.declinedTickets.length;
+      pendingNum.value = store.state.ticket.allPendingTickets.length;
+      approvedNum.value = store.state.ticket.allApprovedTickets.length;
+      declinedNum.value = store.state.ticket.allDeclinedTickets.length;
     });
 
     return {

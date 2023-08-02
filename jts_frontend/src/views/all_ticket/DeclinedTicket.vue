@@ -39,8 +39,8 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllTickets");
-      const declinedTickets = store.getters["ticket/declinedTickets"]
+      await store.dispatch("ticket/fetchAllDeclinedTickets");
+      const declinedTickets = store.state.ticket.allDeclinedTickets;
       params.api.setRowData(declinedTickets);
     };
 

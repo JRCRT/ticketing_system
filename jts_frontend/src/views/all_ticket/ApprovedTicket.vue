@@ -39,8 +39,8 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllTickets");
-      const approvedTickets = store.getters["ticket/approvedTickets"]
+      await store.dispatch("ticket/fetchAllApprovedTickets");
+      const approvedTickets = store.state.ticket.allApprovedTickets;
       params.api.setRowData(approvedTickets);
     };
 

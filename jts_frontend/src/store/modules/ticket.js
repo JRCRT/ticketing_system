@@ -15,6 +15,10 @@ const state = () => ({
   tickets: [],
   ticket: {},
 
+  allPendingTickets: [],
+  allApprovedTickets: [],
+  allDeclinedTickets: [],
+
   myTickets: [],
   myPendingTickets: [],
   myApprovedTickets: [],
@@ -26,56 +30,7 @@ const state = () => ({
   approvedTicketsForApproval: [],
 });
 
-const getters = {
-  pendingTickets: (state) => {
-    console.log(state.tickets);
-    return state.tickets.length == 0
-      ? []
-      : state.tickets.filter(
-          (ticket) => ticket.ticket.status.name == TICKET_STATUS.PENDING
-        );
-  },
-
-  approvedTickets: (state) => {
-    return state.tickets.length == 0
-      ? []
-      : state.tickets.filter(
-          (ticket) => ticket.ticket.status.name == TICKET_STATUS.APPROVED
-        );
-  },
-
-  declinedTickets: (state) => {
-    return state.tickets.length == 0
-      ? []
-      : state.tickets.filter(
-          (ticket) => ticket.ticket.status.name == TICKET_STATUS.DECLINED
-        );
-  },
-
-  myPendingTickets: (state) => {
-    return state.myTickets.length == 0
-      ? []
-      : state.myTickets.filter(
-          (ticket) => ticket.ticket.status.name == TICKET_STATUS.PENDING
-        );
-  },
-
-  myApprovedTickets: (state) => {
-    return state.myTickets.length == 0
-      ? []
-      : state.myTickets.filter(
-          (ticket) => ticket.ticket.status.name == TICKET_STATUS.APPROVED
-        );
-  },
-
-  myDeclinedTickets: (state) => {
-    return state.myTickets.length == 0
-      ? []
-      : state.myTickets.filter(
-          (ticket) => ticket.ticket.status.name == TICKET_STATUS.DECLINED
-        );
-  },
-};
+const getters = {};
 
 const actions = {
   async changeApprovalStatus({ commit, dispatch }, signatory) {
@@ -93,29 +48,6 @@ const actions = {
     dispatch("app/addAlert", alert, { root: true });
   },
 
-  async fetchAllTickets({ commit }) {
-    const response = await tickets();
-    commit("FETCH_TICKETS", response.data);
-  },
-
-  async fetchMyTickets({ commit }, userId) {
-    const response = await myTickets(userId);
-    commit("FETCH_MY_TICKETS", response.data);
-  },
-
-  async fetchAllPendingTickets({ commit }) {
-    const response = await ticketsByStatus(TICKET_STATUS.PENDING);
-    commit("FETCH_PENDING_TICKETS", response.data);
-  },
-  async fetchAllApprovedTickets({ commit }) {
-    const response = await ticketsByStatus(TICKET_STATUS.APPROVED);
-    commit("FETCH_APPROVED_TICKETS", response.data);
-  },
-  async fetchAllDeclinedTickets({ commit }) {
-    const response = await ticketsByStatus(TICKET_STATUS.DECLINED);
-    commit("FETCH_DECLINED_TICKETS", response.data);
-  },
-
   async fetchAllTodaysTickets({ commit }) {
     const response = await ticketsToday();
     commit("FETCH_TODAYS_TICKETS", response.data);
@@ -127,13 +59,21 @@ const actions = {
     if (response.success) {
       commit("app/SET_MODAL_LOADING", false, { root: true });
     }
-
     commit("FETCH_TICKET", response.data);
   },
 
-  async fetchTicketsForApproval({ commit }, param) {
-    const response = await ticketsForApproval(param);
-    commit("FETCH_TICKETS_FOR_APPROVAL", response.data);
+  //All Tickets
+  async fetchAllPendingTickets({ commit }) {
+    const response = await ticketsByStatus(TICKET_STATUS.PENDING);
+    commit("FETCH_ALL_PENDING_TICKETS", response.data);
+  },
+  async fetchAllApprovedTickets({ commit }) {
+    const response = await ticketsByStatus(TICKET_STATUS.APPROVED);
+    commit("FETCH_ALL_APPROVED_TICKETS", response.data);
+  },
+  async fetchAllDeclinedTickets({ commit }) {
+    const response = await ticketsByStatus(TICKET_STATUS.DECLINED);
+    commit("FETCH_ALL_DECLINED_TICKETS", response.data);
   },
 
   //My Tickets
@@ -186,29 +126,23 @@ const actions = {
 };
 
 const mutations = {
-  FETCH_TICKETS(state, value) {
-    state.tickets = value;
+  FETCH_TICKET(state, value) {
+    state.ticket = value;
   },
 
-  FETCH_MY_TICKETS(state, value) {
-    state.myTickets = value;
-  },
-
-  FETCH_PENDING_TICKETS(state, value) {
-    state.pendingTickets = value;
-  },
-  FETCH_APPROVED_TICKETS(state, value) {
-    state.approvedTickets = value;
-  },
-  FETCH_DECLINED_TICKETS(state, value) {
-    state.declinedTickets = value;
-  },
   FETCH_TODAYS_TICKETS(state, value) {
     state.todaysTickets = value;
   },
 
-  FETCH_TICKET(state, value) {
-    state.ticket = value;
+  //All Tickets
+  FETCH_ALL_PENDING_TICKETS(state, value) {
+    state.allPendingTickets = value;
+  },
+  FETCH_ALL_APPROVED_TICKETS(state, value) {
+    state.allApprovedTickets = value;
+  },
+  FETCH_ALL_DECLINED_TICKETS(state, value) {
+    state.allDeclinedTickets = value;
   },
 
   //My Tickets
