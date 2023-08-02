@@ -6,7 +6,7 @@
     <template v-slot:content>
       <div>
         <label> Username </label>
-        <input v-model="username" class="input__field" />
+        <input v-model="username" autocomplete="false" class="input__field" />
         <label> Password </label>
         <input v-model="password" class="input__field" type="password" />
         <label> First Name </label>

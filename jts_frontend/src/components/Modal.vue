@@ -2,10 +2,8 @@
   <Transition name="fade">
     <div class="modal">
       <div class="modal-backdrop"></div>
-      <!-- <div v-if="isModalLoading" class="modal-container m-auto">
-      <LoadingSpinner />
-    </div> -->
-      <div v-if="isModalLoading" class="mx-auto my-auto">
+
+      <div v-if="isModalLoading" class="m-auto">
         <LoadingSpinner />
       </div>
       <div v-else class="modal-container">
