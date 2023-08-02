@@ -202,7 +202,9 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByUser(int userId)
+        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByUser(
+            TicketByUserDto request
+        )
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
             var tickets = await _context.ticket
@@ -212,7 +214,10 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.user.role)
                 .Include(u => u.user.department)
                 .Include(u => u.user.job_title)
-                .Where(t => t.user.user_id == userId)
+                .Where(
+                    t =>
+                        t.user.user_id == request.user_id && t.status.status_id == request.status_id
+                )
                 .Select(t => t)
                 .ToListAsync();
 

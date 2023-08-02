@@ -12,9 +12,9 @@ const tickets = async () => {
   return response;
 };
 
-const myTickets = async (userId) => {
+const myTickets = async (param) => {
   const response = await axios
-    .post(`/Ticket/GetTicketByUser?userId=${userId}`)
+    .post("/Ticket/GetTicketByUser", param)
     .then((res) => {
       return res.data;
     })

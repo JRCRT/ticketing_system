@@ -9,8 +9,8 @@
 import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 export default {
   components: {
     Table,
@@ -19,8 +19,9 @@ export default {
 
   setup() {
     const store = useStore();
-    const router = useRouter();
+    const signalR = useSignalR();
     const gridAPI = ref(null);
+    const PENDING_STATUS_ID = 1;
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
@@ -39,19 +40,22 @@ export default {
     ];
 
     const onGridReady = async (params) => {
-      // tableApi.value = params.api;
+      const param = {
+        user_id: currentUser.user_id,
+        status_id: PENDING_STATUS_ID,
+      };
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchMyTickets", currentUser.user_id);
-      const myPendingTickets = store.getters["ticket/myPendingTickets"]
+      await store.dispatch("ticket/fetchMyPendingTickets", param);
+      const myPendingTickets = store.state.ticket.myPendingTickets;
       params.api.setRowData(myPendingTickets);
     };
 
-  /*  signalR.on('GetUser', user => {
-      store.commit("user/ADD_USER", user);
-      console.log(user);
-      gridAPI.value.setRowData(store.state.user.users)
-    }); */
+    signalR.on("GetMyTicket", (ticket) => {
+      store.commit("ticket/ADD_MY_PENDING_TICKETS", ticket);
+      const myPendingTickets = store.state.ticket.myPendingTickets;
+      gridAPI.value.setRowData(myPendingTickets);
+    });
 
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();

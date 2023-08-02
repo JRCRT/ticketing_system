@@ -19,6 +19,7 @@ export default {
   setup() {
     const store = useStore();
     const gridAPI = ref(null);
+    const APPROVED_STATUS_ID = 2;
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
@@ -37,11 +38,14 @@ export default {
     ];
 
     const onGridReady = async (params) => {
-      // tableApi.value = params.api;
+      const param = {
+        user_id: currentUser.user_id,
+        status_id: APPROVED_STATUS_ID,
+      };
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchMyTickets", currentUser.user_id);
-      const myApprovedTickets = store.getters["ticket/myApprovedTickets"]
+      await store.dispatch("ticket/fetchMyApprovedTickets", param);
+      const myApprovedTickets = store.state.ticket.myApprovedTickets;
       params.api.setRowData(myApprovedTickets);
     };
 
