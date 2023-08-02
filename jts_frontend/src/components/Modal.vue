@@ -6,7 +6,7 @@
       <LoadingSpinner />
     </div> -->
       <div v-if="isModalLoading" class="mx-auto my-auto">
-        <Loading />
+        <LoadingSpinner />
       </div>
       <div v-else class="modal-container">
         <div class="modal-header">
@@ -45,7 +45,7 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
-import Loading from "@/components/Loading.vue";
+
 export default {
   emits: ["close"],
   mounted() {
@@ -56,7 +56,6 @@ export default {
   },
   components: {
     LoadingSpinner,
-    Loading,
   },
 
   setup() {

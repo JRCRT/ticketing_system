@@ -276,13 +276,13 @@ export default {
     };
 
     onMounted(async () => {
-      store.commit("app/SET_LOADING", true);
+      store.commit("app/SET_MODAL_LOADING", true);
       await store.dispatch("user/fetchApprovers");
       await store.dispatch("user/fetchCheckers");
       await store.dispatch("user/fetchAllUsers");
       await store.dispatch("priority/fetchPriorities");
 
-      store.commit("app/SET_LOADING", false);
+      store.commit("app/SET_MODAL_LOADING", false);
       isLoading.value = store.state.app.isLoading;
       approvers.value = store.state.user.approvers;
       checkers.value = store.state.user.checkers;
