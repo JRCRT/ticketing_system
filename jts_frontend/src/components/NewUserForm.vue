@@ -160,8 +160,6 @@ export default {
         });
         await store.dispatch("user/createUser", user);
       }
-
-      //tableApi.setRowData(store.state.user.users);
     };
 
     onMounted(async () => {

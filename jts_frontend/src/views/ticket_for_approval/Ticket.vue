@@ -31,7 +31,7 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-      <component :is="currentTab" />
+    <component :is="currentTab" />
   </div>
 </template>
 
@@ -44,7 +44,7 @@ import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { computed, ref, onUnmounted } from "vue";
+import { computed, ref, onUnmounted, watch } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
@@ -57,7 +57,6 @@ export default {
   },
 
   setup() {
-
     const signalR = useSignalR();
     const router = useRouter();
     const store = useStore();
@@ -78,16 +77,6 @@ export default {
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
     );
-
-/*     signalR.on("GetTicketForApproval", ticket => {
-      console.log(ticket);
-      console.log('GetTicketForApproval')
-    });
-
-    signalR.on('Test', test => {
-      console.log(test);
-      console.log("test")
-    }); */
 
     const tabs = [
       {
@@ -112,12 +101,20 @@ export default {
       modalActive.value = false;
     }
 
+    watch(
+      () => isTicketFormOpen.value,
+      async (newIsTicketFormOpen, oldIsTicketFormOpen) => {
+        if (!newIsTicketFormOpen) {
+          router.replace({
+            name: "TicketForApproval",
+            params: { status: currentStatus.value },
+          });
+        }
+      }
+    );
+
     const closeTicketForm = () => {
       store.commit("app/SET_TICKET_FORM", false);
-      router.replace({
-        name: "TicketForApproval",
-        params: { status: currentStatus.value },
-      });
     };
 
     function openModal() {
@@ -127,11 +124,14 @@ export default {
     function changeTab(tab) {
       currentTab.value = tab.name;
       currentStatus.value = tab.status;
-      router.replace({ name: "TicketForApproval", params: { status: tab.status } });
+      router.replace({
+        name: "TicketForApproval",
+        params: { status: tab.status },
+      });
       store.commit("app/SET_SELECTED_TICKET", {});
     }
 
-    const openTicket = async () => {
+    const openTicket = () => {
       const ticketId = store.state.app.selectedTicket.ticket.ticket_id;
       router.push({
         name: "TicketForApprovalById",
