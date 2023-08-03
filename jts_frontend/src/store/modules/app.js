@@ -2,6 +2,7 @@ const state = () => ({
   isLoading: false,
   alerts: [],
   currentUrl: null,
+  currentUser: {},
   isNewUserFormOpen: false,
   isNewTicketFormOpen: false,
   isLoggingIn: false,
@@ -64,6 +65,9 @@ const mutations = {
   },
   SET_PROCESSING(state, value) {
     state.isProcessing = value;
+  },
+  SET_CURRENT_USER(state, value) {
+    state.currentUser = value;
   },
 };
 

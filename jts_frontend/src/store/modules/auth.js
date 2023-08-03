@@ -48,7 +48,9 @@ const actions = {
 
     commit("app/SET_LOGIN_LOADING", false, { root: true });
     commit("app/SET_CURRENT_URL", "/", { root: true });
-    localStorage.setItem("user", JSON.stringify(response.data));
+    const user = JSON.stringify(response.data);
+    localStorage.setItem("user", user);
+    commit("app/SET_CURRENT_USER", JSON.parse(user), { root: true });
     router.replace({ name: "Dashboard" });
   },
 

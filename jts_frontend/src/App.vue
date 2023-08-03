@@ -14,13 +14,20 @@ export default {
   },
 
   setup() {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const _currentUser = computed(() =>
+      JSON.parse(localStorage.getItem("user"))
+    );
+
     const router = useRouter();
     const store = useStore();
     const sidebarActive = ref(false);
     const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
     const LOGIN_PATH = "/Login";
     const currentPath = ref("");
+    store.commit(
+      "app/SET_CURRENT_USER",
+      JSON.parse(localStorage.getItem("user"))
+    );
 
     const hideSidebar = () => {
       sidebarActive.value = false;
@@ -33,6 +40,8 @@ export default {
       store.commit("app/REMOVE_ALERT", index);
     };
 
+    const currentUser = computed(() => store.state.app.currentUser);
+    console.log(_currentUser.value);
     const alerts = computed(() => store.state.app.alerts);
     const currentUrl = computed(() => store.state.app.currentUrl == LOGIN_PATH);
     const isLoading = computed(() => store.state.app.isLoading);
@@ -219,6 +228,7 @@ export default {
       </router-link>
 
       <div class="ml-auto my-auto flex items-center">
+        <div class="mr-5 font-medium text-sm">{{ currentUser?.username }}</div>
         <button
           type="button"
           class="button button-transparent button-icon button-icon-sm"
