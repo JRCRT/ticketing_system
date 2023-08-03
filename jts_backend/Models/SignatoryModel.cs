@@ -16,5 +16,6 @@ namespace jts_backend.Models
         public TicketModel? ticket { get; set; } = new TicketModel();
         public StatusModel status { get; set; } = new StatusModel();
         public string type { get; set; } = string.Empty;
+        public DateTime action_date { get; set; }
     }
 }

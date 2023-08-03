@@ -36,12 +36,13 @@ export default {
     const showSidebar = () => {
       sidebarActive.value = true;
     };
+
     const removeAlert = (index) => {
       store.commit("app/REMOVE_ALERT", index);
     };
 
     const currentUser = computed(() => store.state.app.currentUser);
-    console.log(_currentUser.value);
+
     const alerts = computed(() => store.state.app.alerts);
     const currentUrl = computed(() => store.state.app.currentUrl == LOGIN_PATH);
     const isLoading = computed(() => store.state.app.isLoading);

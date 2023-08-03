@@ -287,6 +287,7 @@ namespace jts_backend.Services.TicketService
             var ticketForApproval = await GetTicketData(signatory!.ticket!);
 
             signatory!.status = status!;
+            signatory!.action_date = DateTime.now;
             _context.approver.Update(signatory!);
             await _hubContext.Clients
                 .Client(request.connection_id)
