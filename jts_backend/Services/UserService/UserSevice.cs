@@ -181,8 +181,7 @@ namespace jts_backend.Services.UserService
 
             _context.user.Update(user);
             await _context.SaveChangesAsync();
-            response.data =
-                $"RPassword: {request.password} DPassword: {user.password_hash.ToString()}";
+            response.data = $"RPassword: {request.password} DPassword: {user.password_hash}";
             response.message = "Successfully updated";
             return response;
         }
