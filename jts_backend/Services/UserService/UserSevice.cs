@@ -164,7 +164,7 @@ namespace jts_backend.Services.UserService
             user.email = request.email;
             user.ext_name = $"{request.first_name} {request.middle_name} {request.last_name}";
 
-            if (request.password.Equals(System.Text.Encoding.Default.GetString(user.password_hash)))
+            if (request.password.Equals(System.Text.Encoding.UTF8.GetString(user.password_hash)))
             {
                 Helper.Helper.CreatePasswordHash(
                     request.password,
