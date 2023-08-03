@@ -57,6 +57,7 @@ const actions = {
       commit("app/SET_MODAL_LOADING", false, { root: true });
       return;
     }
+    console.log(response.data);
     alert = { type: "success", message: response.message };
     commit("app/SET_MODAL_LOADING", false, { root: true });
     commit("app/SET_USER_FORM", false, { root: true });

@@ -164,7 +164,7 @@ namespace jts_backend.Services.UserService
             user.email = request.email;
             user.ext_name = $"{request.first_name} {request.middle_name} {request.last_name}";
 
-            if (!request.password.Equals(user.password_hash.ToString()))
+            if (request.password.Equals(System.Text.Encoding.Default.GetString(user.password_hash)))
             {
                 Helper.Helper.CreatePasswordHash(
                     request.password,
@@ -181,7 +181,8 @@ namespace jts_backend.Services.UserService
 
             _context.user.Update(user);
             await _context.SaveChangesAsync();
-            response.data = "Successfully updated";
+            response.data =
+                $"RPassword: {request.password} DPassword: {user.password_hash.ToString()}";
             response.message = "Successfully updated";
             return response;
         }
