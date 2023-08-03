@@ -3,6 +3,7 @@ import {
   createUser,
   usersByRole,
   userById,
+  updateUser,
 } from "@/services/userService.js";
 import { User } from "@/models/User";
 const state = () => ({
@@ -45,19 +46,36 @@ const actions = {
     commit("FETCH_CHECKERS", response.data);
   },
 
+  async updateUser({ commit, dispatch }, user) {
+    commit("app/SET_MODAL_LOADING", true, { root: true });
+    const response = await updateUser(user);
+    var alert;
+    if (!response.success) {
+      console.log(response);
+      alert = { type: "danger", message: response.message };
+      dispatch("app/addAlert", alert, { root: true });
+      commit("app/SET_MODAL_LOADING", false, { root: true });
+      return;
+    }
+    alert = { type: "success", message: response.message };
+    commit("app/SET_MODAL_LOADING", false, { root: true });
+    commit("app/SET_USER_FORM", false, { root: true });
+    dispatch("app/addAlert", alert, { root: true });
+  },
+
   async createUser({ commit, dispatch }, user) {
-    commit("app/SET_LOADING", true, { root: true });
+    commit("app/SET_MODAL_LOADING", true, { root: true });
     const response = await createUser(user);
     var alert;
     if (!response.success) {
       console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
-      commit("app/SET_LOADING", false, { root: true });
+      commit("app/SET_MODAL_LOADING", false, { root: true });
       return;
     }
     alert = { type: "success", message: response.message };
-    commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_MODAL_LOADING", false, { root: true });
     commit("app/SET_NEW_USER_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },

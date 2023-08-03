@@ -11,6 +11,18 @@ const users = async () => {
   return response;
 };
 
+const updateUser = async (user) => {
+  const response = await axios
+    .post("/User/UpdateUser", user)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
 const userById = async (id) => {
   const response = await axios
     .post(`/User/GetUserById?user_id=${id}`)
@@ -48,4 +60,4 @@ const createUser = async (user) => {
   return response;
 };
 
-export { users, createUser, usersByRole, userById };
+export { users, createUser, usersByRole, userById, updateUser };

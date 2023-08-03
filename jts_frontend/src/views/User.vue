@@ -42,20 +42,20 @@
 import NewUserForm from "@/components/NewUserForm.vue";
 import UserForm from "@/components/UserForm.vue";
 import Table from "@/components/Table.vue";
-import { onUnmounted, ref } from "vue";
+import { onUnmounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
-import { useSignalR } from '@quangdao/vue-signalr';
+import { useSignalR } from "@quangdao/vue-signalr";
 export default {
   name: "User",
   components: {
     Table,
     NewUserForm,
-    UserForm
+    UserForm,
   },
 
-    setup() {
+  setup() {
     const store = useStore();
     const router = useRouter();
     const signalR = useSignalR();
@@ -82,34 +82,42 @@ export default {
     const gridAPI = ref(null);
     const fullname = ref(null);
     const username = ref(null);
-    const isUserFormOpen = computed(()=> store.state.app.isUserFormOpen);
-    const isNewUserFormOpen = computed(() => store.state.app.isNewUserFormOpen)
+    const isUserFormOpen = computed(() => store.state.app.isUserFormOpen);
+    const isNewUserFormOpen = computed(() => store.state.app.isNewUserFormOpen);
 
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedUser.user_id == null ? true : false
     );
 
-
-    signalR.on('GetUser', user => {
+    signalR.on("GetUser", (user) => {
       store.commit("user/ADD_USER", user);
       console.log(user);
-      gridAPI.value.setRowData(store.state.user.users)
+      gridAPI.value.setRowData(store.state.user.users);
     });
-    
-    
-    const openUserForm = () =>{
+
+    watch(
+      () => isUserFormOpen.value,
+      async (newIsUserFormOpen, oldIsUserFormOpen) => {
+        if (!newIsUserFormOpen) {
+          router.replace({
+            name: "User",
+          });
+        }
+      }
+    );
+
+    const openUserForm = () => {
       const userId = store.state.app.selectedUser.user_id;
       router.push({
         name: "UserById",
-        params: {userId: userId},
+        params: { userId: userId },
       });
+    };
 
-    }
-
-    const closeUserForm = () =>{
+    const closeUserForm = () => {
       store.commit("app/SET_USER_FORM", false);
       router.replace({
-        name: "User"
+        name: "User",
       });
     };
 
@@ -133,9 +141,9 @@ export default {
       store.commit("app/SET_SELECTED_USER", selectedRow[0]);
     };
 
-    onUnmounted(()=>{
+    onUnmounted(() => {
       store.commit("app/SET_SELECTED_USER", {});
-    })
+    });
 
     return {
       columnDefs,
@@ -149,7 +157,7 @@ export default {
       openUserForm,
       closeUserForm,
       onGridReady,
-      onSelectionChanged
+      onSelectionChanged,
     };
   },
 };

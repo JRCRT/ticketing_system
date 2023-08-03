@@ -136,22 +136,20 @@ namespace jts_backend.Services.UserService
             return response;
         }
 
-        public async Task<ServiceResponse<string>> UpdateUser(UpdateUserDto updateUser)
+        public async Task<ServiceResponse<string>> UpdateUser(UpdateUserDto request)
         {
             var response = new ServiceResponse<string>();
             var user = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
                 .Include(u => u.job_title)
-                .FirstOrDefaultAsync(c => c.user_id == updateUser.user_id);
-            var role = await _context.role.FirstOrDefaultAsync(
-                r => r.role_id == updateUser.role_id
-            );
+                .FirstOrDefaultAsync(c => c.user_id == request.user_id);
+            var role = await _context.role.FirstOrDefaultAsync(r => r.role_id == request.role_id);
             var department = await _context.department.FirstOrDefaultAsync(
-                d => d.department_id == updateUser.department_id
+                d => d.department_id == request.department_id
             );
             var jobTitle = await _context.jobTitle.FirstOrDefaultAsync(
-                j => j.job_title_id == updateUser.job_title_id
+                j => j.job_title_id == request.job_title_id
             );
             if (user == null)
             {
@@ -159,21 +157,24 @@ namespace jts_backend.Services.UserService
                 response.success = false;
                 return response;
             }
+            user.username = request.username;
+            user.first_name = request.first_name;
+            user.middle_name = request.middle_name;
+            user.last_name = request.last_name;
+            user.email = request.email;
+            user.ext_name = $"{request.first_name} {request.middle_name} {request.last_name}";
 
-            user.first_name = updateUser.first_name;
-            user.middle_name = updateUser.middle_name;
-            user.last_name = updateUser.last_name;
-            user.email = updateUser.email;
-            user.ext_name =
-                $"{updateUser.first_name} {updateUser.middle_name} {updateUser.last_name}";
+            if (!request.password.Equals(user.password_hash.ToString()))
+            {
+                Helper.Helper.CreatePasswordHash(
+                    request.password,
+                    out byte[] passwordHash,
+                    out byte[] passwordSalt
+                );
 
-            Helper.Helper.CreatePasswordHash(
-                updateUser.password,
-                out byte[] passwordHash,
-                out byte[] passwordSalt
-            );
-            user.password_hash = passwordHash;
-            user.password_salt = passwordSalt;
+                user.password_hash = passwordHash;
+                user.password_salt = passwordSalt;
+            }
             user.role = role!;
             user.department = department!;
             user.job_title = jobTitle!;

@@ -106,19 +106,19 @@ const actions = {
   },
 
   async createTicket({ commit, dispatch }, ticket) {
-    commit("app/SET_LOADING", true, { root: true });
+    commit("app/SET_MODAL_LOADING", true, { root: true });
     const response = await createTicket(ticket);
     var alert;
     if (!response.success) {
       console.log(response);
       alert = { type: "danger", message: response.message };
-      commit("app/SET_LOADING", false, { root: true });
+      commit("app/SET_MODAL_LOADING", false, { root: true });
       commit("app/SET_NEW_TICKET_FORM", false, { root: true });
       dispatch("app/addAlert", alert, { root: true });
       return;
     }
     alert = { type: "success", message: response.message };
-    commit("app/SET_LOADING", false, { root: true });
+    commit("app/SET_MODAL_LOADING", false, { root: true });
     commit("app/SET_NEW_TICKET_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },

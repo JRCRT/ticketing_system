@@ -35,6 +35,10 @@
         <div class="rf-detail-container">
           <div v-html="ticket?.ticket?.user?.ext_name"></div>
         </div>
+        <label v-if="isApproved">Date Approved</label>
+        <div v-if="isApproved" class="rf-detail-container">
+          {{ dateApproved }}
+        </div>
       </div>
     </template>
     <template v-slot:footer>
@@ -64,6 +68,7 @@ import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
 import { TICKET_STATUS, ROLE } from "@/util/constant";
+import { formatDate } from "@/util/helper";
 
 export default {
   emits: ["close"],
@@ -77,11 +82,13 @@ export default {
     const route = useRoute();
     const ticket = ref({});
     const requestedDate = ref(null);
+    const dateApproved = ref(null);
     const APPROVED_STATUS_ID = 2;
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const isPending = ref(false);
     const signatory = ref({});
     const isSignatory = ref(false);
+    const isApproved = ref(false);
 
     const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
@@ -116,14 +123,26 @@ export default {
           }
 
           ticket.value = fetchedTicket;
-          requestedDate.value = Intl.DateTimeFormat("en-US").format(
-            new Date(ticket.value.ticket.date_created)
-          );
+
+          requestedDate.value = formatDate(ticket.value.ticket.date_created);
+
+          dateApproved.value = formatDate(ticket.value.ticket.date_approved);
+
+          isApproved.value =
+            ticket.value.ticket.status.name == TICKET_STATUS.APPROVED;
         }
       },
       { immediate: true }
     );
-    return { ticket, requestedDate, isPending, isSignatory, approved };
+    return {
+      ticket,
+      requestedDate,
+      isPending,
+      isSignatory,
+      dateApproved,
+      isApproved,
+      approved,
+    };
   },
 };
 </script>

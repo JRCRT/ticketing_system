@@ -45,7 +45,7 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="createUser">Save</button>
+          <button class="button-primary mr-2" @click="updateUser">Save</button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -85,26 +85,45 @@ export default {
     const departments = ref([]);
     const roles = ref([]);
     const jobTitles = ref([]);
+    const user = ref({});
 
     watch(
       () => route.params.userId,
       async (newUserId, oldUserId) => {
         if (newUserId) {
           await store.dispatch("user/fetchUser", newUserId);
-          const user = store.state.user.user;
-          username.value = user.username;
-          firstname.value = user.first_name;
-          middlename.value = user.middle_name;
-          lastname.value = user.last_name;
-          emailAddress.value = user.email;
-          password.value = user.password_hash;
-          selectedDepartment.value = user.department;
-          selectedRole.value = user.role;
-          selectedJobTitle.value = user.job_title;
+          user.value = store.state.user.user;
+          username.value = user.value.username;
+          firstname.value = user.value.first_name;
+          middlename.value = user.value.middle_name;
+          lastname.value = user.value.last_name;
+          emailAddress.value = user.value.email;
+          password.value = user.value.password_hash;
+          selectedDepartment.value = user.value.department;
+          selectedRole.value = user.value.role;
+          selectedJobTitle.value = user.value.job_title;
         }
       },
       { immediate: true }
     );
+
+    const updateUser = async () => {
+      const userData = {
+        user_id: user.value.user_id,
+        first_name: firstname.value,
+        middle_name: middlename.value,
+        last_name: lastname.value,
+        username: username.value,
+        email: emailAddress.value,
+        role_id: selectedRole.value.role_id,
+        department_id: selectedDepartment.value.department_id,
+        job_title_id: selectedJobTitle.value.job_title_id,
+        password: password.value,
+      };
+
+      console.log(userData);
+      await store.dispatch("user/updateUser", userData);
+    };
 
     onMounted(async () => {
       await store.dispatch("role/fetchRoles");
@@ -128,6 +147,7 @@ export default {
       middlename,
       lastname,
       emailAddress,
+      updateUser,
     };
   },
 };

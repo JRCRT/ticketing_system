@@ -18,6 +18,10 @@ const setIconUrl = (file) => {
   }
 };
 
+const formatDate = (date) => {
+  return Intl.DateTimeFormat("en-US").format(new Date(date));
+};
+
 const uploadFile = async (file, url) => {
   // set up the request data
   let formData = new FormData();
@@ -33,4 +37,4 @@ const uploadFile = async (file, url) => {
   return response;
 };
 
-export { setIconUrl, uploadFile };
+export { setIconUrl, uploadFile, formatDate };

@@ -318,6 +318,7 @@ namespace jts_backend.Services.TicketService
                     );
 
                     ticket!.status = approvedStatus!;
+                    ticket!.date_approved = DateTime.Now;
                     _context.ticket.Update(ticket);
                     await _context.SaveChangesAsync();
                 }
