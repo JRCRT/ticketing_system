@@ -39,6 +39,26 @@
         <div v-if="isApproved" class="rf-detail-container">
           {{ dateApproved }}
         </div>
+
+        <label v-if="signatoryStatus == TICKET_STATUS.APPROVED"
+          >Date You Approved</label
+        >
+        <div
+          v-if="signatoryStatus == TICKET_STATUS.APPROVED"
+          class="rf-detail-container"
+        >
+          {{ actionDate }}
+        </div>
+
+        <label v-if="signatoryStatus == TICKET_STATUS.DECLINED"
+          >Date You Declined</label
+        >
+        <div
+          v-if="signatoryStatus == TICKET_STATUS.DECLINED"
+          class="rf-detail-container"
+        >
+          {{ actionDate }}
+        </div>
       </div>
     </template>
     <template v-slot:footer>
@@ -95,6 +115,8 @@ export default {
     const isSignatory = ref(false);
     const isApproved = ref(false);
     const isProcessing = computed(() => store.state.app.isProcessing);
+    const signatoryStatus = ref(null);
+    const actionDate = ref(null);
 
     const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
@@ -124,6 +146,8 @@ export default {
             signatory.value = fetchedTicket.signatories.find(
               (s) => s.user.user_id == currentUser.user_id
             );
+            signatoryStatus.value = signatory.value.status.name;
+            actionDate.value = formatDate(signatory.value.action_date);
             isPending.value =
               signatory.value?.status?.name === TICKET_STATUS.PENDING;
           }
@@ -148,6 +172,9 @@ export default {
       dateApproved,
       isApproved,
       isProcessing,
+      signatoryStatus,
+      TICKET_STATUS,
+      actionDate,
       approved,
     };
   },

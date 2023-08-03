@@ -24,6 +24,7 @@ function setActive() {
   active.value = true;
   clearTimeout(inActiveTimeout);
 }
+
 function setInactive() {
   inActiveTimeout = setTimeout(() => {
     active.value = false;
