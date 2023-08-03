@@ -47,36 +47,36 @@ const actions = {
   },
 
   async updateUser({ commit, dispatch }, user) {
-    commit("app/SET_MODAL_LOADING", true, { root: true });
+    commit("app/SET_PROCESSING", true, { root: true });
     const response = await updateUser(user);
     var alert;
     if (!response.success) {
       console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
-      commit("app/SET_MODAL_LOADING", false, { root: true });
+      commit("app/SET_PROCESSING", false, { root: true });
       return;
     }
     console.log(response.data);
     alert = { type: "success", message: response.message };
-    commit("app/SET_MODAL_LOADING", false, { root: true });
+    commit("app/SET_PROCESSING", false, { root: true });
     commit("app/SET_USER_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
 
   async createUser({ commit, dispatch }, user) {
-    commit("app/SET_MODAL_LOADING", true, { root: true });
+    commit("app/SET_PROCESSING", true, { root: true });
     const response = await createUser(user);
     var alert;
     if (!response.success) {
       console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
-      commit("app/SET_MODAL_LOADING", false, { root: true });
+      commit("app/SET_PROCESSING", false, { root: true });
       return;
     }
     alert = { type: "success", message: response.message };
-    commit("app/SET_MODAL_LOADING", false, { root: true });
+    commit("app/SET_PROCESSING", false, { root: true });
     commit("app/SET_NEW_USER_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },

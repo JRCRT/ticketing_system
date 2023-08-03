@@ -45,8 +45,18 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="createUser">Save</button>
-          <button class="button-transparent" @click="$emit('close')">
+          <button
+            class="button-primary mr-2"
+            :disabled="isProcessing"
+            @click="createUser"
+          >
+            {{ isProcessing ? "Creating..." : "Create" }}
+          </button>
+          <button
+            class="button-transparent"
+            :disabled="isProcessing"
+            @click="$emit('close')"
+          >
             Cancel
           </button>
         </div>
@@ -56,7 +66,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { User } from "@/models/User";
 import Modal from "@/components/Modal.vue";
@@ -84,6 +94,7 @@ export default {
     const departments = ref([]);
     const roles = ref([]);
     const jobTitles = ref([]);
+    const isProcessing = computed(() => store.state.app.isProcessing);
 
     const validate = () => {
       var alert;
@@ -184,6 +195,7 @@ export default {
       middlename,
       lastname,
       emailAddress,
+      isProcessing,
       createUser,
     };
   },

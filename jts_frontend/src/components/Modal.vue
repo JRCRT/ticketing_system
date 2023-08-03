@@ -3,10 +3,7 @@
     <div class="modal">
       <div class="modal-backdrop"></div>
 
-      <div v-if="isModalLoading" class="m-auto">
-        <LoadingSpinner />
-      </div>
-      <div v-else class="modal-container">
+      <div class="modal-container">
         <div class="modal-header">
           <slot name="header"></slot>
           <button
@@ -29,7 +26,14 @@
         </div>
 
         <div>
-          <slot name="content"></slot>
+          <div
+            v-if="isModalLoading"
+            class="h-[calc(100vh-32px)] flex justify-center items-center"
+          >
+            <LoadingSpinner />
+          </div>
+
+          <slot v-else name="content"></slot>
         </div>
         <div class="modal-footer">
           <slot name="footer"></slot>

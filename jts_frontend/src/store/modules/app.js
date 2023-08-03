@@ -10,6 +10,7 @@ const state = () => ({
   isTicketFormOpen: false,
   isUserFormOpen: false,
   isModalLoading: false,
+  isProcessing: false,
 });
 
 const getter = {};
@@ -60,6 +61,9 @@ const mutations = {
   },
   SET_MODAL_LOADING(state, value) {
     state.isModalLoading = value;
+  },
+  SET_PROCESSING(state, value) {
+    state.isProcessing = value;
   },
 };
 

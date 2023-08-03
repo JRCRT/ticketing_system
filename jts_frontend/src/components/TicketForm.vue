@@ -44,9 +44,14 @@
     <template v-slot:footer>
       <div class="w-full">
         <div v-if="isPending && isSignatory" class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="approved">
-            Approved
+          <button
+            class="button-primary mr-2"
+            :disabled="isProcessing"
+            @click="approved"
+          >
+            {{ isProcessing ? "Approving..." : "Approved" }}
           </button>
+
           <button class="button-transparent" @click="$emit('close')">
             Declined
           </button>
@@ -65,7 +70,7 @@ import Modal from "@/components/Modal.vue";
 
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
 import { TICKET_STATUS, ROLE } from "@/util/constant";
 import { formatDate } from "@/util/helper";
@@ -89,6 +94,7 @@ export default {
     const signatory = ref({});
     const isSignatory = ref(false);
     const isApproved = ref(false);
+    const isProcessing = computed(() => store.state.app.isProcessing);
 
     const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
@@ -141,6 +147,7 @@ export default {
       isSignatory,
       dateApproved,
       isApproved,
+      isProcessing,
       approved,
     };
   },

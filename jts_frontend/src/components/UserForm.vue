@@ -45,8 +45,18 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="updateUser">Save</button>
-          <button class="button-transparent" @click="$emit('close')">
+          <button
+            class="button-primary mr-2"
+            :disabled="isProcessing"
+            @click="updateUser"
+          >
+            {{ isProcessing ? "Saving..." : "Save" }}
+          </button>
+          <button
+            :disabled="isProcessing"
+            class="button-transparent"
+            @click="$emit('close')"
+          >
             Cancel
           </button>
         </div>
@@ -56,7 +66,7 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Modal from "@/components/Modal.vue";
@@ -86,6 +96,7 @@ export default {
     const roles = ref([]);
     const jobTitles = ref([]);
     const user = ref({});
+    const isProcessing = computed(() => store.state.app.isProcessing);
 
     watch(
       () => route.params.userId,
@@ -147,6 +158,7 @@ export default {
       middlename,
       lastname,
       emailAddress,
+      isProcessing,
       updateUser,
     };
   },

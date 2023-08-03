@@ -82,10 +82,18 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="submitTicket">
-            Submit
+          <button
+            class="button-primary mr-2"
+            :disabled="isProcessing"
+            @click="submitTicket"
+          >
+            {{ isProcessing ? "Submiting..." : "Submit" }}
           </button>
-          <button class="button-transparent" @click="$emit('close')">
+          <button
+            :disabled="isProcessing"
+            class="button-transparent"
+            @click="$emit('close')"
+          >
             Cancel
           </button>
         </div>
@@ -143,6 +151,8 @@ export default {
       second: "2-digit",
       timeZone: "UTC",
     });
+
+    const isProcessing = computed(() => store.state.app.isProcessing);
     const connectionId = signalR.connection.connectionId;
     const formattedDatetime = formatter.format(currentDate);
 
@@ -364,6 +374,7 @@ export default {
       isLoading,
       priorities,
       selectedPriority,
+      isProcessing,
     };
   },
 };

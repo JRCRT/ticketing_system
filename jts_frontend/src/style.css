@@ -331,6 +331,6 @@ input[type="file"]:focus {
   border: 0 !important;
 }
 
-.modal-title{
+.modal-title {
   @apply font-bold;
 }
