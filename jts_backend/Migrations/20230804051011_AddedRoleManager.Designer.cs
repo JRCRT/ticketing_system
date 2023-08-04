@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using jts_backend.Context;
 
@@ -11,9 +12,11 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    partial class JtsContextModelSnapshot : ModelSnapshot
+    [Migration("20230804051011_AddedRoleManager")]
+    partial class AddedRoleManager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,19 +111,6 @@ namespace jts_backend.Migrations
                     b.HasKey("priority_id");
 
                     b.ToTable("priority");
-                });
-
-            modelBuilder.Entity("jts_backend.Models.RoleManagerModel", b =>
-                {
-                    b.Property<int>("role_manager_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("role_manager_id"));
-
-                    b.HasKey("role_manager_id");
-
-                    b.ToTable("role_manager");
                 });
 
             modelBuilder.Entity("jts_backend.Models.RoleModel", b =>
@@ -331,23 +321,6 @@ namespace jts_backend.Migrations
                     b.HasIndex("role_id");
 
                     b.ToTable("user");
-                });
-
-            modelBuilder.Entity("jts_backend.Models.ViewModel", b =>
-                {
-                    b.Property<int>("view_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("view_id"));
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("view_id");
-
-                    b.ToTable("view");
                 });
 
             modelBuilder.Entity("jts_backend.Models.FileModel", b =>

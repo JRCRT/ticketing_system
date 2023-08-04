@@ -21,7 +21,8 @@ namespace jts_backend.Context
         public DbSet<SignatoryModel> approver => Set<SignatoryModel>();
         public DbSet<FileModel> file => Set<FileModel>();
         public DbSet<JobTitleModel> jobTitle => Set<JobTitleModel>();
-
+        public DbSet<ViewModel> view => Set<ViewModel>();
+        public DbSet<RoleManagerModel> roleManager => Set<RoleManagerModel>();
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -8,6 +8,8 @@ using jts_backend.Services.RoleService;
 using jts_backend.Services.StatusService;
 using jts_backend.Services.TicketService;
 using jts_backend.Services.UserService;
+using jts_backend.Services.ViewService;
+using jts_backend.Services.RoleManagerService;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Swashbuckle.AspNetCore.Filters;
@@ -17,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using jts_backend.Services.EmailService;
 using jts_backend.Configuration;
 using jts_backend.Hub;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +41,9 @@ builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IJobTitleService, JobTitleService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IViewService, ViewService>();
+builder.Services.AddScoped<IRoleManagerService, RoleManagerService>();
+
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 builder.Services.AddSwaggerGen(c =>
 {

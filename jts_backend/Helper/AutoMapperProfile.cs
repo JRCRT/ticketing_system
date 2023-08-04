@@ -13,6 +13,7 @@ using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Dtos.TicketDto;
 using jts_backend.Dtos.UserDto;
+using jts_backend.Dtos.ViewDto;
 using jts_backend.Models;
 
 namespace jts_backend.Helper
@@ -31,6 +32,7 @@ namespace jts_backend.Helper
             CreateMap<JobTitleModel, GetJobTitleDto>();
             CreateMap<FileModel, GetFileDto>();
             CreateMap<SignatoryModel, GetSignatoryDto>();
+            CreateMap<ViewModel, GetViewDto>();
         }
     }
 }
