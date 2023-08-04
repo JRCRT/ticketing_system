@@ -37,6 +37,20 @@ const routes = [
   },
 
   {
+    path: "/Id/:ticketId",
+    name: "DashboardTicketById",
+    component: Dashboard,
+    meta: {
+      title: "Dashboard",
+      authRequired: true,
+    },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_TICKET_FORM", true);
+      next();
+    },
+  },
+
+  {
     path: "/Ticket/:status",
     name: "Ticket",
     component: Ticket,

@@ -18,6 +18,7 @@ namespace jts_backend.Controllers
         {
             _viewService = viewService;
         }
+        
         [HttpGet("GetAllViews")]
         public async Task<ActionResult<ServiceResponse<ICollection<GetViewDto>>>> GetAllViews(){
             var response = await _viewService.GetAllViews();
