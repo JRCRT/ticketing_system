@@ -146,8 +146,12 @@ export default {
             signatory.value = fetchedTicket.signatories.find(
               (s) => s.user.user_id == currentUser.user_id
             );
-            signatoryStatus.value = signatory.value.status.name;
-            actionDate.value = formatDate(signatory.value.action_date);
+
+            if (signatory.value != null) {
+              signatoryStatus.value = signatory.value?.status?.name;
+              actionDate.value = formatDate(signatory.value?.action_date);
+            }
+
             isPending.value =
               signatory.value?.status?.name === TICKET_STATUS.PENDING;
           }

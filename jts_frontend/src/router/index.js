@@ -6,7 +6,7 @@ import Dashboard from "@/views/Dashboard.vue";
 import MyTicket from "@/views/my_ticket/Ticket.vue";
 import Ticket from "@/views/all_ticket/Ticket.vue";
 import TicketForApproval from "@/views/ticket_for_approval/Ticket.vue";
-
+import RoleManager from "@/views/RoleManager.vue";
 import User from "@/views/User.vue";
 
 const routes = [
@@ -126,6 +126,16 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.commit("app/SET_USER_FORM", true);
       next();
+    },
+  },
+
+  {
+    path: "/RoleManager",
+    name: "RoleManager",
+    component: RoleManager,
+    meta: {
+      title: "Role Manager",
+      adminRequired: true,
     },
   },
 ];
