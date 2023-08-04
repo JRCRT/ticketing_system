@@ -52,7 +52,7 @@ import FormattedDate from "@/components/FormattedDate.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { onMounted, ref, computed, watch } from "vue";
+import { onMounted, ref, computed, watch, onUnmounted } from "vue";
 import { TICKET_STATUS } from "@/util/constant";
 export default {
   name: "Dashboard",
@@ -128,6 +128,10 @@ export default {
     const closeTicketForm = () => {
       store.commit("app/SET_TICKET_FORM", false);
     };
+
+    onUnmounted(() => {
+      store.commit("app/SET_SELECTED_TICKET", {});
+    });
 
     onMounted(async () => {
       store.commit("app/SET_LOADING", true);
