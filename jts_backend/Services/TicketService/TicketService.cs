@@ -415,7 +415,8 @@ namespace jts_backend.Services.TicketService
                     ticket = ticket,
                     user = user,
                     type = signatory.type,
-                    status = status!
+                    status = status!,
+                    can_approve = GetCanApprove(signatory.type)
                 };
 
                 await _context.approver.AddAsync(newSignatory);
@@ -429,6 +430,18 @@ namespace jts_backend.Services.TicketService
             }
 
             return _signatories;
+        }
+
+        private bool GetCanApprove(string type)
+        {
+            var canApprove = false;
+            const string CHECKER = "Checker";
+            if (type.Equals(CHECKER))
+            {
+                canApprove = true;
+                return canApprove;
+            }
+            return canApprove;
         }
 
         private async Task<ICollection<GetFileDto>> GetFiles(
