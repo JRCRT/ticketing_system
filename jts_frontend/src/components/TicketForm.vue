@@ -124,10 +124,9 @@ export default {
 
       const approver = {
         signatory_id: signatoryId,
-        status_id: APPROVED_STATUS_ID,
         connection_id: connectionId,
       };
-      await store.dispatch("ticket/changeApprovalStatus", approver);
+      await store.dispatch("ticket/approveTicket", approver);
     };
 
     const openDeclineReasonModal = () => {

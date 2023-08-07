@@ -13,6 +13,10 @@
       </div>
     </div>
   </div>
+  <div>
+    <p><black>Decline By:</black> Jerico Rito</p>
+    <p>Reason: dsdasdasd</p>
+  </div>
 </template>
 
 <script>

@@ -98,9 +98,21 @@ const ticketById = async (id) => {
   return response;
 };
 
-const changeForApprovalStatus = async (signatory) => {
+const approveTicket = async (signatory) => {
   const response = await axios
-    .post("/Ticket/ChangeApprovalStatus", signatory)
+    .post("/Ticket/ApproveTicket", signatory)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
+const declineTicket = async (signatory) => {
+  const response = await axios
+    .post("/Ticket/DeclineTicket", signatory)
     .then((res) => {
       return res.data;
     })
@@ -119,5 +131,6 @@ export {
   uploadFile,
   myTickets,
   ticketsForApproval,
-  changeForApprovalStatus,
+  approveTicket,
+  declineTicket,
 };

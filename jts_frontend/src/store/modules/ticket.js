@@ -7,7 +7,8 @@ import {
   ticketById,
   myTickets,
   ticketsForApproval,
-  changeForApprovalStatus,
+  approveTicket,
+  declineTicket,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
 
@@ -33,9 +34,9 @@ const state = () => ({
 const getters = {};
 
 const actions = {
-  async changeApprovalStatus({ commit, dispatch }, signatory) {
+  async approveTicket({ commit, dispatch }, signatory) {
     commit("app/SET_PROCESSING", true, { root: true });
-    const response = await changeForApprovalStatus(signatory);
+    const response = await approveTicket(signatory);
     var alert;
     if (!response.success) {
       console.log(response);

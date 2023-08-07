@@ -352,7 +352,6 @@ namespace jts_backend.Services.TicketService
             _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
 
-            bool isApprovedByAll = true;
             var signatories = await _context.approver
                 .Include(s => s.ticket)
                 .Include(s => s.status)
@@ -360,25 +359,26 @@ namespace jts_backend.Services.TicketService
                 .Select(s => s)
                 .ToListAsync();
 
+            //decline for all signatories
             foreach (var _signatory in signatories)
             {
-                if (_signatory.status.status_id != DECLINE_STATUS_ID)
-                {
-                    isApprovedByAll = false;
-                }
+                _signatory.status = declineStatus!;
+                _signatory.action_date = DateTime.Now;
+                _context.approver.Update(_signatory);
             }
 
-            if (isApprovedByAll)
-            {
-                var ticket = await _context.ticket.FirstOrDefaultAsync(
-                    t => t.ticket_id == signatory!.ticket!.ticket_id
-                );
+            //change ticket status to decline
+            var ticket = await _context.ticket
+                .Where(t => t.ticket_id == signatory!.ticket!.ticket_id)
+                .FirstOrDefaultAsync();
 
-                ticket!.status = declineStatus!;
-                ticket!.date_approved = DateTime.Now;
-                _context.ticket.Update(ticket);
-                await _context.SaveChangesAsync();
-            }
+            var reason =
+                $"<div><p>Decline by: {signatory!.user!.ext_name}</p><p>Reason: {request.decline_reason}</p></div>";
+            ticket!.date_declined = DateTime.Now;
+            ticket!.reason = reason;
+
+            _context.ticket.Update(ticket);
+            await _context.SaveChangesAsync();
 
             var ticketForApproval = await GetTicketData(signatory!.ticket!);
             await _hubContext.Clients
