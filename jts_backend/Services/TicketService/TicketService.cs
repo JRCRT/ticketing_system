@@ -247,7 +247,12 @@ namespace jts_backend.Services.TicketService
                 .Include(a => a.ticket)
                 .Include(t => t.ticket!.status)
                 .Include(t => t.ticket!.priority)
-                .Where(a => a.user!.user_id == userId && a.status.name == status)
+                .Where(
+                    a =>
+                        a.user!.user_id == userId
+                        && a.status.name == status
+                        && a.can_approve == true
+                )
                 .Select(a => a.ticket)
                 .ToListAsync();
 

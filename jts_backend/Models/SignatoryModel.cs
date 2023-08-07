@@ -17,5 +17,6 @@ namespace jts_backend.Models
         public StatusModel status { get; set; } = new StatusModel();
         public string type { get; set; } = string.Empty;
         public DateTime action_date { get; set; }
+        public bool can_approve { get; set; }
     }
 }
