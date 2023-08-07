@@ -300,6 +300,8 @@ namespace jts_backend.Services.TicketService
 
             foreach (var _signatory in signatories)
             {
+                _signatory.can_approve = true;
+                _context.approver.Update(_signatory);
                 if (_signatory.status.status_id != APPROVED_STATUS_ID)
                 {
                     isApprovedByAll = false;
@@ -315,9 +317,9 @@ namespace jts_backend.Services.TicketService
                 ticket!.status = approvedStatus!;
                 ticket!.date_approved = DateTime.Now;
                 _context.ticket.Update(ticket);
-                await _context.SaveChangesAsync();
             }
 
+            await _context.SaveChangesAsync();
             var ticketForApproval = await GetTicketData(signatory!.ticket!);
             await _hubContext.Clients
                 .Client(request.connection_id)

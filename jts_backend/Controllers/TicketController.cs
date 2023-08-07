@@ -79,8 +79,8 @@ namespace jts_backend.Controllers
             return Ok(response);
         }
 
-        [HttpPost("ApprovedTicket")]
-        public async Task<ActionResult<GetTicketDto>> ApprovedTicket(ApproveTicketDto request)
+        [HttpPost("ApproveTicket")]
+        public async Task<ActionResult<GetTicketDto>> ApproveTicket(ApproveTicketDto request)
         {
             var response = await _ticketService.ApproveTicket(request);
             return Ok(response);
