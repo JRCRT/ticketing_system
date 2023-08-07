@@ -402,6 +402,7 @@ namespace jts_backend.Services.TicketService
                 $"<div><p>Decline by: {signatory!.user!.ext_name}</p><p>Reason: {request.decline_reason}</p></div>";
             ticket!.date_declined = DateTime.Now;
             ticket!.declined_reason = reason;
+            ticket!.status = declineStatus!;
 
             _context.ticket.Update(ticket);
             await _context.SaveChangesAsync();
