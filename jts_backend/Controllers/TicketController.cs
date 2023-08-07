@@ -79,12 +79,10 @@ namespace jts_backend.Controllers
             return Ok(response);
         }
 
-        [HttpPost("ChangeApprovalStatus")]
-        public async Task<ActionResult<GetTicketDto>> ChangeApprovalStatus(
-            UpdateSignatoryDto request
-        )
+        [HttpPost("ApprovedTicket")]
+        public async Task<ActionResult<GetTicketDto>> ApprovedTicket(ApproveTicketDto request)
         {
-            var response = await _ticketService.ChangeApprovalStatus(request);
+            var response = await _ticketService.ApproveTicket(request);
             return Ok(response);
         }
     }

@@ -72,7 +72,7 @@
             {{ isProcessing ? "Approving..." : "Approved" }}
           </button>
 
-          <button class="button-transparent" @click="$emit('close')">
+          <button class="button-transparent" @click="openDeclineReasonModal">
             Declined
           </button>
         </div>
@@ -130,6 +130,10 @@ export default {
       await store.dispatch("ticket/changeApprovalStatus", approver);
     };
 
+    const openDeclineReasonModal = () => {
+      store.commit("app/SET_DECLINE_REASON_MODAL", true);
+    };
+
     watch(
       () => route.params.ticketId,
       async (newTicketId, oldTicketId) => {
@@ -180,6 +184,7 @@ export default {
       TICKET_STATUS,
       actionDate,
       approved,
+      openDeclineReasonModal,
     };
   },
 };

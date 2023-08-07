@@ -5,6 +5,7 @@ const state = () => ({
   currentUser: {},
   isNewUserFormOpen: false,
   isNewTicketFormOpen: false,
+  isDeclineReasonModalOpen: false,
   isLoggingIn: false,
   selectedTicket: {},
   selectedUser: {},
@@ -68,6 +69,9 @@ const mutations = {
   },
   SET_CURRENT_USER(state, value) {
     state.currentUser = value;
+  },
+  SET_DECLINE_REASON_MODAL(state, value) {
+    state.isDeclineReasonModalOpen = value;
   },
 };
 

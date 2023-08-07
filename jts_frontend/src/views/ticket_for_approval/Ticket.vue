@@ -2,6 +2,10 @@
   <div class="flex flex-col gap-3">
     <NewTicketForm v-if="modalActive" @close="closeModal" />
     <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
+    <DeclineReasonModal
+      v-if="isDeclineReasonModalOpen"
+      @close="closeDeclineReasonModal"
+    />
     <h4 class="text-primary">Tickets For Approval</h4>
     <div class="relative">
       <div class="flex justify-between">
@@ -40,6 +44,7 @@ import PendingTicket from "@/views/ticket_for_approval/PendingTicket.vue";
 import ApprovedTicket from "@/views/ticket_for_approval/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/ticket_for_approval/DeclinedTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
+import DeclineReasonModal from "@/components/DeclineReasonModal.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -54,6 +59,7 @@ export default {
     DeclinedTicket,
     NewTicketForm,
     TicketForm,
+    DeclineReasonModal,
   },
 
   setup() {
@@ -63,6 +69,10 @@ export default {
     const route = useRoute();
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
+    const isDeclineReasonModalOpen = computed(
+      () => store.state.app.isDeclineReasonModalOpen
+    );
+
     const setTabOnMount = (status) => {
       switch (status) {
         case TICKET_STATUS.PENDING:
@@ -97,9 +107,9 @@ export default {
     ];
     const modalActive = ref(false);
 
-    function closeModal() {
+    const closeModal = () => {
       modalActive.value = false;
-    }
+    };
 
     watch(
       () => isTicketFormOpen.value,
@@ -117,11 +127,15 @@ export default {
       store.commit("app/SET_TICKET_FORM", false);
     };
 
-    function openModal() {
-      modalActive.value = true;
-    }
+    const closeDeclineReasonModal = () => {
+      store.commit("app/SET_DECLINE_REASON_MODAL", false);
+    };
 
-    function changeTab(tab) {
+    const openModal = () => {
+      modalActive.value = true;
+    };
+
+    const changeTab = (tab) => {
       currentTab.value = tab.name;
       currentStatus.value = tab.status;
       router.replace({
@@ -129,7 +143,7 @@ export default {
         params: { status: tab.status },
       });
       store.commit("app/SET_SELECTED_TICKET", {});
-    }
+    };
 
     const openTicket = () => {
       const ticketId = store.state.app.selectedTicket.ticket.ticket_id;
@@ -156,7 +170,9 @@ export default {
       openTicket,
       isSelectedRowEmpty,
       isTicketFormOpen,
+      isDeclineReasonModalOpen,
       closeTicketForm,
+      closeDeclineReasonModal,
     };
   },
 };

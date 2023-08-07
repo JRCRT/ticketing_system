@@ -256,16 +256,14 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<GetTicketDto>> ChangeApprovalStatus(
-            UpdateSignatoryDto request
-        )
+        public async Task<ServiceResponse<GetTicketDto>> ApproveTicket(ApproveTicketDto request)
         {
+            const int APPROVED_STATUS_ID = 2;
             var response = new ServiceResponse<GetTicketDto>();
-            var status = await _context.status.FirstOrDefaultAsync(
-                s => s.status_id == request.status_id
+            var approvedStatus = await _context.status.FirstOrDefaultAsync(
+                s => s.status_id == APPROVED_STATUS_ID
             );
 
-            const string APPROVED_STATUS = "Approved";
             var signatory = await _context.approver
                 .Include(t => t.status)
                 .Include(a => a.ticket!.user)
@@ -281,49 +279,111 @@ namespace jts_backend.Services.TicketService
                 .Include(t => t.ticket!.priority)
                 .FirstOrDefaultAsync(s => s.signatory_id == request.signatory_id);
 
-            var ticket = await _context.ticket.FirstOrDefaultAsync(
-                t => t.ticket_id == signatory!.ticket!.ticket_id
-            );
-            var ticketForApproval = await GetTicketData(signatory!.ticket!);
-
-            signatory!.status = status!;
+            signatory!.status = approvedStatus!;
             signatory!.action_date = DateTime.Now;
+
             _context.approver.Update(signatory!);
+            await _context.SaveChangesAsync();
+
+            bool isApprovedByAll = true;
+            var signatories = await _context.approver
+                .Include(s => s.ticket)
+                .Include(s => s.status)
+                .Where(t => t.ticket!.ticket_id == signatory.ticket!.ticket_id)
+                .Select(s => s)
+                .ToListAsync();
+
+            foreach (var _signatory in signatories)
+            {
+                if (_signatory.status.status_id != APPROVED_STATUS_ID)
+                {
+                    isApprovedByAll = false;
+                }
+            }
+
+            if (isApprovedByAll)
+            {
+                var ticket = await _context.ticket.FirstOrDefaultAsync(
+                    t => t.ticket_id == signatory!.ticket!.ticket_id
+                );
+
+                ticket!.status = approvedStatus!;
+                ticket!.date_approved = DateTime.Now;
+                _context.ticket.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+
+            var ticketForApproval = await GetTicketData(signatory!.ticket!);
             await _hubContext.Clients
                 .Client(request.connection_id)
                 .GetTicketForApproval(ticketForApproval);
+
+            response.data = ticketForApproval;
+            response.message = "Approved Successfully";
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetTicketDto>> DeclineTicket(DeclineTicketDto request)
+        {
+            var response = new ServiceResponse<GetTicketDto>();
+            const int DECLINE_STATUS_ID = 3;
+            var declineStatus = await _context.status.FirstOrDefaultAsync(
+                s => s.status_id == DECLINE_STATUS_ID
+            );
+
+            var signatory = await _context.approver
+                .Include(t => t.status)
+                .Include(a => a.ticket!.user)
+                .Include(a => a.ticket!.user.department)
+                .Include(a => a.ticket!.user.role)
+                .Include(a => a.ticket!.user.job_title)
+                .Include(a => a.user)
+                .Include(u => u.user!.department)
+                .Include(u => u.user!.job_title)
+                .Include(u => u.user!.role)
+                .Include(a => a.ticket)
+                .Include(t => t.ticket!.status)
+                .Include(t => t.ticket!.priority)
+                .FirstOrDefaultAsync(s => s.signatory_id == request.signatory_id);
+
+            signatory!.status = declineStatus!;
+            signatory!.action_date = DateTime.Now;
+
+            _context.approver.Update(signatory!);
             await _context.SaveChangesAsync();
 
-            if (status!.name.Equals(APPROVED_STATUS))
+            bool isApprovedByAll = true;
+            var signatories = await _context.approver
+                .Include(s => s.ticket)
+                .Include(s => s.status)
+                .Where(t => t.ticket!.ticket_id == signatory.ticket!.ticket_id)
+                .Select(s => s)
+                .ToListAsync();
+
+            foreach (var _signatory in signatories)
             {
-                bool isApprovedByAll = true;
-                var signatories = await _context.approver
-                    .Include(s => s.ticket)
-                    .Include(s => s.status)
-                    .Where(t => t.ticket!.ticket_id == signatory.ticket!.ticket_id)
-                    .Select(s => s)
-                    .ToListAsync();
-
-                foreach (var _signatory in signatories)
+                if (_signatory.status.status_id != DECLINE_STATUS_ID)
                 {
-                    if (!_signatory.status.name.Equals(APPROVED_STATUS))
-                    {
-                        isApprovedByAll = false;
-                    }
-                }
-
-                if (isApprovedByAll)
-                {
-                    var approvedStatus = await _context.status.FirstOrDefaultAsync(
-                        s => s.name.Equals(APPROVED_STATUS)
-                    );
-
-                    ticket!.status = approvedStatus!;
-                    ticket!.date_approved = DateTime.Now;
-                    _context.ticket.Update(ticket);
-                    await _context.SaveChangesAsync();
+                    isApprovedByAll = false;
                 }
             }
+
+            if (isApprovedByAll)
+            {
+                var ticket = await _context.ticket.FirstOrDefaultAsync(
+                    t => t.ticket_id == signatory!.ticket!.ticket_id
+                );
+
+                ticket!.status = declineStatus!;
+                ticket!.date_approved = DateTime.Now;
+                _context.ticket.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+
+            var ticketForApproval = await GetTicketData(signatory!.ticket!);
+            await _hubContext.Clients
+                .Client(request.connection_id)
+                .GetTicketForApproval(ticketForApproval);
 
             response.data = ticketForApproval;
             response.message = "Approved Successfully";
