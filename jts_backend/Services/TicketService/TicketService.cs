@@ -291,6 +291,7 @@ namespace jts_backend.Services.TicketService
             await _context.SaveChangesAsync();
 
             bool isApprovedByAll = true;
+            bool isApprovedByAllChecker = true;
             var signatories = await _context.approver
                 .Include(s => s.ticket)
                 .Include(s => s.status)
@@ -300,12 +301,30 @@ namespace jts_backend.Services.TicketService
 
             foreach (var _signatory in signatories)
             {
-                _signatory.can_approve = true;
-                _context.approver.Update(_signatory);
                 if (_signatory.status.status_id != APPROVED_STATUS_ID)
                 {
                     isApprovedByAll = false;
                 }
+
+                if (
+                    _signatory.status.status_id != APPROVED_STATUS_ID
+                    && _signatory.type.Equals("Checker")
+                )
+                {
+                    isApprovedByAllChecker = false;
+                }
+            }
+
+            if (isApprovedByAllChecker)
+            {
+                signatories.ForEach(s =>
+                {
+                    if (!s.type.Equals("Checker"))
+                    {
+                        s.can_approve = true;
+                        _context.approver.Update(s);
+                    }
+                });
             }
 
             if (isApprovedByAll)
@@ -539,7 +558,8 @@ namespace jts_backend.Services.TicketService
                     signatory_id = signatory.signatory_id,
                     user = _mapper.Map<GetUserDto>(user!),
                     type = signatory.type,
-                    status = _mapper.Map<GetStatusDto>(signatory.status)
+                    status = _mapper.Map<GetStatusDto>(signatory.status),
+                    action_date = signatory.action_date
                 };
                 approvers.Add(approverData);
             }

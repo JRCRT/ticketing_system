@@ -153,6 +153,7 @@ export default {
             if (signatory.value != null) {
               signatoryStatus.value = signatory.value?.status?.name;
               actionDate.value = formatDate(signatory.value?.action_date);
+              console.log(signatory.value);
             }
 
             isPending.value =
