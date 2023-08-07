@@ -13,6 +13,7 @@ const state = () => ({
   isUserFormOpen: false,
   isModalLoading: false,
   isProcessing: false,
+  signatory: {},
 });
 
 const getter = {};
@@ -72,6 +73,9 @@ const mutations = {
   },
   SET_DECLINE_REASON_MODAL(state, value) {
     state.isDeclineReasonModalOpen = value;
+  },
+  SET_SIGNATORY(state, value) {
+    state.signatory = value;
   },
 };
 

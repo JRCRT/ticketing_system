@@ -50,6 +50,23 @@ const actions = {
     dispatch("app/addAlert", alert, { root: true });
   },
 
+  async declineTicket({ commit, dispatch }, signatory) {
+    commit("app/SET_PROCESSING", true, { root: true });
+    const response = await declineTicket(signatory);
+    var alert;
+    if (!response.success) {
+      console.log(response);
+      alert = { type: "danger", message: response.message };
+      dispatch("app/addAlert", alert, { root: true });
+      return;
+    }
+    alert = { type: "success", message: response.message };
+    commit("app/SET_PROCESSING", false, { root: true });
+    commit("app/SET_DECLINE_REASON_MODAL", false, { root: true });
+    commit("app/SET_TICKET_FORM", false, { root: true });
+    dispatch("app/addAlert", alert, { root: true });
+  },
+
   async fetchAllTodaysTickets({ commit }) {
     const response = await ticketsToday();
     commit("FETCH_TODAYS_TICKETS", response.data);

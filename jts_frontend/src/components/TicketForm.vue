@@ -126,10 +126,17 @@ export default {
         signatory_id: signatoryId,
         connection_id: connectionId,
       };
+
       await store.dispatch("ticket/approveTicket", approver);
     };
 
     const openDeclineReasonModal = () => {
+      const signatoryId = signatory.value.signatory_id;
+      const connectionId = signalR.connection.connectionId;
+      store.commit("app/SET_SIGNATORY", {
+        signatoryId: signatoryId,
+        connectionId: connectionId,
+      });
       store.commit("app/SET_DECLINE_REASON_MODAL", true);
     };
 
@@ -153,7 +160,6 @@ export default {
             if (signatory.value != null) {
               signatoryStatus.value = signatory.value?.status?.name;
               actionDate.value = formatDate(signatory.value?.action_date);
-              console.log(signatory.value);
             }
 
             isPending.value =

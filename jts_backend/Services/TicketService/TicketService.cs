@@ -401,7 +401,7 @@ namespace jts_backend.Services.TicketService
             var reason =
                 $"<div><p>Decline by: {signatory!.user!.ext_name}</p><p>Reason: {request.decline_reason}</p></div>";
             ticket!.date_declined = DateTime.Now;
-            ticket!.reason = reason;
+            ticket!.declined_reason = reason;
 
             _context.ticket.Update(ticket);
             await _context.SaveChangesAsync();
@@ -412,7 +412,7 @@ namespace jts_backend.Services.TicketService
                 .GetTicketForApproval(ticketForApproval);
 
             response.data = ticketForApproval;
-            response.message = "Approved Successfully";
+            response.message = "Declined Successfully";
             return response;
         }
 

@@ -5,12 +5,12 @@
     </template>
     <template v-slot:content>
       <label>Reason</label>
-      <input class="input__field" v-model="subject" />
+      <input class="input__field" v-model="reason" />
     </template>
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2">Ok</button>
+          <button class="button-primary mr-2" @click="decline">Ok</button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -21,11 +21,31 @@
 </template>
 <script>
 import Modal from "@/components/Modal.vue";
+import { useStore } from "vuex";
+import { useSignalR } from "@quangdao/vue-signalr";
+import { ref, computed } from "vue";
 export default {
   emits: ["close"],
   components: {
     Modal,
   },
-  setup() {},
+  setup() {
+    const store = useStore();
+    const reason = ref(null);
+    const approver = computed(() => store.state.app.signatory);
+
+    const decline = async () => {
+      const _approver = {
+        signatory_id: approver.value.signatoryId,
+        connection_id: approver.value.connectionId,
+        decline_reason: reason.value,
+      };
+      await store.dispatch("ticket/declineTicket", _approver);
+    };
+    return {
+      reason,
+      decline,
+    };
+  },
 };
 </script>
