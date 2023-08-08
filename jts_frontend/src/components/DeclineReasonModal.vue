@@ -22,7 +22,6 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import { useStore } from "vuex";
-import { useSignalR } from "@quangdao/vue-signalr";
 import { ref, computed } from "vue";
 export default {
   emits: ["close"],
