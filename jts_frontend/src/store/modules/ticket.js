@@ -67,8 +67,8 @@ const actions = {
     dispatch("app/addAlert", alert, { root: true });
   },
 
-  async fetchAllTodaysTickets({ commit }) {
-    const response = await ticketsToday();
+  async fetchAllTodaysTickets({ commit }, userId) {
+    const response = await ticketsToday(userId);
     commit("FETCH_TODAYS_TICKETS", response.data);
   },
 

@@ -49,14 +49,14 @@ namespace jts_backend.Controllers
         }
 
         [HttpGet("GetAllTicketsToday")]
-        public async Task<ActionResult<ICollection<GetTicketDto>>> GetAllTicketsToday()
+        public async Task<ActionResult<ICollection<GetTicketDto>>> GetAllTicketsToday(int userId)
         {
-            var response = await _ticketService.GetTodayTickets();
+            var response = await _ticketService.GetTodayTickets(userId);
             return Ok(response);
         }
 
         [HttpPost("GetTicketById")]
-        public async Task<ActionResult<GetTicketDto>> GetAllTicketsToday(int id)
+        public async Task<ActionResult<GetTicketDto>> GetTicketById(int id)
         {
             var response = await _ticketService.GetTicketById(id);
             return Ok(response);
@@ -70,12 +70,9 @@ namespace jts_backend.Controllers
         }
 
         [HttpPost("GetTicketsForApproval")]
-        public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(
-            int userId,
-            string status
-        )
+        public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(TicketByUserDto request)
         {
-            var response = await _ticketService.GetTicketsForApproval(userId, status);
+            var response = await _ticketService.GetTicketsForApproval(request);
             return Ok(response);
         }
 

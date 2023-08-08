@@ -54,8 +54,8 @@ export default {
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
       await store.dispatch("ticket/fetchPendingTicketsForApproval", {
-        userId: currentUser.user_id,
-        status: TICKET_STATUS.PENDING,
+        user_id: currentUser.user_id,
+        status_id: 1,
       });
       const pendingTicketsForApproval =
         store.state.ticket.pendingTicketsForApproval;

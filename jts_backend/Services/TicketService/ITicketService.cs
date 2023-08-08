@@ -13,12 +13,11 @@ namespace jts_backend.Services.TicketService
         Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request);
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetAllTickets();
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByStatus(string status);
-        Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets();
+        Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets(int userId);
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByUser(TicketByUserDto request);
         Task<ServiceResponse<GetTicketDto>> GetTicketById(int id);
         Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketsForApproval(
-            int userId,
-            string status
+            TicketByUserDto request
         );
         Task<ServiceResponse<GetTicketDto>> ApproveTicket(ApproveTicketDto signatory);
         Task<ServiceResponse<GetTicketDto>> DeclineTicket(DeclineTicketDto signatory);

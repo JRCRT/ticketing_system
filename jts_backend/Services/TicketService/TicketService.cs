@@ -165,7 +165,7 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets()
+        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets(int userId)
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
             var tickets = await _context.ticket
@@ -175,7 +175,7 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.user.role)
                 .Include(u => u.user.department)
                 .Include(u => u.user.job_title)
-                .Where(t => t.date_created.Equals(DateTime.Today.Date))
+                .Where(t => t.date_created.Equals(DateTime.Today.Date) && t.user.user_id == userId)
                 .Select(t => t)
                 .ToListAsync();
             var data = await GetTicketsData(tickets);
@@ -228,8 +228,7 @@ namespace jts_backend.Services.TicketService
         }
 
         public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketsForApproval(
-            int userId,
-            string status
+            TicketByUserDto request
         )
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
@@ -249,8 +248,8 @@ namespace jts_backend.Services.TicketService
                 .Include(t => t.ticket!.priority)
                 .Where(
                     a =>
-                        a.user!.user_id == userId
-                        && a.status.name == status
+                        a.user!.user_id == request.user_id
+                        && a.status.status_id == request.status_id
                         && a.can_approve == true
                 )
                 .Select(a => a.ticket)

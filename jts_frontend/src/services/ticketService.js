@@ -26,9 +26,7 @@ const myTickets = async (param) => {
 
 const ticketsForApproval = async (param) => {
   const response = await axios
-    .post(
-      `/Ticket/GetTicketsForApproval?userId=${param.userId}&status=${param.status}`
-    )
+    .post("/Ticket/GetTicketsForApproval", param)
     .then((res) => {
       return res.data;
     })
@@ -74,9 +72,9 @@ const ticketsByStatus = async (status) => {
   return response;
 };
 
-const ticketsToday = async () => {
+const ticketsToday = async (userId) => {
   const response = await axios
-    .get("/Ticket/GetAllTicketsToday")
+    .get(`/Ticket/GetAllTicketsToday?userId=${userId}`)
     .then((res) => {
       return res.data;
     })

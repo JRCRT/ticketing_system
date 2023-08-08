@@ -42,8 +42,8 @@ export default {
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
       await store.dispatch("ticket/fetchDeclinedTicketsForApproval", {
-        userId: currentUser.user_id,
-        status: TICKET_STATUS.DECLINED,
+        user_id: currentUser.user_id,
+        status_id: 3,
       });
       const declinedTicketsForApproval =
         store.state.ticket.declinedTicketsForApproval;

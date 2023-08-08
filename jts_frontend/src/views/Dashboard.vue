@@ -53,7 +53,7 @@ import TicketForm from "@/components/TicketForm.vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref, computed, watch, onUnmounted } from "vue";
-import { TICKET_STATUS } from "@/util/constant";
+import { TICKET_STATUS, ROLE } from "@/util/constant";
 export default {
   name: "Dashboard",
 
@@ -74,6 +74,7 @@ export default {
       store.state.app.selectedTicket.ticket == null ? true : false
     );
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
+    const currentUser = JSON.parse(localStorage.getItem("user"));
 
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
@@ -98,13 +99,27 @@ export default {
     ];
 
     const navigateToTicket = (status) => {
-      router.replace({ name: "Ticket", params: { status: status } });
+      switch (currentUser.roleModel.name) {
+        case ROLE.USER:
+          router.replace({ name: "MyTicket", params: { status: status } });
+          break;
+        case ROLE.ADMIN:
+          router.replace({ name: "Ticket", params: { status: status } });
+          break;
+        default:
+          router.replace({
+            name: "TicketForApproval",
+            params: { status: status },
+          });
+          break;
+      }
     };
 
     const onGridReady = async (params) => {
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllTodaysTickets");
+      const userId = currentUser.user_id;
+      await store.dispatch("ticket/fetchAllTodaysTickets", userId);
       params.api.setRowData(store.state.ticket.todaysTickets);
     };
 
@@ -134,14 +149,59 @@ export default {
     });
 
     onMounted(async () => {
+      const paramPending = {
+        user_id: currentUser.user_id,
+        status_id: 1,
+      };
+      const paramApproved = {
+        user_id: currentUser.user_id,
+        status_id: 2,
+      };
+      const paramDeclined = {
+        user_id: currentUser.user_id,
+        status_id: 3,
+      };
       store.commit("app/SET_LOADING", true);
-      await store.dispatch("ticket/fetchAllPendingTickets");
-      await store.dispatch("ticket/fetchAllApprovedTickets");
-      await store.dispatch("ticket/fetchAllDeclinedTickets");
+      switch (currentUser.roleModel.name) {
+        case ROLE.USER:
+          await store.dispatch("ticket/fetchMyPendingTickets", paramPending);
+          await store.dispatch("ticket/fetchMyApprovedTickets", paramApproved);
+          await store.dispatch("ticket/fetchMyDeclinedTickets", paramDeclined);
+          pendingNum.value = store.state.ticket.myPendingTickets.length;
+          approvedNum.value = store.state.ticket.myApprovedTickets.length;
+          declinedNum.value = store.state.ticket.myDeclinedTickets.length;
+          break;
+        case ROLE.ADMIN:
+          await store.dispatch("ticket/fetchAllPendingTickets");
+          await store.dispatch("ticket/fetchAllApprovedTickets");
+          await store.dispatch("ticket/fetchAllDeclinedTickets");
+          pendingNum.value = store.state.ticket.allPendingTickets.length;
+          approvedNum.value = store.state.ticket.allApprovedTickets.length;
+          declinedNum.value = store.state.ticket.allDeclinedTickets.length;
+          break;
+        default:
+          await store.dispatch(
+            "ticket/fetchPendingTicketsForApproval",
+            paramPending
+          );
+          await store.dispatch(
+            "ticket/fetchApprovedTicketsForApproval",
+            paramApproved
+          );
+          await store.dispatch(
+            "ticket/fetchDeclinedTicketsForApproval",
+            paramDeclined
+          );
+          pendingNum.value =
+            store.state.ticket.pendingTicketsForApproval.length;
+          approvedNum.value =
+            store.state.ticket.approvedTicketsForApproval.length;
+          declinedNum.value =
+            store.state.ticket.declinedTicketsForApproval.length;
+          break;
+      }
+
       store.commit("app/SET_LOADING", false);
-      pendingNum.value = store.state.ticket.allPendingTickets.length;
-      approvedNum.value = store.state.ticket.allApprovedTickets.length;
-      declinedNum.value = store.state.ticket.allDeclinedTickets.length;
     });
 
     watch(

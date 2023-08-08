@@ -122,6 +122,11 @@ export default {
       </router-link>
 
       <router-link
+        v-if="
+          currentUser?.roleModel.name == ROLE.ADMIN ||
+          currentUser?.roleModel.name == ROLE.USER ||
+          currentUser?.roleModel.name == ROLE.CHECKER
+        "
         class="sidebar-link"
         :to="{ name: 'MyTicket', params: { status: TICKET_STATUS.PENDING } }"
       >
@@ -142,6 +147,11 @@ export default {
       </router-link>
 
       <router-link
+        v-if="
+          currentUser?.roleModel.name == ROLE.ADMIN ||
+          currentUser?.roleModel.name == ROLE.CHECKER ||
+          currentUser?.roleModel.name == ROLE.APPROVER
+        "
         class="sidebar-link"
         :to="{
           name: 'TicketForApproval',
@@ -165,7 +175,7 @@ export default {
       </router-link>
 
       <!--Role Manager-->
-      <router-link class="sidebar-link" :to="{ name: 'RoleManager' }">
+      <!--  <router-link class="sidebar-link" :to="{ name: 'RoleManager' }">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -181,10 +191,14 @@ export default {
         </svg>
 
         Role Manager
-      </router-link>
+      </router-link> -->
 
       <!--User-->
-      <router-link class="sidebar-link" :to="{ name: 'User' }">
+      <router-link
+        v-if="currentUser?.roleModel.name == ROLE.ADMIN"
+        class="sidebar-link"
+        :to="{ name: 'User' }"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
