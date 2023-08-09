@@ -120,7 +120,6 @@ import TableCellProperties from "@ckeditor/ckeditor5-table/src/tablecellproperti
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
-
 import "@/stylesheet/content-style.css";
 
 import { useStore } from "vuex";
@@ -267,7 +266,7 @@ export default {
         });
         formData.append("connection_id", connectionId);
         formData.append("subject", subject.value);
-        formData.append("condition", condition.value ?? "");
+        formData.append("condition", condition.value);
         formData.append("background", background.value);
         formData.append("content", content.value);
         formData.append("reason", reason.value);

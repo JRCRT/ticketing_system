@@ -16,14 +16,14 @@ namespace jts_backend.Dtos.TicketDto
         public string subject { get; set; } = string.Empty;
 
         public string background { get; set; } = string.Empty;
-        public string condition { get; set; } = string.Empty;
+        public string? condition { get; set; }
         public string content { get; set; } = string.Empty;
 
         public string reason { get; set; } = string.Empty;
 
-        public string others { get; set; } = string.Empty;
+        public string? others { get; set; }
 
-        public string declined_reason { get; set; } = string.Empty;
+        public string? declined_reason { get; set; }
         public int status_id { get; set; }
         public int user_id { get; set; }
 
