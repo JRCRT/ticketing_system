@@ -33,6 +33,12 @@ export default {
         cellRenderer: FormattedDate,
         flex: 1,
       },
+      {
+        headerName: "Date Declined",
+        field: "ticket.date_declined",
+        flex: 1,
+        cellRenderer: FormattedDate,
+      },
     ];
 
     const onGridReady = async (params) => {

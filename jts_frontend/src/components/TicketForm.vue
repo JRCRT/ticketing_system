@@ -46,7 +46,7 @@
         <div v-if="ticket?.ticket?.status?.name == TICKET_STATUS.DECLINED">
           <label>Date Declined</label>
           <div class="rf-detail-container">
-            {{ dateApproved }}
+            {{ dateDeclined }}
           </div>
         </div>
 
@@ -177,6 +177,7 @@ export default {
       },
       { immediate: true }
     );
+
     return {
       ticket,
       requestedDate,
