@@ -35,29 +35,33 @@
         <div class="rf-detail-container">
           <div v-html="ticket?.ticket?.user?.ext_name"></div>
         </div>
-        <label v-if="isApproved">Date Approved</label>
-        <div v-if="isApproved" class="rf-detail-container">
-          {{ dateApproved }}
+
+        <div v-if="ticket?.ticket?.status?.name == TICKET_STATUS.APPROVED">
+          <label>Date Approved</label>
+          <div class="rf-detail-container">
+            {{ dateApproved }}
+          </div>
         </div>
 
-        <label v-if="signatoryStatus == TICKET_STATUS.APPROVED"
-          >Date You Approved</label
-        >
-        <div
-          v-if="signatoryStatus == TICKET_STATUS.APPROVED"
-          class="rf-detail-container"
-        >
-          {{ actionDate }}
+        <div v-if="ticket?.ticket?.status?.name == TICKET_STATUS.DECLINED">
+          <label>Date Declined</label>
+          <div class="rf-detail-container">
+            {{ dateApproved }}
+          </div>
         </div>
 
-        <label v-if="signatoryStatus == TICKET_STATUS.DECLINED"
-          >Date You Declined</label
-        >
-        <div
-          v-if="signatoryStatus == TICKET_STATUS.DECLINED"
-          class="rf-detail-container"
-        >
-          {{ actionDate }}
+        <div v-if="signatoryStatus == TICKET_STATUS.APPROVED">
+          <label>Date You Approved</label>
+          <div class="rf-detail-container">
+            {{ actionDate }}
+          </div>
+        </div>
+
+        <div v-if="signatoryStatus == TICKET_STATUS.DECLINED">
+          <label>Date You Declined</label>
+          <div class="rf-detail-container">
+            {{ actionDate }}
+          </div>
         </div>
       </div>
     </template>
@@ -108,12 +112,11 @@ export default {
     const ticket = ref({});
     const requestedDate = ref(null);
     const dateApproved = ref(null);
-    const APPROVED_STATUS_ID = 2;
+    const dateDeclined = ref(null);
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const isPending = ref(false);
     const signatory = ref({});
     const isSignatory = ref(false);
-    const isApproved = ref(false);
     const isProcessing = computed(() => store.state.app.isProcessing);
     const signatoryStatus = ref(null);
     const actionDate = ref(null);
@@ -165,15 +168,11 @@ export default {
             isPending.value =
               signatory.value?.status?.name === TICKET_STATUS.PENDING;
           }
-
           ticket.value = fetchedTicket;
 
           requestedDate.value = formatDate(ticket.value.ticket.date_created);
-
           dateApproved.value = formatDate(ticket.value.ticket.date_approved);
-
-          isApproved.value =
-            ticket.value.ticket.status.name == TICKET_STATUS.APPROVED;
+          dateDeclined.value = formatDate(ticket.value.ticket.date_declined);
         }
       },
       { immediate: true }
@@ -184,11 +183,11 @@ export default {
       isPending,
       isSignatory,
       dateApproved,
-      isApproved,
       isProcessing,
       signatoryStatus,
       TICKET_STATUS,
       actionDate,
+      dateDeclined,
       approved,
       openDeclineReasonModal,
     };
