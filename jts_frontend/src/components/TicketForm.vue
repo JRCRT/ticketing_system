@@ -9,6 +9,12 @@
         <div class="rf-detail-container">
           {{ requestedDate }}
         </div>
+
+        <label>Prepared By</label>
+        <div class="rf-detail-container">
+          <div v-html="ticket?.ticket?.user?.ext_name"></div>
+        </div>
+
         <label>Subject</label>
         <div class="rf-detail-container">
           {{ ticket?.ticket?.subject }}
@@ -31,10 +37,6 @@
         </div>
         <label>Attached Documents</label>
         <div class="rf-detail-container"></div>
-        <label>Prepared By</label>
-        <div class="rf-detail-container">
-          <div v-html="ticket?.ticket?.user?.ext_name"></div>
-        </div>
 
         <div v-if="ticket?.ticket?.status?.name == TICKET_STATUS.APPROVED">
           <label>Date Approved</label>

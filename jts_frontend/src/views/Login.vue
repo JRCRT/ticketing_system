@@ -27,7 +27,6 @@
 
 <script lang="js">
 import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
-import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
