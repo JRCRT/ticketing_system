@@ -93,6 +93,7 @@ export default {
         status: TICKET_STATUS.DECLINED,
       },
     ];
+
     const modalActive = ref(false);
 
     function closeModal() {
@@ -136,13 +137,13 @@ export default {
       modalActive,
       router,
       currentStatus,
+      isSelectedRowEmpty,
+      isTicketFormOpen,
       closeModal,
       openModal,
       changeTab,
       setTabOnMount,
       openTicket,
-      isSelectedRowEmpty,
-      isTicketFormOpen,
       closeTicketForm,
     };
   },
