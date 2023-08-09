@@ -11,7 +11,7 @@ export default {
     const password = ref(null);
     const usernameField = ref(null);
     const store = useStore();
-    const router = useRouter();
+
     const isLoading = computed(() => store.state.app.isLoggingIn);
     const login = async () => {
       await store.dispatch("auth/login", {
@@ -23,10 +23,7 @@ export default {
       usernameField.value.focus();
     };
 
-    onMounted(async () => {
-      await router.isReady();
-      store.commit("app/SET_CURRENT_URL", router.currentRoute.value.path);
-      console.log(router.currentRoute.value.path);
+    onMounted( () => {
       usernameField.value.focus();
     });
 

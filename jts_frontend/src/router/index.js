@@ -8,6 +8,7 @@ import Ticket from "@/views/all_ticket/Ticket.vue";
 import TicketForApproval from "@/views/ticket_for_approval/Ticket.vue";
 import RoleManager from "@/views/RoleManager.vue";
 import User from "@/views/User.vue";
+import ErrorPage from "@/views/ErrorPage.vue";
 
 const routes = [
   {
@@ -22,6 +23,7 @@ const routes = [
       if (user) {
         router.replace({ name: "Dashboard" });
       } else {
+        store.commit("app/SET_HIDE_NAVBAR", true);
         next();
       }
     },
@@ -152,6 +154,18 @@ const routes = [
       adminRequired: true,
     },
   },
+  {
+    path: "/ErrorPage",
+    name: "ErrorPage",
+    component: ErrorPage,
+    meta: {
+      title: "Error Page",
+    },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_HIDE_NAVBAR", true);
+      next();
+    },
+  },
 ];
 
 const router = createRouter({
@@ -174,10 +188,16 @@ router.beforeEach((to, from, next) => {
   const user = localStorage.getItem("user");
   if (to.matched.some((route) => route.meta.authRequired)) {
     if (!user) next({ name: "Login" });
-    else next();
+    else {
+      next();
+      store.commit("app/SET_HIDE_NAVBAR", false);
+    }
   } else if (to.matched.some((route) => route.meta.adminRequired)) {
     if (!user) next({ name: "Login" });
-    else next();
+    else {
+      next();
+      store.commit("app/SET_HIDE_NAVBAR", false);
+    }
   } else {
     next();
   }

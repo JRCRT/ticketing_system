@@ -1,7 +1,7 @@
 const state = () => ({
   isLoading: false,
   alerts: [],
-  currentUrl: null,
+
   currentUser: {},
   isNewUserFormOpen: false,
   isNewTicketFormOpen: false,
@@ -14,6 +14,7 @@ const state = () => ({
   isModalLoading: false,
   isProcessing: false,
   signatory: {},
+  hideNavbar: false,
 });
 
 const getter = {};
@@ -31,9 +32,6 @@ const actions = {
 const mutations = {
   SET_LOADING(state, value) {
     state.isLoading = value;
-  },
-  SET_CURRENT_URL(state, value) {
-    state.currentUrl = value;
   },
   ADD_ALERT(state, value) {
     state.alerts.push(value);
@@ -76,6 +74,9 @@ const mutations = {
   },
   SET_SIGNATORY(state, value) {
     state.signatory = value;
+  },
+  SET_HIDE_NAVBAR(state, value) {
+    state.hideNavbar = value;
   },
 };
 

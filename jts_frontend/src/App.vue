@@ -14,16 +14,10 @@ export default {
   },
 
   setup() {
-    const _currentUser = computed(() =>
-      JSON.parse(localStorage.getItem("user"))
-    );
-
     const router = useRouter();
     const store = useStore();
     const sidebarActive = ref(false);
     const VITE_APP_TITLE = ref(import.meta.env.VITE_APP_TITLE);
-    const LOGIN_PATH = "/Login";
-    const currentPath = ref("");
     store.commit(
       "app/SET_CURRENT_USER",
       JSON.parse(localStorage.getItem("user"))
@@ -42,9 +36,8 @@ export default {
     };
 
     const currentUser = computed(() => store.state.app.currentUser);
-
+    const hideNavbar = computed(() => store.state.app.hideNavbar);
     const alerts = computed(() => store.state.app.alerts);
-    const currentUrl = computed(() => store.state.app.currentUrl == LOGIN_PATH);
     const isLoading = computed(() => store.state.app.isLoading);
     const logout = () => {
       store.dispatch("auth/logout");
@@ -55,12 +48,11 @@ export default {
       sidebarActive,
       VITE_APP_TITLE,
       store,
-      currentPath,
       hideSidebar,
       showSidebar,
       removeAlert,
       logout,
-      currentUrl,
+      hideNavbar,
       alerts,
       isLoading,
       TICKET_STATUS,
@@ -236,7 +228,7 @@ export default {
   </Sidebar>
 
   <!-- Navbar -->
-  <nav v-if="!currentUrl" class="navbar shadow-xl h-16">
+  <nav v-if="!hideNavbar" class="navbar shadow-xl h-16">
     <div class="container mx-auto flex p-3 items-center">
       <!-- Sidebar Toggle -->
       <button

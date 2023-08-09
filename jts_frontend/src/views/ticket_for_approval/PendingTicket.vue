@@ -9,10 +9,8 @@
 import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
-import { TICKET_STATUS } from "@/util/constant";
 
 export default {
   components: {
@@ -22,7 +20,6 @@ export default {
 
   setup() {
     const store = useStore();
-    const router = useRouter();
     const signalR = useSignalR();
     const gridAPI = ref(null);
     const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -57,6 +54,7 @@ export default {
         user_id: currentUser.user_id,
         status_id: 1,
       });
+
       const pendingTicketsForApproval =
         store.state.ticket.pendingTicketsForApproval;
       params.api.setRowData(pendingTicketsForApproval);
