@@ -18,20 +18,17 @@ namespace jts_backend.Models
         public string subject { get; set; } = string.Empty;
 
         [MaxLength(200)]
-        public string condition { get; set; } = string.Empty;
+        public string? condition { get; set; }
 
         [MaxLength(500)]
-        public string others { get; set; } = string.Empty;
+        public string? others { get; set; } = string.Empty;
 
-        [MaxLength(1000)]
         [Required]
         public string background { get; set; } = string.Empty;
 
-        [MaxLength(1000)]
         [Required]
         public string content { get; set; } = string.Empty;
 
-        [MaxLength(500)]
         [Required]
         public string reason { get; set; } = string.Empty;
 
@@ -40,7 +37,7 @@ namespace jts_backend.Models
         public DateTime date_declined { get; set; }
 
         [MaxLength(500)]
-        public string declined_reason { get; set; } = string.Empty;
+        public string? declined_reason { get; set; }
         public StatusModel status { get; set; } = new StatusModel();
         public UserModel user { get; set; } = new UserModel();
         public PriorityModel priority { get; set; } = new PriorityModel();

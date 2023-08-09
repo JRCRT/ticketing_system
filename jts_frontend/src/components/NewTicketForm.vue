@@ -265,10 +265,9 @@ export default {
         uploadedFiles.value.forEach((file) => {
           formData.append("files", file);
         });
-
         formData.append("connection_id", connectionId);
         formData.append("subject", subject.value);
-        formData.append("condition", condition.value);
+        formData.append("condition", condition.value ?? "");
         formData.append("background", background.value);
         formData.append("content", content.value);
         formData.append("reason", reason.value);

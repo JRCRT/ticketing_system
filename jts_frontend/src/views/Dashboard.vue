@@ -200,7 +200,6 @@ export default {
             store.state.ticket.declinedTicketsForApproval.length;
           break;
       }
-
       store.commit("app/SET_LOADING", false);
     });
 
