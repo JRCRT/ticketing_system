@@ -108,6 +108,8 @@ import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
+//import InlineEditor from "@ckeditor/ckeditor5-editor-inline/src/inlineeditor";
+
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
@@ -264,13 +266,13 @@ export default {
         uploadedFiles.value.forEach((file) => {
           formData.append("files", file);
         });
+        formData.append("others", other.value);
         formData.append("connection_id", connectionId);
         formData.append("subject", subject.value);
         formData.append("condition", condition.value);
         formData.append("background", background.value);
         formData.append("content", content.value);
         formData.append("reason", reason.value);
-        formData.append("decline_reason", "");
         formData.append("status_id", PENDING_STATUS);
         formData.append("user_id", currentUser.user_id);
         formData.append("priority_id", selectedPriority.value.priority_id);
@@ -326,7 +328,13 @@ export default {
           "tableProperties",
           "tableCellProperties",
         ],
-        tableProperties: {
+      },
+      toolbar: {
+        items: ["bold", "italic", "|", "insertTable", "alignment", "highlight"],
+      },
+    };
+
+    /* tableProperties: {
           defaultProperties: {
             borderStyle: "solid",
             borderColor: "black",
@@ -345,12 +353,7 @@ export default {
             verticalAlignment: "bottom",
             padding: "10px",
           },
-        },
-      },
-      toolbar: {
-        items: ["bold", "italic", "|", "insertTable", "alignment", "highlight"],
-      },
-    };
+        }, */
 
     return {
       submitTicket,
