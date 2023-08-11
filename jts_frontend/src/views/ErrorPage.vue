@@ -1,6 +1,6 @@
 <template>
   <figure class="table" style="width: 816px">
-    <table class="ck-table-resized" style="border: 2px solid hsl(0, 0%, 0%)">
+    <table class="ck-table-resized" style="border: 3px double hsl(0, 0%, 0%)">
       <colgroup>
         <col style="width: 10.07%" />
         <col style="width: 5.61%" />
@@ -8,7 +8,6 @@
         <col style="width: 5.27%" />
         <col style="width: 5.27%" />
         <col style="width: 4.57%" />
-        <col style="width: 16.5%" />
         <col style="width: 5.27%" />
         <col style="width: 5.27%" />
         <col style="width: 5.27%" />
@@ -16,87 +15,114 @@
         <col style="width: 5.27%" />
         <col style="width: 5.27%" />
         <col style="width: 5.27%" />
-        <col style="width: 5.27%" />
+        <col style="width: 12.5%" />
+        <col style="width: 9.27%" />
         <col style="width: 5.28%" />
       </colgroup>
       <tbody>
         <tr>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              font-weight: bold;
               height: 18.5pt;
               width: 96pt;
+              font-size: 8pt;
             "
             colspan="2"
           >
             Approved Date
           </td>
           <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 192pt"
+            style="border: 2px solid hsl(0, 0%, 0%); width: 192pt"
             colspan="4"
           >
-            &nbsp;
+            <!--Approved Date-->
           </td>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              font-weight: bold;
+              border: 2px solid hsl(0, 0%, 0%);
               width: 288pt;
               text-align: center;
               vertical-align: top;
+              font-size: 14pt;
             "
             colspan="6"
             rowspan="3"
           >
             APPLICATION (稟議書)
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+              font-size: 8pt;
+              font-weight: bold;
+            "
+            colspan="2"
+          >
             Applied Date
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            &nbsp;
+          <td style="border: 2px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+            <!--Applied Date-->
           </td>
         </tr>
         <tr>
           <td
-            style="border: 1px solid hsl(0, 0%, 0%); height: 30pt; width: 96pt"
+            style="
+              font-weight: bold;
+              border: 2px solid hsl(0, 0%, 0%);
+              height: 30pt;
+              width: 96pt;
+              font-size: 8pt;
+            "
             colspan="2"
             rowspan="2"
           >
             Approved No.
           </td>
           <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 192pt"
+            style="border: 2px solid hsl(0, 0%, 0%); width: 192pt"
             colspan="4"
             rowspan="2"
           >
-            &nbsp;
+            <!--Approved No-->
           </td>
 
           <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
+            style="width: 96pt; font-size: 8pt; font-weight: bold"
             colspan="2"
-            rowspan="2"
           >
-            <p>Receipt No.</p>
-            <p>Receipt Date</p>
+            Receipt No.
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            &nbsp;
+
+          <td style="border: 2px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+            <!--Receipt No-->
           </td>
         </tr>
         <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            &nbsp;
+          <td
+            style="font-weight: bold; width: 96pt; font-size: 8pt"
+            colspan="2"
+          >
+            Receipt Date
+          </td>
+          <td style="border: 2px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+            <!--Receipt Date-->
           </td>
         </tr>
 
         <tr>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              text-align: center;
+              background-color: hsl(192, 51%, 90%);
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
               height: 14.5pt;
               vertical-align: top;
               width: 48pt;
+              font-weight: bold;
             "
             rowspan="4"
           >
@@ -105,109 +131,335 @@
           </td>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
               text-align: center;
               width: 240pt;
             "
             colspan="5"
           >
-            <p>JACCS CO., LTD</p>
-            <p>(BOARD OF DIRECTORS)&nbsp;</p>
+            <p style="font-weight: bold">JACCS CO., LTD</p>
+            <p style="font-size: 6pt">(BOARD OF DIRECTORS)&nbsp;</p>
           </td>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
               text-align: center;
               width: 288pt;
             "
             colspan="6"
           >
-            <p>JACCS CO., LTD&nbsp;</p>
-            <p>(INTERNATIONAL BUSINESS DIVISION)</p>
+            <p style="font-weight: bold">JACCS CO., LTD&nbsp;</p>
+            <p style="font-size: 6pt">(INTERNATIONAL BUSINESS DIVISION)</p>
           </td>
           <td
             style="
-              background-color: hsl(180, 75%, 60%);
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 8pt;
+              background-color: hsl(192, 51%, 90%);
+              border: 2px solid hsl(0, 0%, 0%);
               text-align: center;
               width: 192pt;
             "
             colspan="4"
           >
-            <p>JFP</p>
-            <p>(JACCS FINANCE PHILIPPINES CORPORATION)</p>
+            <p style="font-weight: bold">JFP</p>
+            <p style="font-size: 6pt">
+              (JACCS FINANCE PHILIPPINES CORPORATION)
+            </p>
           </td>
         </tr>
         <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             □CEO
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">□COO</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            □COO
+          </td>
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             □担当役員
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             □部長
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             課長
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">検印</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">担当</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            検印
+          </td>
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            担当
+          </td>
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="1"
+          >
             □President
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">EVP</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">SVP</td>
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="1"
+          >
+            CFO
+          </td>
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            EVP
+          </td>
+          <td
+            style="
+              text-align: center;
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            SVP
+          </td>
         </tr>
+
         <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="1"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="1"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 48pt;
+            "
+          >
+            &nbsp;
+          </td>
+          <td style="border-bottom: 2px dashed hsl(0, 0%, 0%); width: 48pt">
+            &nbsp;
+          </td>
         </tr>
+
         <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td style="border-right: 2px solid hsl(0, 0%, 0%); width: 48pt">
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
+          <td
+            style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+          >
             &nbsp;
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 48pt">&nbsp;</td>
+          <td style="border-right: 2px solid hsl(0, 0%, 0%); width: 48pt">
+            &nbsp;
+          </td>
+          <td style="border-right: 2px solid hsl(0, 0%, 0%); width: 48pt">
+            &nbsp;
+          </td>
+          <td
+            style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="1"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="1"
+          >
+            &nbsp;
+          </td>
+          <td style="border-right: 2px solid hsl(0, 0%, 0%); width: 48pt">
+            &nbsp;
+          </td>
           <td style="width: 48pt">&nbsp;</td>
         </tr>
         <tr>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              font-weight: bold;
+              text-align: center;
+              background-color: hsl(192, 51%, 90%);
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
               height: 14.5pt;
               width: 48pt;
             "
@@ -216,26 +468,43 @@
             <p>Subject</p>
           </td>
           <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 384pt"
+            style="
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 384pt;
+            "
             colspan="8"
+          ></td>
+          <td
+            style="
+              font-weight: bold;
+              background-color: hsl(192, 51%, 90%);
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
           >
-            New Employee System Access
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
             <p>Conditions&nbsp;</p>
             <p>(承認条件)</p>
           </td>
           <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 240pt"
+            style="border: 2px solid hsl(0, 0%, 0%); width: 240pt"
             colspan="5"
           >
             &nbsp;
           </td>
         </tr>
+
         <tr>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
+              font-weight: bold;
+              text-align: center;
+              background-color: hsl(192, 51%, 90%);
+              vertical-align: top;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
               height: 14.5pt;
               width: 48pt;
             "
@@ -244,175 +513,241 @@
             <p>事後回覧</p>
             <p>Related Partys</p>
           </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            Party
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            Checked by&nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 144pt"
-            colspan="3"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            (関係先)
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            (検印)
-          </td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            Date&nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            Prepared by&nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 144pt"
-            colspan="3"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            (日付)
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            (作成者)
-          </td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            Seal
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 96pt"
-            colspan="2"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            Division&nbsp;
-          </td>
-          <td
-            style="border: 1px solid hsl(0, 0%, 0%); width: 144pt"
-            colspan="3"
-            rowspan="2"
-          >
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            (印)
-          </td>
-          <td style="border: 1px solid hsl(0, 0%, 0%); width: 96pt" colspan="2">
-            (作成部署)
-          </td>
-        </tr>
-        <tr>
           <td
             style="
-              border: 1px solid hsl(0, 0%, 0%);
-              height: 14.5pt;
-              width: 768pt;
+              font-weight: bold;
+              text-align: center;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
             "
-            colspan="16"
+            colspan="2"
+            rowspan=""
+          >
+            <p>Party</p>
+            <p>(関係先)</p>
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            <p>Checked by&nbsp;</p>
+            <p>(検印)</p>
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 144pt"
+            colspan="3"
+            rowspan="2"
           >
             &nbsp;
           </td>
         </tr>
+
+        <tr></tr>
+
         <tr>
           <td
             style="
-              background-color: hsl(180, 75%, 60%);
-              border: 1px solid hsl(0, 0%, 0%);
+              font-weight: bold;
+              text-align: center;
+              font-size: 8pt;
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
+            <p>Date&nbsp;</p>
+            <p>(日付)</p>
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px dashed hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
+            <p>Prepared by&nbsp;</p>
+            <p>(作成者)</p>
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 144pt"
+            colspan="3"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td
+            style="
+              font-weight: bold;
+              text-align: center;
+              font-size: 8pt;
+              border-bottom: 2px solid hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
+            <p>Seal</p>
+            <p>(印)</p>
+          </td>
+          <td
+            style="
+              border-bottom: 2px solid hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px solid hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px solid hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              border-bottom: 2px solid hsl(0, 0%, 0%);
+              border-right: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+          <td
+            style="
+              font-weight: bold;
+              font-size: 8pt;
+              border: 2px solid hsl(0, 0%, 0%);
+              width: 96pt;
+            "
+            colspan="2"
+          >
+            <p>Division&nbsp;</p>
+            <p>(作成部署)</p>
+          </td>
+          <td
+            style="border: 2px solid hsl(0, 0%, 0%); width: 144pt"
+            colspan="3"
+            rowspan="2"
+          >
+            &nbsp;
+          </td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td style="height: 14.5pt; width: 768pt" colspan="16">&nbsp;</td>
+        </tr>
+        <tr>
+          <td
+            style="
+              font-size: 10pt;
+              background-color: hsl(192, 51%, 90%);
+              font-weight: bold;
               height: 14.5pt;
               width: 768pt;
             "
@@ -422,22 +757,14 @@
           </td>
         </tr>
         <tr>
-          <td
-            style="
-              border: 1px solid hsl(0, 0%, 0%);
-              height: 116pt;
-              width: 768pt;
-            "
-            colspan="16"
-          >
-            &nbsp;
-          </td>
+          <td style="height: 116pt; width: 768pt" colspan="16">&nbsp;</td>
         </tr>
         <tr>
           <td
             style="
-              background-color: hsl(180, 75%, 60%);
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 10pt;
+              background-color: hsl(192, 51%, 90%);
+              font-weight: bold;
               height: 14.5pt;
               width: 768pt;
             "
@@ -447,22 +774,14 @@
           </td>
         </tr>
         <tr>
-          <td
-            style="
-              border: 1px solid hsl(0, 0%, 0%);
-              height: 116pt;
-              width: 768pt;
-            "
-            colspan="16"
-          >
-            &nbsp;
-          </td>
+          <td style="height: 116pt; width: 768pt" colspan="16">&nbsp;</td>
         </tr>
         <tr>
           <td
             style="
-              background-color: hsl(180, 75%, 60%);
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 10pt;
+              background-color: hsl(192, 51%, 90%);
+              font-weight: bold;
               height: 14.5pt;
               width: 768pt;
             "
@@ -472,22 +791,14 @@
           </td>
         </tr>
         <tr>
-          <td
-            style="
-              border: 1px solid hsl(0, 0%, 0%);
-              height: 101.5pt;
-              width: 768pt;
-            "
-            colspan="16"
-          >
-            &nbsp;
-          </td>
+          <td style="height: 101.5pt; width: 768pt" colspan="16">&nbsp;</td>
         </tr>
         <tr>
           <td
             style="
-              background-color: hsl(180, 75%, 60%);
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 10pt;
+              background-color: hsl(192, 51%, 90%);
+              font-weight: bold;
               height: 14.5pt;
               width: 768pt;
             "
@@ -497,22 +808,14 @@
           </td>
         </tr>
         <tr>
-          <td
-            style="
-              border: 1px solid hsl(0, 0%, 0%);
-              height: 101.5pt;
-              width: 768pt;
-            "
-            colspan="16"
-          >
-            &nbsp;
-          </td>
+          <td style="height: 101.5pt; width: 768pt" colspan="16">&nbsp;</td>
         </tr>
         <tr>
           <td
             style="
-              background-color: hsl(180, 75%, 60%);
-              border: 1px solid hsl(0, 0%, 0%);
+              font-size: 10pt;
+              background-color: hsl(192, 51%, 90%);
+              font-weight: bold;
               height: 14.5pt;
               width: 768pt;
             "
@@ -522,16 +825,7 @@
           </td>
         </tr>
         <tr>
-          <td
-            style="
-              border: 1px solid hsl(0, 0%, 0%);
-              height: 101.5pt;
-              width: 768pt;
-            "
-            colspan="16"
-          >
-            &nbsp;
-          </td>
+          <td style="height: 101.5pt; width: 768pt" colspan="16">&nbsp;</td>
         </tr>
       </tbody>
     </table>
