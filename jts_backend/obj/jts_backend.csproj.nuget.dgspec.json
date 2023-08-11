@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {}
+    "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {}
   },
   "projects": {
-    "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {
+    "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+        "projectUniqueName": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
         "projectName": "jts_backend",
-        "projectPath": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+        "projectPath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
         "packagesPath": "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\obj\\",
+        "outputPath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ts226jor.JACCS\\AppData\\Roaming\\NuGet\\NuGet.Config",
