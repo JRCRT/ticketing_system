@@ -74,6 +74,7 @@
                 </td>
                 <td
                   style="
+                    padding: 3px;
                     font-size: 8pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 96pt;
@@ -98,7 +99,11 @@
                   Approved No.
                 </td>
                 <td
-                  style="border: 2px solid hsl(0, 0%, 0%); width: 192pt"
+                  style="
+                    border: 2px solid hsl(0, 0%, 0%);
+                    width: 192pt;
+                    padding: 3px;
+                  "
                   colspan="4"
                   rowspan="2"
                 >
@@ -495,6 +500,7 @@
                 </td>
                 <td
                   style="
+                    padding: 5px;
                     word-wrap: break-word;
                     font-size: 8pt;
                     border: 2px solid hsl(0, 0%, 0%);
@@ -520,10 +526,15 @@
                   <p>(承認条件)</p>
                 </td>
                 <td
-                  style="border: 2px solid hsl(0, 0%, 0%); width: 240pt"
+                  style="
+                    border: 2px solid hsl(0, 0%, 0%);
+                    width: 240pt;
+                    padding: 3px;
+                    font-size: 8pt;
+                  "
                   colspan="5"
                 >
-                  &nbsp;
+                  {{ ticket?.ticket?.condition }}
                 </td>
               </tr>
 
@@ -687,6 +698,7 @@
                 </td>
                 <td
                   style="
+                    padding: 5px;
                     font-size: 9pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
@@ -771,6 +783,7 @@
                 </td>
                 <td
                   style="
+                    padding: 5px;
                     font-size: 9pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
@@ -802,7 +815,16 @@
                 </td>
               </tr>
               <tr>
-                <td style="height: 116pt; width: 768pt" colspan="16">&nbsp;</td>
+                <td
+                  v-html="ticket?.ticket?.background"
+                  style="
+                    height: 116pt;
+                    width: 768pt;
+                    padding: 5px;
+                    font-size: 10pt;
+                  "
+                  colspan="16"
+                ></td>
               </tr>
               <tr>
                 <td
@@ -819,7 +841,16 @@
                 </td>
               </tr>
               <tr>
-                <td style="height: 116pt; width: 768pt" colspan="16">&nbsp;</td>
+                <td
+                  v-html="ticket?.ticket?.content"
+                  style="
+                    height: 116pt;
+                    width: 768pt;
+                    padding: 5px;
+                    font-size: 10pt;
+                  "
+                  colspan="16"
+                ></td>
               </tr>
               <tr>
                 <td
@@ -836,9 +867,16 @@
                 </td>
               </tr>
               <tr>
-                <td style="height: 101.5pt; width: 768pt" colspan="16">
-                  &nbsp;
-                </td>
+                <td
+                  v-html="ticket?.ticket?.reason"
+                  style="
+                    height: 101.5pt;
+                    width: 768pt;
+                    padding: 5px;
+                    font-size: 10pt;
+                  "
+                  colspan="16"
+                ></td>
               </tr>
               <tr>
                 <td
@@ -855,9 +893,16 @@
                 </td>
               </tr>
               <tr>
-                <td style="height: 101.5pt; width: 768pt" colspan="16">
-                  &nbsp;
-                </td>
+                <td
+                  v-html="ticket?.ticket?.other"
+                  style="
+                    height: 101.5pt;
+                    width: 768pt;
+                    padding: 5px;
+                    font-size: 10pt;
+                  "
+                  colspan="16"
+                ></td>
               </tr>
               <tr>
                 <td
@@ -881,6 +926,7 @@
             </tbody>
           </table>
         </figure>
+        <br />
       </div>
     </template>
     <template v-slot:footer>

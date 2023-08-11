@@ -4,7 +4,7 @@
       <h5 class="modal-title">New</h5>
     </template>
     <template v-slot:content>
-      <div class="ticket_form_container">
+      <div class="new_ticket_form_container">
         <label>Subject (Required)</label>
         <input class="input__field" v-model="subject" />
         <label>Condition</label>
@@ -77,6 +77,7 @@
           track-by="user_id"
           label="ext_name"
         />
+        <br />
       </div>
     </template>
     <template v-slot:footer>

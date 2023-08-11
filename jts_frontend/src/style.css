@@ -243,7 +243,7 @@ button {
 }
 
 .modal-container {
-  @apply rounded-md border-dark1 border-opacity-50 bg-white m-auto w-3/5 z-10 p-5 max-h-[calc(100vh-32px)];
+  @apply rounded-md border-dark1 border-opacity-50 bg-white m-auto w-fit min-w-[60%] z-10 p-5 max-h-[calc(100vh-32px)];
 }
 
 .modal-header {
@@ -251,7 +251,11 @@ button {
 }
 
 .ticket_form_container {
-  @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-155px)] flex justify-center;
+  @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-155px)] flex flex-col items-center;
+}
+
+.new_ticket_form_container {
+  @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-155px)];
 }
 
 .modal-footer {
