@@ -303,7 +303,7 @@ export default {
     });
 
     onUnmounted(() => {
-      store.commit("file/EMPTY_FILE", []);
+      store.commit("file/EMPTY_FILES", []);
     });
 
     const editorConfig = {

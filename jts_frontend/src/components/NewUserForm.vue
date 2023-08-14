@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { User } from "@/models/User";
 import Modal from "@/components/Modal.vue";
@@ -202,6 +202,10 @@ export default {
       roles.value = store.state.role.roles;
       departments.value = store.state.department.departments;
       jobTitles.value = store.state.jobTitle.jobTitles;
+    });
+
+    onUnmounted(() => {
+      store.commit("file/EMPTY_FILE", {});
     });
 
     return {

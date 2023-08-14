@@ -31,8 +31,12 @@ const mutations = {
     state.file = new UploadedFile(value);
   },
 
-  EMPTY_FILE(state, value) {
+  EMPTY_FILES(state, value) {
     state.files = value;
+  },
+
+  EMPTY_FILE(state, value) {
+    state.file = value;
   },
 };
 

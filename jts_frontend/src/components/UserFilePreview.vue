@@ -6,13 +6,13 @@
     </div>
 
     <label class="button-wrap" for="input-file">
+      <button>Change</button>
       <input
         type="file"
         accept="image/*"
         id="input-file"
         @change="onInputChange"
       />
-      <button>Change</button>
     </label>
   </div>
 </template>
@@ -43,7 +43,6 @@ export default {
 .file-preview {
   width: 150px;
   margin: 1rem;
-
   overflow: hidden;
 }
 .image-container {
@@ -66,11 +65,6 @@ img {
 
 input[type="file"] {
   position: absolute;
-  z-index: -1;
-  top: 15px;
-  left: 20px;
-  font-size: 17px;
-  color: #b8b8b8;
 }
 
 .button-wrap {
