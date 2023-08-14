@@ -5,7 +5,7 @@
       @files-dropped="setFile"
       #default="{ dropZoneActive }"
     >
-      <label for="file-input">
+      <label for="file-input" v-if="!file?.file?.name">
         <span v-if="dropZoneActive">
           <span>Drop Them Here</span>
           <span class="smaller">to add them</span>
@@ -17,10 +17,16 @@
           </span>
         </span>
 
-        <input type="file" id="file-input" @change="onInputChange" />
+        <input
+          type="file"
+          id="file-input"
+          accept="image/*"
+          @change="onInputChange"
+        />
       </label>
-
-      <UserFilePreview :file="file" v-if="file?.file?.name" />
+      <div class="file-preview">
+        <UserFilePreview :file="file" v-if="file?.file?.name" />
+      </div>
     </DropZone>
   </div>
 </template>
@@ -69,10 +75,10 @@ span {
 .smaller {
   font-size: 14px;
 }
-.image-list {
+.file-preview {
   display: flex;
-  list-style: none;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   padding: 0;
 }
 
