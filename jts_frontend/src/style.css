@@ -254,7 +254,8 @@ button {
   @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-155px)] flex flex-col items-center;
 }
 
-.new_ticket_form_container {
+.new_ticket_form_container,
+.new_user_form_container {
   @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-155px)];
 }
 

@@ -37,8 +37,8 @@ span {
 }
 
 img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: block;
   object-fit: cover;
 }

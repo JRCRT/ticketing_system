@@ -2,6 +2,7 @@ import { UploadedFile } from "@/models/UploadedFile";
 
 const state = () => ({
   files: [],
+  file: {},
 });
 
 const getters = {
@@ -13,7 +14,7 @@ const getters = {
 const actions = {};
 
 const mutations = {
-  ADD_FILE(state, value) {
+  ADD_FILES(state, value) {
     let newUploadableFiles = [...value]
       .map((file) => new UploadedFile(file))
       .filter((file) => !state.files.some(({ id }) => id === file.id));
@@ -25,9 +26,14 @@ const mutations = {
     if (index > -1) state.files.splice(index, 1);
   },
 
-  EMPTY_FILE(state, value){
+  SET_FILE(state, value) {
+    console.log(value);
+    state.file = new UploadedFile(value);
+  },
+
+  EMPTY_FILE(state, value) {
     state.files = value;
-  }
+  },
 };
 
 export default {

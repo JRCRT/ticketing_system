@@ -4,7 +4,7 @@
       <h5 class="modal-title">New</h5>
     </template>
     <template v-slot:content>
-      <div>
+      <div class="new_user_form_container">
         <label> Username </label>
         <input v-model="username" autocomplete="false" class="input__field" />
         <label> Password </label>
@@ -40,6 +40,9 @@
           label="name"
           :show-labels="false"
         ></VueMultiselect>
+
+        <label>Signature</label>
+        <UserFileUploader />
       </div>
     </template>
     <template v-slot:footer>
@@ -71,6 +74,7 @@ import { useStore } from "vuex";
 import { User } from "@/models/User";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
+import UserFileUploader from "@/components/UserFileUploader.vue";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -78,6 +82,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
+    UserFileUploader,
   },
 
   setup() {

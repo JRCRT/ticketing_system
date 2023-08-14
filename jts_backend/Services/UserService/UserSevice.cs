@@ -47,7 +47,8 @@ namespace jts_backend.Services.UserService
             foreach (var user in users)
             {
                 var file = await _context.file.FirstOrDefaultAsync(
-                    f => f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User)
+                    f =>
+                        f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User.ToString())
                 );
                 var userData = new GetUserDto()
                 {
@@ -70,7 +71,7 @@ namespace jts_backend.Services.UserService
                 .Include(u => u.department)
                 .Include(u => u.job_title)
                 .Where(u => u.user_id == user_id)
-                .Select(u => _mapper.Map<GetUserDto>(u))
+                .Select(u => _mapper.Map<UserDto>(u))
                 .FirstOrDefaultAsync();
 
             if (user == null)
@@ -79,7 +80,12 @@ namespace jts_backend.Services.UserService
                 response.success = false;
                 return response;
             }
-            response.data = user;
+
+            var file = await _context.file.FirstOrDefaultAsync(
+                f => f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User.ToString())
+            );
+            var userData = new GetUserDto() { user = user, file = _mapper.Map<GetFileDto>(file) };
+            response.data = userData;
             return response;
         }
 
@@ -151,13 +157,14 @@ namespace jts_backend.Services.UserService
                 job_title = jobTitle
             };
 
+            _context.user.Add(newUser);
+            await _context.SaveChangesAsync();
+
             if (!string.IsNullOrEmpty(request?.file?.FileName))
             {
                 file = await GetFile(request.file, newUser.user_id, OwnerType.User);
             }
 
-            _context.user.Add(newUser);
-            await _context.SaveChangesAsync();
             var data = new GetUserDto() { user = _mapper.Map<UserDto>(newUser), file = file };
 
             response.data = data;

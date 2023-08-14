@@ -134,12 +134,11 @@ export default {
       params.api.showLoadingOverlay();
       await store.dispatch("user/fetchAllUsers");
       params.api.setRowData(store.state.user.users);
-      console.log(store.state.user.users[0].user);
     };
 
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
-      store.commit("app/SET_SELECTED_USER", selectedRow[0]);
+      store.commit("app/SET_SELECTED_USER", selectedRow[0].user);
     };
 
     onUnmounted(() => {

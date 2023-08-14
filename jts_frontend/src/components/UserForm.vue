@@ -104,15 +104,15 @@ export default {
         if (newUserId) {
           await store.dispatch("user/fetchUser", newUserId);
           user.value = store.state.user.user;
-          username.value = user.value.username;
-          firstname.value = user.value.first_name;
-          middlename.value = user.value.middle_name;
-          lastname.value = user.value.last_name;
-          emailAddress.value = user.value.email;
-          password.value = user.value.password_hash;
-          selectedDepartment.value = user.value.department;
-          selectedRole.value = user.value.role;
-          selectedJobTitle.value = user.value.job_title;
+          username.value = user.value.user.username;
+          firstname.value = user.value.user.first_name;
+          middlename.value = user.value.user.middle_name;
+          lastname.value = user.value.user.last_name;
+          emailAddress.value = user.value.user.email;
+          password.value = user.value.user.password_hash;
+          selectedDepartment.value = user.value.user.department;
+          selectedRole.value = user.value.user.role;
+          selectedJobTitle.value = user.value.user.job_title;
         }
       },
       { immediate: true }
@@ -132,7 +132,6 @@ export default {
         password: password.value,
       };
 
-      console.log(userData);
       await store.dispatch("user/updateUser", userData);
     };
 

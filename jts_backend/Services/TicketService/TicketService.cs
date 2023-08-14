@@ -505,7 +505,9 @@ namespace jts_backend.Services.TicketService
 
                 var ticketFiles = await _context.file
                     .Where(
-                        f => f.owner_id == ticket.ticket_id && f.owner_type.Equals(OwnerType.Ticket)
+                        f =>
+                            f.owner_id == ticket.ticket_id
+                            && f.owner_type.Equals(OwnerType.Ticket.ToString())
                     )
                     .Select(f => _mapper.Map<GetFileDto>(f))
                     .ToListAsync();
@@ -536,7 +538,7 @@ namespace jts_backend.Services.TicketService
                     .Where(
                         f =>
                             f.owner_id == ticketCreator!.user_id
-                            && f.owner_type.Equals(OwnerType.User)
+                            && f.owner_type.Equals(OwnerType.User.ToString())
                     )
                     .FirstOrDefaultAsync();
 
@@ -588,7 +590,11 @@ namespace jts_backend.Services.TicketService
                 .ToListAsync();
 
             var files = await _context.file
-                .Where(f => f.owner_id == ticket.ticket_id && f.owner_type.Equals(OwnerType.Ticket))
+                .Where(
+                    f =>
+                        f.owner_id == ticket.ticket_id
+                        && f.owner_type.Equals(OwnerType.Ticket.ToString())
+                )
                 .Select(f => _mapper.Map<GetFileDto>(f))
                 .ToListAsync();
 
@@ -616,7 +622,9 @@ namespace jts_backend.Services.TicketService
 
             var userFile = await _context.file
                 .Where(
-                    f => f.owner_id == ticketCreator!.user_id && f.owner_type.Equals(OwnerType.User)
+                    f =>
+                        f.owner_id == ticketCreator!.user_id
+                        && f.owner_type.Equals(OwnerType.User.ToString())
                 )
                 .FirstOrDefaultAsync();
 

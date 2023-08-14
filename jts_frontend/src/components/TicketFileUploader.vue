@@ -19,8 +19,9 @@
 
         <input type="file" id="file-input" multiple @change="onInputChange" />
       </label>
+
       <ul class="image-list" v-show="files">
-        <FilePreview
+        <TicketFilePreview
           v-for="file of files"
           :key="file.id"
           :file="file"
@@ -33,23 +34,17 @@
 </template>
 
 <script setup>
-// Components
 import DropZone from "@/components/DropZone.vue";
-import FilePreview from "@/components/FilePreview.vue";
+import TicketFilePreview from "@/components/TicketFilePreview.vue";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-// File Management
-//import useFileList from "./compositions/file-list";
-//const { files, addFiles, removeFile } = useFileList();
+
 const files = computed(() => store.state.file.files);
 
 const addFiles = (files) => {
-  /* var myObject = new ActiveXObject("Scripting.FileSystemObject");
-  var file = myObject.GetFile(URL.createObjectURL(files[0]));
-  file.Move("D:\\"); */
-  store.commit("file/ADD_FILE", files);
+  store.commit("file/ADD_FILES", files);
 };
 
 const removeFile = (file) => {

@@ -35,7 +35,7 @@
           v-model="other"
         ></ckeditor>
         <label>Attached Documents</label>
-        <FileUploader />
+        <TicketFileUploader />
         <label>Priority</label>
         <VueMultiselect
           v-model="selectedPriority"
@@ -103,7 +103,7 @@
   </Modal>
 </template>
 <script>
-import FileUploader from "@/components/FileUploader.vue";
+import TicketFileUploader from "@/components/TicketFileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
@@ -136,7 +136,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
-    FileUploader,
+    TicketFileUploader,
   },
 
   setup() {
