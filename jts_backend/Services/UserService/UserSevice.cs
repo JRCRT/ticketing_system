@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using AutoMapper;
 using jts_backend.Context;
 using jts_backend.Dtos.FileDto;
+using jts_backend.Dtos.TicketDto;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Enums;
 using jts_backend.Hub;
@@ -35,13 +36,29 @@ namespace jts_backend.Services.UserService
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
         {
             var response = new ServiceResponse<ICollection<GetUserDto>>();
-            ICollection<GetUserDto> users = await _context.user
+            var data = new Collection<GetUserDto>();
+            ICollection<UserDto> users = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
                 .Include(u => u.job_title)
-                .Select(u => _mapper.Map<GetUserDto>(u))
+                .Select(u => _mapper.Map<UserDto>(u))
                 .ToListAsync();
-            response.data = users;
+
+            foreach (var user in users)
+            {
+                var file = await _context.file.FirstOrDefaultAsync(
+                    f => f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User)
+                );
+                var userData = new GetUserDto()
+                {
+                    user = user,
+                    file = _mapper.Map<GetFileDto>(file)
+                };
+
+                data.Add(userData);
+            }
+
+            response.data = data;
             return response;
         }
 
@@ -55,6 +72,7 @@ namespace jts_backend.Services.UserService
                 .Where(u => u.user_id == user_id)
                 .Select(u => _mapper.Map<GetUserDto>(u))
                 .FirstOrDefaultAsync();
+
             if (user == null)
             {
                 response.message = "User not found.";
@@ -68,6 +86,7 @@ namespace jts_backend.Services.UserService
         public async Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto request)
         {
             var response = new ServiceResponse<GetUserDto>();
+            var file = new GetFileDto();
             Helper.Helper.CreatePasswordHash(
                 request.password,
                 out byte[] passwordHash,
@@ -134,12 +153,13 @@ namespace jts_backend.Services.UserService
 
             if (!string.IsNullOrEmpty(request?.file?.FileName))
             {
-                var file = GetFile(request.file, newUser.user_id, OwnerType.User);
+                file = await GetFile(request.file, newUser.user_id, OwnerType.User);
             }
 
             _context.user.Add(newUser);
             await _context.SaveChangesAsync();
-            var data = _mapper.Map<GetUserDto>(newUser);
+            var data = new GetUserDto() { user = _mapper.Map<UserDto>(newUser), file = file };
+
             response.data = data;
             await _hubContext.Clients.All.GetUser(data);
 
@@ -213,8 +233,6 @@ namespace jts_backend.Services.UserService
 
         private async Task<GetFileDto> GetFile(IFormFile file, int ownerId, OwnerType ownerType)
         {
-            var _file = new GetFileDto();
-
             var fileData = await Helper.Helper.UploadFiles(
                 file,
                 _env.ContentRootPath,
@@ -223,9 +241,8 @@ namespace jts_backend.Services.UserService
             );
             await _context.file.AddAsync(fileData);
             await _context.SaveChangesAsync();
-            _file = _mapper.Map<GetFileDto>(fileData);
 
-            return _file;
+            return _mapper.Map<GetFileDto>(fileData);
         }
     }
 }

@@ -158,7 +158,24 @@ export default {
 
     const createUser = async () => {
       if (!validate()) {
-        const user = new User({
+        var userFormData = new FormData();
+        userFormData.append("first_name", firstname.value);
+        userFormData.append("middle_name", middlename.value);
+        userFormData.append("last_name", lastname.value);
+        userFormData.append("username", username.value);
+        userFormData.append("password", password.value);
+        userFormData.append("email", emailAddress.value);
+        userFormData.append("role_id", selectedRole.value.role_id);
+        userFormData.append(
+          "department_id",
+          selectedDepartment.value.department_id
+        );
+        userFormData.append(
+          "job_title_id",
+          selectedJobTitle.value.job_title_id
+        );
+        userFormData.append("first_name", firstname.value);
+        /*  const user = new User({
           first_name: firstname.value,
           middle_name: middlename.value,
           last_name: lastname.value,
@@ -168,8 +185,8 @@ export default {
           role_id: selectedRole.value.role_id,
           department_id: selectedDepartment.value.department_id,
           job_title_id: selectedJobTitle.value.job_title_id,
-        });
-        await store.dispatch("user/createUser", user);
+        }); */
+        await store.dispatch("user/createUser", userFormData);
       }
     };
 

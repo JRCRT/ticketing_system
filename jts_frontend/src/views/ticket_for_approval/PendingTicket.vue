@@ -58,6 +58,7 @@ export default {
       const pendingTicketsForApproval =
         store.state.ticket.pendingTicketsForApproval;
       params.api.setRowData(pendingTicketsForApproval);
+      console.log(pendingTicketsForApproval);
     };
 
     const onSelectionChanged = () => {

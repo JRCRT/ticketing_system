@@ -503,7 +503,7 @@ namespace jts_backend.Services.TicketService
                     .Select(a => a)
                     .ToListAsync();
 
-                var files = await _context.file
+                var ticketFiles = await _context.file
                     .Where(
                         f => f.owner_id == ticket.ticket_id && f.owner_type.Equals(OwnerType.Ticket)
                     )
@@ -527,11 +527,48 @@ namespace jts_backend.Services.TicketService
                     approvers.Add(approverData);
                 }
 
+                //Get User Dto
+                var ticketCreator = await _context.user.FirstOrDefaultAsync(
+                    u => u.user_id == ticket.user.user_id
+                );
+
+                var userFile = await _context.file
+                    .Where(
+                        f =>
+                            f.owner_id == ticketCreator!.user_id
+                            && f.owner_type.Equals(OwnerType.User)
+                    )
+                    .FirstOrDefaultAsync();
+
+                var _user = new GetUserDto()
+                {
+                    user = _mapper.Map<UserDto>(ticketCreator),
+                    file = _mapper.Map<GetFileDto>(userFile)
+                };
+
+                var _ticket = new TicketDto()
+                {
+                    ticket_id = ticket.ticket_id,
+                    background = ticket.background,
+                    condition = ticket.condition,
+                    content = ticket.content,
+                    date_approved = ticket.date_approved,
+                    date_created = ticket.date_created,
+                    date_declined = ticket.date_declined,
+                    declined_reason = ticket.declined_reason,
+                    others = ticket.others,
+                    priority = ticket.priority,
+                    reason = ticket.reason,
+                    status = ticket.status,
+                    subject = ticket.subject,
+                    user = _user
+                };
+
                 var data = new GetTicketDto()
                 {
-                    ticket = _mapper.Map<TicketDto>(ticket),
+                    ticket = _mapper.Map<TicketDto>(_ticket),
                     signatories = approvers,
-                    files = files
+                    files = ticketFiles
                 };
 
                 responseData.Add(data);
@@ -573,9 +610,43 @@ namespace jts_backend.Services.TicketService
                 approvers.Add(approverData);
             }
 
+            var ticketCreator = await _context.user.FirstOrDefaultAsync(
+                u => u.user_id == ticket.user.user_id
+            );
+
+            var userFile = await _context.file
+                .Where(
+                    f => f.owner_id == ticketCreator!.user_id && f.owner_type.Equals(OwnerType.User)
+                )
+                .FirstOrDefaultAsync();
+
+            var _user = new GetUserDto()
+            {
+                user = _mapper.Map<UserDto>(ticketCreator),
+                file = _mapper.Map<GetFileDto>(userFile)
+            };
+
+            var _ticket = new TicketDto()
+            {
+                ticket_id = ticket.ticket_id,
+                background = ticket.background,
+                condition = ticket.condition,
+                content = ticket.content,
+                date_approved = ticket.date_approved,
+                date_created = ticket.date_created,
+                date_declined = ticket.date_declined,
+                declined_reason = ticket.declined_reason,
+                others = ticket.others,
+                priority = ticket.priority,
+                reason = ticket.reason,
+                status = ticket.status,
+                subject = ticket.subject,
+                user = _user
+            };
+
             var data = new GetTicketDto()
             {
-                ticket = _mapper.Map<TicketDto>(ticket),
+                ticket = _mapper.Map<TicketDto>(_ticket),
                 signatories = approvers,
                 files = files
             };

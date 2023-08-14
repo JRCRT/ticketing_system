@@ -60,21 +60,21 @@ export default {
     const router = useRouter();
     const signalR = useSignalR();
     const columnDefs = [
-      { headerName: "No.", field: "user_id", flex: 1 },
-      { headerName: "Name", field: "ext_name", flex: 2 },
+      { headerName: "No.", field: "user.user_id", flex: 1 },
+      { headerName: "Name", field: "user.ext_name", flex: 2 },
       {
         headerName: "Username",
-        field: "username",
+        field: "user.username",
         flex: 1,
       },
       {
         headerName: "Department",
-        field: "department.name",
+        field: "user.department.name",
         flex: 1,
       },
       {
         headerName: "Role",
-        field: "role.name",
+        field: "user.role.name",
         flex: 1,
       },
     ];
@@ -134,6 +134,7 @@ export default {
       params.api.showLoadingOverlay();
       await store.dispatch("user/fetchAllUsers");
       params.api.setRowData(store.state.user.users);
+      console.log(store.state.user.users[0].user);
     };
 
     const onSelectionChanged = () => {

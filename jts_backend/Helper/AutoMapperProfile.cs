@@ -29,6 +29,7 @@ namespace jts_backend.Helper
             CreateMap<StatusModel, GetStatusDto>();
             CreateMap<PriorityModel, GetPriorityDto>();
             CreateMap<TicketModel, TicketDto>();
+            CreateMap<UserModel, UserDto>();
             CreateMap<JobTitleModel, GetJobTitleDto>();
             CreateMap<FileModel, GetFileDto>();
             CreateMap<SignatoryModel, GetSignatoryDto>();
