@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace jts_backend.Controllers
 {
-    //[Authorize] 
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -33,7 +33,7 @@ namespace jts_backend.Controllers
 
         [HttpPost("CreateUser")]
         public async Task<ActionResult<ServiceResponse<UserModel>>> CreateUser(
-            CreateUserDto newUser
+            [FromForm] CreateUserDto newUser
         )
         {
             var user = await _userService.CreateUser(newUser);

@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR;
 using jts_backend.Hub;
 using jts_backend.Dtos.StatusDto;
+using jts_backend.Enums;
 
 namespace jts_backend.Services.TicketService
 {
@@ -103,7 +104,7 @@ namespace jts_backend.Services.TicketService
                 await _context.SaveChangesAsync();
 
                 var signatories = await GetSignatories(request.signatories, ticket);
-                var files = await GetFiles(request.files, ticket);
+                var files = await GetFiles(request.files, ticket.ticket_id, OwnerType.Ticket);
 
                 var responseData = new GetTicketDto()
                 {
@@ -467,13 +468,19 @@ namespace jts_backend.Services.TicketService
 
         private async Task<ICollection<GetFileDto>> GetFiles(
             List<IFormFile> files,
-            TicketModel ticket
+            int ownerId,
+            OwnerType ownerType
         )
         {
             var _files = new Collection<GetFileDto>();
             foreach (var file in files)
             {
-                var fileData = await Helper.Helper.UploadFiles(file, _env.ContentRootPath, ticket);
+                var fileData = await Helper.Helper.UploadFiles(
+                    file,
+                    _env.ContentRootPath,
+                    ownerId,
+                    ownerType
+                );
                 await _context.file.AddAsync(fileData);
                 await _context.SaveChangesAsync();
                 _files.Add(_mapper.Map<GetFileDto>(fileData));
@@ -497,7 +504,9 @@ namespace jts_backend.Services.TicketService
                     .ToListAsync();
 
                 var files = await _context.file
-                    .Where(f => f.ticket.ticket_id == ticket.ticket_id)
+                    .Where(
+                        f => f.owner_id == ticket.ticket_id && f.owner_type.Equals(OwnerType.Ticket)
+                    )
                     .Select(f => _mapper.Map<GetFileDto>(f))
                     .ToListAsync();
 
@@ -542,7 +551,7 @@ namespace jts_backend.Services.TicketService
                 .ToListAsync();
 
             var files = await _context.file
-                .Where(f => f.ticket.ticket_id == ticket.ticket_id)
+                .Where(f => f.owner_id == ticket.ticket_id && f.owner_type.Equals(OwnerType.Ticket))
                 .Select(f => _mapper.Map<GetFileDto>(f))
                 .ToListAsync();
 

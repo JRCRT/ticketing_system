@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using jts_backend.Dtos.FileDto;
+using jts_backend.Enums;
 using jts_backend.Models;
 
 namespace jts_backend.Helper
@@ -39,7 +40,8 @@ namespace jts_backend.Helper
         public static async Task<FileModel> UploadFiles(
             IFormFile file,
             string rootPath,
-            TicketModel ticket
+            int ownerId,
+            OwnerType ownerType
         )
         {
             FileModel uploadedFile = new FileModel();
@@ -63,7 +65,8 @@ namespace jts_backend.Helper
                     content_type = contentType,
                     original_file_name = originalFileName,
                     stored_file_name = storedFileName,
-                    ticket = ticket
+                    owner_id = ownerId,
+                    owner_type = ownerType.ToString()
                 };
 
                 uploadedFile = fileData;

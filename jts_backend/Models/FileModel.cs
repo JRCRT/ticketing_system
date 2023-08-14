@@ -19,6 +19,7 @@ namespace jts_backend.Models
         public string stored_file_name { get; set; } = string.Empty;
         public string original_file_name { get; set; } = string.Empty;
         public string content_type { get; set; } = string.Empty;
-        public TicketModel ticket { get; set; } = new TicketModel();
+        public string owner_type { get; set; } = string.Empty;
+        public int owner_id { get; set; }
     }
 }

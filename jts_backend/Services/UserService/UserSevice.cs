@@ -1,6 +1,9 @@
+using System.Collections.ObjectModel;
 using AutoMapper;
 using jts_backend.Context;
+using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.UserDto;
+using jts_backend.Enums;
 using jts_backend.Hub;
 using jts_backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -14,16 +17,19 @@ namespace jts_backend.Services.UserService
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
         private readonly IHubContext<JtsHub, IJtsHub> _hubContext;
+        private readonly IWebHostEnvironment _env;
 
         public UserSevice(
             JtsContext context,
             IMapper mapper,
-            IHubContext<JtsHub, IJtsHub> hubContext
+            IHubContext<JtsHub, IJtsHub> hubContext,
+            IWebHostEnvironment env
         )
         {
             _context = context;
             _mapper = mapper;
             _hubContext = hubContext;
+            _env = env;
         }
 
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
@@ -126,6 +132,11 @@ namespace jts_backend.Services.UserService
                 job_title = jobTitle
             };
 
+            if (!string.IsNullOrEmpty(request?.file?.FileName))
+            {
+                var file = GetFile(request.file, newUser.user_id, OwnerType.User);
+            }
+
             _context.user.Add(newUser);
             await _context.SaveChangesAsync();
             var data = _mapper.Map<GetUserDto>(newUser);
@@ -198,6 +209,23 @@ namespace jts_backend.Services.UserService
                 .ToListAsync();
             response.data = users;
             return response;
+        }
+
+        private async Task<GetFileDto> GetFile(IFormFile file, int ownerId, OwnerType ownerType)
+        {
+            var _file = new GetFileDto();
+
+            var fileData = await Helper.Helper.UploadFiles(
+                file,
+                _env.ContentRootPath,
+                ownerId,
+                ownerType
+            );
+            await _context.file.AddAsync(fileData);
+            await _context.SaveChangesAsync();
+            _file = _mapper.Map<GetFileDto>(fileData);
+
+            return _file;
         }
     }
 }
