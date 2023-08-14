@@ -182,7 +182,6 @@ export default {
         );
         userFormData.append("first_name", firstname.value);
         console.log(store.state.file.file.file);
-        //await store.dispatch("user/createUser", userFormData);
       }
     };
 

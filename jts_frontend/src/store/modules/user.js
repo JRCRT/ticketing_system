@@ -84,22 +84,27 @@ const actions = {
 
 const mutations = {
   FETCH_USERS(state, value) {
-    state.users = value;
+    let users = [...value].map((user) => user.user);
+    state.users = users;
   },
   FETCH_ADMINS(state, value) {
-    state.admins = value;
+    let users = [...value].map((user) => user.user);
+    console.log("users:", users);
+    state.admins = users;
   },
   FETCH_APPROVERS(state, value) {
-    state.approvers = value;
+    let users = [...value].map((user) => user.user);
+    state.approvers = users;
   },
   FETCH_CHECKERS(state, value) {
-    state.checkers = value;
+    let users = [...value].map((user) => user.user);
+    state.checkers = users;
   },
   ADD_USER(state, value) {
     state.users.push(value);
   },
   FETCH_USER(state, value) {
-    state.user = value;
+    state.user = value.user;
   },
 };
 
