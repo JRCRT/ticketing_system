@@ -35,7 +35,7 @@
           v-model="other"
         ></ckeditor>
         <label>Attached Documents</label>
-        <TicketFileUploader />
+        <FileUploader :isMultiple="true" />
         <label>Priority</label>
         <VueMultiselect
           v-model="selectedPriority"
@@ -103,7 +103,7 @@
   </Modal>
 </template>
 <script>
-import TicketFileUploader from "@/components/TicketFileUploader.vue";
+import FileUploader from "@/components/FileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
@@ -136,7 +136,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
-    TicketFileUploader,
+    FileUploader,
   },
 
   setup() {
@@ -295,9 +295,9 @@ export default {
 
       store.commit("app/SET_MODAL_LOADING", false);
       isLoading.value = store.state.app.isLoading;
-      approvers.value = store.state.user.approvers;
-      checkers.value = store.state.user.checkers;
-      relatedParty.value = store.state.user.users;
+      approvers.value = [...store.state.user.approvers].map((u) => u.user);
+      checkers.value = [...store.state.user.checkers].map((u) => u.user);
+      relatedParty.value = [...store.state.user.users].map((u) => u.user);
       priorities.value = store.state.priority.priorities;
       selectedPriority.value = store.state.priority.priorities[0];
     });

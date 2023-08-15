@@ -57,7 +57,6 @@ const actions = {
       commit("app/SET_PROCESSING", false, { root: true });
       return;
     }
-    console.log(response.data);
     alert = { type: "success", message: response.message };
     commit("app/SET_PROCESSING", false, { root: true });
     commit("app/SET_USER_FORM", false, { root: true });
@@ -84,27 +83,22 @@ const actions = {
 
 const mutations = {
   FETCH_USERS(state, value) {
-    let users = [...value].map((user) => user.user);
-    state.users = users;
+    state.users = value;
   },
   FETCH_ADMINS(state, value) {
-    let users = [...value].map((user) => user.user);
-    console.log("users:", users);
-    state.admins = users;
+    state.admins = value;
   },
   FETCH_APPROVERS(state, value) {
-    let users = [...value].map((user) => user.user);
-    state.approvers = users;
+    state.approvers = value;
   },
   FETCH_CHECKERS(state, value) {
-    let users = [...value].map((user) => user.user);
-    state.checkers = users;
+    state.checkers = value;
   },
   ADD_USER(state, value) {
     state.users.push(value);
   },
   FETCH_USER(state, value) {
-    state.user = value.user;
+    state.user = value;
   },
 };
 
