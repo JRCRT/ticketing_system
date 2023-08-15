@@ -42,7 +42,7 @@
         ></VueMultiselect>
 
         <label>Signature</label>
-        <FileUploader :isMultiple="false" />
+        <FileUploader :isMultiple="false" accept="image/*" />
       </div>
     </template>
     <template v-slot:footer>

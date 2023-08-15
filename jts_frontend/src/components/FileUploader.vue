@@ -20,6 +20,7 @@
         <input
           type="file"
           id="file-input"
+          :accept="props.accept"
           :multiple="props.isMultiple"
           @change="onInputChange"
         />
@@ -49,7 +50,7 @@ import UserFilePreview from "@/components/UserFilePreview.vue";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 
-const props = defineProps(["isMultiple"]);
+const props = defineProps(["isMultiple", "accept"]);
 
 const store = useStore();
 

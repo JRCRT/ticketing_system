@@ -6,13 +6,14 @@
     </div>
 
     <label class="button-wrap" for="input-file">
-      <button>Change</button>
-      <input
-        type="file"
-        accept="image/*"
-        id="input-file"
-        @change="onInputChange"
-      />
+      <button>
+        <input
+          type="file"
+          accept="image/*"
+          id="input-file"
+          @change="onInputChange"
+        />Change
+      </button>
     </label>
   </div>
 </template>
