@@ -4,7 +4,7 @@
       <h5 class="modal-title">User</h5>
     </template>
     <template v-slot:content>
-      <div>
+      <div class="user_form_container">
         <label> Username </label>
         <input v-model="username" class="input__field" />
         <label> Password </label>
@@ -40,6 +40,8 @@
           label="name"
           :show-labels="false"
         ></VueMultiselect>
+        <label>Signature</label>
+        <FileUploader :isMultiple="false" accept="image/*" />
       </div>
     </template>
     <template v-slot:footer>
@@ -71,6 +73,7 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
+import FileUploader from "@/components/FileUploader.vue";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -78,6 +81,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
+    FileUploader,
   },
 
   setup() {
@@ -113,6 +117,7 @@ export default {
           selectedDepartment.value = user.value.user.department;
           selectedRole.value = user.value.user.role;
           selectedJobTitle.value = user.value.user.job_title;
+          store.commit("file/SET_FILE", user.value.file);
         }
       },
       { immediate: true }

@@ -71,7 +71,6 @@
 <script>
 import { computed, onMounted, ref, onUnmounted } from "vue";
 import { useStore } from "vuex";
-import { User } from "@/models/User";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import FileUploader from "@/components/FileUploader.vue";
