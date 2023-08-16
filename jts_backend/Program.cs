@@ -19,7 +19,7 @@ using Microsoft.OpenApi.Models;
 using jts_backend.Services.EmailService;
 using jts_backend.Configuration;
 using jts_backend.Hub;
-
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,13 +47,17 @@ builder.Services.AddScoped<IRoleManagerService, RoleManagerService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 builder.Services.AddSwaggerGen(c =>
 {
-    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        Description = """Standard Authorization header using the Bearer scheme. Example: "bearer {token}" """,
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
-    });
+    c.AddSecurityDefinition(
+        "oauth2",
+        new OpenApiSecurityScheme
+        {
+            Description =
+                """Standard Authorization header using the Bearer scheme. Example: "bearer {token}" """,
+            In = ParameterLocation.Header,
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        }
+    );
 
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
@@ -84,6 +88,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles(
+    new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(builder.Environment.ContentRootPath, "Uploads")
+        ),
+        RequestPath = "/Uploads"
+    }
+);
 
 app.UseHttpsRedirection();
 

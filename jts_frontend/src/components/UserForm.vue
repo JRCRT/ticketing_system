@@ -41,7 +41,7 @@
           :show-labels="false"
         ></VueMultiselect>
         <label>Signature</label>
-        <FileUploader :isMultiple="false" accept="image/*" />
+        <UserFilePreview :file="fileFromDb ?? file" />
       </div>
     </template>
     <template v-slot:footer>
@@ -73,7 +73,7 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
-import FileUploader from "@/components/FileUploader.vue";
+import UserFilePreview from "@/components/UserFilePreview.vue";
 import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
@@ -81,7 +81,7 @@ export default {
   components: {
     Modal,
     VueMultiselect,
-    FileUploader,
+    UserFilePreview,
   },
 
   setup() {
@@ -101,7 +101,8 @@ export default {
     const jobTitles = ref([]);
     const user = ref({});
     const isProcessing = computed(() => store.state.app.isProcessing);
-
+    const file = computed(() => store.state.file.file);
+    const fileFromDb = ref({});
     watch(
       () => route.params.userId,
       async (newUserId, oldUserId) => {
@@ -117,8 +118,9 @@ export default {
           selectedDepartment.value = user.value.user.department;
           selectedRole.value = user.value.user.role;
           selectedJobTitle.value = user.value.user.job_title;
-          store.commit("file/SET_FILE", user.value.file);
+          fileFromDb.value = user.value.file;
         }
+        console.log("File Path: ", fileFromDb.value.file_url);
       },
       { immediate: true }
     );
@@ -163,6 +165,8 @@ export default {
       lastname,
       emailAddress,
       isProcessing,
+      file,
+      fileFromDb,
       updateUser,
     };
   },

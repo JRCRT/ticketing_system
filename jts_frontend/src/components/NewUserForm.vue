@@ -17,6 +17,7 @@
         <input v-model="lastname" class="input__field" />
         <label> Email Address </label>
         <input v-model="emailAddress" class="input__field" />
+
         <label> Role </label>
         <VueMultiselect
           :options="roles"
@@ -40,7 +41,6 @@
           label="name"
           :show-labels="false"
         ></VueMultiselect>
-
         <label>Signature</label>
         <FileUploader :isMultiple="false" accept="image/*" />
       </div>

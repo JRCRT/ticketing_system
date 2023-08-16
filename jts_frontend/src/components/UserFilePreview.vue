@@ -1,7 +1,11 @@
 <template>
   <div class="file-preview">
     <div class="image-container">
-      <img :src="file?.url" :alt="file?.file?.name" :title="file?.file?.name" />
+      <img
+        :src="file?.url ?? file?.file_url"
+        :alt="file?.file?.name ?? file?.original_file_name"
+        :title="file?.file?.name ?? file?.original_file_name"
+      />
       <span>{{ file?.file?.name }}</span>
     </div>
 
@@ -29,6 +33,7 @@ export default {
     const setFile = (files) => {
       store.commit("file/SET_FILE", files);
     };
+
     function onInputChange(e) {
       setFile(e.target.files[0]);
       e.target.value = null;
