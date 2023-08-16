@@ -10,6 +10,7 @@ using jts_backend.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace jts_backend.Services.UserService
 {
@@ -63,9 +64,9 @@ namespace jts_backend.Services.UserService
             return response;
         }
 
-        public async Task<ServiceResponse<GetUserDto>> GetUserById(int user_id)
+        public async Task<ServiceResponse<TestDto>> GetUserById(int user_id)
         {
-            var response = new ServiceResponse<GetUserDto>();
+            var response = new ServiceResponse<TestDto>();
             var user = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
@@ -84,7 +85,20 @@ namespace jts_backend.Services.UserService
             var file = await _context.file.FirstOrDefaultAsync(
                 f => f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User.ToString())
             );
-            var userData = new GetUserDto() { user = user, file = _mapper.Map<GetFileDto>(file) };
+
+            var path = Path.Combine(_env.ContentRootPath, "Uploads", file.stored_file_name);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            var userData = new GetUserDto()
+            {
+                user = user,
+                file = File(memory, file.content_type, Path.GetFileName(path))
+            };
             response.data = userData;
             return response;
         }
