@@ -99,6 +99,7 @@ namespace jts_backend.Services.UserService
                 user = user,
                 file = File(memory, file.content_type, Path.GetFileName(path))
             };
+
             response.data = userData;
             return response;
         }
