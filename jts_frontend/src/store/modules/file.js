@@ -1,4 +1,5 @@
 import { UploadedFile } from "@/models/UploadedFile";
+import { getImage } from "@/services/fileService.js";
 
 const state = () => ({
   files: [],
@@ -11,7 +12,9 @@ const getters = {
   },
 };
 
-const actions = {};
+const actions = {
+  async getImage({ commit }) {},
+};
 
 const mutations = {
   ADD_FILES(state, value) {
