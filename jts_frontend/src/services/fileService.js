@@ -1,6 +1,6 @@
 import axios from "./api";
 
-const getImage = async ({ fileName }) => {
+const getImage = async (fileName) => {
   const response = await axios
     .get(`/File/${fileName}`)
     .then((res) => {

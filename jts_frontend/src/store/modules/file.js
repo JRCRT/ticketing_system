@@ -13,7 +13,10 @@ const getters = {
 };
 
 const actions = {
-  async getImage({ commit }) {},
+  async getImage({ commit }, fileName) {
+    const response = await getImage(fileName);
+    commit("SET_FILE", response);
+  },
 };
 
 const mutations = {
