@@ -41,7 +41,7 @@
           :show-labels="false"
         ></VueMultiselect>
         <label>Signature</label>
-        <UserFilePreview :file="fileFromDb ?? file" />
+        <UserFilePreview :file="file" />
       </div>
     </template>
     <template v-slot:footer>
@@ -120,7 +120,10 @@ export default {
           selectedJobTitle.value = user.value.user.job_title;
           fileFromDb.value = user.value.file;
         }
-        console.log("File Path: ", fileFromDb.value.file_url);
+        await store.dispatch(
+          "file/getImage",
+          fileFromDb.value.stored_file_name
+        );
       },
       { immediate: true }
     );
@@ -146,6 +149,7 @@ export default {
       await store.dispatch("role/fetchRoles");
       await store.dispatch("department/fetchDepartments");
       await store.dispatch("jobTitle/fetchJobTitles");
+
       roles.value = store.state.role.roles;
       departments.value = store.state.department.departments;
       jobTitles.value = store.state.jobTitle.jobTitles;
