@@ -41,7 +41,7 @@
           :show-labels="false"
         ></VueMultiselect>
         <label>Signature</label>
-        <UserFilePreview :file="file" />
+        <UserFilePreview :file="file" :imageURI="imageURI" />
       </div>
     </template>
     <template v-slot:footer>
@@ -75,7 +75,7 @@ import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import UserFilePreview from "@/components/UserFilePreview.vue";
 import "vue-multiselect/dist/vue-multiselect.css";
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export default {
   emits: ["close"],
   components: {
@@ -102,7 +102,8 @@ export default {
     const user = ref({});
     const isProcessing = computed(() => store.state.app.isProcessing);
     const file = computed(() => store.state.file.file);
-    const fileFromDb = ref({});
+    const imageURI = ref(null);
+
     watch(
       () => route.params.userId,
       async (newUserId, oldUserId) => {
@@ -118,12 +119,13 @@ export default {
           selectedDepartment.value = user.value.user.department;
           selectedRole.value = user.value.user.role;
           selectedJobTitle.value = user.value.user.job_title;
-          fileFromDb.value = user.value.file;
+
+          imageURI.value = user.value.file.stored_file_name
+            ? `${BASE_URL}/File/${user.value.file.stored_file_name}`
+            : "";
+          console.log(user.value.file.stored_file_name);
+          console.log(imageURI.value);
         }
-        await store.dispatch(
-          "file/getImage",
-          fileFromDb.value.stored_file_name
-        );
       },
       { immediate: true }
     );
@@ -170,7 +172,7 @@ export default {
       emailAddress,
       isProcessing,
       file,
-      fileFromDb,
+      imageURI,
       updateUser,
     };
   },

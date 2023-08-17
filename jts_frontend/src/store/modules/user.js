@@ -27,8 +27,12 @@ const actions = {
   },
 
   async fetchUser({ commit }, id) {
+    commit("app/SET_MODAL_LOADING", true, { root: true });
     const response = await userById(id);
-    commit("FETCH_USER", response.data);
+    if (response.success) {
+      commit("FETCH_USER", response.data);
+      commit("app/SET_MODAL_LOADING", false, { root: true });
+    }
   },
 
   async fetchAdmins({ commit }) {

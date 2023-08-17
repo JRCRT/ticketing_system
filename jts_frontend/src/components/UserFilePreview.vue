@@ -1,10 +1,10 @@
 <template>
   <div class="file-preview">
-    <div class="image-container">
+    <div class="image-container" v-if="file?.file?.name || imageURI">
       <img
-        :src="file?.url ?? file?.file_url"
-        :alt="file?.file?.name ?? file?.original_file_name"
-        :title="file?.file?.name ?? file?.original_file_name"
+        :src="imageURI ?? file?.url"
+        :alt="file?.file?.name ?? 'Signature'"
+        :title="file?.file?.name ?? ''"
       />
       <span>{{ file?.file?.name }}</span>
     </div>
@@ -25,10 +25,10 @@
 <script>
 import { useStore } from "vuex";
 export default {
-  props: {
-    file: {},
-  },
-  setup() {
+  props: ["file", "imageURI"],
+  setup(props) {
+    const file = props.file;
+    const imageURI = props.imageURI;
     const store = useStore();
     const setFile = (files) => {
       store.commit("file/SET_FILE", files);
@@ -40,6 +40,8 @@ export default {
     }
     return {
       onInputChange,
+      file,
+      imageURI,
     };
   },
 };
