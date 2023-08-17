@@ -34,7 +34,6 @@ const mutations = {
   },
 
   SET_FILE(state, value) {
-    console.log(value);
     state.file = new UploadedFile(value);
   },
 

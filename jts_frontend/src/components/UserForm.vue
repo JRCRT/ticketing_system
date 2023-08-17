@@ -41,7 +41,9 @@
           :show-labels="false"
         ></VueMultiselect>
         <label>Signature</label>
-        <UserFilePreview :file="file" />
+        <div class="flex justify-center border-[1.6px] p-3 rounded-md">
+          <UserFilePreview :file="file" />
+        </div>
       </div>
     </template>
     <template v-slot:footer>
@@ -68,7 +70,7 @@
 </template>
 
 <script>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Modal from "@/components/Modal.vue";
@@ -121,7 +123,7 @@ export default {
 
           store.commit(
             "file/SET_IMAGE_URI",
-            user.value.file.stored_file_name
+            user.value?.file?.stored_file_name
               ? `${BASE_URL}/File/${user.value.file.stored_file_name}`
               : ""
           );
@@ -155,6 +157,11 @@ export default {
       roles.value = store.state.role.roles;
       departments.value = store.state.department.departments;
       jobTitles.value = store.state.jobTitle.jobTitles;
+    });
+
+    onUnmounted(() => {
+      store.commit("file/SET_IMAGE_URI", null);
+      store.commit("file/EMPTY_FILE", {});
     });
 
     return {

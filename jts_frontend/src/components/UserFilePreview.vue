@@ -1,24 +1,28 @@
 <template>
-  <div class="file-preview">
-    <div class="image-container" v-if="file?.file?.name || imageURI">
+  <div class="w-36 flex flex-col items-center">
+    <div
+      class="flex flex-col items-center mb-2"
+      v-if="file?.file?.name || imageURI"
+    >
       <img
+        class="object-cover h-[80px] w-[80px]"
         :src="file?.url ?? imageURI"
         :alt="file?.file?.name ?? 'Signature'"
         :title="file?.file?.name ?? ''"
       />
-      <span>{{ file?.file?.name ?? "" }}</span>
     </div>
-
-    <label class="button-wrap" for="input-file">
-      <button>
-        <input
-          type="file"
-          accept="image/*"
-          id="input-file"
-          @change="onInputChange"
-        />Change
-      </button>
+    <label
+      class="button-primary text-center py-[6px] px-2 w-fit rounded-md cursor-pointer"
+      htmlFor="file-input"
+    >
+      {{ !file?.file?.name && !imageURI ? "Add" : "Change" }}
     </label>
+    <input
+      type="file"
+      accept="image/*"
+      id="file-input"
+      @change="onInputChange"
+    />
   </div>
 </template>
 
@@ -47,36 +51,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.file-preview {
-  width: 150px;
-  margin: 1rem;
-  overflow: hidden;
-}
-.image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-span {
-  font-size: 12px;
-  text-align: center;
-}
-
-img {
-  width: 80px;
-  height: 80px;
-  display: block;
-  object-fit: cover;
-}
-
-input[type="file"] {
-  position: absolute;
-}
-
-.button-wrap {
-  position: relative;
-}
-</style>
