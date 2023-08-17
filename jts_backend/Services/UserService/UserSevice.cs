@@ -182,6 +182,7 @@ namespace jts_backend.Services.UserService
         public async Task<ServiceResponse<string>> UpdateUser(UpdateUserDto request)
         {
             var response = new ServiceResponse<string>();
+
             var user = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
@@ -225,8 +226,23 @@ namespace jts_backend.Services.UserService
             user.department = department!;
             user.job_title = jobTitle!;
 
-            _context.user.Update(user);
-            await _context.SaveChangesAsync();
+            var file = await _context.file.FirstOrDefaultAsync(
+                f => f.owner_type.Equals(OwnerType.User.ToString()) && f.owner_id == request.user_id
+            );
+
+            if (!request.file.FileName.Equals(file?.original_file_name))
+            {
+                var fileData = await Helper.Helper.UploadFiles(
+                    request.file,
+                    _env.ContentRootPath,
+                    request.user_id,
+                    OwnerType.User
+                );
+                _context.file.Add(fileData);
+                _context.user.Update(user);
+                await _context.SaveChangesAsync();
+            }
+
             response.data =
                 $"RPassword: {request.password} DPassword: {Convert.ToBase64String(user.password_hash)}";
             response.message = "Successfully updated";

@@ -16,7 +16,7 @@ namespace jts_backend.Dtos.UserDto
         public string email { get; set; } = string.Empty;
         public int role_id { get; set; }
         public int department_id { get; set; }
-
         public int job_title_id { get; set; }
+        public IFormFile? file { get; set; }
     }
 }
