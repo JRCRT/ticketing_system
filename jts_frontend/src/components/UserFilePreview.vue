@@ -2,11 +2,11 @@
   <div class="file-preview">
     <div class="image-container" v-if="file?.file?.name || imageURI">
       <img
-        :src="imageURI ?? file?.url"
+        :src="file?.url ?? imageURI"
         :alt="file?.file?.name ?? 'Signature'"
         :title="file?.file?.name ?? ''"
       />
-      <span>{{ file?.file?.name }}</span>
+      <span>{{ file?.file?.name ?? "" }}</span>
     </div>
 
     <label class="button-wrap" for="input-file">
@@ -24,16 +24,16 @@
 
 <script>
 import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
-  props: ["file", "imageURI"],
-  setup(props) {
-    const file = props.file;
-    const imageURI = props.imageURI;
-    console.log(imageURI);
+  setup() {
     const store = useStore();
     const setFile = (files) => {
       store.commit("file/SET_FILE", files);
     };
+
+    const imageURI = computed(() => store.state.file.imageURI);
+    const file = computed(() => store.state.file.file);
 
     function onInputChange(e) {
       setFile(e.target.files[0]);

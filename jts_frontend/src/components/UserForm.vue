@@ -41,7 +41,7 @@
           :show-labels="false"
         ></VueMultiselect>
         <label>Signature</label>
-        <UserFilePreview :file="file" :imageURI="imageURI" />
+        <UserFilePreview :file="file" />
       </div>
     </template>
     <template v-slot:footer>
@@ -102,7 +102,6 @@ export default {
     const user = ref({});
     const isProcessing = computed(() => store.state.app.isProcessing);
     const file = computed(() => store.state.file.file);
-    const imageURI = computed(() => store.state.file.imageURI);
 
     watch(
       () => route.params.userId,
@@ -126,8 +125,6 @@ export default {
               ? `${BASE_URL}/File/${user.value.file.stored_file_name}`
               : ""
           );
-
-          console.log(imageURI.value);
         }
       },
       { immediate: true }
@@ -175,7 +172,6 @@ export default {
       emailAddress,
       isProcessing,
       file,
-      imageURI,
       updateUser,
     };
   },
