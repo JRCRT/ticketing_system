@@ -44,6 +44,13 @@ namespace jts_backend.Services.UserService
                 .Select(u => _mapper.Map<UserDto>(u))
                 .ToListAsync();
 
+            response.data = await GetUsersData(users);
+            return response;
+        }
+
+        private async Task<ICollection<GetUserDto>> GetUsersData(ICollection<UserDto> users)
+        {
+            var data = new Collection<GetUserDto>();
             foreach (var user in users)
             {
                 var file = await _context.file.FirstOrDefaultAsync(
@@ -58,9 +65,7 @@ namespace jts_backend.Services.UserService
 
                 data.Add(userData);
             }
-
-            response.data = data;
-            return response;
+            return data;
         }
 
         public async Task<ServiceResponse<GetUserDto>> GetUserById(int user_id)
@@ -186,15 +191,18 @@ namespace jts_backend.Services.UserService
             var department = await _context.department.FirstOrDefaultAsync(
                 d => d.department_id == request.department_id
             );
+
             var jobTitle = await _context.jobTitle.FirstOrDefaultAsync(
                 j => j.job_title_id == request.job_title_id
             );
+
             if (user == null)
             {
                 response.message = "User not found.";
                 response.success = false;
                 return response;
             }
+
             user.username = request.username;
             user.first_name = request.first_name;
             user.middle_name = request.middle_name;
@@ -228,13 +236,14 @@ namespace jts_backend.Services.UserService
         public async Task<ServiceResponse<ICollection<GetUserDto>>> GetUsersByRole(string role)
         {
             var response = new ServiceResponse<ICollection<GetUserDto>>();
-            ICollection<GetUserDto> users = await _context.user
+            ICollection<UserDto> users = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
                 .Where(u => u.role.name.Equals(role))
-                .Select(u => _mapper.Map<GetUserDto>(u))
+                .Select(u => _mapper.Map<UserDto>(u))
                 .ToListAsync();
-            response.data = users;
+
+            response.data = await GetUsersData(users);
             return response;
         }
 

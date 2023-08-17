@@ -300,6 +300,8 @@ export default {
       relatedParty.value = [...store.state.user.users].map((u) => u.user);
       priorities.value = store.state.priority.priorities;
       selectedPriority.value = store.state.priority.priorities[0];
+
+      console.log(store.state.user.checkers);
     });
 
     onUnmounted(() => {
