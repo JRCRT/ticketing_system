@@ -133,7 +133,7 @@ export default {
     );
 
     const updateUser = async () => {
-      const userData = {
+      /* const userData = {
         user_id: user.value.user_id,
         first_name: firstname.value,
         middle_name: middlename.value,
@@ -144,9 +144,26 @@ export default {
         department_id: selectedDepartment.value.department_id,
         job_title_id: selectedJobTitle.value.job_title_id,
         password: password.value,
-      };
+      }; */
 
-      await store.dispatch("user/updateUser", userData);
+      var userformData = new FormData();
+
+      userformData.append("user_id", user.value.user_id);
+      userformData.append("first_name", firstname.value);
+      userformData.append("middle_name", middlename.value);
+      userformData.append("last_name", lastname.value);
+      userformData.append("username", username.value);
+      userformData.append("email", emailAddress.value);
+      userformData.append("role_id", selectedRole.value.role_id);
+      userformData.append(
+        "department_id",
+        selectedDepartment.value.department_id
+      );
+      userformData.append("job_title_id", selectedJobTitle.value.job_title_id);
+      userformData.append("password", password.value);
+      //userformData.append("file", file.value);
+
+      await store.dispatch("user/updateUser", userformData);
     };
 
     onMounted(async () => {

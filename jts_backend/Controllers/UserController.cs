@@ -62,7 +62,7 @@ namespace jts_backend.Controllers
 
         [HttpPost("UpdateUser")]
         public async Task<ActionResult<ServiceResponse<string>>> GetUsersByRole(
-            UpdateUserDto request
+            [FromForm] UpdateUserDto request
         )
         {
             var response = await _userService.UpdateUser(request);
