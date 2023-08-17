@@ -4,6 +4,7 @@ import { getImage } from "@/services/fileService.js";
 const state = () => ({
   files: [],
   file: {},
+  imageURI: null,
 });
 
 const getters = {
@@ -43,6 +44,10 @@ const mutations = {
 
   EMPTY_FILE(state, value) {
     state.file = value;
+  },
+
+  SET_IMAGE_URI(state, value) {
+    state.imageURI = value;
   },
 };
 

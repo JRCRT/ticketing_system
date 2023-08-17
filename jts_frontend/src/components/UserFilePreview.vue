@@ -29,6 +29,7 @@ export default {
   setup(props) {
     const file = props.file;
     const imageURI = props.imageURI;
+    console.log(imageURI);
     const store = useStore();
     const setFile = (files) => {
       store.commit("file/SET_FILE", files);

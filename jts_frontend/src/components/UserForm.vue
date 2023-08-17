@@ -102,7 +102,7 @@ export default {
     const user = ref({});
     const isProcessing = computed(() => store.state.app.isProcessing);
     const file = computed(() => store.state.file.file);
-    const imageURI = ref(null);
+    const imageURI = computed(() => store.state.file.imageURI);
 
     watch(
       () => route.params.userId,
@@ -120,10 +120,13 @@ export default {
           selectedRole.value = user.value.user.role;
           selectedJobTitle.value = user.value.user.job_title;
 
-          imageURI.value = user.value.file.stored_file_name
-            ? `${BASE_URL}/File/${user.value.file.stored_file_name}`
-            : "";
-          console.log(user.value.file.stored_file_name);
+          store.commit(
+            "file/SET_IMAGE_URI",
+            user.value.file.stored_file_name
+              ? `${BASE_URL}/File/${user.value.file.stored_file_name}`
+              : ""
+          );
+
           console.log(imageURI.value);
         }
       },
