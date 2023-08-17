@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {}
+    "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {
+    "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+        "projectUniqueName": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
         "projectName": "jts_backend",
-        "projectPath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
+        "projectPath": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\jts_backend.csproj",
         "packagesPath": "C:\\Users\\ts226jor.JACCS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\obj\\",
+        "outputPath": "c:\\Users\\ts226jor.JACCS\\Desktop\\ticketing_system\\jts_backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ts226jor.JACCS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.307\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -107,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.307\\RuntimeIdentifierGraph.json"
         }
       }
     }
