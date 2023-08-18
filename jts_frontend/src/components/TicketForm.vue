@@ -615,11 +615,14 @@
                     font-size: 8pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
+                    padding: 5px;
                   "
                   colspan="3"
                   rowspan="2"
                 >
-                  &nbsp;
+                  <p v-for="checker in checkers">
+                    {{ checker?.user?.user?.ext_name }}
+                  </p>
                 </td>
               </tr>
 
@@ -984,6 +987,7 @@ export default {
     const isProcessing = computed(() => store.state.app.isProcessing);
     const signatoryStatus = ref(null);
     const actionDate = ref(null);
+    const checkers = ref([]);
 
     const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
@@ -1032,6 +1036,12 @@ export default {
             isPending.value =
               signatory.value?.status?.name === TICKET_STATUS.PENDING;
           }
+
+          checkers.value = fetchedTicket.signatories.filter(
+            (s) => s.type == "Checker"
+          );
+
+          console.log(checkers.value);
           ticket.value = fetchedTicket;
 
           requestedDate.value = formatDate(ticket.value.ticket.date_created);
@@ -1053,6 +1063,7 @@ export default {
       TICKET_STATUS,
       actionDate,
       dateDeclined,
+      checkers,
       approved,
       openDeclineReasonModal,
     };
