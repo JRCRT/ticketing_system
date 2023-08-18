@@ -26,7 +26,6 @@ namespace jts_backend.Dtos.TicketDto
         public string declined_reason { get; set; } = string.Empty;
 
         private DateTime _date_created;
-
         public DateTime date_created
         {
             get { return _date_created.Date.ToUniversalTime(); }
