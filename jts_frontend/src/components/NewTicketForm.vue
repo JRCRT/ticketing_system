@@ -275,7 +275,7 @@ export default {
         formData.append("content", content.value);
         formData.append("reason", reason.value);
         formData.append("status_id", PENDING_STATUS);
-        formData.append("user_id", currentUser.user_id);
+        formData.append("created_by", currentUser.user_id);
         formData.append("priority_id", selectedPriority.value.priority_id);
         formData.append("date_created", formattedDatetime);
         formData.append("date_approved", DEFAULT_DATE_TIME);

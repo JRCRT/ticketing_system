@@ -26,7 +26,7 @@ export default {
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
       {
         headerName: "Prepared By",
-        field: "ticket.user.ext_name",
+        field: "ticket.created_by.user.ext_name",
         flex: 1,
       },
       {
@@ -46,6 +46,7 @@ export default {
       params.api.showLoadingOverlay();
       await store.dispatch("ticket/fetchMyApprovedTickets", param);
       const myApprovedTickets = store.state.ticket.myApprovedTickets;
+
       params.api.setRowData(myApprovedTickets);
     };
 

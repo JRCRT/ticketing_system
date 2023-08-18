@@ -28,7 +28,7 @@ export default {
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
       {
         headerName: "Prepared By",
-        field: "ticket.user.ext_name",
+        field: "ticket.created_by.user.ext_name",
         flex: 1,
       },
       {
@@ -53,7 +53,9 @@ export default {
 
     signalR.on("GetMyTicket", (ticket) => {
       store.commit("ticket/ADD_MY_PENDING_TICKETS", ticket);
+      console.log(ticket);
       const myPendingTickets = store.state.ticket.myPendingTickets;
+
       gridAPI.value.setRowData(myPendingTickets);
     });
 

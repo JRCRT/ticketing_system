@@ -7,7 +7,6 @@ using jts_backend.Dtos.UserDto;
 using jts_backend.Enums;
 using jts_backend.Hub;
 using jts_backend.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 

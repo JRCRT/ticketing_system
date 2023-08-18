@@ -14,13 +14,11 @@ using jts_backend.Dtos.SignatoryDto;
 using jts_backend.Dtos.TicketDto;
 using jts_backend.Dtos.UserDto;
 using jts_backend.Models;
-using jts_backend.Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR;
 using jts_backend.Hub;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Enums;
-using MimeKit.Encodings;
 
 namespace jts_backend.Services.TicketService
 {
@@ -55,7 +53,7 @@ namespace jts_backend.Services.TicketService
                     .Include(u => u.role)
                     .Include(u => u.department)
                     .Include(u => u.job_title)
-                    .FirstOrDefaultAsync(u => u.user_id == request.user_id);
+                    .FirstOrDefaultAsync(u => u.user_id == request.created_by);
 
                 var priority = await _context.priority.FirstOrDefaultAsync(
                     p => p.priority_id == request.priority_id
@@ -86,7 +84,7 @@ namespace jts_backend.Services.TicketService
                     return response;
                 }
 
-                var ticket = new TicketModel()
+                var ticketData = new TicketModel()
                 {
                     background = request.background,
                     content = request.content,
@@ -96,20 +94,39 @@ namespace jts_backend.Services.TicketService
                     condition = request.condition,
                     priority = priority,
                     status = status,
+                    received_by = null,
                     created_by = preparedBy,
                     date_created = request.date_created.Date,
                     others = request.others
                 };
 
-                await _context.ticket.AddAsync(ticket);
+                await _context.ticket.AddAsync(ticketData);
                 await _context.SaveChangesAsync();
 
-                var signatories = await GetSignatories(request.signatories, ticket);
-                var files = await GetFiles(request.files, ticket.ticket_id, OwnerType.Ticket);
+                var signatories = await GetSignatories(request.signatories, ticketData);
+                var files = await GetFiles(request.files, ticketData.ticket_id, OwnerType.Ticket);
+                var ticket = new TicketDto()
+                {
+                    background = request.background,
+                    condition = request.background,
+                    content = request.content,
+                    date_approved = request.date_approved,
+                    date_created = request.date_created,
+                    date_declined = request.date_declined,
+                    declined_reason = request.declined_reason,
+                    others = request.others,
+                    priority = priority,
+                    status = status,
+                    reason = request.reason,
+                    subject = request.subject,
+                    ticket_id = ticketData.ticket_id,
+                    created_by = await GetUserData(preparedBy.user_id),
+                    received_by = null
+                };
 
                 var responseData = new GetTicketDto()
                 {
-                    ticket = _mapper.Map<TicketDto>(ticket),
+                    ticket = ticket,
                     signatories = signatories,
                     files = files
                 };

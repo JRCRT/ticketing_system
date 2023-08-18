@@ -8,10 +8,10 @@ export default function setup() {
       return response;
     },
     (error) => {
-      console.log(error);
+      /* console.log(error);
       store.commit("app/SET_MODAL_LOADING", false);
       store.commit("app/SET_LOADING", false);
-      router.replace({ name: "ErrorPage" });
+      router.replace({ name: "ErrorPage" }); */
     }
   );
 }

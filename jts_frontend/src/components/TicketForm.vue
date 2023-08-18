@@ -706,7 +706,7 @@
                   colspan="3"
                   rowspan="2"
                 >
-                  {{ ticket?.ticket?.user?.user?.ext_name }}
+                  {{ ticket?.ticket?.created_by?.user?.ext_name }}
                 </td>
               </tr>
               <tr></tr>
