@@ -39,9 +39,12 @@ namespace jts_backend.Models
         [MaxLength(500)]
         public string? declined_reason { get; set; }
         public StatusModel status { get; set; } = new StatusModel();
-        public UserModel created_by { get; set; } = new UserModel();
 
-        public UserModel received_by { get; set; } = new UserModel();
+        [Column("created_by_")]
+        public UserModel? created_by { get; set; } = new UserModel();
+
+        [Column("received_by_")]
+        public UserModel? received_by { get; set; } = new UserModel();
         public PriorityModel priority { get; set; } = new PriorityModel();
     }
 }
