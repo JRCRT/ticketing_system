@@ -180,6 +180,7 @@ export default {
           selectedJobTitle.value.job_title_id
         );
         userFormData.append("first_name", firstname.value);
+        await store.dispatch("user/createUser", userFormData);
         console.log(store.state.file.file.file);
       }
     };

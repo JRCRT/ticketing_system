@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.SignalR;
 using jts_backend.Hub;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Enums;
+using MimeKit.Encodings;
 
 namespace jts_backend.Services.TicketService
 {
@@ -518,35 +519,19 @@ namespace jts_backend.Services.TicketService
                         .Include(u => u.role)
                         .Include(u => u.department)
                         .Include(u => u.job_title)
-                        .FirstOrDefaultAsync(u => u.user_id == signatory.user!.user_id);
+                        .Where(u => u.user_id == signatory.user!.user_id)
+                        .Select(u => _mapper.Map<UserDto>(u))
+                        .FirstOrDefaultAsync();
+
                     var approverData = new GetSignatoryDto()
                     {
                         signatory_id = signatory.signatory_id,
-                        user = _mapper.Map<GetUserDto>(user!),
+                        user = await GetUserData(user!.user_id),
                         type = signatory.type,
                         status = _mapper.Map<GetStatusDto>(signatory.status)
                     };
                     approvers.Add(approverData);
                 }
-
-                //Get User Dto
-                var ticketCreator = await _context.user.FirstOrDefaultAsync(
-                    u => u.user_id == ticket.user.user_id
-                );
-
-                var userFile = await _context.file
-                    .Where(
-                        f =>
-                            f.owner_id == ticketCreator!.user_id
-                            && f.owner_type.Equals(OwnerType.User.ToString())
-                    )
-                    .FirstOrDefaultAsync();
-
-                var _user = new GetUserDto()
-                {
-                    user = _mapper.Map<UserDto>(ticketCreator),
-                    file = _mapper.Map<GetFileDto>(userFile)
-                };
 
                 var _ticket = new TicketDto()
                 {
@@ -563,7 +548,7 @@ namespace jts_backend.Services.TicketService
                     reason = ticket.reason,
                     status = ticket.status,
                     subject = ticket.subject,
-                    user = _user
+                    user = await GetUserData(ticket.user.user_id)
                 };
 
                 var data = new GetTicketDto()
@@ -576,6 +561,20 @@ namespace jts_backend.Services.TicketService
                 responseData.Add(data);
             }
             return responseData;
+        }
+
+        private async Task<GetUserDto> GetUserData(int userId)
+        {
+            var user = await _context.user.FirstOrDefaultAsync(u => u.user_id == userId);
+            var file = await _context.file.FirstOrDefaultAsync(
+                f => f.owner_type.Equals(OwnerType.User.ToString()) && f.owner_id == userId
+            );
+            var userData = new GetUserDto()
+            {
+                user = _mapper.Map<UserDto>(user),
+                file = _mapper.Map<GetFileDto>(file)
+            };
+            return userData;
         }
 
         private async Task<GetTicketDto> GetTicketData(TicketModel ticket)
@@ -608,31 +607,13 @@ namespace jts_backend.Services.TicketService
                 var approverData = new GetSignatoryDto()
                 {
                     signatory_id = signatory.signatory_id,
-                    user = _mapper.Map<GetUserDto>(user!),
+                    user = await GetUserData(user!.user_id),
                     type = signatory.type,
                     status = _mapper.Map<GetStatusDto>(signatory.status),
                     action_date = signatory.action_date
                 };
                 approvers.Add(approverData);
             }
-
-            var ticketCreator = await _context.user.FirstOrDefaultAsync(
-                u => u.user_id == ticket.user.user_id
-            );
-
-            var userFile = await _context.file
-                .Where(
-                    f =>
-                        f.owner_id == ticketCreator!.user_id
-                        && f.owner_type.Equals(OwnerType.User.ToString())
-                )
-                .FirstOrDefaultAsync();
-
-            var _user = new GetUserDto()
-            {
-                user = _mapper.Map<UserDto>(ticketCreator),
-                file = _mapper.Map<GetFileDto>(userFile)
-            };
 
             var _ticket = new TicketDto()
             {
@@ -649,7 +630,7 @@ namespace jts_backend.Services.TicketService
                 reason = ticket.reason,
                 status = ticket.status,
                 subject = ticket.subject,
-                user = _user
+                user = await GetUserData(ticket.user.user_id)
             };
 
             var data = new GetTicketDto()

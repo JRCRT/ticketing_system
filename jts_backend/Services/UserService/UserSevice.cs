@@ -53,16 +53,7 @@ namespace jts_backend.Services.UserService
             var data = new Collection<GetUserDto>();
             foreach (var user in users)
             {
-                var file = await _context.file.FirstOrDefaultAsync(
-                    f =>
-                        f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User.ToString())
-                );
-                var userData = new GetUserDto()
-                {
-                    user = user,
-                    file = _mapper.Map<GetFileDto>(file)
-                };
-
+                var userData = await GetUserData(user.user_id);
                 data.Add(userData);
             }
             return data;
@@ -86,12 +77,23 @@ namespace jts_backend.Services.UserService
                 return response;
             }
 
-            var file = await _context.file.FirstOrDefaultAsync(
-                f => f.owner_id == user.user_id && f.owner_type.Equals(OwnerType.User.ToString())
-            );
-            var userData = new GetUserDto() { user = user, file = _mapper.Map<GetFileDto>(file) };
+            var userData = await GetUserData(user_id);
             response.data = userData;
             return response;
+        }
+
+        private async Task<GetUserDto> GetUserData(int userId)
+        {
+            var user = await _context.user.FirstOrDefaultAsync(u => u.user_id == userId);
+            var file = await _context.file.FirstOrDefaultAsync(
+                f => f.owner_type.Equals(OwnerType.User.ToString()) && f.owner_id == userId
+            );
+            var userData = new GetUserDto()
+            {
+                user = _mapper.Map<UserDto>(user),
+                file = _mapper.Map<GetFileDto>(file)
+            };
+            return userData;
         }
 
         public async Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto request)
