@@ -152,7 +152,10 @@ namespace jts_backend.Services.UserService
             {
                 first_name = request.first_name,
                 middle_name = request.middle_name,
-                last_name = request.last_name,
+                last_name =
+                    string.IsNullOrEmpty(request.last_name) || request.last_name.Equals("null")
+                        ? ""
+                        : request.last_name,
                 username = request.username,
                 email = request.email,
                 password_hash = passwordHash,
@@ -176,7 +179,7 @@ namespace jts_backend.Services.UserService
             response.data = data;
             await _hubContext.Clients.All.GetUser(data);
 
-            response.message = "User added successfully.";
+            response.message = request.last_name;
             return response;
         }
 
