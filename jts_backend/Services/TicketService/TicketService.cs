@@ -96,7 +96,7 @@ namespace jts_backend.Services.TicketService
                     condition = request.condition,
                     priority = priority,
                     status = status,
-                    user = preparedBy,
+                    created_by = preparedBy,
                     date_created = request.date_created.Date,
                     others = request.others
                 };
@@ -134,10 +134,10 @@ namespace jts_backend.Services.TicketService
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
-                .Include(t => t.user)
-                .Include(u => u.user.role)
-                .Include(u => u.user.department)
-                .Include(u => u.user.job_title)
+                .Include(t => t.created_by)
+                .Include(u => u.created_by.role)
+                .Include(u => u.created_by.department)
+                .Include(u => u.created_by.job_title)
                 .Select(t => t)
                 .ToListAsync();
             var data = await GetTicketsData(tickets);
@@ -154,9 +154,9 @@ namespace jts_backend.Services.TicketService
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
-                .Include(t => t.user)
-                .Include(u => u.user.role)
-                .Include(u => u.user.department)
+                .Include(t => t.created_by)
+                .Include(u => u.created_by.role)
+                .Include(u => u.created_by.department)
                 .Where(t => t.status.name.Equals(status))
                 .Select(t => t)
                 .ToListAsync();
@@ -173,11 +173,14 @@ namespace jts_backend.Services.TicketService
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
-                .Include(t => t.user)
-                .Include(u => u.user.role)
-                .Include(u => u.user.department)
-                .Include(u => u.user.job_title)
-                .Where(t => t.date_created.Equals(DateTime.Today.Date) && t.user.user_id == userId)
+                .Include(t => t.created_by)
+                .Include(u => u.created_by.role)
+                .Include(u => u.created_by.department)
+                .Include(u => u.created_by.job_title)
+                .Where(
+                    t =>
+                        t.date_created.Equals(DateTime.Today.Date) && t.created_by.user_id == userId
+                )
                 .Select(t => t)
                 .ToListAsync();
             var data = await GetTicketsData(tickets);
@@ -192,10 +195,10 @@ namespace jts_backend.Services.TicketService
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
-                .Include(t => t.user)
-                .Include(u => u.user.role)
-                .Include(u => u.user.department)
-                .Include(u => u.user.job_title)
+                .Include(t => t.created_by)
+                .Include(u => u.created_by.role)
+                .Include(u => u.created_by.department)
+                .Include(u => u.created_by.job_title)
                 .FirstOrDefaultAsync(t => t.ticket_id == id);
 
             var data = await GetTicketData(tickets!);
@@ -212,13 +215,14 @@ namespace jts_backend.Services.TicketService
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
-                .Include(t => t.user)
-                .Include(u => u.user.role)
-                .Include(u => u.user.department)
-                .Include(u => u.user.job_title)
+                .Include(t => t.created_by)
+                .Include(u => u.created_by.role)
+                .Include(u => u.created_by.department)
+                .Include(u => u.created_by.job_title)
                 .Where(
                     t =>
-                        t.user.user_id == request.user_id && t.status.status_id == request.status_id
+                        t.created_by.user_id == request.user_id
+                        && t.status.status_id == request.status_id
                 )
                 .Select(t => t)
                 .ToListAsync();
@@ -237,10 +241,10 @@ namespace jts_backend.Services.TicketService
             var responseData = new Collection<GetTicketDto>();
             var tickets = await _context.approver
                 .Include(t => t.status)
-                .Include(a => a.ticket!.user)
-                .Include(a => a.ticket!.user.department)
-                .Include(a => a.ticket!.user.role)
-                .Include(a => a.ticket!.user.job_title)
+                .Include(a => a.ticket!.created_by)
+                .Include(a => a.ticket!.created_by.department)
+                .Include(a => a.ticket!.created_by.role)
+                .Include(a => a.ticket!.created_by.job_title)
                 .Include(a => a.user)
                 .Include(u => u.user!.department)
                 .Include(u => u.user!.job_title)
@@ -272,10 +276,10 @@ namespace jts_backend.Services.TicketService
 
             var signatory = await _context.approver
                 .Include(t => t.status)
-                .Include(a => a.ticket!.user)
-                .Include(a => a.ticket!.user.department)
-                .Include(a => a.ticket!.user.role)
-                .Include(a => a.ticket!.user.job_title)
+                .Include(a => a.ticket!.created_by)
+                .Include(a => a.ticket!.created_by.department)
+                .Include(a => a.ticket!.created_by.role)
+                .Include(a => a.ticket!.created_by.job_title)
                 .Include(a => a.user)
                 .Include(u => u.user!.department)
                 .Include(u => u.user!.job_title)
@@ -360,10 +364,10 @@ namespace jts_backend.Services.TicketService
 
             var signatory = await _context.approver
                 .Include(t => t.status)
-                .Include(a => a.ticket!.user)
-                .Include(a => a.ticket!.user.department)
-                .Include(a => a.ticket!.user.role)
-                .Include(a => a.ticket!.user.job_title)
+                .Include(a => a.ticket!.created_by)
+                .Include(a => a.ticket!.created_by.department)
+                .Include(a => a.ticket!.created_by.role)
+                .Include(a => a.ticket!.created_by.job_title)
                 .Include(a => a.user)
                 .Include(u => u.user!.department)
                 .Include(u => u.user!.job_title)
@@ -548,7 +552,7 @@ namespace jts_backend.Services.TicketService
                     reason = ticket.reason,
                     status = ticket.status,
                     subject = ticket.subject,
-                    user = await GetUserData(ticket.user.user_id)
+                    created_by = await GetUserData(ticket.created_by.user_id)
                 };
 
                 var data = new GetTicketDto()
@@ -630,7 +634,7 @@ namespace jts_backend.Services.TicketService
                 reason = ticket.reason,
                 status = ticket.status,
                 subject = ticket.subject,
-                user = await GetUserData(ticket.user.user_id)
+                created_by = await GetUserData(ticket.created_by.user_id)
             };
 
             var data = new GetTicketDto()

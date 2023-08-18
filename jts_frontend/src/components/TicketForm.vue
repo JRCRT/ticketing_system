@@ -1023,8 +1023,6 @@ export default {
             signatory.value = fetchedTicket.signatories.find(
               (s) => s.user.user.user_id == currentUser.user_id
             );
-            console.log("Signatories:", fetchedTicket.signatories);
-            console.log(signatory.value);
 
             if (signatory.value != null) {
               signatoryStatus.value = signatory.value?.status?.name;
