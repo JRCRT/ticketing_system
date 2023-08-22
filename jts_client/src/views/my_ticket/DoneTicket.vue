@@ -19,6 +19,8 @@ export default {
   setup() {
     const store = useStore();
     const gridAPI = ref(null);
+    const DONE_STATUS_ID = 4;
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
@@ -30,31 +32,27 @@ export default {
       {
         headerName: "Date Created",
         field: "ticket.date_created",
-        flex: 1,
         cellRenderer: FormattedDate,
-      },
-      {
-        headerName: "Date Approved",
-        field: "ticket.date_approved",
         flex: 1,
-        cellRenderer: FormattedDate,
       },
     ];
 
     const onGridReady = async (params) => {
-      // tableApi.value = params.api;
+      const param = {
+        user_id: currentUser.user_id,
+        status_id: DONE_STATUS_ID,
+      };
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllDoneTickets");
-      const doneTickets = store.state.ticket.allDoneTickets;
-      params.api.setRowData(doneTickets);
+      await store.dispatch("ticket/fetchMyDoneTickets", param);
+      const myDoneTickets = store.state.ticket.myDoneTickets;
+      params.api.setRowData(myDoneTickets);
     };
 
-    const onSelectionChanged = async () => {
+    const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
     };
-
     return {
       columnDefs,
       onGridReady,

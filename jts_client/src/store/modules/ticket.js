@@ -19,16 +19,19 @@ const state = () => ({
   allPendingTickets: [],
   allApprovedTickets: [],
   allDeclinedTickets: [],
+  allDoneTickets: [],
 
   myTickets: [],
   myPendingTickets: [],
   myApprovedTickets: [],
   myDeclinedTickets: [],
+  myDoneTickets: [],
 
   ticketsForApproval: [],
   pendingTicketsForApproval: [],
   declinedTicketsForApproval: [],
   approvedTicketsForApproval: [],
+  doneTicketsForApproval: [],
 });
 
 const getters = {};
@@ -94,6 +97,10 @@ const actions = {
     const response = await ticketsByStatus(TICKET_STATUS.DECLINED);
     commit("FETCH_ALL_DECLINED_TICKETS", response.data);
   },
+  async fetchAllDoneTickets({ commit }) {
+    const response = await ticketsByStatus(TICKET_STATUS.DONE);
+    commit("FETCH_ALL_DONE_TICKETS", response.data);
+  },
 
   //My Tickets
   async fetchMyPendingTickets({ commit }, param) {
@@ -108,21 +115,27 @@ const actions = {
     const response = await myTickets(param);
     commit("FETCH_MY_DECLINED_TICKETS", response.data);
   },
+  async fetchMyDoneTickets({ commit }, param) {
+    const response = await myTickets(param);
+    commit("FETCH_MY_DONE_TICKETS", response.data);
+  },
 
   //Tickets For Approval
   async fetchPendingTicketsForApproval({ commit }, param) {
     const response = await ticketsForApproval(param);
     commit("FETCH_PENDING_TICKETS_FOR_APPROVAL", response.data);
   },
-
   async fetchApprovedTicketsForApproval({ commit }, param) {
     const response = await ticketsForApproval(param);
     commit("FETCH_APPROVED_TICKETS_FOR_APPROVAL", response.data);
   },
-
   async fetchDeclinedTicketsForApproval({ commit }, param) {
     const response = await ticketsForApproval(param);
     commit("FETCH_DECLINED_TICKETS_FOR_APPROVAL", response.data);
+  },
+  async fetchDoneTicketsForApproval({ commit }, param) {
+    const response = await ticketsForApproval(param);
+    commit("FETCH_DONE_TICKETS_FOR_APPROVAL", response.data);
   },
 
   async createTicket({ commit, dispatch }, ticket) {
@@ -163,6 +176,9 @@ const mutations = {
   FETCH_ALL_DECLINED_TICKETS(state, value) {
     state.allDeclinedTickets = value;
   },
+  FETCH_ALL_DONE_TICKETS(state, value) {
+    state.allDoneTickets = value;
+  },
 
   //My Tickets
   FETCH_MY_PENDING_TICKETS(state, value) {
@@ -173,6 +189,9 @@ const mutations = {
   },
   FETCH_MY_DECLINED_TICKETS(state, value) {
     state.myDeclinedTickets = value;
+  },
+  FETCH_MY_DONE_TICKETS(state, value) {
+    state.myDoneTickets = value;
   },
   ADD_MY_PENDING_TICKETS(state, value) {
     state.myPendingTickets.push(value);
@@ -187,6 +206,9 @@ const mutations = {
   },
   FETCH_APPROVED_TICKETS_FOR_APPROVAL(state, value) {
     state.approvedTicketsForApproval = value;
+  },
+  FETCH_DONE_TICKETS_FOR_APPROVAL(state, value) {
+    state.doneTicketsForApproval = value;
   },
   FETCH_TICKETS_FOR_APPROVAL(state, value) {
     state.ticketsForApproval = value;

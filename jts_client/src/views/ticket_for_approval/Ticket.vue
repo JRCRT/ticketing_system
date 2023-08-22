@@ -81,6 +81,8 @@ export default {
           return "ApprovedTicket";
         case TICKET_STATUS.DECLINED:
           return "DeclinedTicket";
+        case TICKET_STATUS.DONE:
+          return "DoneTicket";
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus.value));
@@ -104,7 +106,13 @@ export default {
         label: "Declined",
         status: TICKET_STATUS.DECLINED,
       },
+      {
+        name: "DoneTicket",
+        label: "Done",
+        status: TICKET_STATUS.DONE,
+      },
     ];
+
     const modalActive = ref(false);
 
     const closeModal = () => {

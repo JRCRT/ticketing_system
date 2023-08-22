@@ -10,6 +10,8 @@ import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
+import { TICKET_STATUS } from "@/util/constant";
+
 export default {
   components: {
     Table,
@@ -19,6 +21,7 @@ export default {
   setup() {
     const store = useStore();
     const gridAPI = ref(null);
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
       { headerName: "Subject", field: "ticket.subject", flex: 2 },
@@ -30,27 +33,23 @@ export default {
       {
         headerName: "Date Created",
         field: "ticket.date_created",
-        flex: 1,
         cellRenderer: FormattedDate,
-      },
-      {
-        headerName: "Date Approved",
-        field: "ticket.date_approved",
         flex: 1,
-        cellRenderer: FormattedDate,
       },
     ];
 
     const onGridReady = async (params) => {
-      // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllDoneTickets");
-      const doneTickets = store.state.ticket.allDoneTickets;
-      params.api.setRowData(doneTickets);
+      await store.dispatch("ticket/fetchDoneTicketsForApproval", {
+        user_id: currentUser.user_id,
+        status_id: 4,
+      });
+      const doneTicketsForApproval = store.state.ticket.doneTicketsForApproval;
+      params.api.setRowData(doneTicketsForApproval);
     };
 
-    const onSelectionChanged = async () => {
+    const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
     };

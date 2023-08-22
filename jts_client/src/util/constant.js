@@ -15,6 +15,7 @@ const TICKET_STATUS = Object.freeze({
   PENDING: "Pending",
   APPROVED: "Approved",
   DECLINED: "Declined",
+  DONE: "Done",
 });
 
 const ROLE = Object.freeze({

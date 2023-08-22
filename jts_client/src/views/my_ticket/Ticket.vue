@@ -42,8 +42,10 @@
 import PendingTicket from "@/views/my_ticket/PendingTicket.vue";
 import ApprovedTicket from "@/views/my_ticket/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/my_ticket/DeclinedTicket.vue";
+import DoneTicket from "@/views/my_ticket/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import TicketForm from "@/components/TicketForm.vue";
+
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
@@ -54,6 +56,7 @@ export default {
     PendingTicket,
     ApprovedTicket,
     DeclinedTicket,
+    DoneTicket,
     NewTicketForm,
     TicketForm,
   },
@@ -73,6 +76,8 @@ export default {
           return "ApprovedTicket";
         case TICKET_STATUS.DECLINED:
           return "DeclinedTicket";
+        case TICKET_STATUS.DONE:
+          return "DoneTicket";
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus.value));
@@ -96,7 +101,13 @@ export default {
         label: "Declined",
         status: TICKET_STATUS.DECLINED,
       },
+      {
+        name: "DoneTicket",
+        label: "Done",
+        status: TICKET_STATUS.DONE,
+      },
     ];
+
     const isNewTicketFormOpen = computed(
       () => store.state.app.isNewTicketFormOpen
     );
