@@ -151,11 +151,11 @@ namespace jts_backend.Services.UserService
             var newUser = new UserModel()
             {
                 first_name = request.first_name,
-                middle_name = request.middle_name,
-                last_name =
-                    string.IsNullOrEmpty(request.last_name) || request.last_name.Equals("null")
+                middle_name =
+                    string.IsNullOrEmpty(request.middle_name) || request.middle_name.Equals("null")
                         ? ""
-                        : request.last_name,
+                        : request.middle_name,
+                last_name = request.last_name,
                 username = request.username,
                 email = request.email,
                 password_hash = passwordHash,
@@ -179,7 +179,7 @@ namespace jts_backend.Services.UserService
             response.data = data;
             await _hubContext.Clients.All.GetUser(data);
 
-            response.message = request.last_name;
+            response.message = request.middle_name;
             return response;
         }
 
