@@ -164,7 +164,7 @@ export default {
       if (!validate()) {
         var userFormData = new FormData();
         userFormData.append("first_name", firstname.value);
-        userFormData.append("middle_name", middlename.value);
+        userFormData.append("middle_name", middlename.value ?? "");
         userFormData.append("last_name", lastname.value);
         userFormData.append("username", username.value);
         userFormData.append("password", password.value);

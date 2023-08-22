@@ -150,7 +150,7 @@ export default {
 
       userformData.append("user_id", user.value.user_id);
       userformData.append("first_name", firstname.value);
-      userformData.append("middle_name", middlename.value);
+      userformData.append("middle_name", middlename.value ?? "");
       userformData.append("last_name", lastname.value);
       userformData.append("username", username.value);
       userformData.append("email", emailAddress.value);
