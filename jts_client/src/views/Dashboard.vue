@@ -24,7 +24,7 @@
       </div>
       <div @click="navigateToTicket(TICKET_STATUS.DONE)" class="card">
         <div class="card-content">
-          <h1>{{ declinedNum }}</h1>
+          <h1>{{ doneNum }}</h1>
           <p>Done</p>
         </div>
       </div>
@@ -236,6 +236,7 @@ export default {
       pendingNum,
       approvedNum,
       declinedNum,
+      doneNum,
       navigateToTicket,
       onGridReady,
       getSelectedRow,
