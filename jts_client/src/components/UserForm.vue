@@ -111,6 +111,7 @@ export default {
         if (newUserId) {
           await store.dispatch("user/fetchUser", newUserId);
           user.value = store.state.user.user;
+
           username.value = user.value.user.username;
           firstname.value = user.value.user.first_name;
           middlename.value = user.value.user.middle_name;
@@ -148,7 +149,7 @@ export default {
 
       var userformData = new FormData();
 
-      userformData.append("user_id", user.value.user_id);
+      userformData.append("user_id", user.value.user.user_id);
       userformData.append("first_name", firstname.value);
       userformData.append("middle_name", middlename.value ?? "");
       userformData.append("last_name", lastname.value);

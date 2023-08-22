@@ -10,7 +10,7 @@ namespace jts_backend.Dtos.UserDto
     {
         public int user_id { get; set; }
         public string first_name { get; set; } = string.Empty;
-        public string? middle_name { get; set; }
+        public string? middle_name { get; set; } = string.Empty;
         public string last_name { get; set; } = string.Empty;
         public string username { get; set; } = string.Empty;
         public byte[] password_hash { get; set; } = new byte[0];

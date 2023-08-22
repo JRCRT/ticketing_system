@@ -231,22 +231,25 @@ namespace jts_backend.Services.UserService
                 f => f.owner_type.Equals(OwnerType.User.ToString()) && f.owner_id == request.user_id
             );
 
-            if (!request.file.FileName.Equals(file?.original_file_name))
+            if (!string.IsNullOrEmpty(request?.file?.FileName))
             {
-                var fileData = await Helper.Helper.UploadFiles(
-                    request.file,
-                    _env.ContentRootPath,
-                    request.user_id,
-                    OwnerType.User
-                );
-                _context.file.Add(fileData);
-                _context.user.Update(user);
-                await _context.SaveChangesAsync();
+                if (!request.file.FileName.Equals(file?.original_file_name))
+                {
+                    var fileData = await Helper.Helper.UploadFiles(
+                        request!.file!,
+                        _env.ContentRootPath,
+                        request.user_id,
+                        OwnerType.User
+                    );
+                    _context.file.Add(fileData);
+                }
             }
 
-            response.data =
-                $"RPassword: {request.password} DPassword: {Convert.ToBase64String(user.password_hash)}";
-            response.message = "Successfully updated";
+            _context.user.Update(user);
+            await _context.SaveChangesAsync();
+
+            response.data = "Successfully updated.";
+            response.message = "Successfully updated.";
             return response;
         }
 
