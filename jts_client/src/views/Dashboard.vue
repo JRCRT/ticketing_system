@@ -22,6 +22,12 @@
           <p>Declined</p>
         </div>
       </div>
+      <div @click="navigateToTicket(TICKET_STATUS.DONE)" class="card">
+        <div class="card-content">
+          <h1>{{ declinedNum }}</h1>
+          <p>Done</p>
+        </div>
+      </div>
     </div>
     <!--Today's Transactions-->
     <div>
@@ -70,6 +76,7 @@ export default {
     const pendingNum = ref(0);
     const approvedNum = ref(0);
     const declinedNum = ref(0);
+    const doneNum = ref(0);
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
     );
@@ -161,23 +168,31 @@ export default {
         user_id: currentUser.user_id,
         status_id: 3,
       };
+      const paramDone = {
+        user_id: currentUser.user_id,
+        status_id: 4,
+      };
       store.commit("app/SET_LOADING", true);
       switch (currentUser.roleModel.name) {
         case ROLE.USER:
           await store.dispatch("ticket/fetchMyPendingTickets", paramPending);
           await store.dispatch("ticket/fetchMyApprovedTickets", paramApproved);
           await store.dispatch("ticket/fetchMyDeclinedTickets", paramDeclined);
+          await store.dispatch("ticket/fetchMyDoneTickets", paramDone);
           pendingNum.value = store.state.ticket.myPendingTickets.length;
           approvedNum.value = store.state.ticket.myApprovedTickets.length;
           declinedNum.value = store.state.ticket.myDeclinedTickets.length;
+          doneNum.value = store.state.ticket.myDoneTickets.length;
           break;
         case ROLE.ADMIN:
           await store.dispatch("ticket/fetchAllPendingTickets");
           await store.dispatch("ticket/fetchAllApprovedTickets");
           await store.dispatch("ticket/fetchAllDeclinedTickets");
+          await store.dispatch("ticket/fetchAllDoneTickets");
           pendingNum.value = store.state.ticket.allPendingTickets.length;
           approvedNum.value = store.state.ticket.allApprovedTickets.length;
           declinedNum.value = store.state.ticket.allDeclinedTickets.length;
+          doneNum.value = store.state.ticket.allDoneTickets.length;
           break;
         default:
           await store.dispatch(
@@ -192,12 +207,14 @@ export default {
             "ticket/fetchDeclinedTicketsForApproval",
             paramDeclined
           );
+          await store.dispatch("ticket/fetchDoneTicketsForApproval", paramDone);
           pendingNum.value =
             store.state.ticket.pendingTicketsForApproval.length;
           approvedNum.value =
             store.state.ticket.approvedTicketsForApproval.length;
           declinedNum.value =
             store.state.ticket.declinedTicketsForApproval.length;
+          doneNum.value = store.state.ticket.doneTicketsForApproval.length;
           break;
       }
       store.commit("app/SET_LOADING", false);
