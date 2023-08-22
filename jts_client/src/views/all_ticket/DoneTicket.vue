@@ -34,8 +34,8 @@ export default {
         cellRenderer: FormattedDate,
       },
       {
-        headerName: "Date Approved",
-        field: "ticket.date_approved",
+        headerName: "Date Done",
+        field: "ticket.action_date",
         flex: 1,
         cellRenderer: FormattedDate,
       },

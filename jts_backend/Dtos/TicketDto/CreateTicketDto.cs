@@ -32,8 +32,7 @@ namespace jts_backend.Dtos.TicketDto
 
         public string connection_id { get; set; } = string.Empty;
         public DateTime date_created { get; set; }
-        public DateTime date_approved { get; set; }
-        public DateTime date_declined { get; set; }
+        public DateTime action_date { get; set; }
 
         [ModelBinder(BinderType = typeof(JsonModelBinder))]
         public List<CreateSignatoryDto> signatories { get; set; } = new List<CreateSignatoryDto>();

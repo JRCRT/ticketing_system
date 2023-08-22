@@ -33,8 +33,7 @@ namespace jts_backend.Models
         public string reason { get; set; } = string.Empty;
 
         public DateTime date_created { get; set; }
-        public DateTime date_approved { get; set; }
-        public DateTime date_declined { get; set; }
+        public DateTime action_date { get; set; }
 
         [MaxLength(500)]
         public string? declined_reason { get; set; }

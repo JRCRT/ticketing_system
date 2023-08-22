@@ -35,7 +35,7 @@ export default {
       },
       {
         headerName: "Date Declined",
-        field: "ticket.date_declined",
+        field: "ticket.action_date",
         flex: 1,
         cellRenderer: FormattedDate,
       },

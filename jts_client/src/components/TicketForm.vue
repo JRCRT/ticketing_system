@@ -42,10 +42,15 @@
                   Approved Date
                 </td>
                 <td
-                  style="border: 2px solid hsl(0, 0%, 0%); width: 192pt"
+                  style="
+                    border: 2px solid hsl(0, 0%, 0%);
+                    width: 192pt;
+                    font-size: 9pt;
+                    padding-left: 3px;
+                  "
                   colspan="4"
                 >
-                  <!--Approved Date-->
+                  {{ dateApproved }}
                 </td>
                 <td
                   style="
@@ -74,8 +79,8 @@
                 </td>
                 <td
                   style="
-                    padding: 3px;
-                    font-size: 8pt;
+                    padding-left: 3px;
+                    font-size: 9pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 96pt;
                   "
@@ -502,7 +507,7 @@
                   style="
                     padding: 5px;
                     word-wrap: break-word;
-                    font-size: 8pt;
+                    font-size: 9pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 284pt;
                     max-width: 284pt;
@@ -529,8 +534,8 @@
                   style="
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 240pt;
-                    padding: 3px;
-                    font-size: 8pt;
+                    padding-left: 3px;
+                    font-size: 9pt;
                   "
                   colspan="5"
                 >
@@ -612,10 +617,10 @@
                 </td>
                 <td
                   style="
-                    font-size: 8pt;
+                    font-size: 9pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
-                    padding: 5px;
+                    padding-left: 3px;
                   "
                   colspan="3"
                   rowspan="2"
@@ -701,7 +706,7 @@
                 </td>
                 <td
                   style="
-                    padding: 5px;
+                    padding-left: 3px;
                     font-size: 9pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
@@ -1045,7 +1050,10 @@ export default {
           ticket.value = fetchedTicket;
 
           requestedDate.value = formatDate(ticket.value.ticket.date_created);
-          dateApproved.value = formatDate(ticket.value.ticket.date_approved);
+          dateApproved.value =
+            ticket.value.ticket.status.name === TICKET_STATUS.APPROVED
+              ? formatDate(ticket.value.ticket.action_date)
+              : "";
           dateDeclined.value = formatDate(ticket.value.ticket.date_declined);
         }
       },

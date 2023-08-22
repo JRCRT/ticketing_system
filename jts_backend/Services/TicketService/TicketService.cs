@@ -110,9 +110,8 @@ namespace jts_backend.Services.TicketService
                     background = request.background,
                     condition = request.background,
                     content = request.content,
-                    date_approved = request.date_approved,
+                    action_date = request.action_date,
                     date_created = request.date_created,
-                    date_declined = request.date_declined,
                     declined_reason = request.declined_reason,
                     others = request.others,
                     priority = priority,
@@ -356,7 +355,7 @@ namespace jts_backend.Services.TicketService
                 );
 
                 ticket!.status = approvedStatus!;
-                ticket!.date_approved = DateTime.Now;
+                ticket!.action_date = DateTime.Now;
                 _context.ticket.Update(ticket);
             }
 
@@ -422,7 +421,7 @@ namespace jts_backend.Services.TicketService
 
             var reason =
                 $"<div><p>Decline by: {signatory!.user!.ext_name}</p><p>Reason: {request.decline_reason}</p></div>";
-            ticket!.date_declined = DateTime.Now;
+            ticket!.action_date = DateTime.Now;
             ticket!.declined_reason = reason;
             ticket!.status = declineStatus!;
 
@@ -560,9 +559,8 @@ namespace jts_backend.Services.TicketService
                     background = ticket.background,
                     condition = ticket.condition,
                     content = ticket.content,
-                    date_approved = ticket.date_approved,
+                    action_date = ticket.action_date,
                     date_created = ticket.date_created,
-                    date_declined = ticket.date_declined,
                     declined_reason = ticket.declined_reason,
                     others = ticket.others,
                     priority = ticket.priority,
@@ -642,9 +640,8 @@ namespace jts_backend.Services.TicketService
                 background = ticket.background,
                 condition = ticket.condition,
                 content = ticket.content,
-                date_approved = ticket.date_approved,
+                action_date = ticket.action_date,
                 date_created = ticket.date_created,
-                date_declined = ticket.date_declined,
                 declined_reason = ticket.declined_reason,
                 others = ticket.others,
                 priority = ticket.priority,

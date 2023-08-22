@@ -32,18 +32,12 @@ namespace jts_backend.Dtos.TicketDto
             set { _date_created = value; }
         }
 
-        private DateTime _date_declined;
+        private DateTime _action_date;
 
-        public DateTime date_declined
+        public DateTime action_date
         {
-            get { return _date_declined.Date.ToUniversalTime(); }
-            set { _date_declined = value; }
-        }
-        private DateTime _date_approved;
-        public DateTime date_approved
-        {
-            get { return _date_approved.Date.ToUniversalTime(); }
-            set { _date_approved = value; }
+            get { return _action_date.Date.ToUniversalTime(); }
+            set { _action_date = value; }
         }
 
         public StatusModel status { get; set; } = new StatusModel();
