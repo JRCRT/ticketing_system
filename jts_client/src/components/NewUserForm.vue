@@ -15,6 +15,8 @@
         <input v-model="middlename" class="input__field" />
         <label> Last Name </label>
         <input v-model="lastname" class="input__field" />
+        <label> Short Name </label>
+        <input v-model="shortName" class="input__field" />
         <label> Email Address </label>
         <input v-model="emailAddress" class="input__field" />
 
@@ -94,6 +96,7 @@ export default {
     const firstname = ref(null);
     const middlename = ref(null);
     const lastname = ref(null);
+    const shortName = ref(null);
     const emailAddress = ref(null);
     const departments = ref([]);
     const roles = ref([]);
@@ -166,6 +169,7 @@ export default {
         userFormData.append("first_name", firstname.value);
         userFormData.append("middle_name", middlename.value ?? "");
         userFormData.append("last_name", lastname.value);
+        userFormData.append("short_name", shortName.value);
         userFormData.append("username", username.value);
         userFormData.append("password", password.value);
         userFormData.append("email", emailAddress.value);
@@ -210,6 +214,7 @@ export default {
       firstname,
       middlename,
       lastname,
+      shortName,
       emailAddress,
       isProcessing,
       createUser,

@@ -177,7 +177,7 @@ namespace jts_backend.Services.UserService
             response.data = data;
             await _hubContext.Clients.All.GetUser(data);
 
-            response.message = request.last_name;
+            response.message = request!.last_name;
             return response;
         }
 

@@ -31,4 +31,18 @@ const SIGNATORY_TYPE = Object.freeze({
   CHECKER: "Checker",
 });
 
-export { FILE_STATUS, EXTENSIONS, TICKET_STATUS, SIGNATORY_TYPE, ROLE };
+const JOB_TITLE = Object.freeze({
+  SVP: "SVP",
+  EVP: "EVP",
+  CFO: "CFO",
+  President: "President",
+});
+
+export {
+  FILE_STATUS,
+  EXTENSIONS,
+  TICKET_STATUS,
+  SIGNATORY_TYPE,
+  ROLE,
+  JOB_TITLE,
+};

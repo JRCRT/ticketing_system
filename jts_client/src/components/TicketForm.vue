@@ -1,7 +1,7 @@
 <template>
   <Modal @close="$emit('close')">
     <template v-slot:header>
-      <h5 class="modal-title">{{ ticket?.ticket?.ticket_id }}</h5>
+      <h5 class="modal-title">{{ ticketData?.ticket_id }}</h5>
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
@@ -50,7 +50,7 @@
                   "
                   colspan="4"
                 >
-                  {{ dateApproved }}
+                  {{ getDate(TICKET_STATUS.APPROVED) }}
                 </td>
                 <td
                   style="
@@ -86,7 +86,11 @@
                   "
                   colspan="2"
                 >
-                  {{ requestedDate }}
+                  {{
+                    ticketData?.date_created
+                      ? formatDate(ticketData.date_created)
+                      : ""
+                  }}
                 </td>
               </tr>
               <tr>
@@ -432,9 +436,7 @@
                 </td>
                 <td
                   style="border-bottom: 2px dashed hsl(0, 0%, 0%); width: 48pt"
-                >
-                  &nbsp;
-                </td>
+                ></td>
               </tr>
 
               <tr>
@@ -475,18 +477,30 @@
                   style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
                   colspan="1"
                 >
-                  &nbsp;
+                  {{ getApprover(JOB_TITLE.PRESIDENT) }}
                 </td>
                 <td
-                  style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
+                  style="
+                    border-right: 2px solid hsl(0, 0%, 0%);
+                    width: 96pt;
+                    font-size: 10pt;
+                  "
                   colspan="1"
                 >
-                  &nbsp;
+                  {{ getApprover(JOB_TITLE.CFO) }}
                 </td>
-                <td style="border-right: 2px solid hsl(0, 0%, 0%); width: 48pt">
-                  &nbsp;
+                <td
+                  style="
+                    border-right: 2px solid hsl(0, 0%, 0%);
+                    width: 48pt;
+                    font-size: 10pt;
+                  "
+                >
+                  {{ getApprover(JOB_TITLE.EVP) }}
                 </td>
-                <td style="width: 48pt">&nbsp;</td>
+                <td style="width: 48pt; font-size: 10pt">
+                  {{ getApprover(JOB_TITLE.SVP) }}
+                </td>
               </tr>
               <tr>
                 <td
@@ -507,14 +521,14 @@
                   style="
                     padding: 5px;
                     word-wrap: break-word;
-                    font-size: 9pt;
+                    font-size: 10pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 284pt;
                     max-width: 284pt;
                   "
                   colspan="8"
                 >
-                  {{ ticket?.ticket?.subject }}
+                  {{ ticketData?.subject }}
                 </td>
                 <td
                   style="
@@ -535,11 +549,11 @@
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 240pt;
                     padding-left: 3px;
-                    font-size: 9pt;
+                    font-size: 10pt;
                   "
                   colspan="5"
                 >
-                  {{ ticket?.ticket?.condition }}
+                  {{ ticketData?.condition }}
                 </td>
               </tr>
 
@@ -617,7 +631,7 @@
                 </td>
                 <td
                   style="
-                    font-size: 9pt;
+                    font-size: 10pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
                     padding-left: 3px;
@@ -625,7 +639,7 @@
                   colspan="3"
                   rowspan="2"
                 >
-                  <p v-for="checker in checkers">
+                  <p v-for="checker in getCheckers()">
                     {{ checker?.user?.user?.ext_name }}
                   </p>
                 </td>
@@ -707,14 +721,14 @@
                 <td
                   style="
                     padding-left: 3px;
-                    font-size: 9pt;
+                    font-size: 10pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
                   "
                   colspan="3"
                   rowspan="2"
                 >
-                  {{ ticket?.ticket?.created_by?.user?.ext_name }}
+                  {{ ticketData?.created_by?.user?.ext_name }}
                 </td>
               </tr>
               <tr></tr>
@@ -792,14 +806,14 @@
                 <td
                   style="
                     padding: 5px;
-                    font-size: 9pt;
+                    font-size: 10pt;
                     border: 2px solid hsl(0, 0%, 0%);
                     width: 144pt;
                   "
                   colspan="3"
                   rowspan="2"
                 >
-                  {{ ticket?.ticket?.user?.department?.name }}
+                  {{ ticketData?.created_by?.user?.department?.name }}
                 </td>
               </tr>
               <tr></tr>
@@ -824,7 +838,7 @@
               </tr>
               <tr>
                 <td
-                  v-html="ticket?.ticket?.background"
+                  v-html="ticketData?.background"
                   style="
                     height: 116pt;
                     width: 768pt;
@@ -850,7 +864,7 @@
               </tr>
               <tr>
                 <td
-                  v-html="ticket?.ticket?.content"
+                  v-html="ticketData?.content"
                   style="
                     height: 116pt;
                     width: 768pt;
@@ -876,7 +890,7 @@
               </tr>
               <tr>
                 <td
-                  v-html="ticket?.ticket?.reason"
+                  v-html="ticketData?.reason"
                   style="
                     height: 101.5pt;
                     width: 768pt;
@@ -902,7 +916,7 @@
               </tr>
               <tr>
                 <td
-                  v-html="ticket?.ticket?.other"
+                  v-html="ticketData?.other"
                   style="
                     height: 101.5pt;
                     width: 768pt;
@@ -939,7 +953,10 @@
     </template>
     <template v-slot:footer>
       <div class="w-full">
-        <div v-if="isPending && isSignatory" class="w-44 flex mx-auto">
+        <div
+          v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
+          class="w-44 flex mx-auto"
+        >
           <button
             class="button-primary mr-2"
             :disabled="isProcessing"
@@ -968,7 +985,7 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
-import { TICKET_STATUS, ROLE } from "@/util/constant";
+import { TICKET_STATUS, ROLE, JOB_TITLE } from "@/util/constant";
 import { formatDate } from "@/util/helper";
 
 export default {
@@ -981,18 +998,11 @@ export default {
     const signalR = useSignalR();
     const store = useStore();
     const route = useRoute();
-    const ticket = ref({});
-    const requestedDate = ref(null);
-    const dateApproved = ref(null);
-    const dateDeclined = ref(null);
+    const ticketData = ref({});
+    const currentSignatoryData = ref({});
+    const signatories = ref([]);
     const currentUser = JSON.parse(localStorage.getItem("user"));
-    const isPending = ref(false);
-    const signatory = ref({});
-    const isSignatory = ref(false);
     const isProcessing = computed(() => store.state.app.isProcessing);
-    const signatoryStatus = ref(null);
-    const actionDate = ref(null);
-    const checkers = ref([]);
 
     const approved = async () => {
       const signatoryId = signatory.value.signatory_id;
@@ -1007,7 +1017,7 @@ export default {
     };
 
     const openDeclineReasonModal = () => {
-      const signatoryId = signatory.value.signatory_id;
+      const signatoryId = currentSignatoryData.value.signatory_id;
       const connectionId = signalR.connection.connectionId;
       store.commit("app/SET_SIGNATORY", {
         signatoryId: signatoryId,
@@ -1016,64 +1026,54 @@ export default {
       store.commit("app/SET_DECLINE_REASON_MODAL", true);
     };
 
+    const getApprover = (jobTitle) => {
+      if (ticketData.value?.subject) {
+        return signatories.value.find(
+          (s) => s.user.user.job_title.name === jobTitle
+        )?.user?.user?.short_name;
+      }
+      return null;
+    };
+
+    const getCheckers = () => {
+      return signatories.value.filter((c) => c.type === ROLE.CHECKER);
+    };
+
+    const getDate = (ticketStatus) => {
+      return ticketData.value?.status?.name === ticketStatus
+        ? formatDate(ticketData.value.action_date)
+        : "";
+    };
+
     watch(
       () => route.params.ticketId,
       async (newTicketId, oldTicketId) => {
         if (newTicketId) {
           await store.dispatch("ticket/fetchTicket", newTicketId);
-          const fetchedTicket = store.state.ticket.ticket;
-
-          if (
-            currentUser.roleModel.name == ROLE.ADMIN ||
-            currentUser.roleModel.name == ROLE.CHECKER ||
-            currentUser.roleModel.name == ROLE.APPROVER
-          ) {
-            isSignatory.value = true;
-            signatory.value = fetchedTicket.signatories.find(
-              (s) => s.user.user.user_id == currentUser.user_id
+          ticketData.value = store.state.ticket.ticket.ticket;
+          currentSignatoryData.value =
+            store.state.ticket.ticket.signatories.find(
+              (s) => s.user.user.user_id === currentUser.user_id
             );
-
-            if (signatory.value != null) {
-              signatoryStatus.value = signatory.value?.status?.name;
-              actionDate.value = formatDate(signatory.value?.action_date);
-            }
-
-            isPending.value =
-              signatory.value?.status?.name === TICKET_STATUS.PENDING;
-          }
-
-          checkers.value = fetchedTicket.signatories.filter(
-            (s) => s.type == "Checker"
-          );
-
-          console.log(checkers.value);
-          ticket.value = fetchedTicket;
-
-          requestedDate.value = formatDate(ticket.value.ticket.date_created);
-          dateApproved.value =
-            ticket.value.ticket.status.name === TICKET_STATUS.APPROVED
-              ? formatDate(ticket.value.ticket.action_date)
-              : "";
-          dateDeclined.value = formatDate(ticket.value.ticket.date_declined);
+          signatories.value = store.state.ticket.ticket.signatories;
         }
       },
       { immediate: true }
     );
 
     return {
-      ticket,
-      requestedDate,
-      isPending,
-      isSignatory,
-      dateApproved,
+      ticketData,
+      currentSignatoryData,
+      signatories,
       isProcessing,
-      signatoryStatus,
       TICKET_STATUS,
-      actionDate,
-      dateDeclined,
-      checkers,
+      JOB_TITLE,
+      formatDate,
+      getDate,
+      getCheckers,
       approved,
       openDeclineReasonModal,
+      getApprover,
     };
   },
 };

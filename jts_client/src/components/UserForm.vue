@@ -15,6 +15,8 @@
         <input v-model="middlename" class="input__field" />
         <label> Last Name </label>
         <input v-model="lastname" class="input__field" />
+        <label> Short Name </label>
+        <input v-model="shortName" class="input__field" />
         <label> Email Address </label>
         <input v-model="emailAddress" class="input__field" />
         <label> Role </label>
@@ -97,6 +99,7 @@ export default {
     const firstname = ref(null);
     const middlename = ref(null);
     const lastname = ref(null);
+    const shortName = ref(null);
     const emailAddress = ref(null);
     const departments = ref([]);
     const roles = ref([]);
@@ -121,6 +124,7 @@ export default {
           selectedDepartment.value = user.value.user.department;
           selectedRole.value = user.value.user.role;
           selectedJobTitle.value = user.value.user.job_title;
+          shortName.value = user.value.user.short_name;
 
           store.commit(
             "file/SET_IMAGE_URI",
@@ -154,6 +158,7 @@ export default {
       userformData.append("middle_name", middlename.value ?? "");
       userformData.append("last_name", lastname.value);
       userformData.append("username", username.value);
+      userformData.append("short_name", shortName.value);
       userformData.append("email", emailAddress.value);
       userformData.append("role_id", selectedRole.value.role_id);
       userformData.append(
@@ -194,6 +199,7 @@ export default {
       firstname,
       middlename,
       lastname,
+      shortName,
       emailAddress,
       isProcessing,
       file,
