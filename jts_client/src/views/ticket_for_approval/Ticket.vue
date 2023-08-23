@@ -43,6 +43,7 @@
 import PendingTicket from "@/views/ticket_for_approval/PendingTicket.vue";
 import ApprovedTicket from "@/views/ticket_for_approval/ApprovedTicket.vue";
 import DeclinedTicket from "@/views/ticket_for_approval/DeclinedTicket.vue";
+import DoneTicket from "@/views/ticket_for_approval/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import DeclineReasonModal from "@/components/DeclineReasonModal.vue";
 import TicketForm from "@/components/TicketForm.vue";
@@ -57,6 +58,7 @@ export default {
     PendingTicket,
     ApprovedTicket,
     DeclinedTicket,
+    DoneTicket,
     NewTicketForm,
     TicketForm,
     DeclineReasonModal,
@@ -85,6 +87,7 @@ export default {
           return "DoneTicket";
       }
     };
+
     const currentTab = ref(setTabOnMount(currentStatus.value));
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
