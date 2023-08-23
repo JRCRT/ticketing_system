@@ -160,7 +160,8 @@ namespace jts_backend.Services.UserService
                 department = department,
                 ext_name = $"{request.first_name} {request.middle_name} {request.last_name}",
                 role = role,
-                job_title = jobTitle
+                job_title = jobTitle,
+                short_name = request.short_name
             };
 
             _context.user.Add(newUser);
@@ -211,6 +212,7 @@ namespace jts_backend.Services.UserService
             user.last_name = request.last_name;
             user.email = request.email;
             user.ext_name = $"{request.first_name} {request.middle_name} {request.last_name}";
+            user.short_name = request.short_name;
 
             if (!request.password.Equals(Convert.ToBase64String(user.password_hash)))
             {

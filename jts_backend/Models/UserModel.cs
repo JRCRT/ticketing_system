@@ -28,6 +28,9 @@ namespace jts_backend.Models
         [MaxLength(500)]
         public string ext_name { get; set; } = string.Empty;
 
+        [MaxLength(200)]
+        public string? short_name { get; set; }
+
         [Required()]
         [MaxLength(200)]
         public string email { get; set; } = string.Empty;

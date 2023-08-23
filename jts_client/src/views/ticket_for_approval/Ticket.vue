@@ -51,7 +51,6 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
 import { computed, ref, onUnmounted, watch } from "vue";
-import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
@@ -65,7 +64,6 @@ export default {
   },
 
   setup() {
-    const signalR = useSignalR();
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
