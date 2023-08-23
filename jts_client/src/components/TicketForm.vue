@@ -955,7 +955,10 @@
       <div class="w-full">
         <div
           class="w-44 flex mx-auto"
-          v-if="currentUser?.role?.name === ROLE.ADMIN"
+          v-if="
+            currentUser?.role?.name === ROLE.ADMIN &&
+            ticketData?.status?.name !== TICKET_STATUS.DONE
+          "
         >
           <button class="button-primary mr-2">Done</button>
           <button class="button-transparent">Cancel</button>
