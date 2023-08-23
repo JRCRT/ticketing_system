@@ -50,11 +50,13 @@ namespace jts_backend.Services.AuthService
                 return response;
             }
 
-            var authUser = new AuthUserDto();
-            authUser.user_id = user.user_id;
-            authUser.username = user.username;
-            authUser.access_token = CreateToken(user);
-            authUser.roleModel = user.role;
+            var authUser = new AuthUserDto
+            {
+                user_id = user.user_id,
+                username = user.username,
+                access_token = CreateToken(user),
+                role = user.role
+            };
             response.data = authUser;
 
             return response;

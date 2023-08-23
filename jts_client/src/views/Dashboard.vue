@@ -106,7 +106,7 @@ export default {
     ];
 
     const navigateToTicket = (status) => {
-      switch (currentUser.roleModel.name) {
+      switch (currentUser.role.name) {
         case ROLE.USER:
           router.replace({ name: "MyTicket", params: { status: status } });
           break;
@@ -173,7 +173,7 @@ export default {
         status_id: 4,
       };
       store.commit("app/SET_LOADING", true);
-      switch (currentUser.roleModel.name) {
+      switch (currentUser.role.name) {
         case ROLE.USER:
           await store.dispatch("ticket/fetchMyPendingTickets", paramPending);
           await store.dispatch("ticket/fetchMyApprovedTickets", paramApproved);

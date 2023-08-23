@@ -93,7 +93,7 @@ export default {
       <!--Ticket-->
 
       <router-link
-        v-if="currentUser?.roleModel.name == ROLE.ADMIN"
+        v-if="currentUser?.role.name == ROLE.ADMIN"
         class="sidebar-link"
         :to="{ name: 'Ticket', params: { status: TICKET_STATUS.PENDING } }"
       >
@@ -114,11 +114,7 @@ export default {
       </router-link>
 
       <router-link
-        v-if="
-          currentUser?.roleModel.name == ROLE.ADMIN ||
-          currentUser?.roleModel.name == ROLE.USER ||
-          currentUser?.roleModel.name == ROLE.CHECKER
-        "
+        v-if="!currentUser?.role.name == ROLE.APPROVER"
         class="sidebar-link"
         :to="{ name: 'MyTicket', params: { status: TICKET_STATUS.PENDING } }"
       >
@@ -139,11 +135,7 @@ export default {
       </router-link>
 
       <router-link
-        v-if="
-          currentUser?.roleModel.name == ROLE.ADMIN ||
-          currentUser?.roleModel.name == ROLE.CHECKER ||
-          currentUser?.roleModel.name == ROLE.APPROVER
-        "
+        v-if="!currentUser?.role.name == ROLE.USER"
         class="sidebar-link"
         :to="{
           name: 'TicketForApproval',
@@ -187,7 +179,7 @@ export default {
 
       <!--User-->
       <router-link
-        v-if="currentUser?.roleModel.name == ROLE.ADMIN"
+        v-if="currentUser?.role.name == ROLE.ADMIN"
         class="sidebar-link"
         :to="{ name: 'User' }"
       >

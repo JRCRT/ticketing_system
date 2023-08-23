@@ -954,6 +954,13 @@
     <template v-slot:footer>
       <div class="w-full">
         <div
+          class="w-44 flex mx-auto"
+          v-if="currentUser?.role?.name === ROLE.ADMIN"
+        >
+          <button class="button-primary mr-2">Done</button>
+          <button class="button-transparent">Cancel</button>
+        </div>
+        <div
           v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
           class="w-44 flex mx-auto"
         >
@@ -970,7 +977,10 @@
           </button>
         </div>
 
-        <div v-else class="w-44 flex mx-auto">
+        <div
+          v-if="ticketData?.status?.name === TICKET_STATUS.DONE"
+          class="w-44 flex mx-auto"
+        >
           <button class="button-primary mr-2">Download</button>
           <button class="button-transparent">Print</button>
         </div>
@@ -1068,7 +1078,9 @@ export default {
       isProcessing,
       TICKET_STATUS,
       JOB_TITLE,
+      ROLE,
       formatDate,
+      currentUser,
       getDate,
       getCheckers,
       approved,
