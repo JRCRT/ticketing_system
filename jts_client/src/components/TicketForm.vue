@@ -1005,7 +1005,7 @@ export default {
     const isProcessing = computed(() => store.state.app.isProcessing);
 
     const approved = async () => {
-      const signatoryId = signatory.value.signatory_id;
+      const signatoryId = currentSignatoryData.value.signatory_id;
       const connectionId = signalR.connection.connectionId;
 
       const approver = {
