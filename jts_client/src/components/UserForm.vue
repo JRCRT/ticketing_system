@@ -167,7 +167,7 @@ export default {
       );
       userformData.append("job_title_id", selectedJobTitle.value.job_title_id);
       userformData.append("password", password.value);
-      //userformData.append("file", file.value);
+      userformData.append("file", file.value.file);
 
       await store.dispatch("user/updateUser", userformData);
     };

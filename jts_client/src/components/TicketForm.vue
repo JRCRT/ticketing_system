@@ -413,7 +413,15 @@
                   "
                   colspan="1"
                 >
-                  &nbsp;
+                  <img
+                    style="width: 40pt"
+                    draggable="false"
+                    :src="
+                      getSignature(
+                        getApprover(JOB_TITLE.PRESIDENT)?.file?.stored_file_name
+                      )
+                    "
+                  />
                 </td>
                 <td
                   style="
@@ -423,7 +431,15 @@
                   "
                   colspan="1"
                 >
-                  &nbsp;
+                  <img
+                    style="width: 40pt"
+                    draggable="false"
+                    :src="
+                      getSignature(
+                        getApprover(JOB_TITLE.CFO)?.file?.stored_file_name
+                      )
+                    "
+                  />
                 </td>
                 <td
                   style="
@@ -432,11 +448,29 @@
                     width: 48pt;
                   "
                 >
-                  &nbsp;
+                  <img
+                    style="width: 40pt"
+                    draggable="false"
+                    :src="
+                      getSignature(
+                        getApprover(JOB_TITLE.EVP)?.file?.stored_file_name
+                      )
+                    "
+                  />
                 </td>
                 <td
                   style="border-bottom: 2px dashed hsl(0, 0%, 0%); width: 48pt"
-                ></td>
+                >
+                  <img
+                    style="width: 40pt"
+                    draggable="false"
+                    :src="
+                      getSignature(
+                        getApprover(JOB_TITLE.SVP)?.file?.stored_file_name
+                      )
+                    "
+                  />
+                </td>
               </tr>
 
               <tr>
@@ -477,7 +511,7 @@
                   style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
                   colspan="1"
                 >
-                  {{ getApprover(JOB_TITLE.PRESIDENT) }}
+                  {{ getApprover(JOB_TITLE.PRESIDENT)?.user?.short_name }}
                 </td>
                 <td
                   style="
@@ -487,7 +521,7 @@
                   "
                   colspan="1"
                 >
-                  {{ getApprover(JOB_TITLE.CFO) }}
+                  {{ getApprover(JOB_TITLE.CFO)?.user?.short_name }}
                 </td>
                 <td
                   style="
@@ -496,10 +530,10 @@
                     font-size: 10pt;
                   "
                 >
-                  {{ getApprover(JOB_TITLE.EVP) }}
+                  {{ getApprover(JOB_TITLE.EVP)?.user?.short_name }}
                 </td>
                 <td style="width: 48pt; font-size: 10pt">
-                  {{ getApprover(JOB_TITLE.SVP) }}
+                  {{ getApprover(JOB_TITLE.SVP)?.user?.short_name }}
                 </td>
               </tr>
               <tr>
@@ -728,7 +762,20 @@
                   colspan="3"
                   rowspan="2"
                 >
-                  {{ ticketData?.created_by?.user?.ext_name }}
+                  <div>
+                    <img
+                      style="width: 60pt"
+                      draggable="false"
+                      :src="
+                        getSignature(
+                          ticketData?.created_by?.file?.stored_file_name
+                        )
+                      "
+                    />
+                    <p>
+                      {{ ticketData?.created_by?.user?.ext_name }}
+                    </p>
+                  </div>
                 </td>
               </tr>
               <tr></tr>
@@ -957,7 +1004,7 @@
           class="w-44 flex mx-auto"
           v-if="
             currentUser?.role?.name === ROLE.ADMIN &&
-            ticketData?.status?.name !== TICKET_STATUS.DONE
+            ticketData?.status?.name === TICKET_STATUS.APPROVED
           "
         >
           <button class="button-primary mr-2">Done</button>
@@ -1000,6 +1047,7 @@ import { ref, watch, computed } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
 import { TICKET_STATUS, ROLE, JOB_TITLE } from "@/util/constant";
 import { formatDate } from "@/util/helper";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default {
   emits: ["close"],
@@ -1043,9 +1091,13 @@ export default {
       if (ticketData.value?.subject) {
         return signatories.value.find(
           (s) => s.user.user.job_title.name === jobTitle
-        )?.user?.user?.short_name;
+        )?.user;
       }
       return null;
+    };
+
+    const getSignature = (fileName) => {
+      return fileName ? `${BASE_URL}/File/${fileName}` : "";
     };
 
     const getCheckers = () => {
@@ -1089,6 +1141,7 @@ export default {
       approved,
       openDeclineReasonModal,
       getApprover,
+      getSignature,
     };
   },
 };
