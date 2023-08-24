@@ -657,9 +657,16 @@
                   colspan="3"
                   rowspan="2"
                 >
-                  <p v-for="checker in getCheckers()">
-                    {{ checker?.user?.user?.ext_name }}
-                  </p>
+                  <div style="display: flex; flex-direction: row; gap: 4pt">
+                    <div v-for="checker in getCheckers()">
+                      <img
+                        style="width: 60pt"
+                        draggable="false"
+                        :src="getCheckerSignature(checker)"
+                      />
+                      <p>{{ checker?.user?.user?.ext_name }}</p>
+                    </div>
+                  </div>
                 </td>
               </tr>
 
@@ -1102,6 +1109,12 @@ export default {
       );
     };
 
+    const getCheckerSignature = (checker) => {
+      return checker?.status?.name === TICKET_STATUS.APPROVED
+        ? getSignature(checker?.user?.file?.stored_file_name)
+        : "";
+    };
+
     watch(
       () => route.params.ticketId,
       async (newTicketId, oldTicketId) => {
@@ -1135,6 +1148,7 @@ export default {
       getApprover,
       getSignature,
       getApproverSignature,
+      getCheckerSignature,
     };
   },
 };
