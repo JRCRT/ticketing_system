@@ -33,28 +33,28 @@
     <label>Attached Documents</label>
     <div class="rf-detail-container"></div>
 
-    <div v-if="ticket?.ticket?.status?.name == TICKET_STATUS.APPROVED">
+    <div v-if="ticket?.ticket?.status?.name === TICKET_STATUS.APPROVED">
       <label>Date Approved</label>
       <div class="rf-detail-container">
         {{ dateApproved }}
       </div>
     </div>
 
-    <div v-if="ticket?.ticket?.status?.name == TICKET_STATUS.DECLINED">
+    <div v-if="ticket?.ticket?.status?.name === TICKET_STATUS.DECLINED">
       <label>Date Declined</label>
       <div class="rf-detail-container">
         {{ dateDeclined }}
       </div>
     </div>
 
-    <div v-if="signatoryStatus == TICKET_STATUS.APPROVED">
+    <div v-if="signatoryStatus === TICKET_STATUS.APPROVED">
       <label>Date You Approved</label>
       <div class="rf-detail-container">
         {{ actionDate }}
       </div>
     </div>
 
-    <div v-if="signatoryStatus == TICKET_STATUS.DECLINED">
+    <div v-if="signatoryStatus === TICKET_STATUS.DECLINED">
       <label>Date You Declined</label>
       <div class="rf-detail-container">
         {{ actionDate }}
