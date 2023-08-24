@@ -416,11 +416,7 @@
                   <img
                     style="width: 40pt"
                     draggable="false"
-                    :src="
-                      getSignature(
-                        getApprover(JOB_TITLE.PRESIDENT)?.file?.stored_file_name
-                      )
-                    "
+                    :src="getApproverSignature(JOB_TITLE.PRESIDENT)"
                   />
                 </td>
                 <td
@@ -434,11 +430,7 @@
                   <img
                     style="width: 40pt"
                     draggable="false"
-                    :src="
-                      getSignature(
-                        getApprover(JOB_TITLE.CFO)?.file?.stored_file_name
-                      )
-                    "
+                    :src="getApproverSignature(JOB_TITLE.CFO)"
                   />
                 </td>
                 <td
@@ -451,11 +443,7 @@
                   <img
                     style="width: 40pt"
                     draggable="false"
-                    :src="
-                      getSignature(
-                        getApprover(JOB_TITLE.EVP)?.file?.stored_file_name
-                      )
-                    "
+                    :src="getApproverSignature(JOB_TITLE.EVP)"
                   />
                 </td>
                 <td
@@ -464,11 +452,7 @@
                   <img
                     style="width: 40pt"
                     draggable="false"
-                    :src="
-                      getSignature(
-                        getApprover(JOB_TITLE.SVP)?.file?.stored_file_name
-                      )
-                    "
+                    :src="getApproverSignature(JOB_TITLE.SVP)"
                   />
                 </td>
               </tr>
@@ -511,7 +495,7 @@
                   style="border-right: 2px solid hsl(0, 0%, 0%); width: 96pt"
                   colspan="1"
                 >
-                  {{ getApprover(JOB_TITLE.PRESIDENT)?.user?.short_name }}
+                  {{ getApprover(JOB_TITLE.PRESIDENT)?.user?.user?.short_name }}
                 </td>
                 <td
                   style="
@@ -521,7 +505,7 @@
                   "
                   colspan="1"
                 >
-                  {{ getApprover(JOB_TITLE.CFO)?.user?.short_name }}
+                  {{ getApprover(JOB_TITLE.CFO)?.user?.user?.short_name }}
                 </td>
                 <td
                   style="
@@ -530,10 +514,10 @@
                     font-size: 10pt;
                   "
                 >
-                  {{ getApprover(JOB_TITLE.EVP)?.user?.short_name }}
+                  {{ getApprover(JOB_TITLE.EVP)?.user?.user?.short_name }}
                 </td>
                 <td style="width: 48pt; font-size: 10pt">
-                  {{ getApprover(JOB_TITLE.SVP)?.user?.short_name }}
+                  {{ getApprover(JOB_TITLE.SVP)?.user?.user?.short_name }}
                 </td>
               </tr>
               <tr>
@@ -1091,7 +1075,7 @@ export default {
       if (ticketData.value?.subject) {
         return signatories.value.find(
           (s) => s.user.user.job_title.name === jobTitle
-        )?.user;
+        );
       }
       return null;
     };
@@ -1108,6 +1092,14 @@ export default {
       return ticketData.value?.status?.name === ticketStatus
         ? formatDate(ticketData.value.action_date)
         : "";
+    };
+
+    const getApproverSignature = (jobTitle) => {
+      return getSignature(
+        getApprover(jobTitle)?.status?.name === TICKET_STATUS.APPROVED
+          ? getApprover(jobTitle)?.user?.file?.stored_file_name
+          : ""
+      );
     };
 
     watch(
@@ -1142,6 +1134,7 @@ export default {
       openDeclineReasonModal,
       getApprover,
       getSignature,
+      getApproverSignature,
     };
   },
 };
