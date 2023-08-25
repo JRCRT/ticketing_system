@@ -21,5 +21,6 @@ namespace jts_backend.Services.TicketService
         );
         Task<ServiceResponse<GetTicketDto>> ApproveTicket(ApproveTicketDto signatory);
         Task<ServiceResponse<GetTicketDto>> DeclineTicket(DeclineTicketDto signatory);
+        Task<ServiceResponse<GetTicketDto>> DoneTicket(DoneTicketDto request);
     }
 }
