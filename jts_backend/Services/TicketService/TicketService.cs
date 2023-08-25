@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.SignalR;
 using jts_backend.Hub;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Enums;
+using MimeKit.Encodings;
 
 namespace jts_backend.Services.TicketService
 {
@@ -367,6 +368,36 @@ namespace jts_backend.Services.TicketService
 
             response.data = ticketForApproval;
             response.message = "Approved Successfully";
+            return response;
+        }
+
+        public async Task<ServiceResponse<GetTicketDto>> DoneTicket(DoneTicketDto request)
+        {
+            var response = new ServiceResponse<GetTicketDto>();
+            const int DONE_STATUS_ID = 4;
+            var doneStatus = await _context.status.FirstOrDefaultAsync(
+                s => s.status_id == DONE_STATUS_ID
+            );
+            var receiver = await _context.user.FirstOrDefaultAsync(
+                u => u.user_id == request.user_id
+            );
+            var ticket = await _context.ticket
+                .Include(t => t.priority)
+                .Include(t => t.status)
+                .Include(t => t.created_by)
+                .Include(u => u.created_by.role)
+                .Include(u => u.created_by.department)
+                .Include(u => u.created_by.job_title)
+                .FirstOrDefaultAsync(t => t.ticket_id == request.ticket_id);
+
+            ticket.received_by = receiver;
+            ticket.status = doneStatus;
+            _context.Update(ticket);
+            await _context.SaveChangesAsync();
+            var data = await GetTicketData(ticket!);
+            response.data = data;
+            response.message = "Completed.";
+
             return response;
         }
 
