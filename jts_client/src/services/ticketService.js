@@ -120,6 +120,18 @@ const declineTicket = async (signatory) => {
   return response;
 };
 
+const doneTicket = async (request) => {
+  const response = await axios
+    .post("/Ticket/DoneTicket", request)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return response;
+};
+
 export {
   tickets,
   ticketsByStatus,
@@ -131,4 +143,5 @@ export {
   ticketsForApproval,
   approveTicket,
   declineTicket,
+  doneTicket,
 };
