@@ -998,7 +998,7 @@
             ticketData?.status?.name === TICKET_STATUS.APPROVED
           "
         >
-          <button class="button-primary mr-2">Done</button>
+          <button class="button-primary mr-2" @click="done">Done</button>
           <button class="button-transparent">Cancel</button>
         </div>
         <div
@@ -1066,6 +1066,20 @@ export default {
       };
 
       await store.dispatch("ticket/approveTicket", approver);
+    };
+
+    const done = async () => {
+      const currentUserId = currentUser.user_id;
+      const connectionId = signalR.connection.connectionId;
+      const ticketId = ticketData.value.ticket_id;
+
+      const request = {
+        connection_id: connectionId,
+        ticket_id: ticketId,
+        user_id: currentUserId,
+      };
+
+      await store.dispatch("ticket/doneTicket", request);
     };
 
     const openDeclineReasonModal = () => {
@@ -1144,6 +1158,7 @@ export default {
       getDate,
       getCheckers,
       approved,
+      done,
       openDeclineReasonModal,
       getApprover,
       getSignature,
