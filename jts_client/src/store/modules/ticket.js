@@ -76,7 +76,6 @@ const actions = {
     const response = await doneTicket(request);
     var alert;
     if (!response.success) {
-      console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
       return;
