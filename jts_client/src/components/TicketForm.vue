@@ -47,6 +47,7 @@
                         height: 18.5pt;
                         width: 96pt;
                         font-size: 8pt;
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                       "
                       colspan="2"
                     >
@@ -66,7 +67,7 @@
                     <td
                       style="
                         font-weight: bold;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 288pt;
                         text-align: center;
                         vertical-align: top;
@@ -79,10 +80,12 @@
                     </td>
                     <td
                       style="
-                        border: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                         font-size: 8pt;
                         font-weight: bold;
+
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                       "
                       colspan="2"
                     >
@@ -92,7 +95,7 @@
                       style="
                         padding-left: 3px;
                         font-size: 9pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -108,7 +111,6 @@
                     <td
                       style="
                         font-weight: bold;
-                        border: 2px solid hsl(0, 0%, 0%);
                         height: 30pt;
                         width: 96pt;
                         font-size: 8pt;
@@ -120,7 +122,8 @@
                     </td>
                     <td
                       style="
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 192pt;
                         padding: 3px;
                       "
@@ -131,14 +134,23 @@
                     </td>
 
                     <td
-                      style="width: 96pt; font-size: 8pt; font-weight: bold"
+                      style="
+                        width: 96pt;
+
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        font-size: 8pt;
+                        font-weight: bold;
+                      "
                       colspan="2"
                     >
                       Receipt No.
                     </td>
 
                     <td
-                      style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+                      style="
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        width: 96pt;
+                      "
                       colspan="2"
                     >
                       <!--Receipt No-->
@@ -146,15 +158,18 @@
                   </tr>
                   <tr>
                     <td
-                      style="font-weight: bold; width: 96pt; font-size: 8pt"
+                      style="
+                        font-weight: bold;
+
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        width: 96pt;
+                        font-size: 8pt;
+                      "
                       colspan="2"
                     >
                       Receipt Date
                     </td>
-                    <td
-                      style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
-                      colspan="2"
-                    >
+                    <td style="width: 96pt" colspan="2">
                       <!--Receipt Date-->
                     </td>
                   </tr>
@@ -165,7 +180,9 @@
                         text-align: center;
                         background-color: hsl(192, 51%, 90%);
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         height: 14.5pt;
                         vertical-align: top;
                         width: 48pt;
@@ -179,7 +196,9 @@
                     <td
                       style="
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+
                         text-align: center;
                         width: 240pt;
                       "
@@ -191,7 +210,8 @@
                     <td
                       style="
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         text-align: center;
                         width: 288pt;
                       "
@@ -206,7 +226,8 @@
                       style="
                         font-size: 8pt;
                         background-color: hsl(192, 51%, 90%);
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         text-align: center;
                         width: 192pt;
                       "
@@ -224,7 +245,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -236,7 +259,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 48pt;
                       "
                     >
@@ -247,7 +272,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -259,7 +286,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -271,7 +300,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -283,7 +314,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 48pt;
                       "
                     >
@@ -294,7 +327,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 48pt;
                       "
                     >
@@ -305,7 +340,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="1"
@@ -317,7 +354,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="1"
@@ -329,7 +368,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 48pt;
                       "
                     >
@@ -340,7 +381,9 @@
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 48pt;
                       "
                     >
@@ -573,7 +616,9 @@
                         text-align: center;
                         background-color: hsl(192, 51%, 90%);
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
                         height: 14.5pt;
                         width: 48pt;
                       "
@@ -586,7 +631,8 @@
                         padding: 5px;
                         word-wrap: break-word;
                         font-size: 10pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 284pt;
                         max-width: 284pt;
                       "
@@ -599,7 +645,8 @@
                         font-weight: bold;
                         background-color: hsl(192, 51%, 90%);
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                         max-width: 96pt;
                       "
@@ -610,7 +657,8 @@
                     </td>
                     <td
                       style="
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         width: 240pt;
                         padding-left: 3px;
                         font-size: 10pt;
@@ -643,7 +691,8 @@
                         font-weight: bold;
                         text-align: center;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -653,28 +702,44 @@
                       <p>(関係先)</p>
                     </td>
                     <td
-                      style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+                      style="
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        width: 96pt;
+                      "
                       colspan="2"
                       rowspan="2"
                     >
                       &nbsp;
                     </td>
                     <td
-                      style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+                      style="
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        width: 96pt;
+                      "
                       colspan="2"
                       rowspan="2"
                     >
                       &nbsp;
                     </td>
                     <td
-                      style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+                      style="
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        width: 96pt;
+                      "
                       colspan="2"
                       rowspan="2"
                     >
                       &nbsp;
                     </td>
                     <td
-                      style="border: 2px solid hsl(0, 0%, 0%); width: 96pt"
+                      style="
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        width: 96pt;
+                      "
                       colspan="2"
                       rowspan="2"
                     >
@@ -684,7 +749,8 @@
                       style="
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -696,7 +762,8 @@
                     <td
                       style="
                         font-size: 10pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 144pt;
                         padding-left: 3px;
                       "
@@ -724,7 +791,7 @@
                         font-weight: bold;
                         text-align: center;
                         font-size: 8pt;
-                        border-bottom: 2px dashed hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
@@ -735,7 +802,7 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px dashed hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
@@ -746,7 +813,7 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px dashed hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
@@ -757,7 +824,7 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px dashed hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
@@ -768,7 +835,7 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px dashed hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
@@ -781,7 +848,8 @@
                       style="
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -793,7 +861,8 @@
                       style="
                         padding-left: 3px;
                         font-size: 10pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         width: 144pt;
                       "
                       colspan="3"
@@ -822,8 +891,9 @@
                         font-weight: bold;
                         text-align: center;
                         font-size: 8pt;
-                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px dashed hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -833,8 +903,9 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px dashed hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -844,8 +915,9 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px dashed hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -855,8 +927,9 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px dashed hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -866,8 +939,9 @@
                     </td>
                     <td
                       style="
-                        border-bottom: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px dashed hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -879,7 +953,9 @@
                       style="
                         font-weight: bold;
                         font-size: 8pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
                       "
                       colspan="2"
@@ -891,7 +967,9 @@
                       style="
                         padding: 5px;
                         font-size: 10pt;
-                        border: 2px solid hsl(0, 0%, 0%);
+                        border-top: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
+                        border-bottom: 2px solid hsl(0, 0%, 0%);
                         width: 144pt;
                       "
                       colspan="3"
@@ -1067,12 +1145,11 @@
         </div>
         <div
           v-if="ticketData?.status?.name === TICKET_STATUS.DONE"
-          class="w-44 flex mx-auto"
+          class="w-36 flex mx-auto"
         >
           <button class="button-primary mr-2" @click="generatePDF()">
-            Download
+            Download As PDF
           </button>
-          <button class="button-transparent">Print</button>
         </div>
       </div>
     </template>
