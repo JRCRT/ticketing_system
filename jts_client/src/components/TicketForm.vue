@@ -989,6 +989,8 @@
                       style="
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         font-weight: bold;
                         height: 14.5pt;
                         width: 768pt;
@@ -1015,6 +1017,8 @@
                       style="
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         font-weight: bold;
                         height: 14.5pt;
                         width: 768pt;
@@ -1041,6 +1045,8 @@
                       style="
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         font-weight: bold;
                         height: 14.5pt;
                         width: 768pt;
@@ -1067,6 +1073,8 @@
                       style="
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         font-weight: bold;
                         height: 14.5pt;
                         width: 768pt;
@@ -1093,6 +1101,8 @@
                       style="
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
+                        border-left: 2px solid hsl(0, 0%, 0%);
+                        border-right: 2px solid hsl(0, 0%, 0%);
                         font-weight: bold;
                         height: 14.5pt;
                         width: 768pt;
