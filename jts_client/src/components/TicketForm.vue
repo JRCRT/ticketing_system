@@ -5,9 +5,18 @@
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
-        <Vue3Html2pdf>
+        <Vue3Html2pdf
+          :paginate-elements-by-height="1400"
+          :show-layout="true"
+          :float-layout="false"
+          :enable-download="true"
+          :pdf-quality="2"
+          ref="pdf"
+          pdf-format="a4"
+          pdf-content-width="800px"
+        >
           <template v-slot:pdf-content>
-            <figure class="table" style="width: 816px">
+            <figure class="table" style="width: 790px; padding: 10px">
               <table
                 class="ck-table-resized"
                 style="border: 3px double hsl(0, 0%, 0%)"
@@ -1060,7 +1069,9 @@
           v-if="ticketData?.status?.name === TICKET_STATUS.DONE"
           class="w-44 flex mx-auto"
         >
-          <button class="button-primary mr-2">Download</button>
+          <button class="button-primary mr-2" @click="generatePDF()">
+            Download
+          </button>
           <button class="button-transparent">Print</button>
         </div>
       </div>
@@ -1070,6 +1081,7 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import Vue3Html2pdf from "vue3-html2pdf";
+import jsPDF from "jspdf";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
@@ -1083,10 +1095,12 @@ export default {
   components: {
     Modal,
     Vue3Html2pdf,
+    jsPDF,
   },
 
   setup() {
     const signalR = useSignalR();
+    const pdf = ref(null);
     const store = useStore();
     const route = useRoute();
     const ticketData = ref({});
@@ -1105,6 +1119,10 @@ export default {
       };
 
       await store.dispatch("ticket/approveTicket", approver);
+    };
+
+    const generatePDF = () => {
+      pdf.value.generatePdf();
     };
 
     const done = async () => {
@@ -1194,6 +1212,7 @@ export default {
       ROLE,
       formatDate,
       currentUser,
+      pdf,
       getDate,
       getCheckers,
       approved,
@@ -1203,6 +1222,7 @@ export default {
       getSignature,
       getApproverSignature,
       getCheckerSignature,
+      generatePDF,
     };
   },
 };
