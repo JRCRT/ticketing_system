@@ -41,7 +41,7 @@ export default {
     ];
 
     signalR.on("GetTicketForApproval", (ticket) => {
-      store.commit("ticket/REMOVE_PENDING_TICKETS_FOR_APPROVAL", ticket);
+      store.commit("ticket/REMOVE_PENDING_TICKET_FOR_APPROVAL", ticket);
       const pendingTicketsForApproval =
         store.state.ticket.pendingTicketsForApproval;
       gridAPI.value.setRowData(pendingTicketsForApproval);

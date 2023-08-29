@@ -43,7 +43,6 @@ const actions = {
     const response = await approveTicket(signatory);
     var alert;
     if (!response.success) {
-      console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
       return;
@@ -80,6 +79,7 @@ const actions = {
       dispatch("app/addAlert", alert, { root: true });
       return;
     }
+
     alert = { type: "success", message: response.message };
     commit("app/SET_PROCESSING", false, { root: true });
     commit("app/SET_TICKET_FORM", false, { root: true });
@@ -229,12 +229,19 @@ const mutations = {
   FETCH_TICKETS_FOR_APPROVAL(state, value) {
     state.ticketsForApproval = value;
   },
-  REMOVE_PENDING_TICKETS_FOR_APPROVAL(state, value) {
+  REMOVE_PENDING_TICKET_FOR_APPROVAL(state, value) {
     const ticketId = value.ticket.ticket_id;
     const newValue = state.pendingTicketsForApproval.filter(
       (t) => t.ticket.ticket_id != ticketId
     );
     state.pendingTicketsForApproval = newValue;
+  },
+  REMOVE_DONE_TICKET(state, value) {
+    const ticketId = value.ticket.ticket_id;
+    const newValue = state.allApprovedTickets.filter(
+      (t) => t.ticket.ticket_id != ticketId
+    );
+    state.allApprovedTickets = newValue;
   },
 };
 

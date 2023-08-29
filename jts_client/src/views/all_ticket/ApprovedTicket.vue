@@ -10,6 +10,7 @@ import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { ref } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 export default {
   components: {
     Table,
@@ -18,6 +19,7 @@ export default {
 
   setup() {
     const store = useStore();
+    const signalR = useSignalR();
     const gridAPI = ref(null);
     const columnDefs = [
       { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
@@ -40,6 +42,12 @@ export default {
         cellRenderer: FormattedDate,
       },
     ];
+
+    signalR.on("GetAllTicket", (ticket) => {
+      store.commit("ticket/REMOVE_DONE_TICKET", ticket);
+      const allApprovedTickets = store.state.ticket.allApprovedTickets;
+      gridAPI.value.setRowData(allApprovedTickets);
+    });
 
     const onGridReady = async (params) => {
       // tableApi.value = params.api;

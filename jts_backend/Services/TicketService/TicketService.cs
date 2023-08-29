@@ -395,6 +395,8 @@ namespace jts_backend.Services.TicketService
             _context.Update(ticket);
             await _context.SaveChangesAsync();
             var data = await GetTicketData(ticket!);
+
+            await _hubContext.Clients.Client(request.connection_id).GetAllTicket(data);
             response.data = data;
             response.message = "Completed.";
 
