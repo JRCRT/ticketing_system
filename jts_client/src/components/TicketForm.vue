@@ -1114,7 +1114,7 @@
                   </tr>
                   <tr>
                     <td style="height: 101.5pt; width: 768pt" colspan="16">
-                      &nbsp;
+                      <p v-for="file in files">{{ file.original_file_name }}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -1195,6 +1195,7 @@ export default {
     const signatories = ref([]);
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const isProcessing = computed(() => store.state.app.isProcessing);
+    const files = ref([]);
 
     const approved = async () => {
       const signatoryId = currentSignatoryData.value.signatory_id;
@@ -1283,6 +1284,7 @@ export default {
             store.state.ticket.ticket.signatories.find(
               (s) => s.user.user.user_id === currentUser.user_id
             );
+          files.value = store.state.ticket.ticket.files;
           signatories.value = store.state.ticket.ticket.signatories;
         }
       },
@@ -1300,6 +1302,7 @@ export default {
       formatDate,
       currentUser,
       pdf,
+      files,
       getDate,
       getCheckers,
       approved,
