@@ -17,9 +17,11 @@ export default {
         case TICKET_STATUS.PENDING:
           return "bg-orange";
         case TICKET_STATUS.APPROVED:
-          return "bg-primary";
+          return "bg-blue";
         case TICKET_STATUS.DECLINED:
           return "bg-red";
+        case TICKET_STATUS.DONE:
+          return "bg-primary";
       }
     }
     return {

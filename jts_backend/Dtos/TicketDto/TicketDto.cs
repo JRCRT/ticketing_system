@@ -43,6 +43,7 @@ namespace jts_backend.Dtos.TicketDto
         public StatusModel status { get; set; } = new StatusModel();
         public GetUserDto created_by { get; set; } = new GetUserDto();
         public GetUserDto received_by { get; set; } = new GetUserDto();
+        public GetUserDto declined_by { get; set; } = new GetUserDto();
         public PriorityModel priority { get; set; } = new PriorityModel();
     }
 }

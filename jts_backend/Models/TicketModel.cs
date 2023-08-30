@@ -39,11 +39,14 @@ namespace jts_backend.Models
         public string? declined_reason { get; set; }
         public StatusModel status { get; set; } = new StatusModel();
 
-        [Column("created_by_")]
+        [Column("created_by")]
         public UserModel? created_by { get; set; } = new UserModel();
 
-        [Column("received_by_")]
+        [Column("received_by")]
         public UserModel? received_by { get; set; } = new UserModel();
+
+        [Column("declined_by")]
+        public UserModel? declined_by { get; set; } = new UserModel();
         public PriorityModel priority { get; set; } = new PriorityModel();
     }
 }

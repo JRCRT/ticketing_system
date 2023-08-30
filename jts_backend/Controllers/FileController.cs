@@ -35,7 +35,7 @@ namespace jts_backend.Controllers
         }
 
         [HttpGet("{fileName}")]
-        public async Task<IActionResult> GetImage(string fileName)
+        public async Task<IActionResult> GetFile(string fileName)
         {
             var uploadResult = await _context.file.FirstOrDefaultAsync(
                 f => f.stored_file_name.Equals(fileName)
@@ -49,7 +49,7 @@ namespace jts_backend.Controllers
                 await stream.CopyToAsync(memory);
             }
             memory.Position = 0;
-            return File(memory, uploadResult!.content_type, Path.GetFileName(path));
+            return File(memory, uploadResult!.content_type, uploadResult.original_file_name);
         }
     }
 }

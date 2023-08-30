@@ -11,6 +11,7 @@
           :float-layout="false"
           :enable-download="true"
           :pdf-quality="2"
+          :filename="fileName"
           ref="pdf"
           pdf-format="a4"
           pdf-content-width="800px"
@@ -195,6 +196,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 8pt;
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
@@ -209,6 +211,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 8pt;
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
@@ -224,6 +227,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 8pt;
                         background-color: hsl(192, 51%, 90%);
                         border-right: 2px solid hsl(0, 0%, 0%);
@@ -242,6 +246,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -256,6 +261,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -269,6 +275,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -283,6 +290,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -297,6 +305,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -311,6 +320,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -324,6 +334,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -337,6 +348,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -351,6 +363,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -365,6 +378,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -378,6 +392,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         text-align: center;
                         font-weight: bold;
                         font-size: 8pt;
@@ -612,6 +627,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-weight: bold;
                         text-align: center;
                         background-color: hsl(192, 51%, 90%);
@@ -642,6 +658,7 @@
                     </td>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-weight: bold;
                         background-color: hsl(192, 51%, 90%);
                         font-size: 8pt;
@@ -873,7 +890,7 @@
                           style="width: 60pt"
                           draggable="false"
                           :src="
-                            getSignature(
+                            getFileLink(
                               ticketData?.created_by?.file?.stored_file_name
                             )
                           "
@@ -888,6 +905,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-weight: bold;
                         text-align: center;
                         font-size: 8pt;
@@ -952,6 +970,7 @@
                     <td
                       style="
                         font-weight: bold;
+                        padding-bottom: 5px;
                         font-size: 8pt;
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
@@ -988,6 +1007,7 @@
                     <td
                       style="
                         font-size: 10pt;
+                        padding-bottom: 5px;
                         background-color: hsl(192, 51%, 90%);
                         border-left: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
@@ -1008,6 +1028,8 @@
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
+                        word-wrap: break-word;
+                        max-width: 590pt;
                       "
                       colspan="16"
                     ></td>
@@ -1015,6 +1037,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
                         border-left: 2px solid hsl(0, 0%, 0%);
@@ -1036,6 +1059,8 @@
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
+                        word-wrap: break-word;
+                        max-width: 590pt;
                       "
                       colspan="16"
                     ></td>
@@ -1043,6 +1068,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
                         border-left: 2px solid hsl(0, 0%, 0%);
@@ -1064,6 +1090,8 @@
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
+                        word-wrap: break-word;
+                        max-width: 590pt;
                       "
                       colspan="16"
                     ></td>
@@ -1071,6 +1099,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
                         border-left: 2px solid hsl(0, 0%, 0%);
@@ -1092,6 +1121,8 @@
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
+                        word-wrap: break-word;
+                        max-width: 590pt;
                       "
                       colspan="16"
                     ></td>
@@ -1099,6 +1130,7 @@
                   <tr>
                     <td
                       style="
+                        padding-bottom: 5px;
                         font-size: 10pt;
                         background-color: hsl(192, 51%, 90%);
                         border-left: 2px solid hsl(0, 0%, 0%);
@@ -1114,7 +1146,13 @@
                   </tr>
                   <tr>
                     <td style="height: 101.5pt; width: 768pt" colspan="16">
-                      <p v-for="file in files">{{ file.original_file_name }}</p>
+                      <div>
+                        <div v-for="file in files">
+                          <a :href="getFileLink(file.stored_file_name)">{{
+                            file.original_file_name
+                          }}</a>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -1146,11 +1184,11 @@
             :disabled="isProcessing"
             @click="approved"
           >
-            {{ isProcessing ? "Approving..." : "Approved" }}
+            {{ isProcessing ? "Approving..." : "Approve" }}
           </button>
 
           <button class="button-transparent" @click="openDeclineReasonModal">
-            Declined
+            Decline
           </button>
         </div>
         <div
@@ -1196,6 +1234,7 @@ export default {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const isProcessing = computed(() => store.state.app.isProcessing);
     const files = ref([]);
+    const fileName = ref(null);
 
     const approved = async () => {
       const signatoryId = currentSignatoryData.value.signatory_id;
@@ -1246,7 +1285,7 @@ export default {
       return null;
     };
 
-    const getSignature = (fileName) => {
+    const getFileLink = (fileName) => {
       return fileName ? `${BASE_URL}/File/${fileName}` : "";
     };
 
@@ -1255,13 +1294,14 @@ export default {
     };
 
     const getDate = (ticketStatus) => {
-      return ticketData.value?.status?.name === ticketStatus
+      return ticketData.value?.status?.name === ticketStatus ||
+        ticketData.value?.status?.name === TICKET_STATUS.DONE
         ? formatDate(ticketData.value.action_date)
         : "";
     };
 
     const getApproverSignature = (jobTitle) => {
-      return getSignature(
+      return getFileLink(
         getApprover(jobTitle)?.status?.name === TICKET_STATUS.APPROVED
           ? getApprover(jobTitle)?.user?.file?.stored_file_name
           : ""
@@ -1270,7 +1310,7 @@ export default {
 
     const getCheckerSignature = (checker) => {
       return checker?.status?.name === TICKET_STATUS.APPROVED
-        ? getSignature(checker?.user?.file?.stored_file_name)
+        ? getFileLink(checker?.user?.file?.stored_file_name)
         : "";
     };
 
@@ -1286,6 +1326,7 @@ export default {
             );
           files.value = store.state.ticket.ticket.files;
           signatories.value = store.state.ticket.ticket.signatories;
+          fileName.value = `Application No.${ticketData.value.ticket_id}`;
         }
       },
       { immediate: true }
@@ -1303,13 +1344,14 @@ export default {
       currentUser,
       pdf,
       files,
+      fileName,
       getDate,
       getCheckers,
       approved,
       done,
       openDeclineReasonModal,
       getApprover,
-      getSignature,
+      getFileLink,
       getApproverSignature,
       getCheckerSignature,
       generatePDF,
