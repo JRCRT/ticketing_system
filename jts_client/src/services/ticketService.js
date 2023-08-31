@@ -108,9 +108,9 @@ const approveTicket = async (signatory) => {
   return response;
 };
 
-const declineTicket = async (signatory) => {
+const rejectedTicket = async (signatory) => {
   const response = await axios
-    .post("/Ticket/DeclineTicket", signatory)
+    .post("/Ticket/RejectTicket", signatory)
     .then((res) => {
       return res.data;
     })
@@ -142,6 +142,6 @@ export {
   myTickets,
   ticketsForApproval,
   approveTicket,
-  declineTicket,
+  rejectedTicket,
   doneTicket,
 };

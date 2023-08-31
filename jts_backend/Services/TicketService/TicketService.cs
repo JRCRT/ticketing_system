@@ -89,14 +89,14 @@ namespace jts_backend.Services.TicketService
                 {
                     background = request.background,
                     content = request.content,
-                    declined_reason = request.declined_reason,
+                    rejection_reason = null,
                     reason = request.reason,
                     subject = request.subject,
                     condition = request.condition,
                     priority = priority,
                     status = status,
                     received_by = null,
-                    declined_by = null,
+                    rejected_by = null,
                     created_by = preparedBy,
                     date_created = request.date_created.Date,
                     others = request.others
@@ -114,7 +114,7 @@ namespace jts_backend.Services.TicketService
                     content = request.content,
                     action_date = request.action_date,
                     date_created = request.date_created,
-                    declined_reason = request.declined_reason,
+                    rejection_reason = null,
                     others = request.others,
                     priority = priority,
                     status = status,
@@ -123,7 +123,7 @@ namespace jts_backend.Services.TicketService
                     ticket_id = ticketData.ticket_id,
                     created_by = await GetUserData(preparedBy.user_id),
                     received_by = null,
-                    declined_by = null
+                    rejected_by = null
                 };
 
                 var responseData = new GetTicketDto()
@@ -405,12 +405,12 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<GetTicketDto>> DeclineTicket(DeclineTicketDto request)
+        public async Task<ServiceResponse<GetTicketDto>> RejectTicket(RejectTicket request)
         {
             var response = new ServiceResponse<GetTicketDto>();
-            const int DECLINE_STATUS_ID = 3;
-            var declineStatus = await _context.status.FirstOrDefaultAsync(
-                s => s.status_id == DECLINE_STATUS_ID
+            const int REJECTED_STATUS_ID = 3;
+            var rejectedStatus = await _context.status.FirstOrDefaultAsync(
+                s => s.status_id == REJECTED_STATUS_ID
             );
 
             var signatory = await _context.approver
@@ -428,7 +428,7 @@ namespace jts_backend.Services.TicketService
                 .Include(t => t.ticket!.priority)
                 .FirstOrDefaultAsync(s => s.signatory_id == request.signatory_id);
 
-            signatory!.status = declineStatus!;
+            signatory!.status = rejectedStatus!;
             signatory!.action_date = DateTime.Now;
 
             _context.approver.Update(signatory!);
@@ -444,7 +444,7 @@ namespace jts_backend.Services.TicketService
             //decline for all signatories
             foreach (var _signatory in signatories)
             {
-                _signatory.status = declineStatus!;
+                _signatory.status = rejectedStatus!;
                 _signatory.action_date = DateTime.Now;
                 _context.approver.Update(_signatory);
             }
@@ -454,14 +454,14 @@ namespace jts_backend.Services.TicketService
                 .Where(t => t.ticket_id == signatory!.ticket!.ticket_id)
                 .FirstOrDefaultAsync();
 
-            var declinedBy = await _context.user.FirstOrDefaultAsync(
+            var rejectedBy = await _context.user.FirstOrDefaultAsync(
                 u => u.user_id == signatory!.user!.user_id
             );
 
             ticket!.action_date = DateTime.Now;
-            ticket!.declined_reason = request.decline_reason;
-            ticket!.declined_by = declinedBy;
-            ticket!.status = declineStatus!;
+            ticket!.rejection_reason = request.rejection_reason;
+            ticket!.rejected_by = rejectedBy;
+            ticket!.status = rejectedStatus!;
 
             _context.ticket.Update(ticket);
             await _context.SaveChangesAsync();
@@ -472,7 +472,7 @@ namespace jts_backend.Services.TicketService
                 .GetTicketForApproval(ticketForApproval);
 
             response.data = ticketForApproval;
-            response.message = "Declined Successfully";
+            response.message = "Rejected Successfully";
             return response;
         }
 
@@ -599,14 +599,14 @@ namespace jts_backend.Services.TicketService
                     content = ticket.content,
                     action_date = ticket.action_date,
                     date_created = ticket.date_created,
-                    declined_reason = ticket.declined_reason,
+                    rejection_reason = ticket.rejection_reason,
                     others = ticket.others,
                     priority = ticket.priority,
                     reason = ticket.reason,
                     status = ticket.status,
                     subject = ticket.subject,
                     created_by = await GetUserData(ticket.created_by.user_id),
-                    declined_by = await GetUserData(ticket.declined_by.user_id),
+                    rejected_by = await GetUserData(ticket.rejected_by.user_id),
                     received_by = await GetUserData(ticket.received_by.user_id)
                 };
 
@@ -685,14 +685,14 @@ namespace jts_backend.Services.TicketService
                 content = ticket.content,
                 action_date = ticket.action_date,
                 date_created = ticket.date_created,
-                declined_reason = ticket.declined_reason,
+                rejection_reason = ticket.rejection_reason,
                 others = ticket.others,
                 priority = ticket.priority,
                 reason = ticket.reason,
                 status = ticket.status,
                 subject = ticket.subject,
                 created_by = await GetUserData(ticket.created_by.user_id),
-                declined_by = await GetUserData(ticket.declined_by.user_id),
+                rejected_by = await GetUserData(ticket.rejected_by.user_id),
                 received_by = await GetUserData(ticket.received_by.user_id)
             };
 

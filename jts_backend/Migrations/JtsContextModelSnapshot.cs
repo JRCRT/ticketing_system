@@ -228,13 +228,6 @@ namespace jts_backend.Migrations
                     b.Property<DateTime>("date_created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("declined_byuser_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("declined_reason")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("others")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -249,6 +242,13 @@ namespace jts_backend.Migrations
                     b.Property<int?>("received_byuser_id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("rejected_byuser_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("rejection_reason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<int>("status_id")
                         .HasColumnType("int");
 
@@ -261,11 +261,11 @@ namespace jts_backend.Migrations
 
                     b.HasIndex("created_byuser_id");
 
-                    b.HasIndex("declined_byuser_id");
-
                     b.HasIndex("priority_id");
 
                     b.HasIndex("received_byuser_id");
+
+                    b.HasIndex("rejected_byuser_id");
 
                     b.HasIndex("status_id");
 
@@ -389,10 +389,6 @@ namespace jts_backend.Migrations
                         .WithMany()
                         .HasForeignKey("created_byuser_id");
 
-                    b.HasOne("jts_backend.Models.UserModel", "declined_by")
-                        .WithMany()
-                        .HasForeignKey("declined_byuser_id");
-
                     b.HasOne("jts_backend.Models.PriorityModel", "priority")
                         .WithMany()
                         .HasForeignKey("priority_id")
@@ -403,6 +399,10 @@ namespace jts_backend.Migrations
                         .WithMany()
                         .HasForeignKey("received_byuser_id");
 
+                    b.HasOne("jts_backend.Models.UserModel", "rejected_by")
+                        .WithMany()
+                        .HasForeignKey("rejected_byuser_id");
+
                     b.HasOne("jts_backend.Models.StatusModel", "status")
                         .WithMany()
                         .HasForeignKey("status_id")
@@ -411,11 +411,11 @@ namespace jts_backend.Migrations
 
                     b.Navigation("created_by");
 
-                    b.Navigation("declined_by");
-
                     b.Navigation("priority");
 
                     b.Navigation("received_by");
+
+                    b.Navigation("rejected_by");
 
                     b.Navigation("status");
                 });

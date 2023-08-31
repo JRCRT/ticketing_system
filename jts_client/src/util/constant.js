@@ -1,8 +1,3 @@
-const FILE_STATUS = Object.freeze({
-  INITIAL: "INITIAL",
-  LOADING: "LOADING",
-});
-
 const EXTENSIONS = Object.freeze({
   DOCX: "docx",
   DOC: "doc",
@@ -14,7 +9,7 @@ const EXTENSIONS = Object.freeze({
 const TICKET_STATUS = Object.freeze({
   PENDING: "Pending",
   APPROVED: "Approved",
-  DECLINED: "Declined",
+  REJECTED: "Rejected",
   DONE: "Done",
 });
 
@@ -38,11 +33,4 @@ const JOB_TITLE = Object.freeze({
   President: "President",
 });
 
-export {
-  FILE_STATUS,
-  EXTENSIONS,
-  TICKET_STATUS,
-  SIGNATORY_TYPE,
-  ROLE,
-  JOB_TITLE,
-};
+export { EXTENSIONS, TICKET_STATUS, SIGNATORY_TYPE, ROLE, JOB_TITLE };

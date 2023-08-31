@@ -35,6 +35,7 @@ namespace jts_backend.Services.AuthService
             var response = new ServiceResponse<AuthUserDto>();
             var user = await _context.user
                 .Include(u => u.role)
+                .Include(u => u.department)
                 .FirstOrDefaultAsync(u => u.username.ToLower() == request.username.ToLower());
             if (
                 user is null

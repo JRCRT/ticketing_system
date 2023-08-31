@@ -83,10 +83,10 @@ namespace jts_backend.Controllers
             return Ok(response);
         }
 
-        [HttpPost("DeclineTicket")]
-        public async Task<ActionResult<GetTicketDto>> DeclineTicket(DeclineTicketDto request)
+        [HttpPost("RejectTicket")]
+        public async Task<ActionResult<GetTicketDto>> RejectTicket(RejectTicket request)
         {
-            var response = await _ticketService.DeclineTicket(request);
+            var response = await _ticketService.RejectTicket(request);
             return Ok(response);
         }
 

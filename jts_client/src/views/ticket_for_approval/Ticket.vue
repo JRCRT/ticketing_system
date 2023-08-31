@@ -42,7 +42,7 @@
 <script>
 import PendingTicket from "@/views/ticket_for_approval/PendingTicket.vue";
 import ApprovedTicket from "@/views/ticket_for_approval/ApprovedTicket.vue";
-import DeclinedTicket from "@/views/ticket_for_approval/DeclinedTicket.vue";
+import RejectedTicket from "@/views/ticket_for_approval/RejectedTicket.vue";
 import DoneTicket from "@/views/ticket_for_approval/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import DeclineReasonModal from "@/components/DeclineReasonModal.vue";
@@ -56,7 +56,7 @@ export default {
   components: {
     PendingTicket,
     ApprovedTicket,
-    DeclinedTicket,
+    RejectedTicket,
     DoneTicket,
     NewTicketForm,
     TicketForm,
@@ -79,8 +79,8 @@ export default {
           return "PendingTicket";
         case TICKET_STATUS.APPROVED:
           return "ApprovedTicket";
-        case TICKET_STATUS.DECLINED:
-          return "DeclinedTicket";
+        case TICKET_STATUS.REJECTED:
+          return "RejectedTicket";
         case TICKET_STATUS.DONE:
           return "DoneTicket";
       }
@@ -103,9 +103,9 @@ export default {
         status: TICKET_STATUS.APPROVED,
       },
       {
-        name: "DeclinedTicket",
-        label: "Declined",
-        status: TICKET_STATUS.DECLINED,
+        name: "RejectedTicket",
+        label: "Rejected",
+        status: TICKET_STATUS.REJECTED,
       },
       {
         name: "DoneTicket",

@@ -12,7 +12,7 @@ using jts_backend.Context;
 namespace jts_backend.Migrations
 {
     [DbContext(typeof(JtsContext))]
-    [Migration("20230818031808_Initial")]
+    [Migration("20230831052639_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -210,6 +210,9 @@ namespace jts_backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ticket_id"));
 
+                    b.Property<DateTime>("action_date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("background")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -225,18 +228,8 @@ namespace jts_backend.Migrations
                     b.Property<int?>("created_byuser_id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("date_approved")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("date_created")
                         .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date_declined")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("declined_reason")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("others")
                         .HasMaxLength(500)
@@ -251,6 +244,13 @@ namespace jts_backend.Migrations
 
                     b.Property<int?>("received_byuser_id")
                         .HasColumnType("int");
+
+                    b.Property<int?>("rejected_byuser_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("rejection_reason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("status_id")
                         .HasColumnType("int");
@@ -267,6 +267,8 @@ namespace jts_backend.Migrations
                     b.HasIndex("priority_id");
 
                     b.HasIndex("received_byuser_id");
+
+                    b.HasIndex("rejected_byuser_id");
 
                     b.HasIndex("status_id");
 
@@ -323,6 +325,10 @@ namespace jts_backend.Migrations
 
                     b.Property<int>("role_id")
                         .HasColumnType("int");
+
+                    b.Property<string>("short_name")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("username")
                         .IsRequired()
@@ -396,6 +402,10 @@ namespace jts_backend.Migrations
                         .WithMany()
                         .HasForeignKey("received_byuser_id");
 
+                    b.HasOne("jts_backend.Models.UserModel", "rejected_by")
+                        .WithMany()
+                        .HasForeignKey("rejected_byuser_id");
+
                     b.HasOne("jts_backend.Models.StatusModel", "status")
                         .WithMany()
                         .HasForeignKey("status_id")
@@ -407,6 +417,8 @@ namespace jts_backend.Migrations
                     b.Navigation("priority");
 
                     b.Navigation("received_by");
+
+                    b.Navigation("rejected_by");
 
                     b.Navigation("status");
                 });

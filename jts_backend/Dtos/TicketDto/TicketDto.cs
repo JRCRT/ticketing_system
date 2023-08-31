@@ -23,7 +23,7 @@ namespace jts_backend.Dtos.TicketDto
 
         public string others { get; set; } = string.Empty;
 
-        public string declined_reason { get; set; } = string.Empty;
+        public string rejection_reason { get; set; } = string.Empty;
 
         private DateTime _date_created;
         public DateTime date_created
@@ -43,7 +43,7 @@ namespace jts_backend.Dtos.TicketDto
         public StatusModel status { get; set; } = new StatusModel();
         public GetUserDto created_by { get; set; } = new GetUserDto();
         public GetUserDto received_by { get; set; } = new GetUserDto();
-        public GetUserDto declined_by { get; set; } = new GetUserDto();
+        public GetUserDto rejected_by { get; set; } = new GetUserDto();
         public PriorityModel priority { get; set; } = new PriorityModel();
     }
 }

@@ -8,7 +8,7 @@ import {
   myTickets,
   ticketsForApproval,
   approveTicket,
-  declineTicket,
+  rejectTicket,
   doneTicket,
 } from "@/services/ticketService.js";
 import { TICKET_STATUS } from "@/util/constant";
@@ -19,18 +19,18 @@ const state = () => ({
 
   allPendingTickets: [],
   allApprovedTickets: [],
-  allDeclinedTickets: [],
+  allRejectedTickets: [],
   allDoneTickets: [],
 
   myTickets: [],
   myPendingTickets: [],
   myApprovedTickets: [],
-  myDeclinedTickets: [],
+  myRejectedTickets: [],
   myDoneTickets: [],
 
   ticketsForApproval: [],
   pendingTicketsForApproval: [],
-  declinedTicketsForApproval: [],
+  rejectedTicketsForApproval: [],
   approvedTicketsForApproval: [],
   doneTicketsForApproval: [],
 });
@@ -53,9 +53,9 @@ const actions = {
     dispatch("app/addAlert", alert, { root: true });
   },
 
-  async declineTicket({ commit, dispatch }, signatory) {
+  async rejectTicket({ commit, dispatch }, signatory) {
     commit("app/SET_PROCESSING", true, { root: true });
-    const response = await declineTicket(signatory);
+    const response = await rejectTicket(signatory);
     var alert;
     if (!response.success) {
       console.log(response);
@@ -65,7 +65,7 @@ const actions = {
     }
     alert = { type: "success", message: response.message };
     commit("app/SET_PROCESSING", false, { root: true });
-    commit("app/SET_DECLINE_REASON_MODAL", false, { root: true });
+    commit("app/SET_REJECT_REASON_MODAL", false, { root: true });
     commit("app/SET_TICKET_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
@@ -109,9 +109,9 @@ const actions = {
     const response = await ticketsByStatus(TICKET_STATUS.APPROVED);
     commit("FETCH_ALL_APPROVED_TICKETS", response.data);
   },
-  async fetchAllDeclinedTickets({ commit }) {
-    const response = await ticketsByStatus(TICKET_STATUS.DECLINED);
-    commit("FETCH_ALL_DECLINED_TICKETS", response.data);
+  async fetchAllRejectedTickets({ commit }) {
+    const response = await ticketsByStatus(TICKET_STATUS.REJECTED);
+    commit("FETCH_ALL_REJECTED_TICKETS", response.data);
   },
   async fetchAllDoneTickets({ commit }) {
     const response = await ticketsByStatus(TICKET_STATUS.DONE);
@@ -127,9 +127,9 @@ const actions = {
     const response = await myTickets(param);
     commit("FETCH_MY_APPROVED_TICKETS", response.data);
   },
-  async fetchMyDeclinedTickets({ commit }, param) {
+  async fetchMyRejectedTickets({ commit }, param) {
     const response = await myTickets(param);
-    commit("FETCH_MY_DECLINED_TICKETS", response.data);
+    commit("FETCH_MY_REJECTED_TICKETS", response.data);
   },
   async fetchMyDoneTickets({ commit }, param) {
     const response = await myTickets(param);
@@ -145,9 +145,9 @@ const actions = {
     const response = await ticketsForApproval(param);
     commit("FETCH_APPROVED_TICKETS_FOR_APPROVAL", response.data);
   },
-  async fetchDeclinedTicketsForApproval({ commit }, param) {
+  async fetchRejectedTicketsForApproval({ commit }, param) {
     const response = await ticketsForApproval(param);
-    commit("FETCH_DECLINED_TICKETS_FOR_APPROVAL", response.data);
+    commit("FETCH_REJECTED_TICKETS_FOR_APPROVAL", response.data);
   },
   async fetchDoneTicketsForApproval({ commit }, param) {
     const response = await ticketsForApproval(param);
@@ -189,8 +189,8 @@ const mutations = {
   FETCH_ALL_APPROVED_TICKETS(state, value) {
     state.allApprovedTickets = value;
   },
-  FETCH_ALL_DECLINED_TICKETS(state, value) {
-    state.allDeclinedTickets = value;
+  FETCH_ALL_REJECTED_TICKETS(state, value) {
+    state.allRejectedTickets = value;
   },
   FETCH_ALL_DONE_TICKETS(state, value) {
     state.allDoneTickets = value;
@@ -203,8 +203,8 @@ const mutations = {
   FETCH_MY_APPROVED_TICKETS(state, value) {
     state.myApprovedTickets = value;
   },
-  FETCH_MY_DECLINED_TICKETS(state, value) {
-    state.myDeclinedTickets = value;
+  FETCH_MY_REJECTED_TICKETS(state, value) {
+    state.myRejectedTickets = value;
   },
   FETCH_MY_DONE_TICKETS(state, value) {
     state.myDoneTickets = value;
@@ -217,8 +217,8 @@ const mutations = {
   FETCH_PENDING_TICKETS_FOR_APPROVAL(state, value) {
     state.pendingTicketsForApproval = value;
   },
-  FETCH_DECLINED_TICKETS_FOR_APPROVAL(state, value) {
-    state.declinedTicketsForApproval = value;
+  FETCH_REJECTED_TICKETS_FOR_APPROVAL(state, value) {
+    state.rejectedTicketsForApproval = value;
   },
   FETCH_APPROVED_TICKETS_FOR_APPROVAL(state, value) {
     state.approvedTicketsForApproval = value;

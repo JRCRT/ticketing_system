@@ -129,6 +129,7 @@ namespace jts_backend.Migrations
                     middle_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     last_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     ext_name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    short_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     password_hash = table.Column<byte[]>(type: "varbinary(200)", maxLength: 200, nullable: false),
@@ -173,12 +174,12 @@ namespace jts_backend.Migrations
                     content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     date_created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_approved = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_declined = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    declined_reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    action_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    rejection_reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     status_id = table.Column<int>(type: "int", nullable: false),
                     created_byuser_id = table.Column<int>(type: "int", nullable: true),
                     received_byuser_id = table.Column<int>(type: "int", nullable: true),
+                    rejected_byuser_id = table.Column<int>(type: "int", nullable: true),
                     priority_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -204,6 +205,11 @@ namespace jts_backend.Migrations
                     table.ForeignKey(
                         name: "FK_ticket_user_received_byuser_id",
                         column: x => x.received_byuser_id,
+                        principalTable: "user",
+                        principalColumn: "user_id");
+                    table.ForeignKey(
+                        name: "FK_ticket_user_rejected_byuser_id",
+                        column: x => x.rejected_byuser_id,
                         principalTable: "user",
                         principalColumn: "user_id");
                 });
@@ -271,6 +277,11 @@ namespace jts_backend.Migrations
                 name: "IX_ticket_received_byuser_id",
                 table: "ticket",
                 column: "received_byuser_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ticket_rejected_byuser_id",
+                table: "ticket",
+                column: "rejected_byuser_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ticket_status_id",

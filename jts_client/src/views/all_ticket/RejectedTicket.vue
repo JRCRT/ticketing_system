@@ -34,7 +34,7 @@ export default {
         flex: 1,
       },
       {
-        headerName: "Date Declined",
+        headerName: "Date Rejected",
         field: "ticket.action_date",
         flex: 1,
         cellRenderer: FormattedDate,
@@ -45,9 +45,9 @@ export default {
       // tableApi.value = params.api;
       gridAPI.value = params.api;
       params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchAllDeclinedTickets");
-      const declinedTickets = store.state.ticket.allDeclinedTickets;
-      params.api.setRowData(declinedTickets);
+      await store.dispatch("ticket/fetchAllRejectedTickets");
+      const rejectedTickets = store.state.ticket.allRejectedTickets;
+      params.api.setRowData(rejectedTickets);
     };
 
     const onSelectionChanged = () => {

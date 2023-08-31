@@ -22,8 +22,6 @@ namespace jts_backend.Dtos.TicketDto
         public string reason { get; set; } = string.Empty;
 
         public string? others { get; set; }
-
-        public string? declined_reason { get; set; }
         public int status_id { get; set; }
         public int created_by { get; set; }
         public int? received_by { get; set; }

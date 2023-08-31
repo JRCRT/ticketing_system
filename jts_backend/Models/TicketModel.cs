@@ -36,7 +36,7 @@ namespace jts_backend.Models
         public DateTime action_date { get; set; }
 
         [MaxLength(500)]
-        public string? declined_reason { get; set; }
+        public string? rejection_reason { get; set; }
         public StatusModel status { get; set; } = new StatusModel();
 
         [Column("created_by")]
@@ -46,7 +46,7 @@ namespace jts_backend.Models
         public UserModel? received_by { get; set; } = new UserModel();
 
         [Column("declined_by")]
-        public UserModel? declined_by { get; set; } = new UserModel();
+        public UserModel? rejected_by { get; set; } = new UserModel();
         public PriorityModel priority { get; set; } = new PriorityModel();
     }
 }
