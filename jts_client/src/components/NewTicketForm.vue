@@ -287,12 +287,14 @@ export default {
     };
 
     onMounted(async () => {
+      const param = {
+        department_id: currentUser.department.department_id,
+        user_id: currentUser.user_id,
+      };
+
       store.commit("app/SET_MODAL_LOADING", true);
       await store.dispatch("user/fetchApprovers");
-      await store.dispatch(
-        "user/fetchCheckers",
-        currentUser.department.department_id
-      );
+      await store.dispatch("user/fetchCheckers", param);
       await store.dispatch("user/fetchRelatedParties", currentUser.user_id);
       await store.dispatch("priority/fetchPriorities");
 
@@ -305,8 +307,6 @@ export default {
       );
       priorities.value = store.state.priority.priorities;
       selectedPriority.value = store.state.priority.priorities[0];
-
-      console.log(currentUser.department.department_id);
     });
 
     onUnmounted(() => {

@@ -48,9 +48,9 @@ const usersByRole = async (role) => {
   return response;
 };
 
-const checkers = async (departmentId) => {
+const checkers = async (param) => {
   const response = await axios
-    .get(`/User/GetCheckers?departmentId=${departmentId}`)
+    .post("/User/GetCheckers", param)
     .then((res) => {
       return res.data;
     })

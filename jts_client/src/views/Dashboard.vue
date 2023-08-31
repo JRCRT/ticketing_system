@@ -16,10 +16,10 @@
           <p>Approved</p>
         </div>
       </div>
-      <div @click="navigateToTicket(TICKET_STATUS.DECLINED)" class="card">
+      <div @click="navigateToTicket(TICKET_STATUS.REJECTED)" class="card">
         <div class="card-content">
-          <h1>{{ declinedNum }}</h1>
-          <p>Declined</p>
+          <h1>{{ rejectedNum }}</h1>
+          <p>Rejected</p>
         </div>
       </div>
       <div @click="navigateToTicket(TICKET_STATUS.DONE)" class="card">
@@ -75,7 +75,7 @@ export default {
     const gridAPI = ref(null);
     const pendingNum = ref(0);
     const approvedNum = ref(0);
-    const declinedNum = ref(0);
+    const rejectedNum = ref(0);
     const doneNum = ref(0);
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
@@ -164,7 +164,7 @@ export default {
         user_id: currentUser.user_id,
         status_id: 2,
       };
-      const paramDeclined = {
+      const paramRejected = {
         user_id: currentUser.user_id,
         status_id: 3,
       };
@@ -177,21 +177,21 @@ export default {
         case ROLE.USER:
           await store.dispatch("ticket/fetchMyPendingTickets", paramPending);
           await store.dispatch("ticket/fetchMyApprovedTickets", paramApproved);
-          await store.dispatch("ticket/fetchMyDeclinedTickets", paramDeclined);
+          await store.dispatch("ticket/fetchMyRejectedTickets", paramRejected);
           await store.dispatch("ticket/fetchMyDoneTickets", paramDone);
           pendingNum.value = store.state.ticket.myPendingTickets.length;
           approvedNum.value = store.state.ticket.myApprovedTickets.length;
-          declinedNum.value = store.state.ticket.myDeclinedTickets.length;
+          rejectedNum.value = store.state.ticket.myRejectedTickets.length;
           doneNum.value = store.state.ticket.myDoneTickets.length;
           break;
         case ROLE.ADMIN:
           await store.dispatch("ticket/fetchAllPendingTickets");
           await store.dispatch("ticket/fetchAllApprovedTickets");
-          await store.dispatch("ticket/fetchAllDeclinedTickets");
+          await store.dispatch("ticket/fetchAllRejectedTickets");
           await store.dispatch("ticket/fetchAllDoneTickets");
           pendingNum.value = store.state.ticket.allPendingTickets.length;
           approvedNum.value = store.state.ticket.allApprovedTickets.length;
-          declinedNum.value = store.state.ticket.allDeclinedTickets.length;
+          rejectedNum.value = store.state.ticket.allRejectedTickets.length;
           doneNum.value = store.state.ticket.allDoneTickets.length;
           break;
         default:
@@ -204,16 +204,16 @@ export default {
             paramApproved
           );
           await store.dispatch(
-            "ticket/fetchDeclinedTicketsForApproval",
-            paramDeclined
+            "ticket/fetchRejectedTicketsForApproval",
+            paramRejected
           );
           await store.dispatch("ticket/fetchDoneTicketsForApproval", paramDone);
           pendingNum.value =
             store.state.ticket.pendingTicketsForApproval.length;
           approvedNum.value =
             store.state.ticket.approvedTicketsForApproval.length;
-          declinedNum.value =
-            store.state.ticket.declinedTicketsForApproval.length;
+          rejectedNum.value =
+            store.state.ticket.rejectedTicketsForApproval.length;
           doneNum.value = store.state.ticket.doneTicketsForApproval.length;
           break;
       }
@@ -235,7 +235,7 @@ export default {
       columnDefs,
       pendingNum,
       approvedNum,
-      declinedNum,
+      rejectedNum,
       doneNum,
       navigateToTicket,
       onGridReady,

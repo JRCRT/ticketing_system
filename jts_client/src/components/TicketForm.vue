@@ -723,44 +723,48 @@
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
+                        font-size: 10pt;
                       "
                       colspan="2"
                       rowspan="2"
                     >
-                      &nbsp;
+                      {{ getRelatedParties(0)?.user?.user?.ext_name }}
                     </td>
                     <td
                       style="
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
+                        font-size: 10pt;
                       "
                       colspan="2"
                       rowspan="2"
                     >
-                      &nbsp;
+                      {{ getRelatedParties(1)?.user?.user?.ext_name }}
                     </td>
                     <td
                       style="
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
+                        font-size: 10pt;
                       "
                       colspan="2"
                       rowspan="2"
                     >
-                      &nbsp;
+                      {{ getRelatedParties(2)?.user?.user?.ext_name }}
                     </td>
                     <td
                       style="
                         border-top: 2px solid hsl(0, 0%, 0%);
                         border-right: 2px solid hsl(0, 0%, 0%);
                         width: 96pt;
+                        font-size: 10pt;
                       "
                       colspan="2"
                       rowspan="2"
                     >
-                      &nbsp;
+                      {{ getRelatedParties(3)?.user?.user?.ext_name }}
                     </td>
                     <td
                       style="
@@ -1145,12 +1149,17 @@
                     </td>
                   </tr>
                   <tr>
-                    <td style="height: 40pt; width: 768pt" colspan="16">
+                    <td
+                      style="height: 40pt; width: 768pt; padding: 5pt"
+                      colspan="16"
+                    >
                       <div>
                         <div v-for="file in files">
-                          <a :href="getFileLink(file.stored_file_name)">{{
-                            file.original_file_name
-                          }}</a>
+                          <a
+                            style="font-size: 10pt"
+                            :href="getFileLink(file.stored_file_name)"
+                            >{{ file.original_file_name }}</a
+                          >
                         </div>
                       </div>
                     </td>
@@ -1211,7 +1220,12 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
 import { useSignalR } from "@quangdao/vue-signalr";
-import { TICKET_STATUS, ROLE, JOB_TITLE } from "@/util/constant";
+import {
+  TICKET_STATUS,
+  ROLE,
+  JOB_TITLE,
+  SIGNATORY_TYPE,
+} from "@/util/constant";
 import { formatDate } from "@/util/helper";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -1290,7 +1304,7 @@ export default {
     };
 
     const getCheckers = () => {
-      return signatories.value.filter((c) => c.type === ROLE.CHECKER);
+      return signatories.value.filter((c) => c.type === SIGNATORY_TYPE.CHECKER);
     };
 
     const getDate = (ticketStatus) => {
@@ -1298,6 +1312,20 @@ export default {
         ticketData.value?.status?.name === TICKET_STATUS.DONE
         ? formatDate(ticketData.value.action_date)
         : "";
+    };
+
+    const getRelatedParties = (num) => {
+      const relatedParties = signatories.value.filter(
+        (c) => c.type === SIGNATORY_TYPE.PARTY
+      );
+      console.log("RelatedParties: ", relatedParties);
+      if (relatedParties?.length !== 0) {
+        if (relatedParties?.length - 1 < num) {
+          return null;
+        }
+        return relatedParties[num];
+      }
+      return null;
     };
 
     const getApproverSignature = (jobTitle) => {
@@ -1355,6 +1383,7 @@ export default {
       getApproverSignature,
       getCheckerSignature,
       generatePDF,
+      getRelatedParties,
     };
   },
 };

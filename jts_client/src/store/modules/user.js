@@ -48,8 +48,8 @@ const actions = {
     commit("FETCH_APPROVERS", response.data);
   },
 
-  async fetchCheckers({ commit }, departmentId) {
-    const response = await checkers(departmentId);
+  async fetchCheckers({ commit }, param) {
+    const response = await checkers(param);
     commit("FETCH_CHECKERS", response.data);
   },
 

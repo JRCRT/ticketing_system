@@ -1,7 +1,7 @@
 <template>
   <Modal class="w-2/4" @close="$emit('close')">
     <template v-slot:header>
-      <h5 class="modal-title">Reason For Decline</h5>
+      <h5 class="modal-title">Reason For Rejection</h5>
     </template>
     <template v-slot:content>
       <label>Reason</label>
@@ -10,7 +10,7 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="decline">Ok</button>
+          <button class="button-primary mr-2" @click="reject">Ok</button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -33,17 +33,17 @@ export default {
     const reason = ref(null);
     const approver = computed(() => store.state.app.signatory);
 
-    const decline = async () => {
+    const reject = async () => {
       const _approver = {
         signatory_id: approver.value.signatoryId,
         connection_id: approver.value.connectionId,
-        decline_reason: reason.value,
+        rejection_reason: reason.value,
       };
-      await store.dispatch("ticket/declineTicket", _approver);
+      await store.dispatch("ticket/rejectTicket", _approver);
     };
     return {
       reason,
-      decline,
+      reject,
     };
   },
 };

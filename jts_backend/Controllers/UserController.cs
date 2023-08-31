@@ -69,12 +69,12 @@ namespace jts_backend.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetCheckers")]
+        [HttpPost("GetCheckers")]
         public async Task<ActionResult<ServiceResponse<ICollection<GetUserDto>>>> GetCheckers(
-            int departmentId
+            GetCheckerDto request
         )
         {
-            var response = await _userService.GetCheckers(departmentId);
+            var response = await _userService.GetCheckers(request);
             return Ok(response);
         }
 
