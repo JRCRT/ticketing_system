@@ -1187,8 +1187,8 @@
             {{ isProcessing ? "Approving..." : "Approve" }}
           </button>
 
-          <button class="button-transparent" @click="openDeclineReasonModal">
-            Decline
+          <button class="button-transparent" @click="openRejectionModal">
+            Reject
           </button>
         </div>
         <div
@@ -1266,14 +1266,14 @@ export default {
       await store.dispatch("ticket/doneTicket", request);
     };
 
-    const openDeclineReasonModal = () => {
+    const openRejectionModal = () => {
       const signatoryId = currentSignatoryData.value.signatory_id;
       const connectionId = signalR.connection.connectionId;
       store.commit("app/SET_SIGNATORY", {
         signatoryId: signatoryId,
         connectionId: connectionId,
       });
-      store.commit("app/SET_DECLINE_REASON_MODAL", true);
+      store.commit("app/SET_REJECTION_REASON_MODAL", true);
     };
 
     const getApprover = (jobTitle) => {
@@ -1349,7 +1349,7 @@ export default {
       getCheckers,
       approved,
       done,
-      openDeclineReasonModal,
+      openRejectionModal,
       getApprover,
       getFileLink,
       getApproverSignature,

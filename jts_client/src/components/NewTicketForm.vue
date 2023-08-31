@@ -279,7 +279,7 @@ export default {
         formData.append("priority_id", selectedPriority.value.priority_id);
         formData.append("date_created", formattedDatetime);
         formData.append("date_approved", DEFAULT_DATE_TIME);
-        formData.append("date_declined", DEFAULT_DATE_TIME);
+        formData.append("date_rejected", DEFAULT_DATE_TIME);
         formData.append("signatories", JSON.stringify(selectedSignatories()));
 
         await store.dispatch("ticket/createTicket", formData);

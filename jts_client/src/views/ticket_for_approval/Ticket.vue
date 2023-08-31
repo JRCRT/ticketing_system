@@ -2,9 +2,9 @@
   <div class="flex flex-col gap-3">
     <NewTicketForm v-if="modalActive" @close="closeModal" />
     <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
-    <DeclineReasonModal
-      v-if="isDeclineReasonModalOpen"
-      @close="closeDeclineReasonModal"
+    <RejectionReasonModal
+      v-if="isRejectionReasonModalOpen"
+      @close="closeRejectionModal"
     />
     <h4 class="text-primary">Tickets For Approval</h4>
     <div class="relative">
@@ -45,7 +45,7 @@ import ApprovedTicket from "@/views/ticket_for_approval/ApprovedTicket.vue";
 import RejectedTicket from "@/views/ticket_for_approval/RejectedTicket.vue";
 import DoneTicket from "@/views/ticket_for_approval/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
-import DeclineReasonModal from "@/components/DeclineReasonModal.vue";
+import RejectionReasonModal from "@/components/RejectionReasonModal.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -60,7 +60,7 @@ export default {
     DoneTicket,
     NewTicketForm,
     TicketForm,
-    DeclineReasonModal,
+    RejectionReasonModal,
   },
 
   setup() {
@@ -69,8 +69,8 @@ export default {
     const route = useRoute();
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
-    const isDeclineReasonModalOpen = computed(
-      () => store.state.app.isDeclineReasonModalOpen
+    const isRejectionReasonModalOpen = computed(
+      () => store.state.app.isRejectionReasonModalOpen
     );
 
     const setTabOnMount = (status) => {
@@ -136,8 +136,8 @@ export default {
       store.commit("app/SET_TICKET_FORM", false);
     };
 
-    const closeDeclineReasonModal = () => {
-      store.commit("app/SET_DECLINE_REASON_MODAL", false);
+    const closeRejectionModal = () => {
+      store.commit("app/SET_REJECTION_REASON_MODAL", false);
     };
 
     const openModal = () => {
@@ -172,7 +172,7 @@ export default {
       modalActive,
       router,
       currentStatus,
-      isDeclineReasonModalOpen,
+      isRejectionReasonModalOpen,
       isSelectedRowEmpty,
       isTicketFormOpen,
       closeModal,
@@ -181,7 +181,7 @@ export default {
       setTabOnMount,
       openTicket,
       closeTicketForm,
-      closeDeclineReasonModal,
+      closeRejectionModal,
     };
   },
 };

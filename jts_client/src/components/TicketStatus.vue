@@ -18,7 +18,7 @@ export default {
           return "bg-orange";
         case TICKET_STATUS.APPROVED:
           return "bg-blue";
-        case TICKET_STATUS.DECLINED:
+        case TICKET_STATUS.REJECTED:
           return "bg-red";
         case TICKET_STATUS.DONE:
           return "bg-primary";
