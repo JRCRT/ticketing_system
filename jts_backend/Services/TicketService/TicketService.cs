@@ -96,6 +96,7 @@ namespace jts_backend.Services.TicketService
                     priority = priority,
                     status = status,
                     received_by = null,
+                    declined_by = null,
                     created_by = preparedBy,
                     date_created = request.date_created.Date,
                     others = request.others
