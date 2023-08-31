@@ -1024,7 +1024,7 @@
                     <td
                       v-html="ticketData?.background"
                       style="
-                        height: 116pt;
+                        height: 40pt;
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
@@ -1055,7 +1055,7 @@
                     <td
                       v-html="ticketData?.content"
                       style="
-                        height: 116pt;
+                        height: 40pt;
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
@@ -1086,7 +1086,7 @@
                     <td
                       v-html="ticketData?.reason"
                       style="
-                        height: 101.5pt;
+                        height: 40pt;
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
@@ -1117,7 +1117,7 @@
                     <td
                       v-html="ticketData?.other"
                       style="
-                        height: 101.5pt;
+                        height: 40pt;
                         width: 768pt;
                         padding: 5px;
                         font-size: 10pt;
@@ -1145,7 +1145,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td style="height: 101.5pt; width: 768pt" colspan="16">
+                    <td style="height: 40pt; width: 768pt" colspan="16">
                       <div>
                         <div v-for="file in files">
                           <a :href="getFileLink(file.stored_file_name)">{{

@@ -122,7 +122,8 @@ namespace jts_backend.Services.TicketService
                     subject = request.subject,
                     ticket_id = ticketData.ticket_id,
                     created_by = await GetUserData(preparedBy.user_id),
-                    received_by = null
+                    received_by = null,
+                    declined_by = null
                 };
 
                 var responseData = new GetTicketDto()

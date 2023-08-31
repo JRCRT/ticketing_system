@@ -243,7 +243,7 @@ button {
 }
 
 .modal-container {
-  @apply rounded-md border-dark1 border-opacity-50 bg-white mx-auto mt-[20px] w-fit min-w-[700px] max-w-[850px] z-10 p-5 max-h-[calc(100vh-32px)] min-h-[calc(100vh-32px)];
+  @apply rounded-md border-dark1 border-opacity-50 bg-white mx-auto mt-3 w-fit min-w-[850px] max-w-[850px] z-10 p-5 h-fit;
 }
 
 .modal-header {
