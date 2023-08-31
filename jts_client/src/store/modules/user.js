@@ -4,6 +4,8 @@ import {
   usersByRole,
   userById,
   updateUser,
+  checkers,
+  relatedParties,
 } from "@/services/userService.js";
 import { User } from "@/models/User";
 const state = () => ({
@@ -11,6 +13,7 @@ const state = () => ({
   admins: [],
   approvers: [],
   checkers: [],
+  relatedParties: [],
   user: {},
 });
 
@@ -45,9 +48,14 @@ const actions = {
     commit("FETCH_APPROVERS", response.data);
   },
 
-  async fetchCheckers({ commit }) {
-    const response = await usersByRole("Checker");
+  async fetchCheckers({ commit }, departmentId) {
+    const response = await checkers(departmentId);
     commit("FETCH_CHECKERS", response.data);
+  },
+
+  async fetchRelatedParties({ commit }, currentUserId) {
+    const response = await relatedParties(currentUserId);
+    commit("FETCH_RELATED_PARTIES", response.data);
   },
 
   async updateUser({ commit, dispatch }, user) {
@@ -103,6 +111,10 @@ const mutations = {
   },
   FETCH_USER(state, value) {
     state.user = value;
+  },
+
+  FETCH_RELATED_PARTIES(state, value) {
+    state.relatedParties = value;
   },
 };
 

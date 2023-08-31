@@ -14,5 +14,7 @@ namespace jts_backend.Services.UserService
         Task<ServiceResponse<ICollection<GetUserDto>>> GetUsersByRole(string role);
         Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto request);
         Task<ServiceResponse<string>> UpdateUser(UpdateUserDto user);
+        Task<ServiceResponse<ICollection<GetUserDto>>> GetCheckers(int departmentId);
+        Task<ServiceResponse<ICollection<GetUserDto>>> GetRelatedParties(int currentUserId);
     }
 }

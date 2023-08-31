@@ -55,7 +55,8 @@ namespace jts_backend.Services.AuthService
                 user_id = user.user_id,
                 username = user.username,
                 access_token = CreateToken(user),
-                role = user.role
+                role = user.role,
+                department = user.department
             };
             response.data = authUser;
 

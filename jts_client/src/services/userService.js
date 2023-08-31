@@ -48,6 +48,32 @@ const usersByRole = async (role) => {
   return response;
 };
 
+const checkers = async (departmentId) => {
+  const response = await axios
+    .get(`/User/GetCheckers?departmentId=${departmentId}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+
+  return response;
+};
+
+const relatedParties = async (currentUserId) => {
+  const response = await axios
+    .get(`/User/GetRelatedParties?currentUserId=${currentUserId}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+
+  return response;
+};
+
 const createUser = async (user) => {
   const response = await axios
     .post("/User/CreateUser", user)
@@ -60,4 +86,12 @@ const createUser = async (user) => {
   return response;
 };
 
-export { users, createUser, usersByRole, userById, updateUser };
+export {
+  users,
+  createUser,
+  usersByRole,
+  userById,
+  updateUser,
+  checkers,
+  relatedParties,
+};

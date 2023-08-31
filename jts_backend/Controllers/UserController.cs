@@ -68,5 +68,23 @@ namespace jts_backend.Controllers
             var response = await _userService.UpdateUser(request);
             return Ok(response);
         }
+
+        [HttpGet("GetCheckers")]
+        public async Task<ActionResult<ServiceResponse<ICollection<GetUserDto>>>> GetCheckers(
+            int departmentId
+        )
+        {
+            var response = await _userService.GetCheckers(departmentId);
+            return Ok(response);
+        }
+
+        [HttpGet("GetRelatedParties")]
+        public async Task<ActionResult<ServiceResponse<ICollection<GetUserDto>>>> GetRelatedParties(
+            int currentUserId
+        )
+        {
+            var response = await _userService.GetRelatedParties(currentUserId);
+            return Ok(response);
+        }
     }
 }

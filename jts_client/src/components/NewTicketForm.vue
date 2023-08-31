@@ -289,19 +289,24 @@ export default {
     onMounted(async () => {
       store.commit("app/SET_MODAL_LOADING", true);
       await store.dispatch("user/fetchApprovers");
-      await store.dispatch("user/fetchCheckers");
-      await store.dispatch("user/fetchAllUsers");
+      await store.dispatch(
+        "user/fetchCheckers",
+        currentUser.department.department_id
+      );
+      await store.dispatch("user/fetchRelatedParties", currentUser.user_id);
       await store.dispatch("priority/fetchPriorities");
 
       store.commit("app/SET_MODAL_LOADING", false);
       isLoading.value = store.state.app.isLoading;
       approvers.value = [...store.state.user.approvers].map((u) => u.user);
       checkers.value = [...store.state.user.checkers].map((u) => u.user);
-      relatedParty.value = [...store.state.user.users].map((u) => u.user);
+      relatedParty.value = [...store.state.user.relatedParties].map(
+        (u) => u.user
+      );
       priorities.value = store.state.priority.priorities;
       selectedPriority.value = store.state.priority.priorities[0];
 
-      console.log(store.state.user.checkers);
+      console.log(currentUser.department.department_id);
     });
 
     onUnmounted(() => {

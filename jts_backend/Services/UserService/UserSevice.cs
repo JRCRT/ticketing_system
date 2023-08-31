@@ -282,5 +282,37 @@ namespace jts_backend.Services.UserService
 
             return _mapper.Map<GetFileDto>(fileData);
         }
+
+        public async Task<ServiceResponse<ICollection<GetUserDto>>> GetCheckers(int departmentId)
+        {
+            var response = new ServiceResponse<ICollection<GetUserDto>>();
+            ICollection<UserDto> users = await _context.user
+                .Include(u => u.role)
+                .Include(u => u.department)
+                .Where(
+                    u => u.department.department_id == departmentId && u.role.name.Equals("Checker")
+                )
+                .Select(u => _mapper.Map<UserDto>(u))
+                .ToListAsync();
+
+            response.data = await GetUsersData(users);
+            return response;
+        }
+
+        public async Task<ServiceResponse<ICollection<GetUserDto>>> GetRelatedParties(
+            int currentUserId
+        )
+        {
+            var response = new ServiceResponse<ICollection<GetUserDto>>();
+            ICollection<UserDto> users = await _context.user
+                .Include(u => u.role)
+                .Include(u => u.department)
+                .Where(u => u.user_id != currentUserId)
+                .Select(u => _mapper.Map<UserDto>(u))
+                .ToListAsync();
+
+            response.data = await GetUsersData(users);
+            return response;
+        }
     }
 }
