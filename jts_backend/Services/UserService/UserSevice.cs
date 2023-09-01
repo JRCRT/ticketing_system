@@ -249,7 +249,8 @@ namespace jts_backend.Services.UserService
 
             _context.user.Update(user);
             await _context.SaveChangesAsync();
-
+            var userData = await GetUserData(user.user_id);
+            await _hubContext.Clients.All.UpdateUser(userData);
             response.data = "Successfully updated.";
             response.message = "Successfully updated.";
             return response;

@@ -236,7 +236,6 @@ export default {
       getSelectedRow,
       openTicket,
       onSelectionChanged,
-
       TICKET_STATUS,
       isSelectedRowEmpty,
     };

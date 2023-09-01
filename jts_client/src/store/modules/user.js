@@ -116,6 +116,14 @@ const mutations = {
   FETCH_RELATED_PARTIES(state, value) {
     state.relatedParties = value;
   },
+
+  UPDATE_USER(state, value) {
+    const updatedUser = value;
+    const index = state.users.indexOf(
+      state.users.find((u) => u.user.user_id === updatedUser.user.user_id)
+    );
+    state.users.splice(index, 1, updatedUser);
+  },
 };
 
 export default {

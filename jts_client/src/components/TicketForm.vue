@@ -5,6 +5,13 @@
     </template>
     <template v-slot:content>
       <div class="ticket_form_container">
+        <div
+          v-if="ticketData?.status?.name === TICKET_STATUS.REJECTED"
+          class="bg-[#ffcdcd] border-[3px] rounded-sm text-sm border-red border-solid p-2 w-full flex flex-col justify-start"
+        >
+          <p class="font-bold mb-2">NOTE</p>
+          <span class="font-semibold">{{ makeRejectionNote() }}</span>
+        </div>
         <Vue3Html2pdf
           :paginate-elements-by-height="1400"
           :show-layout="true"
@@ -13,7 +20,7 @@
           :pdf-quality="2"
           :filename="fileName"
           ref="pdf"
-          pdf-format="a4"
+          pdf-format="letter"
           pdf-content-width="800px"
         >
           <template v-slot:pdf-content>
@@ -1315,6 +1322,19 @@ export default {
         : "";
     };
 
+    const makeRejectionNote = () => {
+      if (ticketData.value?.subject) {
+        const rejectedBy = ticketData.value?.rejected_by?.user?.ext_name;
+        const dateRejected = new Intl.DateTimeFormat("en-GB", {
+          dateStyle: "medium",
+        }).format(new Date(ticketData.value?.action_date));
+
+        const reason = ticketData.value?.rejection_reason;
+        return `Rejected (by ${rejectedBy} on ${dateRejected}); Reason: ${reason}`;
+      }
+      return null;
+    };
+
     const getRelatedParties = (num) => {
       const relatedParties = signatories.value.filter(
         (c) => c.type === SIGNATORY_TYPE.PARTY
@@ -1384,6 +1404,7 @@ export default {
       getCheckerSignature,
       generatePDF,
       getRelatedParties,
+      makeRejectionNote,
     };
   },
 };

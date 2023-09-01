@@ -10,6 +10,7 @@ namespace jts_backend.Hub
     public interface IJtsHub
     {
         Task GetUser(GetUserDto user);
+        Task UpdateUser(GetUserDto user);
         Task GetTicket(GetTicketDto ticket);
         Task GetMyTicket(GetTicketDto ticket);
         Task GetTicketForApproval(GetTicketDto ticket);
