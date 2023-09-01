@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col gap-3">
-    <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
     <h4 @click="getSelectedRow" class="text-primary">Dashboard</h4>
     <!--Cards Container-->
     <div class="flex">
@@ -55,7 +54,7 @@
 import Table from "@/components/Table.vue";
 import TicketStatus from "@/components/TicketStatus.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
-import TicketForm from "@/components/TicketForm.vue";
+
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref, computed, watch, onUnmounted } from "vue";
@@ -67,7 +66,6 @@ export default {
     Table,
     TicketStatus,
     FormattedDate,
-    TicketForm,
   },
   setup() {
     const store = useStore();
@@ -145,10 +143,6 @@ export default {
     const onSelectionChanged = () => {
       const selectedRow = gridAPI.value.getSelectedRows();
       store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
-    };
-
-    const closeTicketForm = () => {
-      store.commit("app/SET_TICKET_FORM", false);
     };
 
     onUnmounted(() => {
@@ -242,10 +236,9 @@ export default {
       getSelectedRow,
       openTicket,
       onSelectionChanged,
-      closeTicketForm,
+
       TICKET_STATUS,
       isSelectedRowEmpty,
-      isTicketFormOpen,
     };
   },
 };
