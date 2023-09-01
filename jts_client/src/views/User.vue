@@ -95,6 +95,11 @@ export default {
       gridAPI.value.setRowData(store.state.user.users);
     });
 
+    signalR.on("UpdateUser", (user) => {
+      store.commit("user/UPDATE_USER", user);
+      gridAPI.value.setRowData(store.state.user.users);
+    });
+
     watch(
       () => isUserFormOpen.value,
       async (newIsUserFormOpen, oldIsUserFormOpen) => {
