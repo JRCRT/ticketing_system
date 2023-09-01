@@ -1288,6 +1288,7 @@ export default {
         connectionId: connectionId,
       });
       store.commit("app/SET_REJECTION_REASON_MODAL", true);
+      console.log(store.state.app.isRejectionReasonModalOpen);
     };
 
     const getApprover = (jobTitle) => {
@@ -1318,7 +1319,6 @@ export default {
       const relatedParties = signatories.value.filter(
         (c) => c.type === SIGNATORY_TYPE.PARTY
       );
-      console.log("RelatedParties: ", relatedParties);
       if (relatedParties?.length !== 0) {
         if (relatedParties?.length - 1 < num) {
           return null;

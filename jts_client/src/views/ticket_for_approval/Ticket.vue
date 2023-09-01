@@ -1,11 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <NewTicketForm v-if="modalActive" @close="closeModal" />
-    <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
-    <RejectionReasonModal
-      v-if="isRejectionReasonModalOpen"
-      @close="closeRejectionModal"
-    />
+
     <h4 class="text-primary">Tickets For Approval</h4>
     <div class="relative">
       <div class="flex justify-between">
@@ -69,9 +65,6 @@ export default {
     const route = useRoute();
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
-    const isRejectionReasonModalOpen = computed(
-      () => store.state.app.isRejectionReasonModalOpen
-    );
 
     const setTabOnMount = (status) => {
       switch (status) {
@@ -132,14 +125,6 @@ export default {
       }
     );
 
-    const closeTicketForm = () => {
-      store.commit("app/SET_TICKET_FORM", false);
-    };
-
-    const closeRejectionModal = () => {
-      store.commit("app/SET_REJECTION_REASON_MODAL", false);
-    };
-
     const openModal = () => {
       modalActive.value = true;
     };
@@ -172,7 +157,7 @@ export default {
       modalActive,
       router,
       currentStatus,
-      isRejectionReasonModalOpen,
+
       isSelectedRowEmpty,
       isTicketFormOpen,
       closeModal,
@@ -180,8 +165,6 @@ export default {
       changeTab,
       setTabOnMount,
       openTicket,
-      closeTicketForm,
-      closeRejectionModal,
     };
   },
 };

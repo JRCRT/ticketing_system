@@ -6,11 +6,17 @@ import { useStore } from "vuex";
 import { TICKET_STATUS, ROLE } from "@/util/constant";
 import Loader from "@/components/Loader.vue";
 import Alert from "@/components/Alert.vue";
+
+import RejectionReasonModal from "@/components/RejectionReasonModal.vue";
+import TicketForm from "@/components/TicketForm.vue";
 export default {
   components: {
     Sidebar,
     Alert,
     Loader,
+
+    TicketForm,
+    RejectionReasonModal,
   },
 
   setup() {
@@ -35,13 +41,24 @@ export default {
       store.commit("app/REMOVE_ALERT", index);
     };
 
+    const closeRejectionModal = () => {
+      store.commit("app/SET_REJECTION_REASON_MODAL", false);
+    };
+
     const currentUser = computed(() => store.state.app.currentUser);
     const hideNavbar = computed(() => store.state.app.hideNavbar);
     const alerts = computed(() => store.state.app.alerts);
     const isLoading = computed(() => store.state.app.isLoading);
+    const isRejectionReasonModalOpen = computed(
+      () => store.state.app.isRejectionReasonModalOpen
+    );
+    const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const logout = () => {
       store.dispatch("auth/logout");
       router.replace({ name: "Login" });
+    };
+    const closeTicketForm = () => {
+      store.commit("app/SET_TICKET_FORM", false);
     };
 
     return {
@@ -52,12 +69,16 @@ export default {
       showSidebar,
       removeAlert,
       logout,
+      closeRejectionModal,
+      closeTicketForm,
+      isTicketFormOpen,
       hideNavbar,
       alerts,
       isLoading,
       TICKET_STATUS,
       currentUser,
       ROLE,
+      isRejectionReasonModalOpen,
     };
   },
 };
@@ -277,4 +298,9 @@ export default {
     </transition-group>
   </div>
   <router-view class="container mx-auto h-full px-4 mt-6" />
+  <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
+  <RejectionReasonModal
+    v-if="isRejectionReasonModalOpen"
+    @close="closeRejectionModal"
+  />
 </template>

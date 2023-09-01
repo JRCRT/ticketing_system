@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col gap-3">
     <NewTicketForm v-if="modalActive" @close="closeModal" />
-    <TicketForm v-if="isTicketFormOpen" @close="closeTicketForm" />
     <h4 class="text-primary">All Tickets</h4>
     <div class="relative">
       <div class="flex justify-between">
@@ -45,7 +44,7 @@ import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { computed, ref, onUnmounted } from "vue";
+import { computed, ref, onUnmounted, watch } from "vue";
 
 export default {
   components: {
@@ -109,13 +108,17 @@ export default {
       modalActive.value = false;
     }
 
-    const closeTicketForm = () => {
-      store.commit("app/SET_TICKET_FORM", false);
-      router.replace({
-        name: "Ticket",
-        params: { status: currentStatus.value },
-      });
-    };
+    watch(
+      () => isTicketFormOpen.value,
+      async (newIsTicketFormOpen, oldIsTicketFormOpen) => {
+        if (!newIsTicketFormOpen) {
+          router.replace({
+            name: "Ticket",
+            params: { status: currentStatus.value },
+          });
+        }
+      }
+    );
 
     function openModal() {
       modalActive.value = true;
@@ -153,7 +156,6 @@ export default {
       changeTab,
       setTabOnMount,
       openTicket,
-      closeTicketForm,
     };
   },
 };
