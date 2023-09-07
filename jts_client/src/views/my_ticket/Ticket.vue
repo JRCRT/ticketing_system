@@ -77,7 +77,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
-
+    const ticketIdSearchField = ref(null);
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const setTabOnMount = (status) => {
@@ -171,6 +171,7 @@ export default {
       currentStatus,
       isSelectedRowEmpty,
       isTicketFormOpen,
+      ticketIdSearchField,
       closeModal,
       openModal,
       changeTab,

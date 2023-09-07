@@ -15,6 +15,7 @@ const state = () => ({
   isProcessing: false,
   signatory: {},
   hideNavbar: false,
+  searchTicketId: null,
 });
 
 const getter = {};
@@ -77,6 +78,9 @@ const mutations = {
   },
   SET_HIDE_NAVBAR(state, value) {
     state.hideNavbar = value;
+  },
+  SET_SEARCH_TICKET_ID(state, value) {
+    state.searchTicketId = value;
   },
 };
 
