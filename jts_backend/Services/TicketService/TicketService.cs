@@ -159,7 +159,7 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.job_title)
                 .Select(t => t)
                 .ToListAsync();
-            var data = await GetTicketsData(tickets);
+            var data = await GetTicketsData(tickets, tickets.Count);
             response.data = data;
 
             return response;
@@ -180,7 +180,7 @@ namespace jts_backend.Services.TicketService
                 .Select(t => t)
                 .ToListAsync();
 
-            var data = await GetTicketsData(tickets);
+            var data = await GetTicketsData(tickets, tickets.Count);
             response.data = data;
 
             return response;
@@ -202,7 +202,7 @@ namespace jts_backend.Services.TicketService
                 )
                 .Select(t => t)
                 .ToListAsync();
-            var data = await GetTicketsData(tickets);
+            var data = await GetTicketsData(tickets, tickets.Count);
             response.data = data;
 
             return response;
@@ -238,15 +238,26 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.role)
                 .Include(u => u.created_by.department)
                 .Include(u => u.created_by.job_title)
+                .OrderBy(t => t.ticket_id)
                 .Where(
                     t =>
                         t.created_by.user_id == request.user_id
                         && t.status.status_id == request.status_id
                 )
+                .Skip(request.offset)
+                .Take(request.items_per_page)
                 .Select(t => t)
                 .ToListAsync();
 
-            var data = await GetTicketsData(tickets);
+            var totalTickets = await _context.ticket
+                .Where(
+                    t =>
+                        t.created_by.user_id == request.user_id
+                        && t.status.status_id == request.status_id
+                )
+                .CountAsync();
+
+            var data = await GetTicketsData(tickets, totalTickets);
             response.data = data;
 
             return response;
@@ -271,16 +282,28 @@ namespace jts_backend.Services.TicketService
                 .Include(a => a.ticket)
                 .Include(t => t.ticket!.status)
                 .Include(t => t.ticket!.priority)
+                .OrderBy(t => t.ticket.ticket_id)
                 .Where(
                     a =>
                         a.user!.user_id == request.user_id
                         && a.status.status_id == request.status_id
                         && a.can_approve == true
                 )
+                .Skip(request.offset)
+                .Take(request.items_per_page)
                 .Select(a => a.ticket)
                 .ToListAsync();
 
-            var data = await GetTicketsData(tickets!);
+            var totalTickets = await _context.approver
+                .Where(
+                    a =>
+                        a.user!.user_id == request.user_id
+                        && a.status.status_id == request.status_id
+                        && a.can_approve == true
+                )
+                .CountAsync();
+
+            var data = await GetTicketsData(tickets!, totalTickets);
             response.data = data;
             return response;
         }
@@ -548,7 +571,10 @@ namespace jts_backend.Services.TicketService
             return _files;
         }
 
-        private async Task<Collection<GetTicketDto>> GetTicketsData(List<TicketModel> tickets)
+        private async Task<Collection<GetTicketDto>> GetTicketsData(
+            List<TicketModel> tickets,
+            int totalItems
+        )
         {
             var responseData = new Collection<GetTicketDto>();
             foreach (var ticket in tickets)
@@ -614,7 +640,8 @@ namespace jts_backend.Services.TicketService
                 {
                     ticket = _mapper.Map<TicketDto>(_ticket),
                     signatories = approvers,
-                    files = ticketFiles
+                    files = ticketFiles,
+                    total_items = totalItems
                 };
 
                 responseData.Add(data);

@@ -19,19 +19,31 @@
             {{ tab.label }}
           </div>
         </div>
-        <div>
+
+        <div class="flex gap-2 items-end justify-end relative w-[405px] mb-1">
+          <div class="absolute left-0">
+            <label>Ticket Id</label>
+            <input class="input__field h-8" />
+          </div>
+
           <button
-            class="w-14 button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
+            class="w-16 mr-4 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+          >
+            Search
+          </button>
+          <button
+            class="w-14 border button-transparent disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
             @click="openTicket"
           >
             Open
           </button>
-          <button class="w-14 button-transparent" @click="openModal">
+          <button class="w-14 border button-transparent" @click="openModal">
             New
           </button>
         </div>
       </div>
+
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
     <component :is="currentTab" />

@@ -23,7 +23,9 @@ export default {
   components: {
     AgGridVue,
   },
+
   props: ["columnDefs", "rowData", "onGridReady", "onSelectionChanged"],
+
   setup(props) {
     const columnDefs = props.columnDefs;
     const rowData = props.rowData;
@@ -34,6 +36,7 @@ export default {
       resizable: true,
       sortable: true,
     };
+
     const rowSelection = "single";
     return {
       columnDefs,

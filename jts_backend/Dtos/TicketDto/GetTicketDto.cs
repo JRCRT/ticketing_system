@@ -16,5 +16,6 @@ namespace jts_backend.Dtos.TicketDto
         public ICollection<GetFileDto> files { get; set; } = new Collection<GetFileDto>();
         public ICollection<GetSignatoryDto> signatories { get; set; } =
             new Collection<GetSignatoryDto>();
+        public int total_items { get; set; }
     }
 }

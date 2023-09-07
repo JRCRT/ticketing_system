@@ -18,14 +18,23 @@
 
       <div class="flex">
         <button
+          @click="searchUser(fullname)"
+          class="button-transparent border !w-fit mr-2 disabled:bg-lightSecondary disabled:border-none"
+        >
+          Search
+        </button>
+        <button
           @click="openUserForm"
           :disabled="isSelectedRowEmpty"
-          class="button-transparent !w-fit mr-2 disabled:bg-lightSecondary disabled:border-none"
+          class="button-transparent border !w-fit mr-2 disabled:bg-lightSecondary disabled:border-none"
         >
           Open
         </button>
 
-        <button @click="openNewUserForm" class="button-transparent !w-fit">
+        <button
+          @click="openNewUserForm"
+          class="button-transparent border !w-fit"
+        >
           New user
         </button>
       </div>
@@ -126,6 +135,11 @@ export default {
       });
     };
 
+    const searchUser = (keyWord) => {
+      store.commit("user/SEARCH_USER", keyWord);
+      gridAPI.value.setRowData(store.state.user.users);
+    };
+
     const closeNewUserForm = () => {
       store.commit("app/SET_NEW_USER_FORM", false);
     };
@@ -163,6 +177,7 @@ export default {
       closeUserForm,
       onGridReady,
       onSelectionChanged,
+      searchUser,
     };
   },
 };

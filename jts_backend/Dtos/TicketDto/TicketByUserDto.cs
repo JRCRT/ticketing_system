@@ -9,5 +9,7 @@ namespace jts_backend.Dtos.TicketDto
     {
         public int user_id { get; set; }
         public int status_id { get; set; }
+        public int items_per_page { get; set; }
+        public int offset { get; set; }
     }
 }

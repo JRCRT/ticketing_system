@@ -20,7 +20,7 @@
         </div>
         <div>
           <button
-            class="w-14 button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
+            class="w-14 border button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
             @click="openTicket"
           >
@@ -74,6 +74,7 @@ export default {
           return "DoneTicket";
       }
     };
+
     const currentTab = ref(setTabOnMount(currentStatus.value));
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false

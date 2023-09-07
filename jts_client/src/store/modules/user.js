@@ -124,6 +124,14 @@ const mutations = {
     );
     state.users.splice(index, 1, updatedUser);
   },
+
+  SEARCH_USER(state, value) {
+    console.log(value);
+    const result = state.users.filter((u) =>
+      u.user.ext_name.toLowerCase().includes(value.toLowerCase())
+    );
+    state.users = result;
+  },
 };
 
 export default {

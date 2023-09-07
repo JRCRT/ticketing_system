@@ -31,7 +31,7 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    component: Dashboard,
+    component: RoleManager,
     meta: {
       title: "Dashboard",
       authRequired: true,
