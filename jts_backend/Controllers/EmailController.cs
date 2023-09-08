@@ -13,16 +13,18 @@ namespace jts_backend.Controllers
     [Route("api/[controller]")]
     public class EmailController : ControllerBase
     {
-    private readonly IEmailService _emailService;
-    public EmailController(IEmailService emailService)
-    {
-    _emailService = emailService;
-    }
-    
-    [HttpPost("SendEmail")]
-    public async Task<ActionResult<ServiceResponse<string>>> SendEmail(CreateEmailDto request){
-        var response = await _emailService.Send(request);
-        return Ok(response);
-    }
+        private readonly IEmailService _emailService;
+
+        public EmailController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
+        [HttpPost("SendEmail")]
+        public async Task<ActionResult<ServiceResponse<string>>> SendEmail(CreateEmailDto request)
+        {
+            var response = await _emailService.Send(request);
+            return Ok(response);
+        }
     }
 }
