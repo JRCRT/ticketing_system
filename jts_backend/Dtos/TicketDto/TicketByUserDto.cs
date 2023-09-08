@@ -11,5 +11,7 @@ namespace jts_backend.Dtos.TicketDto
         public int status_id { get; set; }
         public int items_per_page { get; set; }
         public int offset { get; set; }
+
+        public int ticket_id { get; set; }
     }
 }

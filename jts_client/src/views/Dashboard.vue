@@ -75,6 +75,7 @@ export default {
     const approvedNum = ref(0);
     const rejectedNum = ref(0);
     const doneNum = ref(0);
+
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
     );

@@ -84,6 +84,16 @@ const routes = [
       authRequired: true,
     },
   },
+
+  {
+    path: "/MyTicket/:status",
+    name: "MyTicketSearch",
+    component: MyTicket,
+    meta: {
+      title: "My Ticket",
+      authRequired: true,
+    },
+  },
   {
     path: "/MyTicket/:status/Id/:ticketId",
     name: "MyTicketById",
@@ -107,6 +117,7 @@ const routes = [
       authRequired: true,
     },
   },
+
   {
     path: "/TicketForApproval/:status/Id/:ticketId",
     name: "TicketForApprovalById",

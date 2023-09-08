@@ -23,11 +23,12 @@
         <div class="flex gap-2 items-end justify-end relative w-[405px] mb-1">
           <div class="absolute left-0">
             <label>Ticket Id</label>
-            <input class="input__field h-8" />
+            <input class="input__field h-8" v-model="ticketIdSearchField" />
           </div>
 
           <button
             class="w-16 mr-4 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+            @click="search"
           >
             Search
           </button>
@@ -61,7 +62,7 @@ import TicketForm from "@/components/TicketForm.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { computed, ref, onUnmounted, watch } from "vue";
+import { computed, ref, onUnmounted, watch, onMounted } from "vue";
 
 export default {
   components: {
@@ -77,7 +78,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
-    const ticketIdSearchField = ref(null);
+    const ticketIdSearchField = ref("");
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const setTabOnMount = (status) => {
@@ -159,6 +160,14 @@ export default {
       });
     };
 
+    const search = () => {
+      store.commit("app/SET_SEARCH", String(Date.now()));
+      store.commit(
+        "app/SET_SEARCH_TICKET_ID",
+        ticketIdSearchField.value === "" ? 0 : Number(ticketIdSearchField.value)
+      );
+    };
+
     onUnmounted(() => {
       store.commit("app/SET_SELECTED_TICKET", {});
     });
@@ -172,6 +181,7 @@ export default {
       isSelectedRowEmpty,
       isTicketFormOpen,
       ticketIdSearchField,
+      search,
       closeModal,
       openModal,
       changeTab,

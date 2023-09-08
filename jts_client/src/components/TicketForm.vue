@@ -1189,7 +1189,7 @@
           "
         >
           <button class="button-primary mr-2" @click="done">Done</button>
-          <button class="button-transparent">Cancel</button>
+          <button class="button-transparent border">Cancel</button>
         </div>
         <div
           v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
@@ -1203,7 +1203,7 @@
             {{ isProcessing ? "Approving..." : "Approve" }}
           </button>
 
-          <button class="button-transparent" @click="openRejectionModal">
+          <button class="button-transparent border" @click="openRejectionModal">
             Reject
           </button>
         </div>

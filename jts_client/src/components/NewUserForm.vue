@@ -58,7 +58,7 @@
             {{ isProcessing ? "Creating..." : "Create" }}
           </button>
           <button
-            class="button-transparent"
+            class="button-transparent border"
             :disabled="isProcessing"
             @click="$emit('close')"
           >
@@ -169,7 +169,7 @@ export default {
         userFormData.append("first_name", firstname.value);
         userFormData.append("middle_name", middlename.value ?? "");
         userFormData.append("last_name", lastname.value);
-        userFormData.append("short_name", shortName.value);
+        userFormData.append("short_name", shortName.value ?? "");
         userFormData.append("username", username.value);
         userFormData.append("password", password.value);
         userFormData.append("email", emailAddress.value);

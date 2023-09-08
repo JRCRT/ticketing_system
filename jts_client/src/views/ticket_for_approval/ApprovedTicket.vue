@@ -45,6 +45,7 @@ export default {
         user_id: currentUser.user_id,
         status_id: 2,
       });
+
       const approvedTicketsForApproval =
         store.state.ticket.approvedTicketsForApproval;
       params.api.setRowData(approvedTicketsForApproval);

@@ -92,7 +92,7 @@
           </button>
           <button
             :disabled="isProcessing"
-            class="button-transparent"
+            class="button-transparent border"
             @click="$emit('close')"
           >
             Cancel

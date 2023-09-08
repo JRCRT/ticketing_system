@@ -231,31 +231,61 @@ namespace jts_backend.Services.TicketService
         )
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
-            var tickets = await _context.ticket
-                .Include(t => t.priority)
-                .Include(t => t.status)
-                .Include(t => t.created_by)
-                .Include(u => u.created_by.role)
-                .Include(u => u.created_by.department)
-                .Include(u => u.created_by.job_title)
-                .OrderBy(t => t.ticket_id)
-                .Where(
-                    t =>
-                        t.created_by.user_id == request.user_id
-                        && t.status.status_id == request.status_id
-                )
-                .Skip(request.offset)
-                .Take(request.items_per_page)
-                .Select(t => t)
-                .ToListAsync();
+            var tickets =
+                request.ticket_id == 0
+                    ? await _context.ticket
+                        .Include(t => t.priority)
+                        .Include(t => t.status)
+                        .Include(t => t.created_by)
+                        .Include(u => u.created_by.role)
+                        .Include(u => u.created_by.department)
+                        .Include(u => u.created_by.job_title)
+                        .OrderBy(t => t.ticket_id)
+                        .Where(
+                            t =>
+                                t.created_by.user_id == request.user_id
+                                && t.status.status_id == request.status_id
+                        )
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToListAsync()
+                    : await _context.ticket
+                        .Include(t => t.priority)
+                        .Include(t => t.status)
+                        .Include(t => t.created_by)
+                        .Include(u => u.created_by.role)
+                        .Include(u => u.created_by.department)
+                        .Include(u => u.created_by.job_title)
+                        .OrderBy(t => t.ticket_id)
+                        .Where(
+                            t =>
+                                t.created_by.user_id == request.user_id
+                                && t.status.status_id == request.status_id
+                                && t.ticket_id == request.ticket_id
+                        )
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToListAsync();
 
-            var totalTickets = await _context.ticket
-                .Where(
-                    t =>
-                        t.created_by.user_id == request.user_id
-                        && t.status.status_id == request.status_id
-                )
-                .CountAsync();
+            var totalTickets =
+                request.ticket_id == 0
+                    ? await _context.ticket
+                        .Where(
+                            t =>
+                                t.created_by.user_id == request.user_id
+                                && t.status.status_id == request.status_id
+                        )
+                        .CountAsync()
+                    : await _context.ticket
+                        .Where(
+                            t =>
+                                t.created_by.user_id == request.user_id
+                                && t.status.status_id == request.status_id
+                                && t.ticket_id == request.ticket_id
+                        )
+                        .CountAsync();
 
             var data = await GetTicketsData(tickets, totalTickets);
             response.data = data;
@@ -269,7 +299,7 @@ namespace jts_backend.Services.TicketService
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
             var responseData = new Collection<GetTicketDto>();
-            var tickets = await _context.approver
+            /* var tickets = await _context.approver
                 .Include(t => t.status)
                 .Include(a => a.ticket!.created_by)
                 .Include(a => a.ticket!.created_by.department)
@@ -291,6 +321,29 @@ namespace jts_backend.Services.TicketService
                 )
                 .Skip(request.offset)
                 .Take(request.items_per_page)
+                .Select(a => a.ticket)
+                .ToListAsync(); */
+
+            var tickets = await _context.approver
+                .Include(t => t.status)
+                .Include(a => a.ticket!.created_by)
+                .Include(a => a.ticket!.created_by.department)
+                .Include(a => a.ticket!.created_by.role)
+                .Include(a => a.ticket!.created_by.job_title)
+                .Include(a => a.user)
+                .Include(u => u.user!.department)
+                .Include(u => u.user!.job_title)
+                .Include(u => u.user!.role)
+                .Include(a => a.ticket)
+                .Include(t => t.ticket!.status)
+                .Include(t => t.ticket!.priority)
+                .OrderBy(t => t.ticket.ticket_id)
+                .Where(
+                    a =>
+                        a.user!.user_id == request.user_id
+                        && a.status.status_id == request.status_id
+                        && a.can_approve == true
+                )
                 .Select(a => a.ticket)
                 .ToListAsync();
 

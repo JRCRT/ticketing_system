@@ -120,7 +120,10 @@ export default {
     function rowClick(event, item) {
       const selectedTicket = item.item.raw;
       removeSelect();
-      const tr = event.target.parentNode;
+      const tr =
+        event.target.tagName === "DIV"
+          ? event.target.parentNode.parentNode
+          : event.target.parentNode;
       var tds = tr.getElementsByTagName("td");
 
       for (var i = 0; i < tds.length; i++) {

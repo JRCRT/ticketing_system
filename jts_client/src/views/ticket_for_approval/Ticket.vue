@@ -21,7 +21,7 @@
         </div>
         <div>
           <button
-            class="w-14 button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
+            class="w-14 border button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
             @click="openTicket"
           >
