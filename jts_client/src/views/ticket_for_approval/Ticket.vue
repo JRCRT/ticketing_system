@@ -199,7 +199,7 @@ export default {
           ? "1/1/1, 12:00:00"
           : `${dateCreatedSearchField.value}, 12:00:00`
       );
-      store.commit("app/SET_SEARH_PREPARED_BY", preparedBy.value.user_id ?? 0);
+      store.commit("app/SET_SEARCH_PREPARED_BY", preparedBy.value.user_id ?? 0);
     };
 
     onUnmounted(() => {
