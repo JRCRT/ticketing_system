@@ -158,8 +158,14 @@ export default {
       currentTab.value = tab.name;
       currentStatus.value = tab.status;
       router.replace({ name: "MyTicket", params: { status: tab.status } });
-      store.commit("app/SET_SELECTED_TICKET", {});
+      clear();
     }
+
+    const clear = () => {
+      store.commit("app/SET_SELECTED_TICKET", {});
+      store.commit("app/SET_SEARCH_TICKET_ID", 0);
+      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+    };
 
     const openTicket = async () => {
       const ticketId = store.state.app.selectedTicket.ticket.ticket_id;
@@ -185,7 +191,7 @@ export default {
     };
 
     onUnmounted(() => {
-      store.commit("app/SET_SELECTED_TICKET", {});
+      clear();
     });
 
     return {

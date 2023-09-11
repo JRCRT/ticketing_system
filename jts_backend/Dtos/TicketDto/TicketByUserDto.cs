@@ -14,5 +14,6 @@ namespace jts_backend.Dtos.TicketDto
 
         public int ticket_id { get; set; }
         public DateTime date_created { get; set; }
+        public int? prepared_by { get; set; }
     }
 }

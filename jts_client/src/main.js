@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import "./style.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+//import "vue-multiselect/dist/vue-multiselect.css";
 import "@mdi/font/css/materialdesignicons.css";
 //import "@/stylesheet/content-style.css";
 import App from "./App.vue";

@@ -257,6 +257,7 @@ namespace jts_backend.Services.TicketService
             var totalTickets = 0;
             var tickets = new List<TicketModel>();
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
+
             if (request.ticket_id == 0 && request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
             {
                 tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
@@ -324,32 +325,7 @@ namespace jts_backend.Services.TicketService
         {
             var response = new ServiceResponse<ICollection<GetTicketDto>>();
             var responseData = new Collection<GetTicketDto>();
-            /* var tickets = await _context.approver
-                .Include(t => t.status)
-                .Include(a => a.ticket!.created_by)
-                .Include(a => a.ticket!.created_by.department)
-                .Include(a => a.ticket!.created_by.role)
-                .Include(a => a.ticket!.created_by.job_title)
-                .Include(a => a.user)
-                .Include(u => u.user!.department)
-                .Include(u => u.user!.job_title)
-                .Include(u => u.user!.role)
-                .Include(a => a.ticket)
-                .Include(t => t.ticket!.status)
-                .Include(t => t.ticket!.priority)
-                .OrderBy(t => t.ticket.ticket_id)
-                .Where(
-                    a =>
-                        a.user!.user_id == request.user_id
-                        && a.status.status_id == request.status_id
-                        && a.can_approve == true
-                )
-                .Skip(request.offset)
-                .Take(request.items_per_page)
-                .Select(a => a.ticket)
-                .ToListAsync(); */
-
-            var tickets = await _context.approver
+            var result = await _context.approver
                 .Include(t => t.status)
                 .Include(a => a.ticket!.created_by)
                 .Include(a => a.ticket!.created_by.department)
@@ -372,14 +348,94 @@ namespace jts_backend.Services.TicketService
                 .Select(a => a.ticket)
                 .ToListAsync();
 
-            var totalTickets = await _context.approver
+            var totalResult = await _context.approver
+                .Include(a => a.ticket)
+                .Include(a => a.ticket.created_by)
                 .Where(
                     a =>
                         a.user!.user_id == request.user_id
                         && a.status.status_id == request.status_id
                         && a.can_approve == true
                 )
-                .CountAsync();
+                .Select(a => a.ticket)
+                .ToListAsync();
+
+            var totalTickets = 0;
+            var tickets = new List<TicketModel?>();
+
+            if (
+                request.ticket_id == 0
+                && request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                && request.prepared_by == 0
+            )
+            {
+                tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                totalTickets = totalResult.Count;
+            }
+            else if (
+                request.ticket_id != 0
+                && !request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                && request.prepared_by != 0
+            )
+            {
+                tickets = result
+                    .Where(
+                        t =>
+                            t.ticket_id == request.ticket_id
+                            && t.date_created.Date.Equals(request.date_created.Date)
+                            && t.created_by.user_id == request.prepared_by
+                    )
+                    .Skip(request.offset)
+                    .Take(request.items_per_page)
+                    .Select(t => t)
+                    .ToList();
+
+                totalTickets = totalResult
+                    .Where(
+                        t =>
+                            t.ticket_id == request.ticket_id
+                            && t.date_created.Date.Equals(request.date_created.Date)
+                            && t.created_by.user_id == request.prepared_by
+                    )
+                    .Count();
+            }
+            else
+            {
+                if (request.ticket_id != 0)
+                {
+                    tickets = result
+                        .Where(t => t.ticket_id == request.ticket_id)
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToList();
+                    totalTickets = totalResult.Where(t => t.ticket_id == request.ticket_id).Count();
+                }
+                else if (!request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+                {
+                    tickets = result
+                        .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToList();
+                    totalTickets = totalResult
+                        .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                        .Count();
+                }
+                else if (request.prepared_by != 0)
+                {
+                    tickets = result
+                        .Where(t => t.created_by.user_id == request.prepared_by)
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToList();
+                    totalTickets = totalResult
+                        .Where(t => t.created_by.user_id == request.prepared_by)
+                        .Count();
+                }
+            }
 
             var data = await GetTicketsData(tickets!, totalTickets);
             response.data = data;

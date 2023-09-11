@@ -69,17 +69,24 @@ export default {
         sortable: false,
         key: "ticket.ticket_id",
       },
-      { title: "Subject", key: "ticket.subject", align: "start" },
+      {
+        title: "Subject",
+        key: "ticket.subject",
+        align: "start",
+        sortable: false,
+      },
       {
         title: "Prepared By",
         key: "ticket.created_by.user.ext_name",
         align: "start",
+        sortable: false,
       },
 
       {
         title: "Rejected Date",
         key: "ticket.action_date",
         align: "start",
+        sortable: false,
       },
     ];
     const search = computed(() => store.state.app.search);
@@ -147,11 +154,6 @@ export default {
       recentlyClickedRow.value = tds;
       store.commit("app/SET_SELECTED_TICKET", selectedTicket);
     }
-
-    onUnmounted(() => {
-      store.commit("app/SET_SEARCH_TICKET_ID", 0);
-      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
-    });
 
     return {
       itemsPerPageOptions,

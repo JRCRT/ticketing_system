@@ -76,7 +76,6 @@ import { useStore } from "vuex";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import FileUploader from "@/components/FileUploader.vue";
-import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
   emits: ["close"],

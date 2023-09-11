@@ -19,7 +19,35 @@
             {{ tab.label }}
           </div>
         </div>
-        <div>
+        <div class="flex gap-2 items-end justify-end relative w-[725px] mb-1">
+          <div class="absolute left-0 w-[188px]">
+            <label>Ticket Id</label>
+            <input class="input__field h-8" v-model="ticketIdSearchField" />
+          </div>
+          <div class="absolute left-[198px] w-[180px]">
+            <label>Date Created</label>
+            <input
+              class="input__field h-8"
+              type="date"
+              v-model="dateCreatedSearchField"
+            />
+          </div>
+          <div class="absolute w-[180px] left-[386px]">
+            <label>Prepared By</label>
+            <VueMultiselect
+              v-model="preparedBy"
+              :options="allUsers"
+              label="ext_name"
+              :show-labels="false"
+            />
+          </div>
+
+          <button
+            class="w-16 mr-4 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+            @click="search"
+          >
+            Search
+          </button>
           <button
             class="w-14 border button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
@@ -43,10 +71,11 @@ import DoneTicket from "@/views/ticket_for_approval/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import RejectionReasonModal from "@/components/RejectionReasonModal.vue";
 import TicketForm from "@/components/TicketForm.vue";
+import VueMultiselect from "vue-multiselect";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { computed, ref, onUnmounted, watch } from "vue";
+import { computed, ref, onUnmounted, watch, onMounted } from "vue";
 
 export default {
   components: {
@@ -57,15 +86,19 @@ export default {
     NewTicketForm,
     TicketForm,
     RejectionReasonModal,
+    VueMultiselect,
   },
 
   setup() {
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
+    const ticketIdSearchField = ref("");
+    const dateCreatedSearchField = ref("");
+    const preparedBy = ref({});
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
-
+    const allUsers = ref([]);
     const setTabOnMount = (status) => {
       switch (status) {
         case TICKET_STATUS.PENDING:
@@ -147,6 +180,28 @@ export default {
       });
     };
 
+    onMounted(async () => {
+      await store.dispatch("user/fetchAllUsers");
+      allUsers.value = [...store.state.user.users].map((u) => u.user);
+    });
+
+    const search = () => {
+      console.log(preparedBy.value.user_id);
+      console.log(new Date(`${dateCreatedSearchField.value}, 12:00:00`));
+      store.commit("app/SET_SEARCH", String(Date.now()));
+      store.commit(
+        "app/SET_SEARCH_TICKET_ID",
+        ticketIdSearchField.value === "" ? 0 : Number(ticketIdSearchField.value)
+      );
+      store.commit(
+        "app/SET_SEARCH_CREATED_DATE",
+        dateCreatedSearchField.value === ""
+          ? "1/1/1, 12:00:00"
+          : `${dateCreatedSearchField.value}, 12:00:00`
+      );
+      store.commit("app/SET_SEARH_PREPARED_BY", preparedBy.value.user_id ?? 0);
+    };
+
     onUnmounted(() => {
       store.commit("app/SET_SELECTED_TICKET", {});
     });
@@ -157,9 +212,13 @@ export default {
       modalActive,
       router,
       currentStatus,
-
+      allUsers,
       isSelectedRowEmpty,
       isTicketFormOpen,
+      preparedBy,
+      ticketIdSearchField,
+      dateCreatedSearchField,
+      search,
       closeModal,
       openModal,
       changeTab,
@@ -169,3 +228,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+:deep(.multiselect) {
+  min-height: 34px !important;
+  height: 34px !important;
+}
+
+:deep(.multiselect__tags) {
+  min-height: 34px !important;
+  height: 34px !important;
+}
+:deep(.multiselect__placeholder) {
+  padding-top: 0px !important;
+}
+
+:deep(.multiselect__single) {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+</style>

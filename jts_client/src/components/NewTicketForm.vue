@@ -106,7 +106,6 @@
 import FileUploader from "@/components/FileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
-import "vue-multiselect/dist/vue-multiselect.css";
 
 import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
 //import InlineEditor from "@ckeditor/ckeditor5-editor-inline/src/inlineeditor";
