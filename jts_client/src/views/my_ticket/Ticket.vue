@@ -20,10 +20,18 @@
           </div>
         </div>
 
-        <div class="flex gap-2 items-end justify-end relative w-[405px] mb-1">
-          <div class="absolute left-0">
+        <div class="flex gap-2 items-end justify-end relative w-[593px] mb-1">
+          <div class="absolute left-0 w-[188px]">
             <label>Ticket Id</label>
             <input class="input__field h-8" v-model="ticketIdSearchField" />
+          </div>
+          <div class="absolute left-[198px] w-[180px]">
+            <label>Date Created</label>
+            <input
+              class="input__field h-8"
+              type="date"
+              v-model="dateCreatedSearchField"
+            />
           </div>
 
           <button
@@ -79,6 +87,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const ticketIdSearchField = ref("");
+    const dateCreatedSearchField = ref("");
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const setTabOnMount = (status) => {
@@ -161,10 +170,17 @@ export default {
     };
 
     const search = () => {
+      console.log(new Date(`${dateCreatedSearchField.value}, 12:00:00`));
       store.commit("app/SET_SEARCH", String(Date.now()));
       store.commit(
         "app/SET_SEARCH_TICKET_ID",
         ticketIdSearchField.value === "" ? 0 : Number(ticketIdSearchField.value)
+      );
+      store.commit(
+        "app/SET_SEARCH_CREATED_DATE",
+        dateCreatedSearchField.value === ""
+          ? "1/1/1, 12:00:00"
+          : `${dateCreatedSearchField.value}, 12:00:00`
       );
     };
 
@@ -181,6 +197,7 @@ export default {
       isSelectedRowEmpty,
       isTicketFormOpen,
       ticketIdSearchField,
+      dateCreatedSearchField,
       search,
       closeModal,
       openModal,

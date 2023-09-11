@@ -13,12 +13,14 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as directives from "vuetify/directives";
 import { VDataTableServer } from "vuetify/labs/VDataTable";
+import { VDatePicker } from "vuetify/labs/VDatePicker";
 import { VTextField } from "vuetify/lib/components/index.mjs";
 
 const vuetify = createVuetify({
   components: {
     VDataTableServer,
     VTextField,
+    VDatePicker,
   },
   directives,
   theme: {

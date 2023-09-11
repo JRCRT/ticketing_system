@@ -13,5 +13,6 @@ namespace jts_backend.Dtos.TicketDto
         public int offset { get; set; }
 
         public int ticket_id { get; set; }
+        public DateTime date_created { get; set; }
     }
 }

@@ -22,4 +22,14 @@ const formatDate = (date) => {
   return Intl.DateTimeFormat("en-US").format(new Date(date));
 };
 
-export { setIconUrl, formatDate };
+const formatDateTime = (date) =>
+  new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(date);
+
+export { setIconUrl, formatDate, formatDateTime };

@@ -128,6 +128,7 @@ import "@/stylesheet/content-style.css";
 import { useStore } from "vuex";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { SIGNATORY_TYPE } from "@/util/constant";
+import { formatDateTime } from "@/util/helper";
 import { Signatory } from "@/models/Signatory";
 import { useSignalR } from "@quangdao/vue-signalr";
 
@@ -144,19 +145,10 @@ export default {
     const PENDING_STATUS = 1;
     const DEFAULT_DATE_TIME = "2023-06-26T03:51:19.632Z";
     const currentDate = new Date();
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      timeZone: "UTC",
-    });
 
     const isProcessing = computed(() => store.state.app.isProcessing);
     const connectionId = signalR.connection.connectionId;
-    const formattedDatetime = formatter.format(currentDate);
+    const formattedDatetime = formatDateTime(currentDate);
 
     const store = useStore();
     const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
@@ -278,11 +270,9 @@ export default {
         formData.append("created_by", currentUser.user_id);
         formData.append("priority_id", selectedPriority.value.priority_id);
         formData.append("date_created", formattedDatetime);
-        formData.append("date_approved", DEFAULT_DATE_TIME);
-        formData.append("date_rejected", DEFAULT_DATE_TIME);
         formData.append("signatories", JSON.stringify(selectedSignatories()));
-
-        await store.dispatch("ticket/createTicket", formData);
+        console.log(formattedDatetime);
+        //await store.dispatch("ticket/createTicket", formData);
       }
     };
 

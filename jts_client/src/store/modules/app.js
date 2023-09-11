@@ -17,6 +17,7 @@ const state = () => ({
   hideNavbar: false,
   search: null,
   searchTicketId: 0,
+  searchCreatedDate: "1/1/1, 12:00:00",
 });
 
 const getter = {};
@@ -86,6 +87,10 @@ const mutations = {
 
   SET_SEARCH_TICKET_ID(state, value) {
     state.searchTicketId = value;
+  },
+
+  SET_SEARCH_CREATED_DATE(state, value) {
+    state.searchCreatedDate = value;
   },
 };
 

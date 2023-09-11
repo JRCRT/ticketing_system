@@ -23,14 +23,14 @@
         {{ item.columns["ticket.subject"] }}
       </div>
     </template>
-    <template v-slot:item.ticket.date_created="{ item }">
-      {{ formatDate(item.columns["ticket.date_created"]) }}
+    <template v-slot:item.ticket.action_date="{ item }">
+      {{ formatDate(item.columns["ticket.action_date"]) }}
     </template>
   </v-data-table-server>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 import { formatDate } from "@/util/helper";
 
@@ -77,18 +77,32 @@ export default {
       },
 
       {
-        title: "Date Created",
-        key: "ticket.date_created",
+        title: "Date Approved",
+        key: "ticket.action_date",
         align: "start",
       },
     ];
-    const search = "";
+    const search = computed(() => store.state.app.search);
+    const searchTicketId = computed(() => store.state.app.searchTicketId);
+    const searchCreatedDate = computed(() => store.state.app.searchCreatedDate);
     const serverItems = ref([]);
     const loading = ref(true);
     const totalItems = ref(0);
     const recentlyClickedRow = ref([]);
 
     const loadItems = async ({ page, itemsPerPage, sortBy }) => {
+      if (
+        !Number.isInteger(searchTicketId.value) &&
+        searchTicketId.value !== 0
+      ) {
+        var alert = {
+          type: "danger",
+          message: "Ticket ID should be whole number.",
+        };
+        store.dispatch("app/addAlert", alert);
+        return;
+      }
+
       removeSelect();
       const offset = (page - 1) * itemsPerPage;
       const param = {
@@ -96,6 +110,8 @@ export default {
         status_id: APPROVED_STATUS_ID,
         items_per_page: itemsPerPage,
         offset: offset,
+        ticket_id: searchTicketId.value,
+        date_created: new Date(searchCreatedDate.value),
       };
 
       loading.value = true;
@@ -132,6 +148,11 @@ export default {
       recentlyClickedRow.value = tds;
       store.commit("app/SET_SELECTED_TICKET", selectedTicket);
     }
+
+    onUnmounted(() => {
+      store.commit("app/SET_SEARCH_TICKET_ID", 0);
+      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+    });
 
     return {
       itemsPerPageOptions,

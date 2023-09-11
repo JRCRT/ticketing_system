@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 import { formatDate } from "@/util/helper";
 
@@ -82,13 +82,26 @@ export default {
         align: "start",
       },
     ];
-    const search = "";
+    const search = computed(() => store.state.app.search);
+    const searchTicketId = computed(() => store.state.app.searchTicketId);
+    const searchCreatedDate = computed(() => store.state.app.searchCreatedDate);
     const serverItems = ref([]);
     const loading = ref(true);
     const totalItems = ref(0);
     const recentlyClickedRow = ref([]);
 
     const loadItems = async ({ page, itemsPerPage, sortBy }) => {
+      if (
+        !Number.isInteger(searchTicketId.value) &&
+        searchTicketId.value !== 0
+      ) {
+        var alert = {
+          type: "danger",
+          message: "Ticket ID should be whole number.",
+        };
+        store.dispatch("app/addAlert", alert);
+        return;
+      }
       removeSelect();
       const offset = (page - 1) * itemsPerPage;
       const param = {
@@ -131,6 +144,11 @@ export default {
       recentlyClickedRow.value = tds;
       store.commit("app/SET_SELECTED_TICKET", selectedTicket);
     }
+
+    onUnmounted(() => {
+      store.commit("app/SET_SEARCH_TICKET_ID", 0);
+      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+    });
 
     return {
       itemsPerPageOptions,

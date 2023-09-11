@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, onUnmounted } from "vue";
 import { useStore } from "vuex";
-import { formatDate } from "@/util/helper";
+import { formatDate, formatDateTime } from "@/util/helper";
 
 export default {
   setup() {
@@ -84,6 +84,7 @@ export default {
     ];
     const search = computed(() => store.state.app.search);
     const searchTicketId = computed(() => store.state.app.searchTicketId);
+    const searchCreatedDate = computed(() => store.state.app.searchCreatedDate);
     const serverItems = ref([]);
     const loading = ref(true);
     const totalItems = ref(0);
@@ -110,8 +111,10 @@ export default {
         items_per_page: itemsPerPage,
         offset: offset,
         ticket_id: searchTicketId.value,
+        date_created: new Date(searchCreatedDate.value),
       };
 
+      //"2023-06-26T03:51:19.632Z"
       loading.value = true;
       await store.dispatch("ticket/fetchMyPendingTickets", param);
       const myPendingTickets = store.state.ticket.myPendingTickets;
@@ -147,6 +150,11 @@ export default {
       recentlyClickedRow.value = tds;
       store.commit("app/SET_SELECTED_TICKET", selectedTicket);
     }
+
+    onUnmounted(() => {
+      store.commit("app/SET_SEARCH_TICKET_ID", 0);
+      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+    });
 
     return {
       itemsPerPageOptions,
