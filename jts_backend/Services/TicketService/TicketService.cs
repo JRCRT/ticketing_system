@@ -320,7 +320,6 @@ namespace jts_backend.Services.TicketService
         )
         {
             var response = new ServiceResponse<GetTicketsDto>();
-            var responseData = new Collection<GetTicketDto>();
             var result = await _context.approver
                 .Include(t => t.status)
                 .Include(a => a.ticket!.created_by)
@@ -433,9 +432,9 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(result!, totalResult.Count, null);
+            var data = await GetTicketsData(result, totalResult.Count, null);
             response.data = data;
-            //response.message = tickets[0].ticket_id.ToString();
+            response.message = result[0]?.ticket_id.ToString() ?? "Wala";
             return response;
         }
 
@@ -708,7 +707,7 @@ namespace jts_backend.Services.TicketService
             DateTime? actionDate
         )
         {
-            var ticketLists = new Collection<GetTicketDto>();
+            ICollection<GetTicketDto> ticketLists = new Collection<GetTicketDto>();
             foreach (var ticket in tickets)
             {
                 var approvers = new Collection<GetSignatoryDto>();
