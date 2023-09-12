@@ -19,7 +19,7 @@
             {{ tab.label }}
           </div>
         </div>
-        <div class="flex gap-2 items-end justify-end relative w-[725px] mb-1">
+        <div class="flex gap-2 items-end justify-end relative w-[712px] mb-1">
           <div class="absolute left-0 w-[188px]">
             <label>Ticket Id</label>
             <input class="input__field h-8" v-model="ticketIdSearchField" />
@@ -41,13 +41,21 @@
               :show-labels="false"
             />
           </div>
+          <div class="flex flex-col absolute left-[576px]">
+            <button
+              class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+              @click="clear"
+            >
+              Clear
+            </button>
+            <button
+              class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+              @click="search"
+            >
+              Search
+            </button>
+          </div>
 
-          <button
-            class="w-16 mr-4 border button-transparent disabled:bg-lightSecondary disabled:border-none"
-            @click="search"
-          >
-            Search
-          </button>
           <button
             class="w-14 border button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
@@ -170,6 +178,7 @@ export default {
         params: { status: tab.status },
       });
       store.commit("app/SET_SELECTED_TICKET", {});
+      clear();
     };
 
     const openTicket = () => {
@@ -186,8 +195,6 @@ export default {
     });
 
     const search = () => {
-      console.log(preparedBy.value.user_id);
-      console.log(new Date(`${dateCreatedSearchField.value}, 12:00:00`));
       store.commit("app/SET_SEARCH", String(Date.now()));
       store.commit(
         "app/SET_SEARCH_TICKET_ID",
@@ -199,11 +206,23 @@ export default {
           ? "1/1/1, 12:00:00"
           : `${dateCreatedSearchField.value}, 12:00:00`
       );
-      store.commit("app/SET_SEARCH_PREPARED_BY", preparedBy.value.user_id ?? 0);
+      store.commit(
+        "app/SET_SEARCH_PREPARED_BY",
+        preparedBy.value?.user_id ?? 0
+      );
+    };
+
+    const clear = () => {
+      store.commit("app/SET_SELECTED_TICKET", {});
+      store.commit("app/SET_SEARCH_TICKET_ID", 0);
+      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+      ticketIdSearchField.value = "";
+      dateCreatedSearchField.value = "";
+      preparedBy.value = {};
     };
 
     onUnmounted(() => {
-      store.commit("app/SET_SELECTED_TICKET", {});
+      clear();
     });
 
     return {
@@ -218,6 +237,7 @@ export default {
       preparedBy,
       ticketIdSearchField,
       dateCreatedSearchField,
+      clear,
       search,
       closeModal,
       openModal,

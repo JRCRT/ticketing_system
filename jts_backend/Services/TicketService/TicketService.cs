@@ -147,9 +147,9 @@ namespace jts_backend.Services.TicketService
             }
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetAllTickets()
+        public async Task<ServiceResponse<GetTicketsDto>> GetAllTickets()
         {
-            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var response = new ServiceResponse<GetTicketsDto>();
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
@@ -159,17 +159,15 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.job_title)
                 .Select(t => t)
                 .ToListAsync();
-            var data = await GetTicketsData(tickets, tickets.Count);
+            var data = await GetTicketsData(tickets, tickets.Count, null);
             response.data = data;
 
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByStatus(
-            string status
-        )
+        public async Task<ServiceResponse<GetTicketsDto>> GetTicketByStatus(string status)
         {
-            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var response = new ServiceResponse<GetTicketsDto>();
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
@@ -180,15 +178,15 @@ namespace jts_backend.Services.TicketService
                 .Select(t => t)
                 .ToListAsync();
 
-            var data = await GetTicketsData(tickets, tickets.Count);
+            var data = await GetTicketsData(tickets, tickets.Count, null);
             response.data = data;
 
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTodayTickets(int userId)
+        public async Task<ServiceResponse<GetTicketsDto>> GetTodayTickets(int userId)
         {
-            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var response = new ServiceResponse<GetTicketsDto>();
             var tickets = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
@@ -202,7 +200,7 @@ namespace jts_backend.Services.TicketService
                 )
                 .Select(t => t)
                 .ToListAsync();
-            var data = await GetTicketsData(tickets, tickets.Count);
+            var data = await GetTicketsData(tickets, tickets.Count, null);
             response.data = data;
 
             return response;
@@ -226,9 +224,7 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketByUser(
-            TicketByUserDto request
-        )
+        public async Task<ServiceResponse<GetTicketsDto>> GetTicketByUser(TicketByUserDto request)
         {
             var result = await _context.ticket
                 .Include(t => t.priority)
@@ -256,7 +252,7 @@ namespace jts_backend.Services.TicketService
 
             var totalTickets = 0;
             var tickets = new List<TicketModel>();
-            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var response = new ServiceResponse<GetTicketsDto>();
 
             if (request.ticket_id == 0 && request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
             {
@@ -312,18 +308,18 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(tickets, totalTickets);
+            var data = await GetTicketsData(tickets, totalTickets, null);
             response.message = request.date_created.Date.ToString();
             response.data = data;
 
             return response;
         }
 
-        public async Task<ServiceResponse<ICollection<GetTicketDto>>> GetTicketsForApproval(
+        public async Task<ServiceResponse<GetTicketsDto>> GetTicketsForApproval(
             TicketByUserDto request
         )
         {
-            var response = new ServiceResponse<ICollection<GetTicketDto>>();
+            var response = new ServiceResponse<GetTicketsDto>();
             var responseData = new Collection<GetTicketDto>();
             var result = await _context.approver
                 .Include(t => t.status)
@@ -437,8 +433,9 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(tickets!, totalTickets);
+            var data = await GetTicketsData(result!, totalResult.Count, null);
             response.data = data;
+            //response.message = tickets[0].ticket_id.ToString();
             return response;
         }
 
@@ -705,12 +702,13 @@ namespace jts_backend.Services.TicketService
             return _files;
         }
 
-        private async Task<Collection<GetTicketDto>> GetTicketsData(
+        private async Task<GetTicketsDto> GetTicketsData(
             List<TicketModel> tickets,
-            int totalItems
+            int totalItems,
+            DateTime? actionDate
         )
         {
-            var responseData = new Collection<GetTicketDto>();
+            var ticketLists = new Collection<GetTicketDto>();
             foreach (var ticket in tickets)
             {
                 var approvers = new Collection<GetSignatoryDto>();
@@ -778,8 +776,16 @@ namespace jts_backend.Services.TicketService
                     total_items = totalItems
                 };
 
-                responseData.Add(data);
+                ticketLists.Add(data);
             }
+
+            var responseData = new GetTicketsDto()
+            {
+                tickets = ticketLists,
+                total_items = totalItems,
+                action_date = actionDate
+            };
+
             return responseData;
         }
 

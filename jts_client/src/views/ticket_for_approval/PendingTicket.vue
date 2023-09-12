@@ -143,13 +143,15 @@ export default {
       await store.dispatch("ticket/fetchPendingTicketsForApproval", param);
       const pendingTicketsForApproval =
         store.state.ticket.pendingTicketsForApproval;
+
+      console.log(pendingTicketsForApproval);
+
       serverItems.value = pendingTicketsForApproval;
       totalItems.value =
         pendingTicketsForApproval.length !== 0
           ? pendingTicketsForApproval[0].total_items
           : 0;
       loading.value = false;
-
       store.commit("app/SET_SELECTED_TICKET", {});
     };
 
@@ -177,25 +179,6 @@ export default {
       recentlyClickedRow.value = tds;
       store.commit("app/SET_SELECTED_TICKET", selectedTicket);
     }
-
-    /* const onGridReady = async (params) => {
-      gridAPI.value = params.api;
-      params.api.showLoadingOverlay();
-      await store.dispatch("ticket/fetchPendingTicketsForApproval", {
-        user_id: currentUser.user_id,
-        status_id: 1,
-      });
-
-      const pendingTicketsForApproval =
-        store.state.ticket.pendingTicketsForApproval;
-      params.api.setRowData(pendingTicketsForApproval);
-      console.log(pendingTicketsForApproval);
-    };
-
-    const onSelectionChanged = () => {
-      const selectedRow = gridAPI.value.getSelectedRows();
-      store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
-    }; */
 
     return {
       itemsPerPageOptions,

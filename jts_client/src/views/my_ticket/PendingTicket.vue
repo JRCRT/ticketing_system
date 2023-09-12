@@ -125,6 +125,7 @@ export default {
       loading.value = true;
       await store.dispatch("ticket/fetchMyPendingTickets", param);
       const myPendingTickets = store.state.ticket.myPendingTickets;
+      console.log(myPendingTickets);
       serverItems.value = myPendingTickets;
       totalItems.value =
         myPendingTickets.length !== 0 ? myPendingTickets[0].total_items : 0;

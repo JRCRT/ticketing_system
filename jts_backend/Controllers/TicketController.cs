@@ -33,44 +33,50 @@ namespace jts_backend.Controllers
         }
 
         [HttpGet("GetAllTickets")]
-        public async Task<ActionResult<ServiceResponse<ICollection<GetTicketDto>>>> GetAllTickets()
+        public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetAllTickets()
         {
             var response = await _ticketService.GetAllTickets();
             return Ok(response);
         }
 
         [HttpPost("GetAllTicketByStatus")]
-        public async Task<
-            ActionResult<ServiceResponse<ICollection<GetTicketDto>>>
-        > GetAllTicketByStatus(string status)
+        public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetAllTicketByStatus(
+            string status
+        )
         {
             var response = await _ticketService.GetTicketByStatus(status);
             return Ok(response);
         }
 
         [HttpGet("GetAllTicketsToday")]
-        public async Task<ActionResult<ICollection<GetTicketDto>>> GetAllTicketsToday(int userId)
+        public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetAllTicketsToday(
+            int userId
+        )
         {
             var response = await _ticketService.GetTodayTickets(userId);
             return Ok(response);
         }
 
         [HttpPost("GetTicketById")]
-        public async Task<ActionResult<GetTicketDto>> GetTicketById(int id)
+        public async Task<ActionResult<ServiceResponse<GetTicketDto>>> GetTicketById(int id)
         {
             var response = await _ticketService.GetTicketById(id);
             return Ok(response);
         }
 
         [HttpPost("GetTicketByUser")]
-        public async Task<ActionResult<GetTicketDto>> GetTicketByUser(TicketByUserDto request)
+        public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetTicketByUser(
+            TicketByUserDto request
+        )
         {
             var response = await _ticketService.GetTicketByUser(request);
             return Ok(response);
         }
 
         [HttpPost("GetTicketsForApproval")]
-        public async Task<ActionResult<GetTicketDto>> GetTicketsForApproval(TicketByUserDto request)
+        public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetTicketsForApproval(
+            TicketByUserDto request
+        )
         {
             var response = await _ticketService.GetTicketsForApproval(request);
             return Ok(response);
