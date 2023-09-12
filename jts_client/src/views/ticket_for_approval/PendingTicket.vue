@@ -140,17 +140,10 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchPendingTicketsForApproval", param);
-      const pendingTicketsForApproval =
-        store.state.ticket.pendingTicketsForApproval;
-
-      console.log(pendingTicketsForApproval);
-
-      serverItems.value = pendingTicketsForApproval;
-      totalItems.value =
-        pendingTicketsForApproval.length !== 0
-          ? pendingTicketsForApproval[0].total_items
-          : 0;
+      await store.dispatch("ticket/fetchTicketsForApproval", param);
+      const pendingTicketsForApproval = store.state.ticket.ticketsForApproval;
+      serverItems.value = pendingTicketsForApproval.tickets;
+      totalItems.value = pendingTicketsForApproval.total_items;
       loading.value = false;
       store.commit("app/SET_SELECTED_TICKET", {});
     };

@@ -122,11 +122,10 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchMyRejectedTickets", param);
-      const myRejectedTickets = store.state.ticket.myRejectedTickets;
-      serverItems.value = myRejectedTickets;
-      totalItems.value =
-        myRejectedTickets.length !== 0 ? myRejectedTickets[0].total_items : 0;
+      await store.dispatch("ticket/fetchMyTickets", param);
+      const myRejectedTickets = store.state.ticket.myTickets;
+      serverItems.value = myRejectedTickets.tickets;
+      totalItems.value = myRejectedTickets.total_items;
       loading.value = false;
       store.commit("app/SET_SELECTED_TICKET", {});
     };

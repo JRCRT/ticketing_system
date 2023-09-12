@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="flex gap-2 items-end justify-end relative w-[593px] mb-1">
+        <div class="flex gap-2 items-end justify-end relative w-[580px] mb-1">
           <div class="absolute left-0 w-[188px]">
             <label>Ticket Id</label>
             <input class="input__field h-8" v-model="ticketIdSearchField" />
@@ -34,12 +34,20 @@
             />
           </div>
 
-          <button
-            class="w-16 mr-4 border button-transparent disabled:bg-lightSecondary disabled:border-none"
-            @click="search"
-          >
-            Search
-          </button>
+          <div class="flex flex-col absolute left-[387px]">
+            <button
+              class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+              @click="clear"
+            >
+              Clear
+            </button>
+            <button
+              class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+              @click="search"
+            >
+              Search
+            </button>
+          </div>
           <button
             class="w-14 border button-transparent disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
@@ -162,6 +170,9 @@ export default {
     }
 
     const clear = () => {
+      ticketIdSearchField.value = "";
+      dateCreatedSearchField.value = "";
+
       store.commit("app/SET_SELECTED_TICKET", {});
       store.commit("app/SET_SEARCH_TICKET_ID", 0);
       store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");

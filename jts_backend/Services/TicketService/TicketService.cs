@@ -20,6 +20,7 @@ using jts_backend.Hub;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Enums;
 using MimeKit.Encodings;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace jts_backend.Services.TicketService
 {
@@ -165,20 +166,113 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<GetTicketsDto>> GetTicketByStatus(string status)
+        public async Task<ServiceResponse<GetTicketsDto>> GetTicketByStatus(
+            TicketByStatusDto request
+        )
         {
             var response = new ServiceResponse<GetTicketsDto>();
-            var tickets = await _context.ticket
+            var result = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
                 .Include(t => t.created_by)
                 .Include(u => u.created_by.role)
                 .Include(u => u.created_by.department)
-                .Where(t => t.status.name.Equals(status))
+                .Where(t => t.status.status_id == request.status_id)
+                .Select(t => t)
+                .ToListAsync();
+            var totalResult = await _context.ticket
+                .Include(t => t.status)
+                .Where(t => t.status.status_id == request.status_id)
                 .Select(t => t)
                 .ToListAsync();
 
-            var data = await GetTicketsData(tickets, tickets.Count, null);
+            var totalTickets = 0;
+            var tickets = new List<TicketModel>();
+
+            if (request.items_per_page == 0)
+            {
+                totalTickets = totalResult.Count;
+            }
+            else
+            {
+                if (
+                    request.ticket_id == 0
+                    && request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                    && request.prepared_by == 0
+                )
+                {
+                    tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                    totalTickets = totalResult.Count;
+                }
+                else if (
+                    request.ticket_id != 0
+                    && !request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                    && request.prepared_by != 0
+                )
+                {
+                    tickets = result
+                        .Where(
+                            t =>
+                                t.ticket_id == request.ticket_id
+                                && t.date_created.Date.Equals(request.date_created.Date)
+                                && t.created_by.user_id == request.prepared_by
+                        )
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToList();
+
+                    totalTickets = totalResult
+                        .Where(
+                            t =>
+                                t.ticket_id == request.ticket_id
+                                && t.date_created.Date.Equals(request.date_created.Date)
+                                && t.created_by.user_id == request.prepared_by
+                        )
+                        .Count();
+                }
+                else
+                {
+                    if (request.ticket_id != 0)
+                    {
+                        tickets = result
+                            .Where(t => t.ticket_id == request.ticket_id)
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.ticket_id == request.ticket_id)
+                            .Count();
+                    }
+                    else if (!request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+                    {
+                        tickets = result
+                            .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                            .Count();
+                    }
+                    else if (request.prepared_by != 0)
+                    {
+                        tickets = result
+                            .Where(t => t.created_by.user_id == request.prepared_by)
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.created_by.user_id == request.prepared_by)
+                            .Count();
+                    }
+                }
+            }
+
+            var data = await GetTicketsData(tickets, totalTickets, null);
             response.data = data;
 
             return response;
@@ -254,57 +348,70 @@ namespace jts_backend.Services.TicketService
             var tickets = new List<TicketModel>();
             var response = new ServiceResponse<GetTicketsDto>();
 
-            if (request.ticket_id == 0 && request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+            if (request.items_per_page == 0)
             {
-                tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
                 totalTickets = totalResult.Count;
-            }
-            else if (
-                request.ticket_id != 0 && !request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
-            )
-            {
-                tickets = result
-                    .Where(
-                        t =>
-                            t.ticket_id == request.ticket_id
-                            && t.date_created.Date.Equals(request.date_created.Date)
-                    )
-                    .Skip(request.offset)
-                    .Take(request.items_per_page)
-                    .Select(t => t)
-                    .ToList();
-
-                totalTickets = totalResult
-                    .Where(
-                        t =>
-                            t.ticket_id == request.ticket_id
-                            && t.date_created.Date.Equals(request.date_created.Date)
-                    )
-                    .Count();
             }
             else
             {
-                if (request.ticket_id != 0)
+                if (
+                    request.ticket_id == 0
+                    && request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                )
                 {
-                    tickets = result
-                        .Where(t => t.ticket_id == request.ticket_id)
-                        .Skip(request.offset)
-                        .Take(request.items_per_page)
-                        .Select(t => t)
-                        .ToList();
-                    totalTickets = totalResult.Where(t => t.ticket_id == request.ticket_id).Count();
+                    tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                    totalTickets = totalResult.Count;
                 }
-                else if (!request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+                else if (
+                    request.ticket_id != 0
+                    && !request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                )
                 {
                     tickets = result
-                        .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                        .Where(
+                            t =>
+                                t.ticket_id == request.ticket_id
+                                && t.date_created.Date.Equals(request.date_created.Date)
+                        )
                         .Skip(request.offset)
                         .Take(request.items_per_page)
                         .Select(t => t)
                         .ToList();
+
                     totalTickets = totalResult
-                        .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                        .Where(
+                            t =>
+                                t.ticket_id == request.ticket_id
+                                && t.date_created.Date.Equals(request.date_created.Date)
+                        )
                         .Count();
+                }
+                else
+                {
+                    if (request.ticket_id != 0)
+                    {
+                        tickets = result
+                            .Where(t => t.ticket_id == request.ticket_id)
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.ticket_id == request.ticket_id)
+                            .Count();
+                    }
+                    else if (!request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+                    {
+                        tickets = result
+                            .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                            .Count();
+                    }
                 }
             }
 
@@ -343,6 +450,10 @@ namespace jts_backend.Services.TicketService
                 .Select(a => a.ticket)
                 .ToListAsync();
 
+            var actionDate = await _context.approver.FirstOrDefaultAsync(
+                a => a.user.user_id == request.user_id
+            );
+
             var totalResult = await _context.approver
                 .Include(a => a.ticket)
                 .Include(a => a.ticket.created_by)
@@ -357,84 +468,92 @@ namespace jts_backend.Services.TicketService
 
             var totalTickets = 0;
             var tickets = new List<TicketModel?>();
-
-            if (
-                request.ticket_id == 0
-                && request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
-                && request.prepared_by == 0
-            )
+            if (request.items_per_page == 0)
             {
-                tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
                 totalTickets = totalResult.Count;
-            }
-            else if (
-                request.ticket_id != 0
-                && !request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
-                && request.prepared_by != 0
-            )
-            {
-                tickets = result
-                    .Where(
-                        t =>
-                            t.ticket_id == request.ticket_id
-                            && t.date_created.Date.Equals(request.date_created.Date)
-                            && t.created_by.user_id == request.prepared_by
-                    )
-                    .Skip(request.offset)
-                    .Take(request.items_per_page)
-                    .Select(t => t)
-                    .ToList();
-
-                totalTickets = totalResult
-                    .Where(
-                        t =>
-                            t.ticket_id == request.ticket_id
-                            && t.date_created.Date.Equals(request.date_created.Date)
-                            && t.created_by.user_id == request.prepared_by
-                    )
-                    .Count();
             }
             else
             {
-                if (request.ticket_id != 0)
+                if (
+                    request.ticket_id == 0
+                    && request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                    && request.prepared_by == 0
+                )
                 {
-                    tickets = result
-                        .Where(t => t.ticket_id == request.ticket_id)
-                        .Skip(request.offset)
-                        .Take(request.items_per_page)
-                        .Select(t => t)
-                        .ToList();
-                    totalTickets = totalResult.Where(t => t.ticket_id == request.ticket_id).Count();
+                    tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                    totalTickets = totalResult.Count;
                 }
-                else if (!request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+                else if (
+                    request.ticket_id != 0
+                    && !request.date_created.Date.Equals(DateTime.Parse("1/1/1"))
+                    && request.prepared_by != 0
+                )
                 {
                     tickets = result
-                        .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                        .Where(
+                            t =>
+                                t.ticket_id == request.ticket_id
+                                && t.date_created.Date.Equals(request.date_created.Date)
+                                && t.created_by.user_id == request.prepared_by
+                        )
                         .Skip(request.offset)
                         .Take(request.items_per_page)
                         .Select(t => t)
                         .ToList();
+
                     totalTickets = totalResult
-                        .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                        .Where(
+                            t =>
+                                t.ticket_id == request.ticket_id
+                                && t.date_created.Date.Equals(request.date_created.Date)
+                                && t.created_by.user_id == request.prepared_by
+                        )
                         .Count();
                 }
-                else if (request.prepared_by != 0)
+                else
                 {
-                    tickets = result
-                        .Where(t => t.created_by.user_id == request.prepared_by)
-                        .Skip(request.offset)
-                        .Take(request.items_per_page)
-                        .Select(t => t)
-                        .ToList();
-                    totalTickets = totalResult
-                        .Where(t => t.created_by.user_id == request.prepared_by)
-                        .Count();
+                    if (request.ticket_id != 0)
+                    {
+                        tickets = result
+                            .Where(t => t.ticket_id == request.ticket_id)
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.ticket_id == request.ticket_id)
+                            .Count();
+                    }
+                    else if (!request.date_created.Date.Equals(DateTime.Parse("1/1/1")))
+                    {
+                        tickets = result
+                            .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.date_created.Date.Equals(request.date_created.Date))
+                            .Count();
+                    }
+                    else if (request.prepared_by != 0)
+                    {
+                        tickets = result
+                            .Where(t => t.created_by.user_id == request.prepared_by)
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .Select(t => t)
+                            .ToList();
+                        totalTickets = totalResult
+                            .Where(t => t.created_by.user_id == request.prepared_by)
+                            .Count();
+                    }
                 }
             }
 
-            var data = await GetTicketsData(result, totalResult.Count, null);
+            var data = await GetTicketsData(tickets, totalTickets, actionDate.action_date);
             response.data = data;
-            response.message = result[0]?.ticket_id.ToString() ?? "Wala";
+
             return response;
         }
 
@@ -772,7 +891,7 @@ namespace jts_backend.Services.TicketService
                     ticket = _mapper.Map<TicketDto>(_ticket),
                     signatories = approvers,
                     files = ticketFiles,
-                    total_items = totalItems
+                    action_date = actionDate
                 };
 
                 ticketLists.Add(data);
@@ -782,7 +901,6 @@ namespace jts_backend.Services.TicketService
             {
                 tickets = ticketLists,
                 total_items = totalItems,
-                action_date = actionDate
             };
 
             return responseData;

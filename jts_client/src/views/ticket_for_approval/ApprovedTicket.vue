@@ -26,6 +26,10 @@
     <template v-slot:item.ticket.date_created="{ item }">
       {{ formatDate(item.columns["ticket.date_created"]) }}
     </template>
+
+    <template v-slot:item.action_date="{ item }">
+      {{ formatDate(item.columns["action_date"]) }}
+    </template>
   </v-data-table-server>
 </template>
 <script>
@@ -105,8 +109,10 @@ export default {
       },
 
       {
-        title: "Test",
-        key: "signatories[1].user.user.ext_name",
+        title: "Date You Approved",
+        key: "action_date",
+        align: "start",
+        sortable: false,
       },
     ];
 
@@ -136,17 +142,12 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchApprovedTicketsForApproval", param);
-
-      const approvedTicketsForApproval =
-        store.state.ticket.approvedTicketsForApproval;
+      await store.dispatch("ticket/fetchTicketsForApproval", param);
+      const approvedTicketsForApproval = store.state.ticket.ticketsForApproval;
 
       console.log(approvedTicketsForApproval);
-      serverItems.value = approvedTicketsForApproval;
-      totalItems.value =
-        approvedTicketsForApproval.length !== 0
-          ? approvedTicketsForApproval[0].total_items
-          : 0;
+      serverItems.value = approvedTicketsForApproval.tickets;
+      totalItems.value = approvedTicketsForApproval.total_items;
       loading.value = false;
       store.commit("app/SET_SELECTED_TICKET", {});
     };

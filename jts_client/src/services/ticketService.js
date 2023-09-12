@@ -60,9 +60,9 @@ const createTicket = async (ticket) => {
   return response;
 };
 
-const ticketsByStatus = async (status) => {
+const ticketsByStatus = async (param) => {
   const response = await axios
-    .post(`/Ticket/GetAllTicketByStatus?status=${status}`)
+    .post("/Ticket/GetAllTicketByStatus", param)
     .then((res) => {
       return res.data;
     })

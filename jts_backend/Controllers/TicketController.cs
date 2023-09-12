@@ -41,10 +41,10 @@ namespace jts_backend.Controllers
 
         [HttpPost("GetAllTicketByStatus")]
         public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetAllTicketByStatus(
-            string status
+            TicketByStatusDto request
         )
         {
-            var response = await _ticketService.GetTicketByStatus(status);
+            var response = await _ticketService.GetTicketByStatus(request);
             return Ok(response);
         }
 

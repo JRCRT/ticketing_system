@@ -18,7 +18,43 @@
             {{ tab.label }}
           </div>
         </div>
-        <div>
+        <div class="flex gap-2 items-end justify-end relative w-[712px] mb-1">
+          <div class="absolute left-0 w-[188px]">
+            <label>Ticket Id</label>
+            <input class="input__field h-8" v-model="ticketIdSearchField" />
+          </div>
+          <div class="absolute left-[198px] w-[180px]">
+            <label>Date Created</label>
+            <input
+              class="input__field h-8"
+              type="date"
+              v-model="dateCreatedSearchField"
+            />
+          </div>
+          <div class="absolute w-[180px] left-[386px]">
+            <label>Prepared By</label>
+            <VueMultiselect
+              v-model="preparedBy"
+              :options="allUsers"
+              label="ext_name"
+              :show-labels="false"
+            />
+          </div>
+          <div class="flex flex-col absolute left-[576px]">
+            <button
+              class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+              @click="clear"
+            >
+              Clear
+            </button>
+            <button
+              class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
+              @click="search"
+            >
+              Search
+            </button>
+          </div>
+
           <button
             class="w-14 border button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
             :disabled="isSelectedRowEmpty"
@@ -41,10 +77,11 @@ import RejectedTicket from "@/views/all_ticket/RejectedTicket.vue";
 import DoneTicket from "@/views/all_ticket/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import TicketForm from "@/components/TicketForm.vue";
+import VueMultiselect from "vue-multiselect";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
-import { computed, ref, onUnmounted, watch } from "vue";
+import { computed, ref, onUnmounted, watch, onMounted } from "vue";
 
 export default {
   components: {
@@ -54,13 +91,18 @@ export default {
     NewTicketForm,
     DoneTicket,
     TicketForm,
+    VueMultiselect,
   },
 
   setup() {
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
+    const allUsers = ref([]);
     const currentStatus = ref(route.params.status);
+    const ticketIdSearchField = ref("");
+    const dateCreatedSearchField = ref("");
+    const preparedBy = ref({});
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const setTabOnMount = (status) => {
       switch (status) {
@@ -140,6 +182,38 @@ export default {
       });
     };
 
+    const search = () => {
+      store.commit("app/SET_SEARCH", String(Date.now()));
+      store.commit(
+        "app/SET_SEARCH_TICKET_ID",
+        ticketIdSearchField.value === "" ? 0 : Number(ticketIdSearchField.value)
+      );
+      store.commit(
+        "app/SET_SEARCH_CREATED_DATE",
+        dateCreatedSearchField.value === ""
+          ? "1/1/1, 12:00:00"
+          : `${dateCreatedSearchField.value}, 12:00:00`
+      );
+      store.commit(
+        "app/SET_SEARCH_PREPARED_BY",
+        preparedBy.value?.user_id ?? 0
+      );
+    };
+
+    const clear = () => {
+      store.commit("app/SET_SELECTED_TICKET", {});
+      store.commit("app/SET_SEARCH_TICKET_ID", 0);
+      store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+      ticketIdSearchField.value = "";
+      dateCreatedSearchField.value = "";
+      preparedBy.value = {};
+    };
+
+    onMounted(async () => {
+      await store.dispatch("user/fetchAllUsers");
+      allUsers.value = [...store.state.user.users].map((u) => u.user);
+    });
+
     onUnmounted(() => {
       store.commit("app/SET_SELECTED_TICKET", {});
     });
@@ -152,6 +226,12 @@ export default {
       currentStatus,
       isSelectedRowEmpty,
       isTicketFormOpen,
+      ticketIdSearchField,
+      dateCreatedSearchField,
+      allUsers,
+      preparedBy,
+      clear,
+      search,
       closeModal,
       openModal,
       changeTab,
@@ -161,3 +241,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+:deep(.multiselect) {
+  min-height: 34px !important;
+  height: 34px !important;
+}
+
+:deep(.multiselect__tags) {
+  min-height: 34px !important;
+  height: 34px !important;
+}
+:deep(.multiselect__placeholder) {
+  padding-top: 0px !important;
+}
+
+:deep(.multiselect__single) {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+</style>

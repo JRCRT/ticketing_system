@@ -177,7 +177,6 @@ export default {
         name: "TicketForApproval",
         params: { status: tab.status },
       });
-      store.commit("app/SET_SELECTED_TICKET", {});
       clear();
     };
 

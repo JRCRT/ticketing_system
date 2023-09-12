@@ -120,15 +120,12 @@ export default {
         ticket_id: searchTicketId.value,
         date_created: new Date(searchCreatedDate.value),
       };
-
-      //"2023-06-26T03:51:19.632Z"
       loading.value = true;
-      await store.dispatch("ticket/fetchMyPendingTickets", param);
-      const myPendingTickets = store.state.ticket.myPendingTickets;
+      await store.dispatch("ticket/fetchMyTickets", param);
+      const myPendingTickets = store.state.ticket.myTickets;
       console.log(myPendingTickets);
-      serverItems.value = myPendingTickets;
-      totalItems.value =
-        myPendingTickets.length !== 0 ? myPendingTickets[0].total_items : 0;
+      serverItems.value = myPendingTickets.tickets;
+      totalItems.value = myPendingTickets.total_items;
       loading.value = false;
 
       store.commit("app/SET_SELECTED_TICKET", {});
