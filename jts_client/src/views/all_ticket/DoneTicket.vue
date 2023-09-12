@@ -140,8 +140,8 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchAllTickets", param);
-      const doneTickets = store.state.ticket.allTickets;
+      await store.dispatch("ticket/fetchAllDoneTickets", param);
+      const doneTickets = store.state.ticket.allDoneTickets;
       serverItems.value = doneTickets.tickets;
       totalItems.value = doneTickets.total_items;
       loading.value = false;

@@ -140,8 +140,8 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchAllTickets", param);
-      const rejectedTickets = store.state.ticket.allTickets;
+      await store.dispatch("ticket/fetchAllRejectedTickets", param);
+      const rejectedTickets = store.state.ticket.allRejectedTickets;
       serverItems.value = rejectedTickets.tickets;
       totalItems.value = rejectedTickets.total_items;
       loading.value = false;

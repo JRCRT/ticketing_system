@@ -175,6 +175,28 @@ export default {
         items_per_page: 0,
         offset: 0,
       };
+
+      const paramAllPending = {
+        status_id: 1,
+        items_per_page: 0,
+        offset: 0,
+      };
+      const paramAllApproved = {
+        status_id: 2,
+        items_per_page: 0,
+        offset: 0,
+      };
+      const paramAllRejected = {
+        status_id: 3,
+        items_per_page: 0,
+        offset: 0,
+      };
+      const paramAllDone = {
+        status_id: 4,
+        items_per_page: 0,
+        offset: 0,
+      };
+
       store.commit("app/SET_LOADING", true);
       switch (currentUser.role.name) {
         case ROLE.USER:
@@ -188,10 +210,19 @@ export default {
           doneNum.value = store.state.ticket.myDoneTickets.total_items;
           break;
         case ROLE.ADMIN:
-          await store.dispatch("ticket/fetchAllPendingTickets");
-          await store.dispatch("ticket/fetchAllApprovedTickets");
-          await store.dispatch("ticket/fetchAllRejectedTickets");
-          await store.dispatch("ticket/fetchAllDoneTickets");
+          await store.dispatch(
+            "ticket/fetchAllPendingTickets",
+            paramAllPending
+          );
+          await store.dispatch(
+            "ticket/fetchAllApprovedTickets",
+            paramAllApproved
+          );
+          await store.dispatch(
+            "ticket/fetchAllRejectedTickets",
+            paramAllRejected
+          );
+          await store.dispatch("ticket/fetchAllDoneTickets", paramAllDone);
           pendingNum.value = store.state.ticket.allPendingTickets.total_items;
           approvedNum.value = store.state.ticket.allApprovedTickets.total_items;
           rejectedNum.value = store.state.ticket.allRejectedTickets.total_items;

@@ -121,8 +121,8 @@ export default {
         date_created: new Date(searchCreatedDate.value),
       };
       loading.value = true;
-      await store.dispatch("ticket/fetchMyTickets", param);
-      const myPendingTickets = store.state.ticket.myTickets;
+      await store.dispatch("ticket/fetchMyPendingTickets", param);
+      const myPendingTickets = store.state.ticket.myPendingTickets;
       console.log(myPendingTickets);
       serverItems.value = myPendingTickets.tickets;
       totalItems.value = myPendingTickets.total_items;

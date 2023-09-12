@@ -122,8 +122,8 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchMyTickets", param);
-      const myApprovedTickets = store.state.ticket.myTickets;
+      await store.dispatch("ticket/fetchMyApprovedTickets", param);
+      const myApprovedTickets = store.state.ticket.myApprovedTickets;
       serverItems.value = myApprovedTickets.tickets;
       totalItems.value = myApprovedTickets.total_items;
       loading.value = false;

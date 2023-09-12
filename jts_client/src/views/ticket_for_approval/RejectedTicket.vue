@@ -142,9 +142,10 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchTicketsForApproval", param);
+      await store.dispatch("ticket/fetchRejectedTicketsForApproval", param);
 
-      const rejectedTicketsForApproval = store.state.ticket.ticketsForApproval;
+      const rejectedTicketsForApproval =
+        store.state.ticket.rejectedTicketsForApproval;
 
       serverItems.value = rejectedTicketsForApproval.tickets;
       totalItems.value = rejectedTicketsForApproval.total_items;

@@ -142,8 +142,9 @@ export default {
       };
 
       loading.value = true;
-      await store.dispatch("ticket/fetchTicketsForApproval", param);
-      const approvedTicketsForApproval = store.state.ticket.ticketsForApproval;
+      await store.dispatch("ticket/fetchApprovedTicketsForApproval", param);
+      const approvedTicketsForApproval =
+        store.state.ticket.approvedTicketsForApproval;
 
       console.log(approvedTicketsForApproval);
       serverItems.value = approvedTicketsForApproval.tickets;
