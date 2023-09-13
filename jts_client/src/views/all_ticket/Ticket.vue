@@ -211,8 +211,14 @@ export default {
     };
 
     onMounted(async () => {
-      await store.dispatch("user/fetchAllUsers");
-      allUsers.value = [...store.state.user.users].map((u) => u.user);
+      const param = {
+        items_per_page: 0,
+        offset: 0,
+        username: "",
+        full_name: "",
+      };
+      await store.dispatch("user/fetchAllUsers", param);
+      allUsers.value = [...store.state.user.users.users].map((u) => u.user);
     });
 
     onUnmounted(() => {

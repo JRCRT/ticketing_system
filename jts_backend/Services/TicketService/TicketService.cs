@@ -281,23 +281,91 @@ namespace jts_backend.Services.TicketService
         public async Task<ServiceResponse<GetTicketsDto>> GetTodayTickets(TicketsTodayDto request)
         {
             var response = new ServiceResponse<GetTicketsDto>();
-            var tickets = await _context.ticket
+            /* var result = await _context.ticket
                 .Include(t => t.priority)
                 .Include(t => t.status)
                 .Include(t => t.created_by)
                 .Include(u => u.created_by.role)
                 .Include(u => u.created_by.department)
                 .Include(u => u.created_by.job_title)
-                .Where(
-                    t =>
-                        t.date_created.Date.Equals(DateTime.Today.Date)
-                        && t.created_by.user_id == request.user_id
-                )
+                .Where(t => t.date_created.Date.Equals(DateTime.Today.Date))
                 .Select(t => t)
-                .ToListAsync();
-            var data = await GetTicketsData(tickets, tickets.Count, null);
-            response.data = data;
+                .ToListAsync(); */
 
+            var result = await _context.approver
+                .Include(a => a.user)
+                .Include(a => a.ticket)
+                .Include(a => a.ticket.created_by)
+                .Where(a => a.ticket.date_created.Date.Equals(DateTime.Today.Date))
+                .Select(a => a)
+                .ToListAsync();
+
+            var totalResult = await _context.approver
+                .Include(a => a.user)
+                .Include(a => a.ticket)
+                .Include(a => a.ticket.created_by)
+                .Where(a => a.ticket.date_created.Date.Equals(DateTime.Today.Date))
+                .Select(a => a)
+                .ToListAsync();
+
+            var tickets = new List<TicketModel>();
+            var totalTickets = 0;
+
+            switch (request.role_id)
+            {
+                //admin
+                case 1:
+                    tickets = result
+                        .Select(a => a.ticket!)
+                        .Distinct()
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .ToList();
+                    totalTickets = totalResult.Select(a => a.ticket).Count();
+                    break;
+                //approver
+                case 2:
+                    tickets = result
+                        .Where(a => a.user.user_id == request.user_id && a.can_approve == true)
+                        .Select(a => a.ticket!)
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .ToList();
+                    totalTickets = totalResult
+                        .Where(a => a.user.user_id == request.user_id)
+                        .Select(a => a.ticket)
+                        .Count();
+                    break;
+                //checker
+                case 3:
+                    tickets = result
+                        .Where(a => a.user.user_id == request.user_id)
+                        .Select(a => a.ticket!)
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .ToList();
+                    totalTickets = totalResult
+                        .Where(a => a.user.user_id == request.user_id)
+                        .Select(a => a.ticket)
+                        .Count();
+                    break;
+                //user
+                case 4:
+                    tickets = result
+                        .Where(a => a.ticket.created_by.user_id == request.user_id)
+                        .Select(a => a.ticket!)
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .ToList();
+                    totalTickets = totalResult
+                        .Where(a => a.ticket.created_by.user_id == request.user_id)
+                        .Select(a => a.ticket!)
+                        .Count();
+                    break;
+            }
+
+            var data = await GetTicketsData(tickets, totalTickets, null);
+            response.data = data;
             return response;
         }
 

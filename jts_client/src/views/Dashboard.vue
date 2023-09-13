@@ -33,7 +33,7 @@
       <div class="flex items-center justify-between mb-2">
         <h4 class="text-primary">Today's Ticket</h4>
         <button
-          class="w-14 button-transparent mr-2 disabled:bg-lightSecondary disabled:border-none"
+          class="w-14 button-transparent mr-2 border disabled:bg-lightSecondary disabled:border-none"
           :disabled="isSelectedRowEmpty"
           @click="openTicket"
         >
@@ -166,6 +166,7 @@ export default {
         user_id: currentUser.user_id,
         items_per_page: itemsPerPage,
         offset: offset,
+        role_id: currentUser.role.role_id,
       };
 
       loading.value = true;
@@ -173,8 +174,6 @@ export default {
       const todaysTickets = store.state.ticket.todaysTickets;
       serverItems.value = todaysTickets.tickets;
       totalItems.value = todaysTickets.total_items;
-      console.log(param);
-      console.log(todaysTickets);
       loading.value = false;
       store.commit("app/SET_SELECTED_TICKET", {});
     };

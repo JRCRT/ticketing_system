@@ -46,53 +46,60 @@ namespace jts_backend.Services.UserService
             var totalResult = await _context.user.ToListAsync();
             var users = new List<UserDto>();
             var totalUsers = 0;
-            if (request.username.IsNullOrEmpty() && request.full_name.IsNullOrEmpty())
+            if (request.items_per_page == 0)
             {
-                users = result.Skip(request.offset).Take(request.items_per_page).ToList();
-                totalUsers = totalResult.Count;
-            }
-            else if (!request.username.IsNullOrEmpty() && !request.full_name.IsNullOrEmpty())
-            {
-                users = result
-                    .Where(
-                        u =>
-                            u.username.Contains(request.username)
-                            && u.ext_name.Contains(request.full_name)
-                    )
-                    .Skip(request.offset)
-                    .Take(request.items_per_page)
-                    .ToList();
-                totalUsers = totalResult
-                    .Where(
-                        u =>
-                            u.username.Contains(request.username)
-                            && u.ext_name.Contains(request.full_name)
-                    )
-                    .Count();
+                users = result;
             }
             else
             {
-                if (!request.username.IsNullOrEmpty())
+                if (request.username.IsNullOrEmpty() && request.full_name.IsNullOrEmpty())
+                {
+                    users = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                    totalUsers = totalResult.Count;
+                }
+                else if (!request.username.IsNullOrEmpty() && !request.full_name.IsNullOrEmpty())
                 {
                     users = result
-                        .Where(u => u.username.Contains(request.username))
+                        .Where(
+                            u =>
+                                u.username.Contains(request.username)
+                                && u.ext_name.Contains(request.full_name)
+                        )
                         .Skip(request.offset)
                         .Take(request.items_per_page)
                         .ToList();
                     totalUsers = totalResult
-                        .Where(u => u.username.Contains(request.username))
+                        .Where(
+                            u =>
+                                u.username.Contains(request.username)
+                                && u.ext_name.Contains(request.full_name)
+                        )
                         .Count();
                 }
-                else if (!request.full_name.IsNullOrEmpty())
+                else
                 {
-                    users = result
-                        .Where(u => u.ext_name.Contains(request.full_name))
-                        .Skip(request.offset)
-                        .Take(request.items_per_page)
-                        .ToList();
-                    totalUsers = totalResult
-                        .Where(u => u.ext_name.Contains(request.full_name))
-                        .Count();
+                    if (!request.username.IsNullOrEmpty())
+                    {
+                        users = result
+                            .Where(u => u.username.Contains(request.username))
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .ToList();
+                        totalUsers = totalResult
+                            .Where(u => u.username.Contains(request.username))
+                            .Count();
+                    }
+                    else if (!request.full_name.IsNullOrEmpty())
+                    {
+                        users = result
+                            .Where(u => u.ext_name.Contains(request.full_name))
+                            .Skip(request.offset)
+                            .Take(request.items_per_page)
+                            .ToList();
+                        totalUsers = totalResult
+                            .Where(u => u.ext_name.Contains(request.full_name))
+                            .Count();
+                    }
                 }
             }
             response.data = await GetUsers(users, totalUsers);

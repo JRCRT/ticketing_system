@@ -7,6 +7,7 @@ import MyTicket from "@/views/my_ticket/Ticket.vue";
 import Ticket from "@/views/all_ticket/Ticket.vue";
 import TicketForApproval from "@/views/ticket_for_approval/Ticket.vue";
 import RoleManager from "@/views/RoleManager.vue";
+import Profile from "@/views/Profile.vue";
 import User from "@/views/User.vue";
 import ErrorPage from "@/views/ErrorPage.vue";
 
@@ -157,14 +158,14 @@ const routes = [
   },
 
   {
-    path: "/RoleManager",
-    name: "RoleManager",
-    component: RoleManager,
+    path: "/Profile",
+    name: "Profile",
+    component: Profile,
     meta: {
-      title: "Role Manager",
-      adminRequired: true,
+      title: "Profile",
     },
   },
+
   {
     path: "/ErrorPage",
     name: "ErrorPage",
