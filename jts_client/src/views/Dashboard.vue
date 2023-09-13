@@ -67,6 +67,14 @@
         <template v-slot:item.ticket.date_created="{ item }">
           {{ formatDate(item.columns["ticket.date_created"]) }}
         </template>
+        <template v-slot:item.ticket.status.name="{ item }">
+          <div
+            class="w-fit p-[3px] text-[14px] text-white rounded-lg"
+            :class="getColor(item.columns['ticket.status.name'])"
+          >
+            {{ item.columns["ticket.status.name"] }}
+          </div>
+        </template>
       </v-data-table-server>
     </div>
   </div>
@@ -154,6 +162,12 @@ export default {
       {
         title: "Date Created",
         key: "ticket.date_created",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Status",
+        key: "ticket.status.name",
         align: "start",
         sortable: false,
       },
@@ -347,6 +361,19 @@ export default {
       }
     );
 
+    const getColor = (status) => {
+      switch (status) {
+        case TICKET_STATUS.PENDING:
+          return "bg-orange";
+        case TICKET_STATUS.APPROVED:
+          return "bg-blue";
+        case TICKET_STATUS.REJECTED:
+          return "bg-red";
+        case TICKET_STATUS.DONE:
+          return "bg-primary";
+      }
+    };
+
     return {
       pendingNum,
       approvedNum,
@@ -361,6 +388,7 @@ export default {
       totalItems,
       loading,
       formatDate,
+      getColor,
       navigateToTicket,
       openTicket,
       loadItems,

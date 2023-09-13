@@ -30,6 +30,7 @@
       <div class="flex justify-center border-[1.6px] p-3 rounded-md">
         <UserFilePreview :file="file" />
       </div>
+      <button class="button-primary text-[14px] w-16">Save</button>
     </div>
   </div>
 </template>
@@ -51,10 +52,41 @@ export default {
     const store = useStore();
     const file = computed(() => store.state.file.file);
     const currentUser = JSON.parse(localStorage.getItem("user"));
+    const currentProfile = ref({});
+
+    const save = async () => {
+      var userformData = new FormData();
+
+      userformData.append("user_id", currentProfile.value.user.user_id);
+      userformData.append("first_name", currentProfile.value.user.first_name);
+      userformData.append(
+        "middle_name",
+        currentProfile.value.user.middle_name ?? ""
+      );
+      userformData.append("last_name", currentProfile.value.user.last_name);
+      userformData.append("username", currentProfile.value.user.username);
+      userformData.append("short_name", currentProfile.value.user.short_name);
+      userformData.append("email", currentProfile.value.user.email);
+      userformData.append("role_id", currentProfile.value.user.role.role_id);
+      userformData.append(
+        "department_id",
+        currentProfile.value.user.department.department_id
+      );
+      userformData.append(
+        "job_title_id",
+        currentProfile.value.user.job_title_job_title_id
+      );
+      userformData.append("password", currentProfile.value.user.password_hash);
+      userformData.append("file", file.value.file);
+
+      await store.dispatch("user/updateUser", userformData);
+    };
 
     onMounted(async () => {
       await store.dispatch("user/fetchUser", currentUser.user_id);
+
       const user = store.state.user.user;
+      currentProfile.value = user;
       username.value = user.user.username;
       name.value = user.user.ext_name;
       role.value = user.user.role.name;
@@ -65,6 +97,8 @@ export default {
           ? `${BASE_URL}/File/${user.file.stored_file_name}`
           : ""
       );
+
+      console.log(user);
     });
 
     onUnmounted(() => {
