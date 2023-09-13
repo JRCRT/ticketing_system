@@ -18,10 +18,16 @@
 
       <div class="flex">
         <button
-          @click="searchUser(fullname)"
+          @click="searchUser"
           class="button-transparent border !w-fit mr-2 disabled:bg-lightSecondary disabled:border-none"
         >
           Search
+        </button>
+        <button
+          @click="clear"
+          class="button-transparent border !w-fit mr-2 disabled:bg-lightSecondary disabled:border-none"
+        >
+          Clear
         </button>
         <button
           @click="openUserForm"
@@ -39,11 +45,24 @@
         </button>
       </div>
     </div>
-    <Table
-      @grid-ready="onGridReady"
-      @selection-changed="onSelectionChanged"
-      :columnDefs="columnDefs"
-    ></Table>
+    <v-data-table-server
+      v-model:items-per-page="itemsPerPage"
+      :headers="headers"
+      :items-length="totalItems"
+      :items="serverItems"
+      :loading="loading"
+      :search="search"
+      :hover="true"
+      :fixed-header="true"
+      :items-per-page-options="itemsPerPageOptions"
+      height="500"
+      density="comfortable"
+      @click:row="rowClick"
+      class="elevation-1"
+      item-value="name"
+      @update:options="loadItems"
+    >
+    </v-data-table-server>
   </div>
 </template>
 
@@ -56,6 +75,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useSignalR } from "@quangdao/vue-signalr";
+
 export default {
   name: "User",
   components: {
@@ -68,6 +88,124 @@ export default {
     const store = useStore();
     const router = useRouter();
     const signalR = useSignalR();
+
+    const itemsPerPage = ref(10);
+    const serverItems = ref([]);
+    const loading = ref(true);
+    const totalItems = ref(0);
+    const recentlyClickedRow = ref([]);
+    const fullname = ref("");
+    const username = ref("");
+    const search = ref("");
+    const isUserFormOpen = computed(() => store.state.app.isUserFormOpen);
+    const isNewUserFormOpen = computed(() => store.state.app.isNewUserFormOpen);
+
+    const isSelectedRowEmpty = computed(() =>
+      store.state.app.selectedUser?.user?.user_id == null ? true : false
+    );
+
+    const itemsPerPageOptions = [
+      {
+        title: "10",
+        value: 10,
+      },
+      {
+        title: "15",
+        value: 15,
+      },
+      {
+        title: "20",
+        value: 20,
+      },
+      {
+        title: "50",
+        value: 50,
+      },
+      {
+        title: "100",
+        value: 100,
+      },
+    ];
+    const headers = [
+      {
+        title: "No.",
+        align: "start",
+        sortable: false,
+        key: "user.user_id",
+      },
+      {
+        title: "Name",
+        key: "user.ext_name",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Username",
+        key: "user.username",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Department",
+        key: "user.department.name",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Role",
+        key: "user.role.name",
+        align: "start",
+        sortable: false,
+      },
+    ];
+
+    const loadItems = async ({ page, itemsPerPage, sortBy }) => {
+      removeSelect();
+      const offset = (page - 1) * itemsPerPage;
+      const param = {
+        items_per_page: itemsPerPage,
+        offset: offset,
+        username: username.value,
+        full_name: fullname.value,
+      };
+
+      loading.value = true;
+      await store.dispatch("user/fetchAllUsers", param);
+      const users = store.state.user.users;
+
+      serverItems.value = users.users;
+      totalItems.value = users.total_items;
+      loading.value = false;
+      store.commit("app/SET_SELECTED_USER", {});
+    };
+
+    const removeSelect = () => {
+      if (recentlyClickedRow.value.length) {
+        for (var i = 0; i < recentlyClickedRow.value.length; i++) {
+          recentlyClickedRow.value[i].classList.remove("selected");
+        }
+      }
+    };
+
+    function rowClick(event, item) {
+      const selectedUser = item.item.raw;
+      removeSelect();
+      const tr =
+        event.target.tagName === "DIV"
+          ? event.target.parentNode.parentNode
+          : event.target.parentNode;
+
+      var tds = tr.getElementsByTagName("td");
+
+      for (var i = 0; i < tds.length; i++) {
+        tds[i].classList.add("selected");
+      }
+      recentlyClickedRow.value = tds;
+      store.commit("app/SET_SELECTED_USER", selectedUser);
+    }
+
     const columnDefs = [
       { headerName: "No.", field: "user.user_id", flex: 1 },
       { headerName: "Name", field: "user.ext_name", flex: 2 },
@@ -88,17 +226,7 @@ export default {
       },
     ];
 
-    const gridAPI = ref(null);
-    const fullname = ref(null);
-    const username = ref(null);
-    const isUserFormOpen = computed(() => store.state.app.isUserFormOpen);
-    const isNewUserFormOpen = computed(() => store.state.app.isNewUserFormOpen);
-
-    const isSelectedRowEmpty = computed(() =>
-      store.state.app.selectedUser.user_id == null ? true : false
-    );
-
-    signalR.on("GetUser", (user) => {
+    /*    signalR.on("GetUser", (user) => {
       store.commit("user/ADD_USER", user);
       console.log(user);
       gridAPI.value.setRowData(store.state.user.users);
@@ -107,7 +235,7 @@ export default {
     signalR.on("UpdateUser", (user) => {
       store.commit("user/UPDATE_USER", user);
       gridAPI.value.setRowData(store.state.user.users);
-    });
+    }); */
 
     watch(
       () => isUserFormOpen.value,
@@ -120,8 +248,18 @@ export default {
       }
     );
 
+    const searchUser = () => {
+      search.value = String(Date.now());
+    };
+
+    const clear = () => {
+      username.value = "";
+      fullname.value = "";
+      search.value = String(Date.now());
+    };
+
     const openUserForm = () => {
-      const userId = store.state.app.selectedUser.user_id;
+      const userId = store.state.app.selectedUser.user.user_id;
       router.push({
         name: "UserById",
         params: { userId: userId },
@@ -135,11 +273,6 @@ export default {
       });
     };
 
-    const searchUser = (keyWord) => {
-      store.commit("user/SEARCH_USER", keyWord);
-      gridAPI.value.setRowData(store.state.user.users);
-    };
-
     const closeNewUserForm = () => {
       store.commit("app/SET_NEW_USER_FORM", false);
     };
@@ -148,36 +281,32 @@ export default {
       store.commit("app/SET_NEW_USER_FORM", true);
     };
 
-    const onGridReady = async (params) => {
-      gridAPI.value = params.api;
-      params.api.showLoadingOverlay();
-      await store.dispatch("user/fetchAllUsers");
-      params.api.setRowData(store.state.user.users);
-    };
-
-    const onSelectionChanged = () => {
-      const selectedRow = gridAPI.value.getSelectedRows();
-      store.commit("app/SET_SELECTED_USER", selectedRow[0].user);
-    };
-
     onUnmounted(() => {
       store.commit("app/SET_SELECTED_USER", {});
     });
 
     return {
+      itemsPerPageOptions,
+      itemsPerPage,
+      headers,
+      search,
+      serverItems,
+      totalItems,
+      loading,
       columnDefs,
       isUserFormOpen,
       isNewUserFormOpen,
       isSelectedRowEmpty,
       fullname,
       username,
+      clear,
+      searchUser,
       openNewUserForm,
       closeNewUserForm,
       openUserForm,
       closeUserForm,
-      onGridReady,
-      onSelectionChanged,
-      searchUser,
+      loadItems,
+      rowClick,
     };
   },
 };

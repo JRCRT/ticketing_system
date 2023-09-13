@@ -72,9 +72,9 @@ const ticketsByStatus = async (param) => {
   return response;
 };
 
-const ticketsToday = async (userId) => {
+const ticketsToday = async (param) => {
   const response = await axios
-    .get(`/Ticket/GetAllTicketsToday?userId=${userId}`)
+    .post("/Ticket/GetAllTicketsToday", param)
     .then((res) => {
       return res.data;
     })

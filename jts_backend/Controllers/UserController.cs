@@ -24,10 +24,12 @@ namespace jts_backend.Controllers
             _userService = userSevice;
         }
 
-        [HttpGet("GetAllUsers")]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<GetUserDto>>>> GetAllUsers()
+        [HttpPost("GetAllUsers")]
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetUserDto>>>> GetAllUsers(
+            AllUserDto request
+        )
         {
-            var users = await _userService.GetAllUser();
+            var users = await _userService.GetAllUser(request);
             return Ok(users);
         }
 

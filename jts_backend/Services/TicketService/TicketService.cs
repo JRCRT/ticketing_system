@@ -278,7 +278,7 @@ namespace jts_backend.Services.TicketService
             return response;
         }
 
-        public async Task<ServiceResponse<GetTicketsDto>> GetTodayTickets(int userId)
+        public async Task<ServiceResponse<GetTicketsDto>> GetTodayTickets(TicketsTodayDto request)
         {
             var response = new ServiceResponse<GetTicketsDto>();
             var tickets = await _context.ticket
@@ -290,7 +290,8 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.job_title)
                 .Where(
                     t =>
-                        t.date_created.Equals(DateTime.Today.Date) && t.created_by.user_id == userId
+                        t.date_created.Date.Equals(DateTime.Today.Date)
+                        && t.created_by.user_id == request.user_id
                 )
                 .Select(t => t)
                 .ToListAsync();

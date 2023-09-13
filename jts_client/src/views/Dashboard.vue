@@ -41,11 +41,33 @@
         </button>
       </div>
 
-      <Table
-        :columnDefs="columnDefs"
-        @grid-ready="onGridReady"
-        @selection-changed="onSelectionChanged"
-      ></Table>
+      <v-data-table-server
+        v-model:items-per-page="itemsPerPage"
+        :headers="headers"
+        :items-length="totalItems"
+        :items="serverItems"
+        :loading="loading"
+        :hover="true"
+        :fixed-header="true"
+        :items-per-page-options="itemsPerPageOptions"
+        height="450"
+        density="comfortable"
+        @click:row="rowClick"
+        class="elevation-1"
+        item-value="name"
+        @update:options="loadItems"
+      >
+        <template v-slot:item.ticket.subject="{ item }">
+          <div
+            class="max-w-[500px] whitespace-nowrap overflow-hidden text-ellipsis"
+          >
+            {{ item.columns["ticket.subject"] }}
+          </div>
+        </template>
+        <template v-slot:item.ticket.date_created="{ item }">
+          {{ formatDate(item.columns["ticket.date_created"]) }}
+        </template>
+      </v-data-table-server>
     </div>
   </div>
 </template>
@@ -54,11 +76,12 @@
 import Table from "@/components/Table.vue";
 import TicketStatus from "@/components/TicketStatus.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
-
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, ref, computed, watch, onUnmounted } from "vue";
 import { TICKET_STATUS, ROLE } from "@/util/constant";
+import { formatDate, formatDateTime } from "@/util/helper";
+
 export default {
   name: "Dashboard",
 
@@ -81,28 +104,105 @@ export default {
     );
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const currentUser = JSON.parse(localStorage.getItem("user"));
-
-    const columnDefs = [
-      { headerName: "Ticket ID", field: "ticket.ticket_id", flex: 1 },
-      { headerName: "Subject", field: "ticket.subject", flex: 2 },
+    const itemsPerPage = ref(10);
+    const serverItems = ref([]);
+    const loading = ref(true);
+    const totalItems = ref(0);
+    const recentlyClickedRow = ref([]);
+    const itemsPerPageOptions = [
       {
-        headerName: "Prepared By",
-        field: "ticket.created_by.user.ext_name",
-        flex: 1,
+        title: "10",
+        value: 10,
       },
       {
-        headerName: "Date created",
-        field: "ticket.date_created",
-        flex: 1,
-        cellRenderer: FormattedDate,
+        title: "15",
+        value: 15,
       },
       {
-        headerName: "Status",
-        field: "ticket.status.name",
-        flex: 1,
-        cellRenderer: TicketStatus,
+        title: "20",
+        value: 20,
+      },
+      {
+        title: "50",
+        value: 50,
+      },
+      {
+        title: "100",
+        value: 100,
       },
     ];
+    const headers = [
+      {
+        title: "Ticket ID",
+        align: "start",
+        sortable: false,
+        key: "ticket.ticket_id",
+      },
+      {
+        title: "Subject",
+        key: "ticket.subject",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Prepared By",
+        key: "ticket.created_by.user.ext_name",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Date Created",
+        key: "ticket.date_created",
+        align: "start",
+        sortable: false,
+      },
+    ];
+
+    const loadItems = async ({ page, itemsPerPage, sortBy }) => {
+      removeSelect();
+      const offset = (page - 1) * itemsPerPage;
+      const param = {
+        user_id: currentUser.user_id,
+        items_per_page: itemsPerPage,
+        offset: offset,
+      };
+
+      loading.value = true;
+      await store.dispatch("ticket/fetchAllTodaysTickets", param);
+      const todaysTickets = store.state.ticket.todaysTickets;
+      serverItems.value = todaysTickets.tickets;
+      totalItems.value = todaysTickets.total_items;
+      console.log(param);
+      console.log(todaysTickets);
+      loading.value = false;
+      store.commit("app/SET_SELECTED_TICKET", {});
+    };
+
+    const removeSelect = () => {
+      if (recentlyClickedRow.value.length) {
+        for (var i = 0; i < recentlyClickedRow.value.length; i++) {
+          recentlyClickedRow.value[i].classList.remove("selected");
+        }
+      }
+    };
+
+    function rowClick(event, item) {
+      const selectedTicket = item.item.raw;
+      removeSelect();
+      const tr =
+        event.target.tagName === "DIV"
+          ? event.target.parentNode.parentNode
+          : event.target.parentNode;
+
+      var tds = tr.getElementsByTagName("td");
+
+      for (var i = 0; i < tds.length; i++) {
+        tds[i].classList.add("selected");
+      }
+      recentlyClickedRow.value = tds;
+      store.commit("app/SET_SELECTED_TICKET", selectedTicket);
+    }
 
     const navigateToTicket = (status) => {
       switch (currentUser.role.name) {
@@ -121,29 +221,12 @@ export default {
       }
     };
 
-    const onGridReady = async (params) => {
-      gridAPI.value = params.api;
-      params.api.showLoadingOverlay();
-      const userId = currentUser.user_id;
-      await store.dispatch("ticket/fetchAllTodaysTickets", userId);
-      params.api.setRowData(store.state.ticket.todaysTickets.tickets);
-    };
-
-    const getSelectedRow = () => {
-      console.log(gridAPI.value.getSelectedRows());
-    };
-
     const openTicket = () => {
       const ticketId = store.state.app.selectedTicket.ticket.ticket_id;
       router.push({
         name: "DashboardTicketById",
         params: { ticketId: ticketId },
       });
-    };
-
-    const onSelectionChanged = () => {
-      const selectedRow = gridAPI.value.getSelectedRows();
-      store.commit("app/SET_SELECTED_TICKET", selectedRow[0]);
     };
 
     onUnmounted(() => {
@@ -266,18 +349,23 @@ export default {
     );
 
     return {
-      columnDefs,
       pendingNum,
       approvedNum,
       rejectedNum,
       doneNum,
-      navigateToTicket,
-      onGridReady,
-      getSelectedRow,
-      openTicket,
-      onSelectionChanged,
       TICKET_STATUS,
       isSelectedRowEmpty,
+      itemsPerPageOptions,
+      itemsPerPage,
+      headers,
+      serverItems,
+      totalItems,
+      loading,
+      formatDate,
+      navigateToTicket,
+      openTicket,
+      loadItems,
+      rowClick,
     };
   },
 };

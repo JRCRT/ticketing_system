@@ -24,8 +24,8 @@ const getter = {
 };
 
 const actions = {
-  async fetchAllUsers({ commit }) {
-    const response = await users();
+  async fetchAllUsers({ commit }, param) {
+    const response = await users(param);
     commit("FETCH_USERS", response.data);
   },
 

@@ -170,6 +170,7 @@ export default {
     }
 
     const clear = () => {
+      store.commit("app/SET_SEARCH", String(Date.now()));
       ticketIdSearchField.value = "";
       dateCreatedSearchField.value = "";
 
@@ -187,7 +188,6 @@ export default {
     };
 
     const search = () => {
-      console.log(new Date(`${dateCreatedSearchField.value}, 12:00:00`));
       store.commit("app/SET_SEARCH", String(Date.now()));
       store.commit(
         "app/SET_SEARCH_TICKET_ID",
@@ -215,6 +215,7 @@ export default {
       isTicketFormOpen,
       ticketIdSearchField,
       dateCreatedSearchField,
+      clear,
       search,
       closeModal,
       openModal,

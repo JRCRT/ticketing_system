@@ -9,6 +9,7 @@ using jts_backend.Hub;
 using jts_backend.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace jts_backend.Services.UserService
 {
@@ -32,19 +33,83 @@ namespace jts_backend.Services.UserService
             _env = env;
         }
 
-        public async Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser()
+        public async Task<ServiceResponse<GetUsersDto>> GetAllUser(AllUserDto request)
         {
-            var response = new ServiceResponse<ICollection<GetUserDto>>();
-            var data = new Collection<GetUserDto>();
-            ICollection<UserDto> users = await _context.user
+            var response = new ServiceResponse<GetUsersDto>();
+
+            var result = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
                 .Include(u => u.job_title)
                 .Select(u => _mapper.Map<UserDto>(u))
                 .ToListAsync();
-
-            response.data = await GetUsersData(users);
+            var totalResult = await _context.user.ToListAsync();
+            var users = new List<UserDto>();
+            var totalUsers = 0;
+            if (request.username.IsNullOrEmpty() && request.full_name.IsNullOrEmpty())
+            {
+                users = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                totalUsers = totalResult.Count;
+            }
+            else if (!request.username.IsNullOrEmpty() && !request.full_name.IsNullOrEmpty())
+            {
+                users = result
+                    .Where(
+                        u =>
+                            u.username.Contains(request.username)
+                            && u.ext_name.Contains(request.full_name)
+                    )
+                    .Skip(request.offset)
+                    .Take(request.items_per_page)
+                    .ToList();
+                totalUsers = totalResult
+                    .Where(
+                        u =>
+                            u.username.Contains(request.username)
+                            && u.ext_name.Contains(request.full_name)
+                    )
+                    .Count();
+            }
+            else
+            {
+                if (!request.username.IsNullOrEmpty())
+                {
+                    users = result
+                        .Where(u => u.username.Contains(request.username))
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .ToList();
+                    totalUsers = totalResult
+                        .Where(u => u.username.Contains(request.username))
+                        .Count();
+                }
+                else if (!request.full_name.IsNullOrEmpty())
+                {
+                    users = result
+                        .Where(u => u.ext_name.Contains(request.full_name))
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .ToList();
+                    totalUsers = totalResult
+                        .Where(u => u.ext_name.Contains(request.full_name))
+                        .Count();
+                }
+            }
+            response.data = await GetUsers(users, totalUsers);
             return response;
+        }
+
+        private async Task<GetUsersDto> GetUsers(ICollection<UserDto> users, int totalItems)
+        {
+            var data = new Collection<GetUserDto>();
+            foreach (var user in users)
+            {
+                var userData = await GetUserData(user.user_id);
+                data.Add(userData);
+            }
+
+            var listOfUsers = new GetUsersDto() { users = data, total_items = totalItems };
+            return listOfUsers;
         }
 
         private async Task<ICollection<GetUserDto>> GetUsersData(ICollection<UserDto> users)
@@ -55,6 +120,7 @@ namespace jts_backend.Services.UserService
                 var userData = await GetUserData(user.user_id);
                 data.Add(userData);
             }
+
             return data;
         }
 

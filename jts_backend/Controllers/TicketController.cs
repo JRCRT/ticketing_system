@@ -48,12 +48,12 @@ namespace jts_backend.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetAllTicketsToday")]
+        [HttpPost("GetAllTicketsToday")]
         public async Task<ActionResult<ServiceResponse<GetTicketsDto>>> GetAllTicketsToday(
-            int userId
+            TicketsTodayDto request
         )
         {
-            var response = await _ticketService.GetTodayTickets(userId);
+            var response = await _ticketService.GetTodayTickets(request);
             return Ok(response);
         }
 

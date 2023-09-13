@@ -9,7 +9,7 @@ namespace jts_backend.Services.UserService
 {
     public interface IUserService
     {
-        Task<ServiceResponse<ICollection<GetUserDto>>> GetAllUser();
+        Task<ServiceResponse<GetUsersDto>> GetAllUser(AllUserDto request);
         Task<ServiceResponse<GetUserDto>> GetUserById(int user_id);
         Task<ServiceResponse<ICollection<GetUserDto>>> GetUsersByRole(string role);
         Task<ServiceResponse<GetUserDto>> CreateUser(CreateUserDto request);

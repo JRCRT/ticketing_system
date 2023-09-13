@@ -1,7 +1,7 @@
 import axios from "./api";
-const users = async () => {
+const users = async (param) => {
   const response = await axios
-    .get("/User/GetAllUsers")
+    .post("/User/GetAllUsers", param)
     .then((res) => {
       return res.data;
     })

@@ -207,6 +207,7 @@ export default {
       ticketIdSearchField.value = "";
       dateCreatedSearchField.value = "";
       preparedBy.value = {};
+      store.commit("app/SET_SEARCH", String(Date.now()));
     };
 
     onMounted(async () => {

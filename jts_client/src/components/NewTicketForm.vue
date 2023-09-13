@@ -270,8 +270,8 @@ export default {
         formData.append("priority_id", selectedPriority.value.priority_id);
         formData.append("date_created", formattedDatetime);
         formData.append("signatories", JSON.stringify(selectedSignatories()));
-        console.log(formattedDatetime);
-        //await store.dispatch("ticket/createTicket", formData);
+
+        await store.dispatch("ticket/createTicket", formData);
       }
     };
 
