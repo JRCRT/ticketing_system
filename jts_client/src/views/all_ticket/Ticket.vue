@@ -172,6 +172,7 @@ export default {
       currentStatus.value = tab.status;
       router.replace({ name: "Ticket", params: { status: tab.status } });
       store.commit("app/SET_SELECTED_TICKET", {});
+      clear();
     }
 
     const openTicket = async () => {
@@ -204,10 +205,11 @@ export default {
       store.commit("app/SET_SELECTED_TICKET", {});
       store.commit("app/SET_SEARCH_TICKET_ID", 0);
       store.commit("app/SET_SEARCH_CREATED_DATE", "1/1/1, 12:00:00");
+      store.commit("app/SET_SEARCH_PREPARED_BY", 0);
+      store.commit("app/SET_SEARCH", String(Date.now()));
       ticketIdSearchField.value = "";
       dateCreatedSearchField.value = "";
       preparedBy.value = {};
-      store.commit("app/SET_SEARCH", String(Date.now()));
     };
 
     onMounted(async () => {

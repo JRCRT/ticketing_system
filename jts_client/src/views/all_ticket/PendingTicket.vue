@@ -130,7 +130,6 @@ export default {
       removeSelect();
       const offset = (page - 1) * itemsPerPage;
       const param = {
-        user_id: currentUser.user_id,
         status_id: PENDING_STATUS_ID,
         items_per_page: itemsPerPage,
         offset: offset,
@@ -138,6 +137,8 @@ export default {
         date_created: new Date(searchCreatedDate.value),
         prepared_by: searchPreparedBy.value,
       };
+
+      console.log(param);
 
       loading.value = true;
       await store.dispatch("ticket/fetchAllPendingTickets", param);

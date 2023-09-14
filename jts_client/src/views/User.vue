@@ -4,11 +4,7 @@
     <UserForm v-if="isUserFormOpen" @close="closeUserForm" />
 
     <h4 class="text-primary">User</h4>
-    <form
-      @submit.prevent="searchUser"
-      :on-keyup.enter="searchUser"
-      class="flex justify-between items-end mt-1 mb-2"
-    >
+    <div class="flex justify-between items-end mt-1 mb-2">
       <div class="flex gap-4">
         <div>
           <label>Name</label>
@@ -48,7 +44,7 @@
           New user
         </button>
       </div>
-    </form>
+    </div>
     <v-data-table-server
       v-model:items-per-page="itemsPerPage"
       :headers="headers"
