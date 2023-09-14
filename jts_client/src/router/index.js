@@ -6,7 +6,7 @@ import Dashboard from "@/views/Dashboard.vue";
 import MyTicket from "@/views/my_ticket/Ticket.vue";
 import Ticket from "@/views/all_ticket/Ticket.vue";
 import TicketForApproval from "@/views/ticket_for_approval/Ticket.vue";
-import RoleManager from "@/views/RoleManager.vue";
+import NotFound from "@/views/NotFound.vue";
 import Profile from "@/views/Profile.vue";
 import User from "@/views/User.vue";
 import ErrorPage from "@/views/ErrorPage.vue";
@@ -172,6 +172,19 @@ const routes = [
     component: ErrorPage,
     meta: {
       title: "Error Page",
+    },
+    beforeEnter: (to, from, next) => {
+      store.commit("app/SET_HIDE_NAVBAR", true);
+      next();
+    },
+  },
+
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
+    meta: {
+      title: "Not Found",
     },
     beforeEnter: (to, from, next) => {
       store.commit("app/SET_HIDE_NAVBAR", true);

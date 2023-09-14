@@ -19,12 +19,12 @@
             {{ tab.label }}
           </div>
         </div>
-        <div class="flex gap-2 items-end justify-end relative w-[712px] mb-1">
-          <div class="absolute left-0 w-[188px]">
+        <div class="flex gap-2 items-end justify-end relative w-[680px] mb-1">
+          <div class="absolute left-0 w-[180px]">
             <label>Ticket Id</label>
             <input class="input__field h-8" v-model="ticketIdSearchField" />
           </div>
-          <div class="absolute left-[198px] w-[180px]">
+          <div class="absolute left-[189px] w-[165px]">
             <label>Date Created</label>
             <input
               class="input__field h-8"
@@ -32,7 +32,7 @@
               v-model="dateCreatedSearchField"
             />
           </div>
-          <div class="absolute w-[180px] left-[386px]">
+          <div class="absolute w-[165px] left-[365px]">
             <label>Prepared By</label>
             <VueMultiselect
               v-model="preparedBy"
@@ -41,7 +41,7 @@
               :show-labels="false"
             />
           </div>
-          <div class="flex flex-col absolute left-[576px]">
+          <div class="flex flex-col absolute left-[540px]">
             <button
               class="w-16 border button-transparent disabled:bg-lightSecondary disabled:border-none"
               @click="clear"

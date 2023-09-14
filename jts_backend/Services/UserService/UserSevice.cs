@@ -46,6 +46,7 @@ namespace jts_backend.Services.UserService
             var totalResult = await _context.user.ToListAsync();
             var users = new List<UserDto>();
             var totalUsers = 0;
+
             if (request.items_per_page == 0)
             {
                 users = result;
@@ -62,8 +63,8 @@ namespace jts_backend.Services.UserService
                     users = result
                         .Where(
                             u =>
-                                u.username.Contains(request.username)
-                                && u.ext_name.Contains(request.full_name)
+                                u.username.ToLower().Contains(request.username.ToLower())
+                                && u.ext_name.ToLower().Contains(request.full_name.ToLower())
                         )
                         .Skip(request.offset)
                         .Take(request.items_per_page)
@@ -71,8 +72,8 @@ namespace jts_backend.Services.UserService
                     totalUsers = totalResult
                         .Where(
                             u =>
-                                u.username.Contains(request.username)
-                                && u.ext_name.Contains(request.full_name)
+                                u.username.ToLower().Contains(request.username.ToLower())
+                                && u.ext_name.ToLower().Contains(request.full_name.ToLower())
                         )
                         .Count();
                 }
@@ -81,27 +82,28 @@ namespace jts_backend.Services.UserService
                     if (!request.username.IsNullOrEmpty())
                     {
                         users = result
-                            .Where(u => u.username.Contains(request.username))
+                            .Where(u => u.username.ToLower().Contains(request.username.ToLower()))
                             .Skip(request.offset)
                             .Take(request.items_per_page)
                             .ToList();
                         totalUsers = totalResult
-                            .Where(u => u.username.Contains(request.username))
+                            .Where(u => u.username.ToLower().Contains(request.username.ToLower()))
                             .Count();
                     }
                     else if (!request.full_name.IsNullOrEmpty())
                     {
                         users = result
-                            .Where(u => u.ext_name.Contains(request.full_name))
+                            .Where(u => u.ext_name.ToLower().Contains(request.full_name.ToLower()))
                             .Skip(request.offset)
                             .Take(request.items_per_page)
                             .ToList();
                         totalUsers = totalResult
-                            .Where(u => u.ext_name.Contains(request.full_name))
+                            .Where(u => u.ext_name.ToLower().Contains(request.full_name.ToLower()))
                             .Count();
                     }
                 }
             }
+
             response.data = await GetUsers(users, totalUsers);
             return response;
         }

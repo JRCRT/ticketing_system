@@ -19,7 +19,7 @@
       <label>Password</label>
       <input v-model="password" class="input__field" type="password" />
     </div>
-    <button class="mt-3 h-9 button-primary" :disabled="isLoading">
+    <button class="mt-3 h-9 button-primary w-full" :disabled="isLoading">
       {{ isLoading ? "Logging..." : "Login" }}
     </button>
   </form>
