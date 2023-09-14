@@ -10,7 +10,9 @@
     <template v-slot:footer>
       <div class="w-full">
         <div class="w-44 flex mx-auto">
-          <button class="button-primary mr-2" @click="reject">Ok</button>
+          <button class="button-primary mr-2" @click="reject">
+            {{ isSubmitting ? "Submitting..." : "Submit" }}
+          </button>
           <button class="button-transparent" @click="$emit('close')">
             Cancel
           </button>
@@ -30,20 +32,29 @@ export default {
   },
   setup() {
     const store = useStore();
-    const reason = ref(null);
+    const reason = ref("");
     const approver = computed(() => store.state.app.signatory);
-
+    const isSubmitting = computed(() => store.state.app.isSubmitting);
     const reject = async () => {
       const _approver = {
         signatory_id: approver.value.signatoryId,
         connection_id: approver.value.connectionId,
         rejection_reason: reason.value,
       };
+      if (reason.value === "") {
+        var alert = {
+          type: "danger",
+          message: "Kindly fill up the reason for rejection.",
+        };
+        store.dispatch("app/addAlert", alert);
+        return;
+      }
       await store.dispatch("ticket/rejectTicket", _approver);
     };
     return {
       reason,
       reject,
+      isSubmitting,
     };
   },
 };

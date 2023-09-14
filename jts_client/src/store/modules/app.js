@@ -13,6 +13,7 @@ const state = () => ({
   isUserFormOpen: false,
   isModalLoading: false,
   isProcessing: false,
+  isSubmitting: false,
   signatory: {},
   hideNavbar: false,
   search: null,
@@ -69,6 +70,9 @@ const mutations = {
   },
   SET_PROCESSING(state, value) {
     state.isProcessing = value;
+  },
+  SET_SUBMITTING(state, value) {
+    state.isSubmitting = value;
   },
   SET_CURRENT_USER(state, value) {
     state.currentUser = value;
