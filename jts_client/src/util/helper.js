@@ -32,4 +32,15 @@ const formatDateTime = (date) =>
     second: "2-digit",
   }).format(date);
 
-export { setIconUrl, formatDate, formatDateTime };
+const setPriorityColor = (priority) => {
+  switch (priority) {
+    case "High":
+      return "#b22222";
+    case "Medium":
+      return "#eed202";
+    case "Low":
+      return "green";
+  }
+};
+
+export { setIconUrl, formatDate, formatDateTime, setPriorityColor };

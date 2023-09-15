@@ -281,16 +281,6 @@ namespace jts_backend.Services.TicketService
         public async Task<ServiceResponse<GetTicketsDto>> GetTodayTickets(TicketsTodayDto request)
         {
             var response = new ServiceResponse<GetTicketsDto>();
-            /* var result = await _context.ticket
-                .Include(t => t.priority)
-                .Include(t => t.status)
-                .Include(t => t.created_by)
-                .Include(u => u.created_by.role)
-                .Include(u => u.created_by.department)
-                .Include(u => u.created_by.job_title)
-                .Where(t => t.date_created.Date.Equals(DateTime.Today.Date))
-                .Select(t => t)
-                .ToListAsync(); */
 
             var result = await _context.approver
                 .Include(a => a.user)
@@ -321,7 +311,7 @@ namespace jts_backend.Services.TicketService
                         .Skip(request.offset)
                         .Take(request.items_per_page)
                         .ToList();
-                    totalTickets = totalResult.Select(a => a.ticket).Count();
+                    totalTickets = totalResult.Select(a => a.ticket).Distinct().Count();
                     break;
                 //approver
                 case 2:
@@ -354,12 +344,14 @@ namespace jts_backend.Services.TicketService
                     tickets = result
                         .Where(a => a.ticket.created_by.user_id == request.user_id)
                         .Select(a => a.ticket!)
+                        .Distinct()
                         .Skip(request.offset)
                         .Take(request.items_per_page)
                         .ToList();
                     totalTickets = totalResult
                         .Where(a => a.ticket.created_by.user_id == request.user_id)
                         .Select(a => a.ticket!)
+                        .Distinct()
                         .Count();
                     break;
             }

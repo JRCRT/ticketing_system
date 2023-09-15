@@ -46,6 +46,8 @@
         />
         <label>Checked By (Required)</label>
         <VueMultiselect
+          @select="selectOption"
+          @remove="removeSelectedOption"
           v-model="selectedChecker"
           :options="checkers"
           label="ext_name"
@@ -57,6 +59,8 @@
         />
         <label>Approved By (Required)</label>
         <VueMultiselect
+          @select="selectOption"
+          @remove="removeSelectedOption"
           v-model="selectedApprover"
           :options="approvers"
           :multiple="true"
@@ -68,6 +72,8 @@
         />
         <label>Related Partys</label>
         <VueMultiselect
+          @select="selectRelatedParty"
+          @remove="removeSelectedParty"
           v-model="selectedRelatedPary"
           :options="relatedParty"
           :multiple="true"
@@ -252,6 +258,40 @@ export default {
       return hasError;
     };
 
+    function selectOption(selectedOption) {
+      const newRelatedParty = [...relatedParty.value].filter(
+        (u) => u.user_id != selectedOption.user_id
+      );
+      relatedParty.value = newRelatedParty;
+    }
+
+    function removeSelectedOption(removedOption) {
+      relatedParty.value = relatedParty.value.concat(removedOption);
+    }
+
+    function selectRelatedParty(selectedOption) {
+      const newCheckers = [...checkers.value].filter(
+        (u) => u.user_id != selectedOption.user_id
+      );
+      const newApprovers = [...approvers.value].filter(
+        (u) => u.user_id != selectedOption.user_id
+      );
+
+      checkers.value = newCheckers;
+      approvers.value = newApprovers;
+    }
+
+    function removeSelectedParty(removedOption) {
+      switch (removedOption.role.name) {
+        case "Checker":
+          checkers.value = checkers.value.concat(removedOption);
+          break;
+        case "Approver":
+          approvers.value = approvers.value.concat(removedOption);
+          break;
+      }
+    }
+
     const submitTicket = async () => {
       if (!validate()) {
         var formData = new FormData();
@@ -354,6 +394,10 @@ export default {
 
     return {
       submitTicket,
+      selectOption,
+      removeSelectedOption,
+      selectRelatedParty,
+      removeSelectedParty,
       VITE_TINY_API_KEY,
       editor,
       editorConfig,

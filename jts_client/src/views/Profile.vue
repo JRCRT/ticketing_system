@@ -30,7 +30,9 @@
       <div class="flex justify-center border-[1.6px] p-3 rounded-md">
         <UserFilePreview :file="file" />
       </div>
-      <button class="button-primary text-[14px] w-16">Save</button>
+      <button class="button-primary text-[14px] w-16" @click="save">
+        Save
+      </button>
     </div>
   </div>
 </template>
@@ -74,7 +76,7 @@ export default {
       );
       userformData.append(
         "job_title_id",
-        currentProfile.value.user.job_title_job_title_id
+        currentProfile.value.user.job_title.job_title_id
       );
       userformData.append("password", currentProfile.value.user.password_hash);
       userformData.append("file", file.value.file);
@@ -97,8 +99,6 @@ export default {
           ? `${BASE_URL}/File/${user.file.stored_file_name}`
           : ""
       );
-
-      console.log(user);
     });
 
     onUnmounted(() => {
@@ -111,6 +111,7 @@ export default {
       name,
       role,
       department,
+      save,
     };
   },
 };

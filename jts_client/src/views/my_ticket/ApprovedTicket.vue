@@ -16,6 +16,24 @@
     item-value="name"
     @update:options="loadItems"
   >
+    <template v-slot:item.ticket.priority.name="{ item }">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          :fill="setPriorityColor(item.columns['ticket.priority.name'])"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="white"
+          class="w-7 h-7"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+          />
+        </svg>
+      </div>
+    </template>
     <template v-slot:item.ticket.subject="{ item }">
       <div
         class="max-w-[500px] whitespace-nowrap overflow-hidden text-ellipsis"
@@ -32,7 +50,7 @@
 <script>
 import { ref, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
-import { formatDate } from "@/util/helper";
+import { formatDate, setPriorityColor } from "@/util/helper";
 
 export default {
   setup() {
@@ -63,6 +81,13 @@ export default {
     ];
     const itemsPerPage = ref(10);
     const headers = [
+      {
+        width: "80px",
+        title: "Priority",
+        align: "start",
+        sortable: false,
+        key: "ticket.priority.name",
+      },
       {
         title: "Ticket ID",
         align: "start",
@@ -164,6 +189,7 @@ export default {
       loading,
       loadItems,
       rowClick,
+      setPriorityColor,
       formatDate,
     };
   },
