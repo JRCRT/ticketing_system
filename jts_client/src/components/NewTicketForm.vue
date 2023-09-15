@@ -46,8 +46,8 @@
         />
         <label>Checked By (Required)</label>
         <VueMultiselect
-          @select="selectOption"
-          @remove="removeSelectedOption"
+          @select="selectChecker"
+          @remove="removeSelectedChecker"
           v-model="selectedChecker"
           :options="checkers"
           label="ext_name"
@@ -59,8 +59,8 @@
         />
         <label>Approved By (Required)</label>
         <VueMultiselect
-          @select="selectOption"
-          @remove="removeSelectedOption"
+          @select="selectApprover"
+          @remove="removeSelectedChecker"
           v-model="selectedApprover"
           :options="approvers"
           :multiple="true"
@@ -148,7 +148,6 @@ export default {
   setup() {
     const signalR = useSignalR();
     const PENDING_STATUS = 1;
-    const DEFAULT_DATE_TIME = "2023-06-26T03:51:19.632Z";
     const currentDate = new Date();
 
     const isProcessing = computed(() => store.state.app.isProcessing);
@@ -258,14 +257,33 @@ export default {
       return hasError;
     };
 
-    function selectOption(selectedOption) {
+    function selectChecker(selectedOption) {
       const newRelatedParty = [...relatedParty.value].filter(
         (u) => u.user_id != selectedOption.user_id
       );
       relatedParty.value = newRelatedParty;
     }
 
-    function removeSelectedOption(removedOption) {
+    function removeSelectedChecker(removedOption) {
+      relatedParty.value = relatedParty.value.concat(removedOption);
+    }
+
+    function selectApprover(selectedOption) {
+      const newRelatedParty = [...relatedParty.value].filter(
+        (u) => u.user_id != selectedOption.user_id
+      );
+      relatedParty.value = newRelatedParty;
+
+      /* const newApprovers = [...approvers.value].filter(
+        (u) =>
+          u.role.name !== selectedOption.role.name ||
+          u.user_id === selectedOption.user_id
+      );
+
+      approvers.value = newApprovers; */
+    }
+
+    function removeSelectedApprover(removedOption) {
       relatedParty.value = relatedParty.value.concat(removedOption);
     }
 
@@ -394,10 +412,11 @@ export default {
 
     return {
       submitTicket,
-      selectOption,
-      removeSelectedOption,
+      selectChecker,
+      removeSelectedChecker,
       selectRelatedParty,
       removeSelectedParty,
+      selectApprover,
       VITE_TINY_API_KEY,
       editor,
       editorConfig,
