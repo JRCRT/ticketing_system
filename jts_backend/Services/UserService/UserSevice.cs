@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using AutoMapper;
+using jts_backend.Configuration;
 using jts_backend.Context;
 using jts_backend.Dtos.FileDto;
 using jts_backend.Dtos.TicketDto;
@@ -9,6 +10,7 @@ using jts_backend.Hub;
 using jts_backend.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace jts_backend.Services.UserService
@@ -19,18 +21,21 @@ namespace jts_backend.Services.UserService
         private readonly IMapper _mapper;
         private readonly IHubContext<JtsHub, IJtsHub> _hubContext;
         private readonly IWebHostEnvironment _env;
+        private readonly AppSettings _settings;
 
         public UserSevice(
             JtsContext context,
             IMapper mapper,
             IHubContext<JtsHub, IJtsHub> hubContext,
-            IWebHostEnvironment env
+            IWebHostEnvironment env,
+            IOptions<AppSettings> settings
         )
         {
             _context = context;
             _mapper = mapper;
             _hubContext = hubContext;
             _env = env;
+            _settings = settings.Value;
         }
 
         public async Task<ServiceResponse<GetUsersDto>> GetAllUser(AllUserDto request)
@@ -252,7 +257,7 @@ namespace jts_backend.Services.UserService
             response.data = data;
             await _hubContext.Clients.All.GetUser(data);
 
-            response.message = request!.last_name;
+            response.message = "Created Successfully!";
             return response;
         }
 
@@ -314,11 +319,23 @@ namespace jts_backend.Services.UserService
                 {
                     var fileData = await Helper.Helper.UploadFiles(
                         request!.file!,
-                        _env.ContentRootPath,
+                        _settings.FilePath!,
                         request.user_id,
                         OwnerType.User
                     );
-                    _context.file.Add(fileData);
+
+                    if (file != null)
+                    {
+                        file.file_url = fileData.file_url;
+                        file.original_file_name = fileData.original_file_name;
+                        file.stored_file_name = fileData.stored_file_name;
+                        file.content_type = fileData.content_type;
+                        _context.file.Update(file);
+                    }
+                    else
+                    {
+                        _context.file.Add(fileData);
+                    }
                 }
             }
 
@@ -327,7 +344,7 @@ namespace jts_backend.Services.UserService
             var userData = await GetUserData(user.user_id);
             await _hubContext.Clients.All.UpdateUser(userData);
             response.data = "Successfully updated.";
-            response.message = "Successfully updated.";
+            response.message = "Successfully Updated!";
             return response;
         }
 

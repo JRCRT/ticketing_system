@@ -45,6 +45,8 @@ builder.Services.AddScoped<IViewService, ViewService>();
 builder.Services.AddScoped<IRoleManagerService, RoleManagerService>();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(nameof(AppSettings)));
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition(
@@ -89,8 +91,7 @@ app.UseHttpsRedirection();
 //app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
 app.UseCors(
     x =>
-        x
-            .WithOrigins("https://jaccs-ticketing")
+        x.WithOrigins(builder.Configuration.GetSection("AppSettings:ClientUrl").Value!)
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()

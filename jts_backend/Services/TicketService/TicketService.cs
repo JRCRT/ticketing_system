@@ -19,8 +19,8 @@ using Microsoft.AspNetCore.SignalR;
 using jts_backend.Hub;
 using jts_backend.Dtos.StatusDto;
 using jts_backend.Enums;
-using MimeKit.Encodings;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using jts_backend.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace jts_backend.Services.TicketService
 {
@@ -28,21 +28,23 @@ namespace jts_backend.Services.TicketService
     {
         private readonly JtsContext _context;
         private readonly IMapper _mapper;
-
         private readonly IWebHostEnvironment _env;
         private readonly IHubContext<JtsHub, IJtsHub> _hubContext;
+        private readonly AppSettings _settings;
 
         public TicketService(
             JtsContext context,
             IMapper mapper,
             IWebHostEnvironment env,
-            IHubContext<JtsHub, IJtsHub> hubContext
+            IHubContext<JtsHub, IJtsHub> hubContext,
+            IOptions<AppSettings> settings
         )
         {
             _context = context;
             _mapper = mapper;
             _env = env;
             _hubContext = hubContext;
+            _settings = settings.Value;
         }
 
         public async Task<ServiceResponse<GetTicketDto>> CreateTicket(CreateTicketDto request)
@@ -511,9 +513,19 @@ namespace jts_backend.Services.TicketService
                 .Select(a => a.ticket)
                 .ToListAsync();
 
-            var actionDate = await _context.approver.FirstOrDefaultAsync(
+            var date = await _context.approver.FirstOrDefaultAsync(
                 a => a.user.user_id == request.user_id
             );
+            DateTime? actionDate = new DateTime();
+
+            if (date?.action_date == null)
+            {
+                actionDate = null;
+            }
+            else
+            {
+                actionDate = date.action_date;
+            }
 
             var totalResult = await _context.approver
                 .Include(a => a.ticket)
@@ -612,7 +624,7 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(tickets, totalTickets, actionDate.action_date);
+            var data = await GetTicketsData(tickets, totalTickets, actionDate);
             response.data = data;
 
             return response;
@@ -869,7 +881,7 @@ namespace jts_backend.Services.TicketService
             {
                 var fileData = await Helper.Helper.UploadFiles(
                     file,
-                    _env.ContentRootPath,
+                    _settings.FilePath!,
                     ownerId,
                     ownerType
                 );

@@ -74,7 +74,7 @@ import RejectedTicket from "@/views/my_ticket/RejectedTicket.vue";
 import DoneTicket from "@/views/my_ticket/DoneTicket.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import TicketForm from "@/components/TicketForm.vue";
-
+import { useSignalR } from "@quangdao/vue-signalr";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
@@ -91,6 +91,7 @@ export default {
   },
 
   setup() {
+    const signalR = useSignalR();
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
@@ -200,6 +201,10 @@ export default {
           : `${dateCreatedSearchField.value}, 12:00:00`
       );
     };
+
+    signalR.on("GetMyTicket", (ticket) => {
+      store.commit("app/SET_SEARCH", String(Date.now()));
+    });
 
     onUnmounted(() => {
       clear();

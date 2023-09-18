@@ -51,7 +51,7 @@ import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { ref, computed } from "vue";
-import { useSignalR } from "@quangdao/vue-signalr";
+
 import { formatDate, setPriorityColor } from "@/util/helper";
 
 export default {
@@ -62,8 +62,7 @@ export default {
 
   setup() {
     const store = useStore();
-    const signalR = useSignalR();
-    const gridAPI = ref(null);
+
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const PENDING_STATUS_ID = 1;
     const search = computed(() => store.state.app.search);
@@ -131,13 +130,6 @@ export default {
         sortable: false,
       },
     ];
-
-    signalR.on("GetTicketForApproval", (ticket) => {
-      store.commit("ticket/REMOVE_PENDING_TICKET_FOR_APPROVAL", ticket);
-      const pendingTicketsForApproval =
-        store.state.ticket.pendingTicketsForApproval;
-      gridAPI.value.setRowData(pendingTicketsForApproval);
-    });
 
     const loadItems = async ({ page, itemsPerPage, sortBy }) => {
       if (

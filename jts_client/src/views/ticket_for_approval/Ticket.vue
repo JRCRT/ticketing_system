@@ -84,6 +84,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
 import { computed, ref, onUnmounted, watch, onMounted } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
@@ -98,6 +99,7 @@ export default {
   },
 
   setup() {
+    const signalR = useSignalR();
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
@@ -216,6 +218,10 @@ export default {
         preparedBy.value?.user_id ?? 0
       );
     };
+
+    signalR.on("GetTicketForApproval", (ticket) => {
+      store.commit("app/SET_SEARCH", String(Date.now()));
+    });
 
     const clear = () => {
       store.commit("app/SET_SELECTED_TICKET", {});

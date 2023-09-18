@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Configuration;
 using jts_backend.Context;
 using jts_backend.Models;
 using jts_backend.Services.FileService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace jts_backend.Controllers
 {
@@ -17,12 +19,19 @@ namespace jts_backend.Controllers
         private readonly IFileService _fileServie;
         private readonly JtsContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly AppSettings _settings;
 
-        public FileController(IFileService fileService, JtsContext context, IWebHostEnvironment env)
+        public FileController(
+            IFileService fileService,
+            JtsContext context,
+            IWebHostEnvironment env,
+            IOptions<AppSettings> settings
+        )
         {
             _fileServie = fileService;
             _context = context;
             _env = env;
+            _settings = settings.Value;
         }
 
         [HttpPost("UploadFiles")]
@@ -41,7 +50,7 @@ namespace jts_backend.Controllers
                 f => f.stored_file_name.Equals(fileName)
             );
 
-            var path = Path.Combine(_env.ContentRootPath, "Uploads", fileName);
+            var path = Path.Combine(_settings.FilePath!, "Uploads", fileName);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))

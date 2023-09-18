@@ -82,6 +82,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
 import { computed, ref, onUnmounted, watch, onMounted } from "vue";
+import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
@@ -95,6 +96,7 @@ export default {
   },
 
   setup() {
+    const signalR = useSignalR();
     const router = useRouter();
     const store = useStore();
     const route = useRoute();
@@ -182,6 +184,10 @@ export default {
         params: { status: currentStatus.value, ticketId: ticketId },
       });
     };
+
+    signalR.on("GetTicket", (ticket) => {
+      store.commit("app/SET_SEARCH", String(Date.now()));
+    });
 
     const search = () => {
       store.commit("app/SET_SEARCH", String(Date.now()));

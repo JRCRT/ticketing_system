@@ -226,16 +226,13 @@ export default {
       },
     ];
 
-    /*    signalR.on("GetUser", (user) => {
-      store.commit("user/ADD_USER", user);
-      console.log(user);
-      gridAPI.value.setRowData(store.state.user.users);
+    signalR.on("GetUser", (user) => {
+      search.value = String(Date.now());
     });
 
     signalR.on("UpdateUser", (user) => {
-      store.commit("user/UPDATE_USER", user);
-      gridAPI.value.setRowData(store.state.user.users);
-    }); */
+      search.value = String(Date.now());
+    });
 
     watch(
       () => isUserFormOpen.value,
