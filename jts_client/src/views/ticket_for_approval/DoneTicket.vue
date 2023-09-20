@@ -48,7 +48,7 @@ export default {
   setup() {
     const store = useStore();
     const currentUser = JSON.parse(localStorage.getItem("user"));
-    const APPROVED_STATUS_ID = 2;
+    const DONE_TICKET_ID = 4;
     const search = computed(() => store.state.app.search);
     const searchTicketId = computed(() => store.state.app.searchTicketId);
     const searchCreatedDate = computed(() => store.state.app.searchCreatedDate);
@@ -133,7 +133,7 @@ export default {
       const offset = (page - 1) * itemsPerPage;
       const param = {
         user_id: currentUser.user_id,
-        status_id: APPROVED_STATUS_ID,
+        status_id: DONE_TICKET_ID,
         items_per_page: itemsPerPage,
         offset: offset,
         ticket_id: searchTicketId.value,

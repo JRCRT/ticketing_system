@@ -1191,29 +1191,34 @@
           <button class="button-primary mr-2" @click="done">Done</button>
           <button class="button-transparent border">Cancel</button>
         </div>
-        <div
-          v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
-          class="w-44 flex mx-auto"
-        >
-          <button
-            class="button-primary mr-2"
-            :disabled="isProcessing"
-            @click="approved"
+        <div class="flex flex-col">
+          <div
+            v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
+            class="w-44 flex mx-auto"
           >
-            {{ isProcessing ? "Approving..." : "Approve" }}
-          </button>
+            <button
+              class="button-primary mr-2"
+              :disabled="isProcessing"
+              @click="approved"
+            >
+              {{ isProcessing ? "Approving..." : "Approve" }}
+            </button>
 
-          <button class="button-transparent border" @click="openRejectionModal">
-            Reject
-          </button>
-        </div>
-        <div
-          v-if="ticketData?.status?.name === TICKET_STATUS.DONE"
-          class="w-36 flex mx-auto"
-        >
-          <button class="button-primary mr-2" @click="generatePDF()">
-            Download As PDF
-          </button>
+            <button
+              class="button-transparent border"
+              @click="openRejectionModal"
+            >
+              Reject
+            </button>
+          </div>
+          <div
+            v-if="ticketData?.status?.name !== TICKET_STATUS.PENDING"
+            class="w-fit flex mx-auto"
+          >
+            <button class="button-primary mr-2 w-fit" @click="generatePDF()">
+              Download As PDF
+            </button>
+          </div>
         </div>
       </div>
     </template>

@@ -501,8 +501,8 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.user!.job_title)
                 .Include(u => u.user!.role)
                 .Include(a => a.ticket)
-                .Include(t => t.ticket!.status)
-                .Include(t => t.ticket!.priority)
+                .Include(t => t.ticket.status)
+                .Include(t => t.ticket.priority)
                 .OrderBy(t => t.ticket.ticket_id)
                 .Where(
                     a =>
@@ -553,7 +553,7 @@ namespace jts_backend.Services.TicketService
                     && request.prepared_by == 0
                 )
                 {
-                    tickets = result.Skip(request.offset).Take(request.items_per_page).ToList();
+                    tickets = result.Skip(request.offset).Take(request.items_per_page).Select(t => t).ToList();
                     totalTickets = totalResult.Count;
                 }
                 else if (
