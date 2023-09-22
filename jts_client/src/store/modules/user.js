@@ -63,7 +63,6 @@ const actions = {
     const response = await updateUser(user);
     var alert;
     if (!response.success) {
-      console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_PROCESSING", false, { root: true });
@@ -80,7 +79,6 @@ const actions = {
     const response = await createUser(user);
     var alert;
     if (!response.success) {
-      console.log(response);
       alert = { type: "danger", message: response.message };
       dispatch("app/addAlert", alert, { root: true });
       commit("app/SET_PROCESSING", false, { root: true });
@@ -126,7 +124,6 @@ const mutations = {
   },
 
   SEARCH_USER(state, value) {
-    console.log(value);
     const result = state.users.filter((u) =>
       u.user.ext_name.toLowerCase().includes(value.toLowerCase())
     );

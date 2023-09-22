@@ -8,7 +8,7 @@
         <label> Username </label>
         <input v-model="username" class="input__field" />
         <label> Password </label>
-        <input v-model="password" class="input__field" type="password" />
+        <Password @inputChange="passwordChange" />
         <label> First Name </label>
         <input v-model="firstname" class="input__field" />
         <label> Middle Name </label>
@@ -78,6 +78,7 @@ import { useRoute } from "vue-router";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import UserFilePreview from "@/components/UserFilePreview.vue";
+import Password from "@/components/Password.vue";
 import "vue-multiselect/dist/vue-multiselect.css";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export default {
@@ -86,6 +87,7 @@ export default {
     Modal,
     VueMultiselect,
     UserFilePreview,
+    Password,
   },
 
   setup() {
@@ -136,6 +138,10 @@ export default {
       },
       { immediate: true }
     );
+
+    const passwordChange = (value) => {
+      password.value = value;
+    };
 
     const updateUser = async () => {
       /* const userData = {
@@ -204,6 +210,7 @@ export default {
       isProcessing,
       file,
       updateUser,
+      passwordChange,
     };
   },
 };

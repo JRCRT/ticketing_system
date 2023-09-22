@@ -8,10 +8,13 @@
         <label> Username </label>
         <input v-model="username" autocomplete="false" class="input__field" />
         <label> Password </label>
-        <input v-model="password" class="input__field" type="password" />
+
+        <Password @inputChange="passwordChange" />
+        <label> ConfirmPassword </label>
+        <Password @inputChange="confirmPasswordChange" />
         <label> First Name </label>
         <input v-model="firstname" class="input__field" />
-        <label> Middle Name </label>
+        <label> Middle Initial </label>
         <input v-model="middlename" class="input__field" />
         <label> Last Name </label>
         <input v-model="lastname" class="input__field" />
@@ -76,6 +79,7 @@ import { useStore } from "vuex";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
 import FileUploader from "@/components/FileUploader.vue";
+import Password from "@/components/Password.vue";
 
 export default {
   emits: ["close"],
@@ -83,6 +87,7 @@ export default {
     Modal,
     VueMultiselect,
     FileUploader,
+    Password,
   },
 
   setup() {
@@ -92,6 +97,7 @@ export default {
     const selectedJobTitle = ref({});
     const username = ref(null);
     const password = ref(null);
+    const confirmPassword = ref(null);
     const firstname = ref(null);
     const middlename = ref(null);
     const lastname = ref(null);
@@ -153,6 +159,12 @@ export default {
           message: "Please select job title.",
         };
         hasError = true;
+      } else if (password.value != confirmPassword.value) {
+        alert = {
+          type: "danger",
+          message: "Password and Confirm Password doesn't match.",
+        };
+        hasError = true;
       }
 
       if (hasError) {
@@ -184,8 +196,15 @@ export default {
         );
         userFormData.append("first_name", firstname.value);
         await store.dispatch("user/createUser", userFormData);
-        console.log(store.state.file.file.file);
       }
+    };
+
+    const passwordChange = (value) => {
+      password.value = value;
+    };
+
+    const confirmPasswordChange = (value) => {
+      confirmPassword.value = value;
     };
 
     onMounted(async () => {
@@ -210,6 +229,7 @@ export default {
       selectedJobTitle,
       username,
       password,
+      confirmPassword,
       firstname,
       middlename,
       lastname,
@@ -217,6 +237,8 @@ export default {
       emailAddress,
       isProcessing,
       createUser,
+      passwordChange,
+      confirmPasswordChange,
     };
   },
 };

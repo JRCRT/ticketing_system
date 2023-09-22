@@ -17,8 +17,9 @@
     </div>
     <div class="w-full mb-3">
       <label>Password</label>
-      <input v-model="password" class="input__field" type="password" />
+      <Password @inputChange="inputChange" />
     </div>
+
     <button class="mt-3 h-9 button-primary w-full" :disabled="isLoading">
       {{ isLoading ? "Logging..." : "Login" }}
     </button>
@@ -27,12 +28,17 @@
 
 <script lang="js">
 import JFP_Logo from "@/assets/jaccs-logo-wo-bg.png";
+import Password from "@/components/Password.vue"
 import { useStore } from "vuex";
 import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 export default {
   name: "Login Page",
+  components:{
+    Password
+  },
   setup() {
+
     const username = ref(null);
     const password = ref(null);
     const usernameField = ref(null);
@@ -40,6 +46,7 @@ export default {
 
     const isLoading = computed(() => store.state.app.isLoggingIn);
     const login = async () => {
+
       await store.dispatch("auth/login", {
         username: username.value,
         password: password.value,
@@ -49,12 +56,17 @@ export default {
       usernameField.value.focus();
     };
 
+    function inputChange (value) {
+      password.value = value;
+    }
+
     onMounted( () => {
       usernameField.value.focus();
     });
 
     return {
       login,
+      inputChange,
       JFP_Logo,
       username,
       password,

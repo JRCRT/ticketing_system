@@ -190,8 +190,6 @@ export default {
       totalItems.value = todaysTickets.total_items;
       loading.value = false;
       store.commit("app/SET_SELECTED_TICKET", {});
-
-      console.log(todaysTickets);
     };
 
     const removeSelect = () => {

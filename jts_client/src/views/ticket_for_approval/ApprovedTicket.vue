@@ -171,7 +171,6 @@ export default {
       const approvedTicketsForApproval =
         store.state.ticket.approvedTicketsForApproval;
 
-      console.log(approvedTicketsForApproval);
       serverItems.value = approvedTicketsForApproval.tickets;
       totalItems.value = approvedTicketsForApproval.total_items;
       loading.value = false;

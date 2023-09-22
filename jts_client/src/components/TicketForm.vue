@@ -1180,46 +1180,42 @@
       </div>
     </template>
     <template v-slot:footer>
-      <div class="w-full">
+      <div class="w-full flex justify-center">
         <div
-          class="w-44 flex mx-auto"
+          class="flex"
           v-if="
             currentUser?.role?.name === ROLE.ADMIN &&
             ticketData?.status?.name === TICKET_STATUS.APPROVED
           "
         >
           <button class="button-primary mr-2" @click="done">Done</button>
-          <button class="button-transparent border">Cancel</button>
+          <button class="button-transparent border mr-2">Cancel</button>
         </div>
-        <div class="flex flex-col">
-          <div
-            v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
-            class="w-44 flex mx-auto"
-          >
-            <button
-              class="button-primary mr-2"
-              :disabled="isProcessing"
-              @click="approved"
-            >
-              {{ isProcessing ? "Approving..." : "Approve" }}
-            </button>
 
-            <button
-              class="button-transparent border"
-              @click="openRejectionModal"
-            >
-              Reject
-            </button>
-          </div>
-          <div
-            v-if="ticketData?.status?.name !== TICKET_STATUS.PENDING"
-            class="w-fit flex mx-auto"
+        <div
+          v-if="currentSignatoryData?.status?.name === TICKET_STATUS.PENDING"
+          class="w-full flex justify-center"
+        >
+          <button
+            class="button-primary mr-2"
+            :disabled="isProcessing"
+            @click="approved"
           >
-            <button class="button-primary mr-2 w-fit" @click="generatePDF()">
-              Download As PDF
-            </button>
-          </div>
+            {{ isProcessing ? "Approving..." : "Approve" }}
+          </button>
+
+          <button class="button-transparent border" @click="openRejectionModal">
+            Reject
+          </button>
         </div>
+
+        <button
+          v-if="ticketData?.status?.name !== TICKET_STATUS.PENDING"
+          class="button-primary w-fit"
+          @click="generatePDF()"
+        >
+          Download As PDF
+        </button>
       </div>
     </template>
   </Modal>
@@ -1300,7 +1296,6 @@ export default {
         connectionId: connectionId,
       });
       store.commit("app/SET_REJECTION_REASON_MODAL", true);
-      console.log(store.state.app.isRejectionReasonModalOpen);
     };
 
     const getApprover = (jobTitle) => {

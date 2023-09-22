@@ -185,7 +185,7 @@ export default {
       });
     };
 
-    signalR.on("GetTicket", (ticket) => {
+    signalR.on("GetAllTicket", (ticket) => {
       store.commit("app/SET_SEARCH", String(Date.now()));
     });
 

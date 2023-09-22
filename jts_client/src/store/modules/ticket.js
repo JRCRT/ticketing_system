@@ -47,7 +47,7 @@ const actions = {
       return;
     }
     alert = { type: "success", message: response.message };
-    commit("app/SET_SUBMITTING", false, { root: true });
+    commit("app/SET_PROCESSING", true, { root: true });
     commit("app/SET_TICKET_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },
@@ -157,7 +157,6 @@ const actions = {
     const response = await createTicket(ticket);
     var alert;
     if (!response.success) {
-      console.log(response);
       alert = { type: "danger", message: response.message };
       commit("app/SET_PROCESSING", false, { root: true });
       commit("app/SET_NEW_TICKET_FORM", false, { root: true });

@@ -370,6 +370,8 @@ namespace jts_backend.Services.TicketService
                 .Include(t => t.priority)
                 .Include(t => t.status)
                 .Include(t => t.created_by)
+                .Include(t => t.received_by)
+                .Include(t => t.rejected_by)
                 .Include(u => u.created_by.role)
                 .Include(u => u.created_by.department)
                 .Include(u => u.created_by.job_title)
@@ -553,7 +555,11 @@ namespace jts_backend.Services.TicketService
                     && request.prepared_by == 0
                 )
                 {
-                    tickets = result.Skip(request.offset).Take(request.items_per_page).Select(t => t).ToList();
+                    tickets = result
+                        .Skip(request.offset)
+                        .Take(request.items_per_page)
+                        .Select(t => t)
+                        .ToList();
                     totalTickets = totalResult.Count;
                 }
                 else if (
@@ -736,6 +742,19 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.department)
                 .Include(u => u.created_by.job_title)
                 .FirstOrDefaultAsync(t => t.ticket_id == request.ticket_id);
+
+            var signatories = await _context.approver
+                .Include(s => s.status)
+                .Include(s => s.ticket)
+                .Where(s => s.ticket.ticket_id == ticket.ticket_id)
+                .Select(s => s)
+                .ToListAsync();
+
+            foreach (var signatory in signatories)
+            {
+                signatory.status = doneStatus;
+                _context.Update(signatory);
+            }
 
             ticket.received_by = receiver;
             ticket.status = doneStatus;
@@ -982,7 +1001,11 @@ namespace jts_backend.Services.TicketService
         private async Task<GetUserDto> GetUserData(int userId)
         {
             var userData = new GetUserDto();
-            var user = await _context.user.FirstOrDefaultAsync(u => u.user_id == userId);
+            var user = await _context.user
+                .Include(u => u.role)
+                .Include(u => u.department)
+                .Include(u => u.role)
+                .FirstOrDefaultAsync(u => u.user_id == userId);
             if (user != null)
             {
                 var file = await _context.file.FirstOrDefaultAsync(

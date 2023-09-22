@@ -163,8 +163,6 @@ export default {
         prepared_by: searchPreparedBy.value,
       };
 
-      console.log(param);
-
       loading.value = true;
       await store.dispatch("ticket/fetchAllPendingTickets", param);
       const pendingTickets = store.state.ticket.allPendingTickets;
