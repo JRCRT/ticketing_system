@@ -65,7 +65,6 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <!--  <component :is="currentTab" /> -->
     <TicketTab :ticketStatus="currentStatus" :headers="currentHeader" />
   </div>
 </template>

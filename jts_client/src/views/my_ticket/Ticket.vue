@@ -63,7 +63,6 @@
 
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <!--  <component :is="currentTab" :ticketStatus="currentStatus" /> -->
     <TicketTab :ticketStatus="currentStatus" />
   </div>
 </template>
