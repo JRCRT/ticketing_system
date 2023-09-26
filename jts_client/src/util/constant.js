@@ -13,6 +13,13 @@ const TICKET_STATUS = Object.freeze({
   DONE: "Done",
 });
 
+const TICKET_STATUS_ID = Object.freeze({
+  PENDING: 1,
+  APPROVED: 2,
+  REJECTED: 3,
+  DONE: 4,
+});
+
 const ROLE = Object.freeze({
   ADMIN: "Admin",
   APPROVER: "Approver",
@@ -33,4 +40,11 @@ const JOB_TITLE = Object.freeze({
   President: "President",
 });
 
-export { EXTENSIONS, TICKET_STATUS, SIGNATORY_TYPE, ROLE, JOB_TITLE };
+export {
+  EXTENSIONS,
+  TICKET_STATUS,
+  TICKET_STATUS_ID,
+  SIGNATORY_TYPE,
+  ROLE,
+  JOB_TITLE,
+};

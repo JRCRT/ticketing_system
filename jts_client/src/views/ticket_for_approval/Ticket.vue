@@ -1,7 +1,5 @@
 <template>
   <div class="flex flex-col gap-3">
-    <NewTicketForm v-if="modalActive" @close="closeModal" />
-
     <h4 class="text-primary">Tickets For Approval</h4>
     <div class="relative">
       <div class="flex justify-between">
@@ -67,19 +65,16 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <component :is="currentTab" />
+    <!--  <component :is="currentTab" /> -->
+    <TicketTab :ticketStatus="currentStatus" :headers="currentHeader" />
   </div>
 </template>
 
 <script>
-import PendingTicket from "@/views/ticket_for_approval/PendingTicket.vue";
-import ApprovedTicket from "@/views/ticket_for_approval/ApprovedTicket.vue";
-import RejectedTicket from "@/views/ticket_for_approval/RejectedTicket.vue";
-import DoneTicket from "@/views/ticket_for_approval/DoneTicket.vue";
-import NewTicketForm from "@/components/NewTicketForm.vue";
 import RejectionReasonModal from "@/components/RejectionReasonModal.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import VueMultiselect from "vue-multiselect";
+import TicketTab from "@/views/ticket_for_approval/TicketTab.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { TICKET_STATUS } from "@/util/constant";
@@ -88,13 +83,9 @@ import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
-    PendingTicket,
-    ApprovedTicket,
-    RejectedTicket,
-    DoneTicket,
-    NewTicketForm,
     TicketForm,
     RejectionReasonModal,
+    TicketTab,
     VueMultiselect,
   },
 
@@ -106,26 +97,175 @@ export default {
     const ticketIdSearchField = ref("");
     const dateCreatedSearchField = ref("");
     const preparedBy = ref({});
+
     const currentStatus = ref(route.params.status);
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
     const allUsers = ref([]);
-    const setTabOnMount = (status) => {
-      switch (status) {
-        case TICKET_STATUS.PENDING:
-          return "PendingTicket";
-        case TICKET_STATUS.APPROVED:
-          return "ApprovedTicket";
-        case TICKET_STATUS.REJECTED:
-          return "RejectedTicket";
-        case TICKET_STATUS.DONE:
-          return "DoneTicket";
-      }
-    };
 
-    const currentTab = ref(setTabOnMount(currentStatus.value));
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
     );
+
+    const pendingHeader = [
+      {
+        width: "80px",
+        title: "Priority",
+        align: "start",
+        sortable: false,
+        key: "ticket.priority.name",
+      },
+      {
+        title: "Ticket ID",
+        align: "start",
+        sortable: false,
+        key: "ticket.ticket_id",
+      },
+      {
+        title: "Subject",
+        key: "ticket.subject",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Prepared By",
+        key: "ticket.created_by.user.ext_name",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Date Created",
+        key: "ticket.date_created",
+        align: "start",
+        sortable: false,
+      },
+    ];
+
+    const approvedHeader = [
+      {
+        width: "80px",
+        title: "Priority",
+        align: "start",
+        sortable: false,
+        key: "ticket.priority.name",
+      },
+      {
+        title: "Ticket ID",
+        align: "start",
+        sortable: false,
+        key: "ticket.ticket_id",
+      },
+      {
+        title: "Subject",
+        key: "ticket.subject",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Prepared By",
+        key: "ticket.created_by.user.ext_name",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Date Created",
+        key: "ticket.date_created",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Approved Date",
+        key: "action_date",
+        align: "start",
+        sortable: false,
+      },
+    ];
+
+    const rejectedHeader = [
+      {
+        width: "80px",
+        title: "Priority",
+        align: "start",
+        sortable: false,
+        key: "ticket.priority.name",
+      },
+      {
+        title: "Ticket ID",
+        align: "start",
+        sortable: false,
+        key: "ticket.ticket_id",
+      },
+      {
+        title: "Subject",
+        key: "ticket.subject",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Prepared By",
+        key: "ticket.created_by.user.ext_name",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Date Created",
+        key: "ticket.date_created",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Rejected Date",
+        key: "action_date",
+        align: "start",
+        sortable: false,
+      },
+    ];
+
+    const doneHeader = [
+      {
+        width: "80px",
+        title: "Priority",
+        align: "start",
+        sortable: false,
+        key: "ticket.priority.name",
+      },
+      {
+        title: "Ticket ID",
+        align: "start",
+        sortable: false,
+        key: "ticket.ticket_id",
+      },
+      {
+        title: "Subject",
+        key: "ticket.subject",
+        align: "start",
+        sortable: false,
+      },
+      {
+        title: "Prepared By",
+        key: "ticket.created_by.user.ext_name",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Date Created",
+        key: "ticket.date_created",
+        align: "start",
+        sortable: false,
+      },
+
+      {
+        title: "Approved Date",
+        key: "action_date",
+        align: "start",
+        sortable: false,
+      },
+    ];
 
     const tabs = [
       {
@@ -150,11 +290,20 @@ export default {
       },
     ];
 
-    const modalActive = ref(false);
-
-    const closeModal = () => {
-      modalActive.value = false;
+    const setHeader = (status) => {
+      switch (status) {
+        case TICKET_STATUS.PENDING:
+          return pendingHeader;
+        case TICKET_STATUS.APPROVED:
+          return approvedHeader;
+        case TICKET_STATUS.REJECTED:
+          return rejectedHeader;
+        case TICKET_STATUS.DONE:
+          return doneHeader;
+      }
     };
+
+    const currentHeader = ref(setHeader(currentStatus.value));
 
     watch(
       () => isTicketFormOpen.value,
@@ -168,13 +317,9 @@ export default {
       }
     );
 
-    const openModal = () => {
-      modalActive.value = true;
-    };
-
     const changeTab = (tab) => {
-      currentTab.value = tab.name;
       currentStatus.value = tab.status;
+      currentHeader.value = setHeader(tab.status);
       router.replace({
         name: "TicketForApproval",
         params: { status: tab.status },
@@ -238,9 +383,7 @@ export default {
     });
 
     return {
-      currentTab,
       tabs,
-      modalActive,
       router,
       currentStatus,
       allUsers,
@@ -249,12 +392,11 @@ export default {
       preparedBy,
       ticketIdSearchField,
       dateCreatedSearchField,
+      currentHeader,
       clear,
       search,
-      closeModal,
-      openModal,
       changeTab,
-      setTabOnMount,
+
       openTicket,
     };
   },

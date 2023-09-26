@@ -63,15 +63,13 @@
 
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <component :is="currentTab" />
+    <!--  <component :is="currentTab" :ticketStatus="currentStatus" /> -->
+    <TicketTab :ticketStatus="currentStatus" />
   </div>
 </template>
 
 <script>
-import PendingTicket from "@/views/my_ticket/PendingTicket.vue";
-import ApprovedTicket from "@/views/my_ticket/ApprovedTicket.vue";
-import RejectedTicket from "@/views/my_ticket/RejectedTicket.vue";
-import DoneTicket from "@/views/my_ticket/DoneTicket.vue";
+import TicketTab from "@/views/my_ticket/TicketTab.vue";
 import NewTicketForm from "@/components/NewTicketForm.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import { useSignalR } from "@quangdao/vue-signalr";
@@ -82,10 +80,7 @@ import { computed, ref, onUnmounted, watch, onMounted } from "vue";
 
 export default {
   components: {
-    PendingTicket,
-    ApprovedTicket,
-    RejectedTicket,
-    DoneTicket,
+    TicketTab,
     NewTicketForm,
     TicketForm,
   },
@@ -102,13 +97,13 @@ export default {
     const setTabOnMount = (status) => {
       switch (status) {
         case TICKET_STATUS.PENDING:
-          return "PendingTicket";
+          return "TicketTab";
         case TICKET_STATUS.APPROVED:
-          return "ApprovedTicket";
+          return "TicketTab";
         case TICKET_STATUS.REJECTED:
-          return "RejectedTicket";
+          return "TicketTab";
         case TICKET_STATUS.DONE:
-          return "DoneTicket";
+          return "TicketTab";
       }
     };
     const currentTab = ref(setTabOnMount(currentStatus.value));
@@ -118,22 +113,22 @@ export default {
 
     const tabs = [
       {
-        name: "PendingTicket",
+        name: "TicketTab",
         label: "Pending",
         status: TICKET_STATUS.PENDING,
       },
       {
-        name: "ApprovedTicket",
+        name: "TicketTab",
         label: "Approved",
         status: TICKET_STATUS.APPROVED,
       },
       {
-        name: "RejectedTicket",
+        name: "TicketTab",
         label: "Rejected",
         status: TICKET_STATUS.REJECTED,
       },
       {
-        name: "DoneTicket",
+        name: "TicketTab",
         label: "Done",
         status: TICKET_STATUS.DONE,
       },

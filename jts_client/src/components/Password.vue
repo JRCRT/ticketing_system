@@ -43,6 +43,7 @@
     </a>
     <input
       @input="(event) => $emit('inputChange', event.target.value)"
+      :value="initialValue"
       class="input__field"
       :type="passwordType"
     />
@@ -50,6 +51,9 @@
 </template>
 <script>
 export default {
+  props: {
+    initialValue: "",
+  },
   emit: ["inputChange"],
   data() {
     return {

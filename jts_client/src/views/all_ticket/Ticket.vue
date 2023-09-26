@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col gap-3">
-    <NewTicketForm v-if="modalActive" @close="closeModal" />
     <h4 class="text-primary">All Tickets</h4>
     <div class="relative">
       <div class="flex justify-between">
@@ -66,16 +65,13 @@
       </div>
       <div class="border-b w-full absolute bottom-0"></div>
     </div>
-    <component :is="currentTab" />
+    <!--  <component :is="currentTab" :ticketStatus="currentStatus" /> -->
+    <TicketTab :ticketStatus="currentStatus" />
   </div>
 </template>
 
 <script>
-import PendingTicket from "@/views/all_ticket/PendingTicket.vue";
-import ApprovedTicket from "@/views/all_ticket/ApprovedTicket.vue";
-import RejectedTicket from "@/views/all_ticket/RejectedTicket.vue";
-import DoneTicket from "@/views/all_ticket/DoneTicket.vue";
-import NewTicketForm from "@/components/NewTicketForm.vue";
+import TicketTab from "@/views/all_ticket/TicketTab.vue";
 import TicketForm from "@/components/TicketForm.vue";
 import VueMultiselect from "vue-multiselect";
 import { useRouter, useRoute } from "vue-router";
@@ -86,12 +82,8 @@ import { useSignalR } from "@quangdao/vue-signalr";
 
 export default {
   components: {
-    PendingTicket,
-    ApprovedTicket,
-    RejectedTicket,
-    NewTicketForm,
-    DoneTicket,
     TicketForm,
+    TicketTab,
     VueMultiselect,
   },
 
@@ -106,52 +98,28 @@ export default {
     const dateCreatedSearchField = ref("");
     const preparedBy = ref({});
     const isTicketFormOpen = computed(() => store.state.app.isTicketFormOpen);
-    const setTabOnMount = (status) => {
-      switch (status) {
-        case TICKET_STATUS.PENDING:
-          return "PendingTicket";
-        case TICKET_STATUS.APPROVED:
-          return "ApprovedTicket";
-        case TICKET_STATUS.REJECTED:
-          return "RejectedTicket";
-        case TICKET_STATUS.DONE:
-          return "DoneTicket";
-      }
-    };
-
-    const currentTab = ref(setTabOnMount(currentStatus.value));
     const isSelectedRowEmpty = computed(() =>
       store.state.app.selectedTicket.ticket == null ? true : false
     );
 
     const tabs = [
       {
-        name: "PendingTicket",
         label: "Pending",
         status: TICKET_STATUS.PENDING,
       },
       {
-        name: "ApprovedTicket",
         label: "Approved",
         status: TICKET_STATUS.APPROVED,
       },
       {
-        name: "RejectedTicket",
         label: "Rejected",
         status: TICKET_STATUS.REJECTED,
       },
       {
-        name: "DoneTicket",
         label: "Done",
         status: TICKET_STATUS.DONE,
       },
     ];
-
-    const modalActive = ref(false);
-
-    function closeModal() {
-      modalActive.value = false;
-    }
 
     watch(
       () => isTicketFormOpen.value,
@@ -165,12 +133,7 @@ export default {
       }
     );
 
-    function openModal() {
-      modalActive.value = true;
-    }
-
     function changeTab(tab) {
-      currentTab.value = tab.name;
       currentStatus.value = tab.status;
       router.replace({ name: "Ticket", params: { status: tab.status } });
       store.commit("app/SET_SELECTED_TICKET", {});
@@ -234,9 +197,7 @@ export default {
     });
 
     return {
-      currentTab,
       tabs,
-      modalActive,
       router,
       currentStatus,
       isSelectedRowEmpty,
@@ -247,10 +208,7 @@ export default {
       preparedBy,
       clear,
       search,
-      closeModal,
-      openModal,
       changeTab,
-      setTabOnMount,
       openTicket,
     };
   },

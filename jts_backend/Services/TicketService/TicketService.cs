@@ -162,7 +162,7 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.job_title)
                 .Select(t => t)
                 .ToListAsync();
-            var data = await GetTicketsData(tickets, tickets.Count, null);
+            var data = await GetTicketsData(tickets, tickets.Count, 0);
             response.data = data;
 
             return response;
@@ -274,7 +274,7 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(tickets, totalTickets, null);
+            var data = await GetTicketsData(tickets, totalTickets, 0);
             response.data = data;
 
             return response;
@@ -358,7 +358,7 @@ namespace jts_backend.Services.TicketService
                     break;
             }
 
-            var data = await GetTicketsData(tickets, totalTickets, null);
+            var data = await GetTicketsData(tickets, totalTickets, 0);
             response.data = data;
             return response;
         }
@@ -480,7 +480,7 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(tickets, totalTickets, null);
+            var data = await GetTicketsData(tickets, totalTickets, 0);
             response.message = request.date_created.Date.ToString();
             response.data = data;
 
@@ -630,7 +630,7 @@ namespace jts_backend.Services.TicketService
                 }
             }
 
-            var data = await GetTicketsData(tickets, totalTickets, actionDate);
+            var data = await GetTicketsData(tickets, totalTickets, request.user_id);
             response.data = data;
 
             return response;
@@ -915,7 +915,7 @@ namespace jts_backend.Services.TicketService
         private async Task<GetTicketsDto> GetTicketsData(
             List<TicketModel> tickets,
             int totalItems,
-            DateTime? actionDate
+            int signatoryId
         )
         {
             ICollection<GetTicketDto> ticketLists = new Collection<GetTicketDto>();
@@ -977,6 +977,20 @@ namespace jts_backend.Services.TicketService
                     rejected_by = await GetUserData(ticket.rejected_by.user_id),
                     received_by = await GetUserData(ticket.received_by.user_id)
                 };
+
+                var date = await _context.approver.FirstOrDefaultAsync(
+                    a => a.user.user_id == signatoryId && a.ticket.ticket_id == ticket.ticket_id
+                );
+                DateTime? actionDate = new DateTime();
+
+                if (date?.action_date == null)
+                {
+                    actionDate = null;
+                }
+                else
+                {
+                    actionDate = date.action_date;
+                }
 
                 var data = new GetTicketDto()
                 {

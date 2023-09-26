@@ -337,8 +337,3 @@ C:\Users\226jor.JACCS\Desktop\ticketing_system\jts_backend\obj\Debug\net7.0\refi
 C:\Users\226jor.JACCS\Desktop\ticketing_system\jts_backend\obj\Debug\net7.0\jts_backend.pdb
 C:\Users\226jor.JACCS\Desktop\ticketing_system\jts_backend\obj\Debug\net7.0\jts_backend.genruntimeconfig.cache
 C:\Users\226jor.JACCS\Desktop\ticketing_system\jts_backend\obj\Debug\net7.0\ref\jts_backend.dll
-C:\Users\ts226jor.JACCS\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\publish\web.config
-C:\Users\ts226jor.JACCS\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\publish\appsettings.Development.json
-C:\Users\ts226jor.JACCS\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\publish\appsettings.json
-C:\Users\ts226jor.JACCS\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\publish\jts_backend.deps.json
-C:\Users\ts226jor.JACCS\Desktop\ticketing_system\jts_backend\bin\Debug\net7.0\publish\jts_backend.runtimeconfig.json
