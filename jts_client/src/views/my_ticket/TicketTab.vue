@@ -202,7 +202,7 @@ export default {
           break;
         case TICKET_STATUS.DONE:
           await store.dispatch("ticket/fetchMyDoneTickets", doneParam);
-          const myDoneTickets = store.state.ticket.myPendingTickets;
+          const myDoneTickets = store.state.ticket.myDoneTickets;
           serverItems.value = myDoneTickets.tickets;
           totalItems.value = myDoneTickets.total_items;
           break;
