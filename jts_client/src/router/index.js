@@ -32,7 +32,7 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    component: Dashboard,
+    component: ErrorPage,
     meta: {
       title: "Dashboard",
       authRequired: true,

@@ -42,34 +42,30 @@
       </svg>
     </a>
     <input
-      @input="(event) => $emit('inputChange', event.target.value)"
-      :value="initialValue"
+      @input="inputChange"
+      :value="modelValue"
       class="input__field"
       :type="passwordType"
     />
   </div>
 </template>
-<script>
-export default {
-  props: {
-    initialValue: "",
-  },
-  emit: ["inputChange"],
-  data() {
-    return {
-      visible: false,
-      passwordType: "password",
-    };
-  },
-  methods: {
-    changePasswordVisibility() {
-      this.visible = !this.visible;
-      if (this.visible) {
-        this.passwordType = "text";
-      } else {
-        this.passwordType = "password";
-      }
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+const visible = ref(false);
+const passwordType = ref("password");
+defineProps(["modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
+
+function inputChange(event) {
+  emit("update:modelValue", event.target.value);
+}
+
+function changePasswordVisibility() {
+  visible.value = !visible.value;
+  if (visible.value) {
+    passwordType.value = "text";
+  } else {
+    passwordType.value = "password";
+  }
+}
 </script>

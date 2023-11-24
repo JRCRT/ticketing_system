@@ -17,7 +17,7 @@
     </div>
     <div class="w-full mb-3">
       <label>Password</label>
-      <Password @inputChange="inputChange" />
+      <Password v-model="password" />
     </div>
 
     <button class="mt-3 h-9 button-primary w-full" :disabled="isLoading">
@@ -45,6 +45,7 @@ export default {
     const store = useStore();
 
     const isLoading = computed(() => store.state.app.isLoggingIn);
+
     const login = async () => {
 
       await store.dispatch("auth/login", {
@@ -56,9 +57,7 @@ export default {
       usernameField.value.focus();
     };
 
-    function inputChange (value) {
-      password.value = value;
-    }
+
 
     onMounted( () => {
       usernameField.value.focus();
@@ -66,7 +65,7 @@ export default {
 
     return {
       login,
-      inputChange,
+
       JFP_Logo,
       username,
       password,

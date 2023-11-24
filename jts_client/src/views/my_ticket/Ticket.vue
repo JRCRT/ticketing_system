@@ -138,7 +138,10 @@ export default {
     );
 
     function closeModal() {
+      console.log("close");
+
       store.commit("app/SET_NEW_TICKET_FORM", false);
+      console.log(isNewTicketFormOpen.value);
     }
 
     watch(

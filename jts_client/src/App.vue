@@ -6,7 +6,7 @@ import { useStore } from "vuex";
 import { TICKET_STATUS, ROLE } from "@/util/constant";
 import Loader from "@/components/Loader.vue";
 import Alert from "@/components/Alert.vue";
-
+import NewTicketForm from "@/components/NewTicketForm.vue";
 import RejectionReasonModal from "@/components/RejectionReasonModal.vue";
 import TicketForm from "@/components/TicketForm.vue";
 export default {
@@ -14,7 +14,6 @@ export default {
     Sidebar,
     Alert,
     Loader,
-
     TicketForm,
     RejectionReasonModal,
   },
