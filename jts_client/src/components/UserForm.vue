@@ -8,7 +8,7 @@
         <label> Username </label>
         <input v-model="username" class="input__field" />
         <label> Password </label>
-        <Password @inputChange="passwordChange" :initialValue="password" />
+        <Password v-model="password" />
         <label> First Name </label>
         <input v-model="firstname" class="input__field" />
         <label> Middle Name </label>
@@ -116,7 +116,7 @@ export default {
         if (newUserId) {
           await store.dispatch("user/fetchUser", newUserId);
           user.value = store.state.user.user;
-
+          console.log(user.value);
           username.value = user.value.user.username;
           firstname.value = user.value.user.first_name;
           middlename.value = user.value.user.middle_name;

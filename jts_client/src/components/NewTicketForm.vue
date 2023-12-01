@@ -10,30 +10,13 @@
         <label>Condition</label>
         <input class="input__field" v-model="condition" />
         <label>Background (Required)</label>
-        <ckeditor
-          v-model="background"
-          :editor="editor"
-          :config="editorConfig"
-        ></ckeditor>
-
+        <ckeditor v-model="background" :editor="editor"></ckeditor>
         <label>Contents (Required)</label>
-        <ckeditor
-          :editor="editor"
-          :config="editorConfig"
-          v-model="content"
-        ></ckeditor>
+        <ckeditor :editor="editor" v-model="content"></ckeditor>
         <label>Reasons (Required)</label>
-        <ckeditor
-          :editor="editor"
-          :config="editorConfig"
-          v-model="reason"
-        ></ckeditor>
+        <ckeditor :editor="editor" v-model="reason"></ckeditor>
         <label>Others</label>
-        <ckeditor
-          :editor="editor"
-          :config="editorConfig"
-          v-model="other"
-        ></ckeditor>
+        <ckeditor :editor="editor" v-model="other"></ckeditor>
         <label>Attached Documents</label>
         <FileUploader :isMultiple="true" />
         <label>Priority</label>
@@ -59,8 +42,6 @@
         />
         <label>Approved By (Required)</label>
         <VueMultiselect
-          @select="selectApprover"
-          @remove="removeSelectedChecker"
           v-model="selectedApprover"
           :options="approvers"
           :multiple="true"
@@ -72,8 +53,6 @@
         />
         <label>Related Partys</label>
         <VueMultiselect
-          @select="selectRelatedParty"
-          @remove="removeSelectedParty"
           v-model="selectedRelatedPary"
           :options="relatedParty"
           :multiple="true"
@@ -108,15 +87,14 @@
     </template>
   </Modal>
 </template>
+
 <script>
+import CKEditor from "@ckeditor/ckeditor5-vue";
+import ClassicEditor from "@/util/ClassicEditor.js";
 import FileUploader from "@/components/FileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
-
-//import BalloonEditor from "@ckeditor/ckeditor5-editor-balloon/src/ballooneditor";
-//import InlineEditor from "@ckeditor/ckeditor5-editor-inline/src/inlineeditor";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-
+//import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
 import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
@@ -129,7 +107,6 @@ import TableCellProperties from "@ckeditor/ckeditor5-table/src/tablecellproperti
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
-import "@/stylesheet/content-style.css";
 
 import { useStore } from "vuex";
 import { computed, onMounted, onUnmounted, ref } from "vue";
@@ -144,6 +121,7 @@ export default {
     Modal,
     VueMultiselect,
     FileUploader,
+    ckeditor: CKEditor.component,
   },
 
   setup() {
@@ -156,7 +134,7 @@ export default {
     const formattedDatetime = formatDateTime(currentDate);
 
     const store = useStore();
-    const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
+
     const background = ref("");
     const subject = ref("");
     const condition = ref("");
@@ -390,27 +368,6 @@ export default {
       },
     };
 
-    /* tableProperties: {
-          defaultProperties: {
-            borderStyle: "solid",
-            borderColor: "black",
-            borderWidth: "1px",
-            alignment: "left",
-            width: "550px",
-            height: "450px",
-          },
-        },
-        tableCellProperties: {
-          defaultProperties: {
-            borderStyle: "solid",
-            borderColor: "black",
-            borderWidth: "1px",
-            horizontalAlignment: "center",
-            verticalAlignment: "bottom",
-            padding: "10px",
-          },
-        }, */
-
     return {
       submitTicket,
       selectChecker,
@@ -418,7 +375,6 @@ export default {
       selectRelatedParty,
       removeSelectedParty,
       selectApprover,
-      VITE_TINY_API_KEY,
       editor,
       editorConfig,
       selectedChecker,

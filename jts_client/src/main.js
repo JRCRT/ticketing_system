@@ -13,15 +13,11 @@ import interceptor from "./services/interceptor";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as directives from "vuetify/directives";
-import { VDataTableServer } from "vuetify/labs/VDataTable";
-import { VDatePicker } from "vuetify/labs/VDatePicker";
-import { VTextField } from "vuetify/lib/components/index.mjs";
+import { VDataTableServer } from "vuetify/lib/components/index.mjs";
 
 const vuetify = createVuetify({
   components: {
     VDataTableServer,
-    VTextField,
-    VDatePicker,
   },
   directives,
   theme: {
@@ -43,7 +39,7 @@ const app = createApp(App);
 app.use(vuetify);
 app.use(router);
 app.use(store);
-app.use(CKEditor);
+//app.use(CKEditor);
 app.use(VueSignalR, {
   url: URL_HUB,
 });

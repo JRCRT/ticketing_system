@@ -69,7 +69,6 @@
 <script>
 import NewUserForm from "@/components/NewUserForm.vue";
 import UserForm from "@/components/UserForm.vue";
-import Table from "@/components/Table.vue";
 import { onUnmounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
@@ -79,7 +78,6 @@ import { useSignalR } from "@quangdao/vue-signalr";
 export default {
   name: "User",
   components: {
-    Table,
     NewUserForm,
     UserForm,
   },
@@ -190,7 +188,7 @@ export default {
     };
 
     function rowClick(event, item) {
-      const selectedUser = item.item.raw;
+      const selectedUser = item.item;
       removeSelect();
       const tr =
         event.target.tagName === "DIV"

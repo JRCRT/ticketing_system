@@ -54,7 +54,6 @@
   </v-data-table-server>
 </template>
 <script>
-import Table from "@/components/Table.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useStore } from "vuex";
 import { ref, computed } from "vue";
@@ -63,7 +62,6 @@ import { TICKET_STATUS, TICKET_STATUS_ID } from "@/util/constant";
 
 export default {
   components: {
-    Table,
     FormattedDate,
   },
 

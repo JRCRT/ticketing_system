@@ -10,17 +10,29 @@
         <label>Condition</label>
         <input class="input__field" v-model="condition" />
         <label>Background (Required)</label>
-        <RichTextEditor v-model="background" />
-
+        <ckeditor
+          v-model="background"
+          :editor="editor"
+          :config="editorConfig"
+        ></ckeditor>
         <label>Contents (Required)</label>
-        <RichTextEditor v-model="content" />
-
+        <ckeditor
+          :editor="editor"
+          :config="editorConfig"
+          v-model="content"
+        ></ckeditor>
         <label>Reasons (Required)</label>
-        <RichTextEditor v-model="reason" />
-
+        <ckeditor
+          :editor="editor"
+          :config="editorConfig"
+          v-model="reason"
+        ></ckeditor>
         <label>Others</label>
-        <RichTextEditor v-model="other" />
-
+        <ckeditor
+          :editor="editor"
+          :config="editorConfig"
+          v-model="other"
+        ></ckeditor>
         <label>Attached Documents</label>
         <FileUploader :isMultiple="true" />
         <label>Priority</label>
@@ -46,8 +58,6 @@
         />
         <label>Approved By (Required)</label>
         <VueMultiselect
-          @select="selectApprover"
-          @remove="removeSelectedChecker"
           v-model="selectedApprover"
           :options="approvers"
           :multiple="true"
@@ -59,8 +69,6 @@
         />
         <label>Related Partys</label>
         <VueMultiselect
-          @select="selectRelatedParty"
-          @remove="removeSelectedParty"
           v-model="selectedRelatedPary"
           :options="relatedParty"
           :multiple="true"
@@ -95,11 +103,24 @@
     </template>
   </Modal>
 </template>
+
 <script>
-import RichTextEditor from "@/components/RichTextEditor.vue";
 import FileUploader from "@/components/FileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
+import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
+import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
+import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+import PasteFromOffice from "@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice";
+import Table from "@ckeditor/ckeditor5-table/src/table";
+import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
+import TableProperties from "@ckeditor/ckeditor5-table/src/tableproperties";
+import TableCellProperties from "@ckeditor/ckeditor5-table/src/tablecellproperties";
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
+import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
 import { useStore } from "vuex";
 import { computed, onMounted, onUnmounted, ref } from "vue";
@@ -114,7 +135,6 @@ export default {
     Modal,
     VueMultiselect,
     FileUploader,
-    RichTextEditor,
   },
 
   setup() {
@@ -127,7 +147,7 @@ export default {
     const formattedDatetime = formatDateTime(currentDate);
 
     const store = useStore();
-    const VITE_TINY_API_KEY = ref(import.meta.env.VITE_TINY_API_KEY);
+
     const background = ref("");
     const subject = ref("");
     const condition = ref("");
@@ -135,6 +155,7 @@ export default {
     const reason = ref("");
     const other = ref("");
 
+    const editor = ClassicEditor;
     const approvers = ref([]);
     const checkers = ref([]);
     const relatedParty = ref([]);
@@ -331,26 +352,34 @@ export default {
       store.commit("file/EMPTY_FILES", []);
     });
 
-    /* tableProperties: {
-          defaultProperties: {
-            borderStyle: "solid",
-            borderColor: "black",
-            borderWidth: "1px",
-            alignment: "left",
-            width: "550px",
-            height: "450px",
-          },
-        },
-        tableCellProperties: {
-          defaultProperties: {
-            borderStyle: "solid",
-            borderColor: "black",
-            borderWidth: "1px",
-            horizontalAlignment: "center",
-            verticalAlignment: "bottom",
-            padding: "10px",
-          },
-        }, */
+    const editorConfig = {
+      plugins: [
+        EssentialsPlugin,
+        BoldPlugin,
+        ItalicPlugin,
+        ParagraphPlugin,
+        PasteFromOffice,
+        Table,
+        TableToolbar,
+        TableProperties,
+        TableCellProperties,
+        Highlight,
+        Alignment,
+        TableColumnResize,
+      ],
+      table: {
+        contentToolbar: [
+          "tableColumn",
+          "tableRow",
+          "mergeTableCells",
+          "tableProperties",
+          "tableCellProperties",
+        ],
+      },
+      toolbar: {
+        items: ["bold", "italic", "|", "insertTable", "alignment", "highlight"],
+      },
+    };
 
     return {
       submitTicket,
@@ -359,7 +388,8 @@ export default {
       selectRelatedParty,
       removeSelectedParty,
       selectApprover,
-      VITE_TINY_API_KEY,
+      editor,
+      editorConfig,
       selectedChecker,
       selectedApprover,
       selectedRelatedPary,

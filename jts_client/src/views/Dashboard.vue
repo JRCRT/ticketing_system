@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import Table from "@/components/Table.vue";
 import TicketStatus from "@/components/TicketStatus.vue";
 import FormattedDate from "@/components/FormattedDate.vue";
 import { useRouter } from "vue-router";
@@ -94,7 +93,6 @@ export default {
   name: "Dashboard",
 
   components: {
-    Table,
     TicketStatus,
     FormattedDate,
   },

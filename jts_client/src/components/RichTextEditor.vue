@@ -1,13 +1,8 @@
 <template>
-  <ckeditor
-    :editor="editor"
-    :config="editorConfig"
-    @input="$emit('inputChange')"
-  ></ckeditor>
+  <ckeditor :editor="editor" :config="editorConfig"></ckeditor>
 </template>
 
-<script setup>
-//import Editor from "@tinymce/tinymce-vue";
+<script>
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 
 import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
@@ -23,7 +18,12 @@ import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
-defineEmits(["inputChange"]);
+export default {
+  setup() {
+    return {};
+  },
+};
+
 const editor = ClassicEditor;
 const editorConfig = {
   plugins: [
