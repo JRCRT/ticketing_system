@@ -10,7 +10,11 @@
         <label>Condition</label>
         <input class="input__field" v-model="condition" />
         <label>Background (Required)</label>
-        <ckeditor v-model="background" :editor="editor"></ckeditor>
+        <ckeditor
+          @input="changeBackground"
+          v-model="background"
+          :editor="editor"
+        ></ckeditor>
         <label>Contents (Required)</label>
         <ckeditor :editor="editor" v-model="content"></ckeditor>
         <label>Reasons (Required)</label>
@@ -94,19 +98,6 @@ import ClassicEditor from "@/util/ClassicEditor.js";
 import FileUploader from "@/components/FileUploader.vue";
 import Modal from "@/components/Modal.vue";
 import VueMultiselect from "vue-multiselect";
-//import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import EssentialsPlugin from "@ckeditor/ckeditor5-essentials/src/essentials";
-import BoldPlugin from "@ckeditor/ckeditor5-basic-styles/src/bold";
-import ItalicPlugin from "@ckeditor/ckeditor5-basic-styles/src/italic";
-import ParagraphPlugin from "@ckeditor/ckeditor5-paragraph/src/paragraph";
-import PasteFromOffice from "@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice";
-import Table from "@ckeditor/ckeditor5-table/src/table";
-import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
-import TableProperties from "@ckeditor/ckeditor5-table/src/tableproperties";
-import TableCellProperties from "@ckeditor/ckeditor5-table/src/tablecellproperties";
-import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
-import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
-import TableColumnResize from "@ckeditor/ckeditor5-table/src/tablecolumnresize";
 
 import { useStore } from "vuex";
 import { computed, onMounted, onUnmounted, ref } from "vue";
@@ -289,6 +280,10 @@ export default {
       }
     }
 
+    const changeBackground = (event) => {
+      console.log(event);
+    };
+
     const submitTicket = async () => {
       if (!validate()) {
         var formData = new FormData();
@@ -339,35 +334,6 @@ export default {
       store.commit("file/EMPTY_FILES", []);
     });
 
-    const editorConfig = {
-      plugins: [
-        EssentialsPlugin,
-        BoldPlugin,
-        ItalicPlugin,
-        ParagraphPlugin,
-        PasteFromOffice,
-        Table,
-        TableToolbar,
-        TableProperties,
-        TableCellProperties,
-        Highlight,
-        Alignment,
-        TableColumnResize,
-      ],
-      table: {
-        contentToolbar: [
-          "tableColumn",
-          "tableRow",
-          "mergeTableCells",
-          "tableProperties",
-          "tableCellProperties",
-        ],
-      },
-      toolbar: {
-        items: ["bold", "italic", "|", "insertTable", "alignment", "highlight"],
-      },
-    };
-
     return {
       submitTicket,
       selectChecker,
@@ -375,8 +341,8 @@ export default {
       selectRelatedParty,
       removeSelectedParty,
       selectApprover,
+      changeBackground,
       editor,
-      editorConfig,
       selectedChecker,
       selectedApprover,
       selectedRelatedPary,

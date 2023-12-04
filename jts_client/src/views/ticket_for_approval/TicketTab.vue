@@ -20,7 +20,7 @@
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          :fill="setPriorityColor(item.columns['ticket.priority.name'])"
+          :fill="setPriorityColor(item.ticket.priority.name)"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="white"
@@ -38,18 +38,18 @@
       <div
         class="max-w-[500px] whitespace-nowrap overflow-hidden text-ellipsis"
       >
-        {{ item.columns["ticket.subject"] }}
+        {{ item.ticket.subject }}
       </div>
     </template>
     <template v-slot:item.ticket.date_created="{ item }">
-      {{ formatDate(item.columns["ticket.date_created"]) }}
+      {{ formatDate(item.ticket.date_created) }}
     </template>
 
     <template
       v-if="ticketStatus !== TICKET_STATUS.PENDING"
       v-slot:item.action_date="{ item }"
     >
-      {{ formatDate(item.columns["action_date"]) }}
+      {{ formatDate(item.action_date) }}
     </template>
   </v-data-table-server>
 </template>
@@ -268,7 +268,7 @@ export default {
     }
 
     function rowClick(event, item) {
-      const selectedTicket = item.item.raw;
+      const selectedTicket = item.item;
       removeSelect();
       const tr =
         event.target.tagName === "DIV"

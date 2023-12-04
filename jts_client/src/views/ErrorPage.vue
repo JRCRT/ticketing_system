@@ -1,14 +1,39 @@
 <template>
-  <v-data-table-server
-    v-model:items-per-page="itemsPerPage"
-    :headers="headers"
-    :items-length="totalItems"
-    :items="serverItems"
-    :loading="loading"
-    :search="search"
-    item-value="name"
-    @update:options="loadItems"
-  ></v-data-table-server>
+  <figure class="table" style="width: 100%">
+    <table
+      class="ck-table-resized"
+      style="border: 1px solid hsl(0, 0%, 0%); width: 100%"
+    >
+      <colgroup>
+        <col style="width: 18.24%" />
+        <col style="width: 30.32%" />
+        <col style="width: 20.94%" />
+        <col style="width: 9.89%" />
+        <col style="width: 10.15%" />
+        <col style="width: 10.46%" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">
+            <p style="text-align: right">1</p>
+          </td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">1</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sds</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sd</td>
+          <td style="border: 1px solid hsl(0, 0%, 0%)">sdsdsd</td>
+        </tr>
+      </tbody>
+    </table>
+  </figure>
 </template>
 
 <script setup>

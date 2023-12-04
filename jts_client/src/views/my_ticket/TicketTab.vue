@@ -196,7 +196,7 @@ export default {
           break;
         case TICKET_STATUS.REJECTED:
           await store.dispatch("ticket/fetchMyRejectedTickets", rejectedParam);
-          const myRejectedTickets = store.state.ticket.myPendingTickets;
+          const myRejectedTickets = store.state.ticket.myRejectedTickets;
           serverItems.value = myRejectedTickets.tickets;
           totalItems.value = myRejectedTickets.total_items;
           break;

@@ -358,3 +358,24 @@ input[type="file"]:focus {
 .selected {
   background-color: #dfdfdf !important;
 }
+
+/* .ck-content .table {
+  float: left !important;
+  width: 100% !important;
+  //height: 450px !important;
+}
+
+.ck-content .table table {
+  border-style: solid !important;
+  border-color: hsl(0, 0%, 0%) !important;
+  border-width: 1px !important;
+}
+
+.ck-content .table table td {
+  //text-align: center !important;
+  //vertical-align: bottom !important;
+  //padding: 10px !important;
+  border-style: solid !important;
+  border-color: hsl(0, 0%, 0%) !important;
+  border-width: 1px !important;
+} */

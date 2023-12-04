@@ -47,7 +47,7 @@ const actions = {
       return;
     }
     alert = { type: "success", message: response.message };
-    commit("app/SET_PROCESSING", true, { root: true });
+    commit("app/SET_PROCESSING", false, { root: true });
     commit("app/SET_TICKET_FORM", false, { root: true });
     dispatch("app/addAlert", alert, { root: true });
   },

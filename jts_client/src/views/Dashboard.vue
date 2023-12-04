@@ -61,18 +61,18 @@
           <div
             class="max-w-[500px] whitespace-nowrap overflow-hidden text-ellipsis"
           >
-            {{ item.columns["ticket.subject"] }}
+            {{ item.ticket.subject }}
           </div>
         </template>
         <template v-slot:item.ticket.date_created="{ item }">
-          {{ formatDate(item.columns["ticket.date_created"]) }}
+          {{ formatDate(item.ticket.date_created) }}
         </template>
         <template v-slot:item.ticket.status.name="{ item }">
           <div
             class="w-fit p-[3px] text-[14px] text-white rounded-lg"
-            :class="getColor(item.columns['ticket.status.name'])"
+            :class="getColor(item.ticket.status.name)"
           >
-            {{ item.columns["ticket.status.name"] }}
+            {{ item.ticket.status.name }}
           </div>
         </template>
       </v-data-table-server>
@@ -199,7 +199,7 @@ export default {
     };
 
     function rowClick(event, item) {
-      const selectedTicket = item.item.raw;
+      const selectedTicket = item.item;
       removeSelect();
       const tr =
         event.target.tagName === "DIV"
