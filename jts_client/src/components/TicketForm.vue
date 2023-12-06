@@ -1033,6 +1033,7 @@
                   </tr>
                   <tr>
                     <td
+                      class="application_field"
                       v-html="ticketData?.background"
                       style="
                         height: 40pt;
@@ -1064,6 +1065,7 @@
                   </tr>
                   <tr>
                     <td
+                      class="application_field"
                       v-html="ticketData?.content"
                       style="
                         height: 40pt;
@@ -1095,6 +1097,7 @@
                   </tr>
                   <tr>
                     <td
+                      class="application_field"
                       v-html="ticketData?.reason"
                       style="
                         height: 40pt;
@@ -1126,6 +1129,7 @@
                   </tr>
                   <tr>
                     <td
+                      class="application_field"
                       v-html="ticketData?.other"
                       style="
                         height: 40pt;

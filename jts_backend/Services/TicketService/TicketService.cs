@@ -180,6 +180,7 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.role)
                 .Include(u => u.created_by.department)
                 .Where(t => t.status.status_id == request.status_id)
+                .OrderByDescending(t => t.ticket_id)
                 .Select(t => t)
                 .ToListAsync();
             var totalResult = await _context.ticket
@@ -392,7 +393,7 @@ namespace jts_backend.Services.TicketService
                 .Include(u => u.created_by.role)
                 .Include(u => u.created_by.department)
                 .Include(u => u.created_by.job_title)
-                .OrderBy(t => t.ticket_id)
+                .OrderByDescending(t => t.ticket_id)
                 .Where(
                     t =>
                         t.created_by.user_id == request.user_id
@@ -505,7 +506,7 @@ namespace jts_backend.Services.TicketService
                 .Include(a => a.ticket)
                 .Include(t => t.ticket.status)
                 .Include(t => t.ticket.priority)
-                .OrderBy(t => t.ticket.ticket_id)
+                .OrderByDescending(t => t.ticket.ticket_id)
                 .Where(
                     a =>
                         a.user!.user_id == request.user_id

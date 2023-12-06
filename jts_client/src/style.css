@@ -337,6 +337,14 @@ input[type="file"]:focus {
   border: 0 !important;
 }
 
+/* ul {
+  list-style-type: disc !important;
+}
+
+ol {
+  list-style-type: decimal !important;
+}
+ */
 .modal-title {
   @apply font-bold;
 }
@@ -357,6 +365,21 @@ input[type="file"]:focus {
 
 .selected {
   background-color: #dfdfdf !important;
+}
+
+.ck-content ul,
+.ck-content ol {
+  padding: 0px 0px 0px 20px !important;
+}
+
+.application_field ul {
+  list-style-type: disc !important;
+  padding: 0px 0px 0px 20px !important;
+}
+
+.application_field ol {
+  list-style-type: decimal !important;
+  padding: 0px 0px 0px 20px !important;
 }
 
 /* .ck-content .table {
