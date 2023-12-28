@@ -535,7 +535,7 @@
                 >
                   <VueMultiselect
                     v-model="selectedPresident"
-                    :options="approvers"
+                    :options="getApprover('President')"
                     label="ext_name"
                     :show-labels="false"
                   />
@@ -551,7 +551,7 @@
                 >
                   <VueMultiselect
                     v-model="selectedCFO"
-                    :options="approvers"
+                    :options="getApprover('CFO')"
                     label="ext_name"
                     :show-labels="false"
                   />
@@ -567,7 +567,7 @@
                 >
                   <VueMultiselect
                     v-model="selectedEVP"
-                    :options="approvers"
+                    :options="getApprover('EVP')"
                     label="ext_name"
                     :show-labels="false"
                   />
@@ -578,7 +578,7 @@
                 >
                   <VueMultiselect
                     v-model="selectedSVP"
-                    :options="approvers"
+                    :options="getApprover('SVP')"
                     label="ext_name"
                     :show-labels="false"
                   />
@@ -727,7 +727,7 @@
                   rowspan="2"
                 >
                   <VueMultiselect
-                    v-model="selectedPartyTwo"
+                    v-model="selectedPartyThree"
                     :options="approvers"
                     label="ext_name"
                     :show-labels="false"
@@ -745,7 +745,7 @@
                   rowspan="2"
                 >
                   <VueMultiselect
-                    v-model="selectedPartyTwo"
+                    v-model="selectedPartyFour"
                     :options="approvers"
                     label="ext_name"
                     :show-labels="false"
@@ -1334,18 +1334,16 @@ export default {
     }
 
     function selectApprover(selectedOption) {
-      const newRelatedParty = [...relatedParty.value].filter(
-        (u) => u.user_id != selectedOption.user_id
+      approvers.value = [...approvers.value].filter(
+        (value) => value.user_id !== selectedOption.user_id
       );
-      relatedParty.value = newRelatedParty;
+    }
 
-      /* const newApprovers = [...approvers.value].filter(
-        (u) =>
-          u.role.name !== selectedOption.role.name ||
-          u.user_id === selectedOption.user_id
+    //get approver based on position
+    function getApprover(position) {
+      return [...approvers.value].filter(
+        (value) => value.job_title.name === position
       );
-
-      approvers.value = newApprovers; */
     }
 
     function removeSelectedApprover(removedOption) {
@@ -1435,6 +1433,7 @@ export default {
       removeSelectedParty,
       selectApprover,
       changeBackground,
+      getApprover,
       editor,
       selectedChecker,
       selectedApprover,

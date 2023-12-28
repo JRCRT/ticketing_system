@@ -354,6 +354,7 @@ namespace jts_backend.Services.UserService
             ICollection<UserDto> users = await _context.user
                 .Include(u => u.role)
                 .Include(u => u.department)
+                .Include(u => u.job_title)
                 .Where(u => u.role.name.Equals(role))
                 .Select(u => _mapper.Map<UserDto>(u))
                 .ToListAsync();
