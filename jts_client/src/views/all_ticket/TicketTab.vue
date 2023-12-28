@@ -226,7 +226,7 @@ export default {
 
     function rowClick(event, item) {
       const selectedTicket = item.item;
-      console.log(item.item.ticket);
+
       removeSelect();
       const tr =
         event.target.tagName === "DIV"

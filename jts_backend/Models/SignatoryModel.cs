@@ -18,5 +18,6 @@ namespace jts_backend.Models
         public string type { get; set; } = string.Empty;
         public DateTime action_date { get; set; }
         public bool can_approve { get; set; }
+        public int position {get;set;}
     }
 }

@@ -1379,7 +1379,6 @@ export default {
           files.value = store.state.ticket.ticket.files;
           signatories.value = store.state.ticket.ticket.signatories;
           fileName.value = `Application No.${ticketData.value.ticket_id}`;
-          console.log(ticketData.value);
         }
       },
       { immediate: true }

@@ -116,7 +116,7 @@ export default {
         if (newUserId) {
           await store.dispatch("user/fetchUser", newUserId);
           user.value = store.state.user.user;
-          console.log(user.value);
+
           username.value = user.value.user.username;
           firstname.value = user.value.user.first_name;
           middlename.value = user.value.user.middle_name;
