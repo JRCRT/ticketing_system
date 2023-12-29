@@ -10,7 +10,6 @@ using jts_backend.Services.TicketService;
 using jts_backend.Services.UserService;
 using jts_backend.Services.ViewService;
 using jts_backend.Services.RoleManagerService;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.EntityFrameworkCore;

@@ -27,8 +27,7 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { computed } from "vue";
+import { useStore, computed } from "vuex";
 export default {
   setup() {
     const store = useStore();
@@ -43,6 +42,7 @@ export default {
       setFile(e.target.files[0]);
       e.target.value = null;
     }
+
     return {
       onInputChange,
       file,
