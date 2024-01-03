@@ -10,5 +10,6 @@ namespace jts_backend.Configuration
         public string? Token { get; set; }
         public string? FilePath { get; set; }
         public string? ClientUrl { get; set; }
+        public string? ApiUrl { get; set; }
     }
 }

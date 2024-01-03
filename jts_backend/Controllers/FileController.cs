@@ -48,7 +48,7 @@ namespace jts_backend.Controllers
 
             var response = new FileUploadResponse()
             {
-                url = $"http://localhost:5148/api/File/GetImage?fileName={storedFileName}"
+                url = $"{_settings.ApiUrl}/File/GetImage?fileName={storedFileName}"
             };
 
             return Ok(response);

@@ -27,6 +27,7 @@
     "@quangdao/vue-signalr": "^1.0.1",
     "axios": "^1.6.3",
     "jspdf": "^2.5.1",
+    "juice": "^10.0.0",
     "material-design-icons-iconfont": "^6.7.0",
     "vue": "^3.4.3",
     "vue-axios": "^3.5.2",
