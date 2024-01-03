@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jts_backend.Configuration;
 using jts_backend.Context;
 using jts_backend.Models;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 
 namespace jts_backend.Services.FileService
@@ -12,34 +14,31 @@ namespace jts_backend.Services.FileService
     {
         private readonly IWebHostEnvironment _env;
         private readonly JtsContext _context;
+        private readonly AppSettings _settings;
 
-        public FileService(IWebHostEnvironment env, JtsContext context)
+        public FileService(
+            IWebHostEnvironment env,
+            JtsContext context,
+            IOptions<AppSettings> settings
+        )
         {
             _env = env;
             _context = context;
+            _settings = settings.Value;
         }
 
-        public async Task<ServiceResponse<ICollection<string>>> UploadFiles(List<IFormFile> files)
+        public async Task<FileUploadResponse> UploadFiles(IFormFile upload)
         {
-            // var filePaths = new Collection<string>();
-            foreach (var formFile in files)
+            var storedFileName = Path.GetRandomFileName();
+
+            var filePath = Path.Combine(_settings.FilePath!, "Uploads", storedFileName);
+
+            using (var stream = System.IO.File.Create(filePath))
             {
-                if (formFile.Length > 0)
-                {
-                    var storedFileName = Path.GetRandomFileName();
-                    var originalFileName = formFile.FileName;
-                    var contentType = formFile.ContentType;
-
-                    var filePath = Path.Combine(_env.ContentRootPath, "Uploads", storedFileName);
-
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
-                }
+                await upload.CopyToAsync(stream);
             }
 
-            var response = new ServiceResponse<ICollection<string>>() { };
+            var response = new FileUploadResponse() { url = filePath };
 
             return response;
         }

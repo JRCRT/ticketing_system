@@ -1312,6 +1312,7 @@ export default {
     };
 
     const getFileLink = (fileName) => {
+      console.log(`${BASE_URL}/File/${fileName}`);
       return fileName ? `${BASE_URL}/File/${fileName}` : "";
     };
 

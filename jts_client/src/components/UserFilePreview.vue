@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import { useStore, computed } from "vuex";
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
   setup() {
     const store = useStore();

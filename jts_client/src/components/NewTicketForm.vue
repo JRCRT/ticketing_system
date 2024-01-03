@@ -1373,7 +1373,9 @@ export default {
       }
     }
 
-    const changeBackground = (event) => {};
+    const changeBackground = (value) => {
+      console.log(value);
+    };
 
     const submitTicket = async () => {
       if (!validate()) {

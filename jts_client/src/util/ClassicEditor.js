@@ -6,6 +6,8 @@ import { PasteFromOffice } from "@ckeditor/ckeditor5-paste-from-office";
 import { Highlight } from "@ckeditor/ckeditor5-highlight";
 import { Alignment } from "@ckeditor/ckeditor5-alignment";
 import { DocumentList } from "@ckeditor/ckeditor5-list";
+import { Image, ImageResize, ImageInsert } from "@ckeditor/ckeditor5-image";
+import { SimpleUploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
   Table,
   TableToolbar,
@@ -13,6 +15,8 @@ import {
   TableCellProperties,
   TableColumnResize,
 } from "@ckeditor/ckeditor5-table";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const currentUser = JSON.parse(localStorage.getItem("user"));
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -33,6 +37,10 @@ ClassicEditor.defaultConfig = {
     Highlight,
     Alignment,
     TableColumnResize,
+    Image,
+    ImageInsert,
+    ImageResize,
+    SimpleUploadAdapter,
   ],
   table: {
     contentToolbar: [
@@ -80,10 +88,23 @@ ClassicEditor.defaultConfig = {
       "italic",
       "|",
       "insertTable",
+      "insertImage",
       "bulletedList",
       "numberedList",
       "alignment",
       "highlight",
     ],
+  },
+  simpleUpload: {
+    // The URL that the images are uploaded to.
+    uploadUrl: `${BASE_URL}/File/UploadFile`,
+
+    // Enable the XMLHttpRequest.withCredentials property.
+    withCredentials: true,
+
+    // Headers sent along with the XMLHttpRequest to the upload server.
+    headers: {
+      Authorization: `Bearer ${currentUser?.access_token}`,
+    },
   },
 };

@@ -34,12 +34,23 @@ namespace jts_backend.Controllers
             _settings = settings.Value;
         }
 
-        [HttpPost("UploadFiles")]
-        public async Task<ActionResult<ServiceResponse<ICollection<string>>>> UploadFiles(
-            List<IFormFile> files
-        )
+        [HttpPost("UploadFile")]
+        public async Task<ActionResult<FileUploadResponse>> UploadFile(IFormFile upload)
         {
-            var response = await _fileServie.UploadFiles(files);
+            var storedFileName = Path.GetRandomFileName();
+
+            var filePath = Path.Combine(_settings.FilePath!, "Uploads", storedFileName);
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await upload.CopyToAsync(stream);
+            }
+
+            var response = new FileUploadResponse()
+            {
+                url = $"http://localhost:5148/api/File/GetImage?fileName={storedFileName}"
+            };
+
             return Ok(response);
         }
 
@@ -59,6 +70,20 @@ namespace jts_backend.Controllers
             }
             memory.Position = 0;
             return File(memory, uploadResult!.content_type, uploadResult.original_file_name);
+        }
+
+        [HttpGet("GetImage")]
+        public async Task<IActionResult> GetImage(string fileName)
+        {
+            var path = Path.Combine(_settings.FilePath!, "Uploads", fileName);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "image/png", "image");
         }
     }
 }
