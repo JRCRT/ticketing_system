@@ -60,12 +60,12 @@ ClassicEditor.defaultConfig = {
     tableProperties: {
       // The default styles for tables in the editor.
       // They should be synchronized with the content styles.
-      /*   defaultProperties: {
+      defaultProperties: {
         borderStyle: "solid",
         borderColor: "hsl(0, 0%, 0%)",
         borderWidth: "1px",
         alignment: "left",
-        width: "100%",
+        //width: "100%",
         //height: "450px",
       },
       // The default styles for table cells in the editor.
@@ -79,7 +79,7 @@ ClassicEditor.defaultConfig = {
           //verticalAlignment: "bottom",
           //padding: "10px",
         },
-      }, */
+      },
     },
   },
   toolbar: {

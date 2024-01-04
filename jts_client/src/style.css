@@ -382,9 +382,9 @@ ol {
   padding: 0px 0px 0px 20px !important;
 }
 
-/* .ck-content .table {
-  float: left !important;
-  width: 100% !important;
+.ck-content .table {
+  //float: left !important;
+  //width: 100% !important;
   //height: 450px !important;
 }
 
@@ -401,4 +401,4 @@ ol {
   border-style: solid !important;
   border-color: hsl(0, 0%, 0%) !important;
   border-width: 1px !important;
-} */
+}
